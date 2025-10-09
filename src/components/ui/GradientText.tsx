@@ -29,26 +29,30 @@ export default function GradientText({ children, className = "" }: GradientTextP
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  // Calculate dynamic gradient angle and positions based on mouse
+  const gradientAngle = 135 + (mousePos.x - 50) * 0.3;
+  const lightGradient = `linear-gradient(${gradientAngle}deg,
+    #4A12C0 ${Math.max(0, mousePos.x - 25)}%,
+    #6B3DCB ${mousePos.x}%,
+    #8B5CF6 ${Math.min(100, mousePos.x + 25)}%)`;
+
+  const darkGradient = `linear-gradient(${gradientAngle}deg,
+    #E9D5FF ${Math.max(0, mousePos.x - 25)}%,
+    #C4B5FD ${mousePos.x}%,
+    #A78BFA ${Math.min(100, mousePos.x + 25)}%)`;
+
   return (
     <span ref={containerRef} className={`relative inline-block ${className}`}>
-      {/* Dynamic gradient orb that follows mouse */}
-      <span
-        className="absolute inset-0 opacity-0 dark:opacity-20 pointer-events-none transition-opacity duration-500"
-        style={{
-          background: `radial-gradient(circle 400px at ${mousePos.x}% ${mousePos.y}%, rgba(139, 92, 246, 0.3), transparent 70%)`,
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Main gradient text with dynamic gradient based on mouse position */}
+      {/* Main gradient text for light mode */}
       <span
         className={`
           relative font-extrabold tracking-tight
+          dark:opacity-0
           ${mounted ? 'opacity-100' : 'opacity-0'}
-          transition-opacity duration-1000
+          transition-opacity duration-700
         `}
         style={{
-          background: `linear-gradient(${135 + (mousePos.x - 50) * 0.5}deg, #4A12C0 ${Math.max(0, mousePos.x - 20)}%, #6B3DCB ${mousePos.x}%, #8B5CF6 ${Math.min(100, mousePos.x + 20)}%)`,
+          background: lightGradient,
           WebkitTextFillColor: 'transparent',
           WebkitBackgroundClip: 'text',
           backgroundClip: 'text',
@@ -57,28 +61,15 @@ export default function GradientText({ children, className = "" }: GradientTextP
         {children}
       </span>
 
-      {/* Dark mode version with lighter colors */}
+      {/* Dark mode text */}
       <span
-        className={`
-          absolute inset-0 opacity-0 dark:opacity-100
-          font-extrabold tracking-tight
-          transition-opacity duration-500
-        `}
+        className="absolute inset-0 opacity-0 dark:opacity-100 font-extrabold tracking-tight transition-opacity duration-700"
         style={{
-          background: `linear-gradient(${135 + (mousePos.x - 50) * 0.5}deg, #E9D5FF ${Math.max(0, mousePos.x - 20)}%, #C4B5FD ${mousePos.x}%, #A78BFA ${Math.min(100, mousePos.x + 20)}%)`,
+          background: darkGradient,
           WebkitTextFillColor: 'transparent',
           WebkitBackgroundClip: 'text',
           backgroundClip: 'text',
         }}
-        aria-hidden="true"
-      >
-        {children}
-      </span>
-
-      {/* Subtle glow that pulses */}
-      <span
-        className="absolute inset-0 bg-gradient-to-r from-[#4A12C0] via-[#6B3DCB] to-[#8B5CF6] dark:from-[#E9D5FF] dark:via-[#C4B5FD] dark:to-[#A78BFA] bg-clip-text text-transparent blur-[2px] opacity-0 dark:opacity-5 animate-pulse"
-        style={{ animationDuration: '3s' }}
         aria-hidden="true"
       >
         {children}
