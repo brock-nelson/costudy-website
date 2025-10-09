@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import HighContrastToggle from "@/components/ui/HighContrastToggle";
 import DarkModeToggle from "@/components/ui/DarkModeToggle";
@@ -13,8 +14,15 @@ export default function Header() {
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-bold text-[#4A12C0]">
-            CoStudy
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/logo_upperleft.svg"
+              alt="CoStudy"
+              width={160}
+              height={40}
+              className="h-10 w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
