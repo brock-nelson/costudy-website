@@ -29,65 +29,57 @@ export default function GradientText({ children, className = "" }: GradientTextP
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Create mesh gradient distortion based on mouse position
-  // Multiple gradient layers that shift and blend
-  const distortX = (mousePos.x - 50) * 0.4;
-  const distortY = (mousePos.y - 50) * 0.4;
+  // Calculate gradient angle based on mouse position
+  const angle = 135 + (mousePos.x - 50) * 0.5;
 
-  const gradientAngle1 = 135 + distortX;
-  const gradientAngle2 = 225 - distortX;
-  const gradientAngle3 = 45 + distortY;
+  // Shift color stops based on mouse position
+  const colorStop1 = Math.max(0, Math.min(100, mousePos.x - 20));
+  const colorStop2 = Math.max(0, Math.min(100, mousePos.x + 10));
+  const colorStop3 = Math.max(0, Math.min(100, mousePos.x + 40));
 
-  const lightMeshGradient = `
-    radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, #8B5CF6 0%, transparent 50%),
-    linear-gradient(${gradientAngle1}deg, #4A12C0 ${Math.max(0, mousePos.x - 30)}%, transparent ${mousePos.x + 20}%),
-    linear-gradient(${gradientAngle2}deg, #6B3DCB ${Math.max(0, 100 - mousePos.x - 30)}%, transparent ${100 - mousePos.x + 20}%),
-    linear-gradient(${gradientAngle3}deg, #A855F7 ${Math.max(0, mousePos.y - 20)}%, #4A12C0 ${mousePos.y + 30}%)
-  `;
+  // Light mode gradient
+  const lightGradient = `linear-gradient(${angle}deg, #4A12C0 ${colorStop1}%, #6B3DCB ${colorStop2}%, #A855F7 ${colorStop3}%)`;
 
-  const darkMeshGradient = `
-    radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, #C4B5FD 0%, transparent 50%),
-    linear-gradient(${gradientAngle1}deg, #E9D5FF ${Math.max(0, mousePos.x - 30)}%, transparent ${mousePos.x + 20}%),
-    linear-gradient(${gradientAngle2}deg, #C4B5FD ${Math.max(0, 100 - mousePos.x - 30)}%, transparent ${100 - mousePos.x + 20}%),
-    linear-gradient(${gradientAngle3}deg, #DDD6FE ${Math.max(0, mousePos.y - 20)}%, #E9D5FF ${mousePos.y + 30}%)
-  `;
+  // Dark mode gradient
+  const darkGradient = `linear-gradient(${angle}deg, #E9D5FF ${colorStop1}%, #C4B5FD ${colorStop2}%, #DDD6FE ${colorStop3}%)`;
 
   return (
-    <span ref={containerRef} className={`relative inline-block ${className}`}>
-      {/* Main mesh gradient text for light mode */}
+    <>
+      {/* Light mode text */}
       <span
+        ref={containerRef}
         className={`
-          relative font-extrabold tracking-tight
-          dark:opacity-0
+          inline-block font-extrabold tracking-tight
+          bg-clip-text text-transparent
+          dark:hidden
           ${mounted ? 'opacity-100' : 'opacity-0'}
           transition-opacity duration-700
+          ${className}
         `}
         style={{
-          background: lightMeshGradient,
-          WebkitTextFillColor: 'transparent',
-          WebkitBackgroundClip: 'text',
-          backgroundClip: 'text',
-          transition: 'all 0.3s ease-out',
+          backgroundImage: lightGradient,
+          transition: 'background-image 0.3s ease-out',
         }}
       >
         {children}
       </span>
 
-      {/* Dark mode mesh gradient text */}
+      {/* Dark mode text */}
       <span
-        className="absolute inset-0 opacity-0 dark:opacity-100 font-extrabold tracking-tight transition-opacity duration-700"
+        className={`
+          hidden dark:inline-block font-extrabold tracking-tight
+          bg-clip-text text-transparent
+          ${mounted ? 'opacity-100' : 'opacity-0'}
+          transition-opacity duration-700
+          ${className}
+        `}
         style={{
-          background: darkMeshGradient,
-          WebkitTextFillColor: 'transparent',
-          WebkitBackgroundClip: 'text',
-          backgroundClip: 'text',
-          transition: 'all 0.3s ease-out',
+          backgroundImage: darkGradient,
+          transition: 'background-image 0.3s ease-out',
         }}
-        aria-hidden="true"
       >
         {children}
       </span>
-
-    </span>
+    </>
   );
 }
