@@ -88,14 +88,6 @@ export default function GradientText({ children, className = "" }: GradientTextP
         {children}
       </span>
 
-      {/* Subtle outer glow that responds to mouse */}
-      <span
-        className="absolute -inset-4 opacity-0 dark:opacity-30 pointer-events-none transition-opacity duration-500 blur-2xl"
-        style={{
-          background: `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, rgba(139, 92, 246, 0.4), transparent 60%)`,
-        }}
-        aria-hidden="true"
-      />
     </span>
   );
 }
