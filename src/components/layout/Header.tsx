@@ -15,12 +15,22 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center">
+            {/* Light mode logo */}
             <Image
               src="/logo_upperleft.svg"
               alt="CoStudy"
               width={160}
               height={40}
-              className="h-10 w-auto"
+              className="h-10 w-auto dark:hidden"
+              priority
+            />
+            {/* Dark mode logo - brightened for visibility */}
+            <Image
+              src="/logo_upperleft.svg"
+              alt="CoStudy"
+              width={160}
+              height={40}
+              className="h-10 w-auto hidden dark:block brightness-[2] contrast-[1.2] saturate-[1.1]"
               priority
             />
           </Link>
