@@ -1,6 +1,38 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 export default function AnimatedBackground() {
+  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      setMousePos({ x, y });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Calculate repulsion for shapes based on mouse proximity
+  const getRepulsion = (shapeX: number, shapeY: number, strength: number = 20) => {
+    const dx = mousePos.x - shapeX;
+    const dy = mousePos.y - shapeY;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    const maxDistance = 30; // pixels of influence
+
+    if (distance < maxDistance) {
+      const force = (1 - distance / maxDistance) * strength;
+      return {
+        x: -dx * force * 0.3,
+        y: -dy * force * 0.3,
+      };
+    }
+    return { x: 0, y: 0 };
+  };
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {/* Tech grid pattern overlay */}
@@ -33,9 +65,28 @@ export default function AnimatedBackground() {
       </svg>
 
       {/* Large gradient orbs with enhanced dark mode - reduced opacity for better text readability, mobile-optimized sizes */}
-      <div className="absolute -top-40 -left-40 w-[400px] h-[400px] md:w-[700px] md:h-[700px] bg-gradient-to-br from-purple-400/15 dark:from-purple-500/35 via-purple-300/10 dark:via-purple-400/25 to-transparent rounded-full blur-3xl animate-float"></div>
-      <div className="absolute top-20 -right-40 w-[350px] h-[350px] md:w-[600px] md:h-[600px] bg-gradient-to-bl from-cyan-400/15 dark:from-cyan-500/35 via-blue-400/10 dark:via-blue-500/25 to-transparent rounded-full blur-3xl animate-float-delayed"></div>
-      <div className="absolute -bottom-40 left-1/3 w-[320px] h-[320px] md:w-[550px] md:h-[550px] bg-gradient-to-tr from-pink-400/12 dark:from-pink-500/30 via-fuchsia-300/8 dark:via-fuchsia-400/20 to-transparent rounded-full blur-3xl animate-float-slow"></div>
+      {(() => {
+        const orb1Repulsion = getRepulsion(10, 20, 15);
+        const orb2Repulsion = getRepulsion(90, 15, 15);
+        const orb3Repulsion = getRepulsion(50, 80, 15);
+
+        return (
+          <>
+            <div
+              className="absolute -top-40 -left-40 w-[400px] h-[400px] md:w-[700px] md:h-[700px] bg-gradient-to-br from-purple-400/15 dark:from-purple-500/35 via-purple-300/10 dark:via-purple-400/25 to-transparent rounded-full blur-3xl animate-float transition-transform duration-500 ease-out"
+              style={{ transform: `translate(${orb1Repulsion.x}px, ${orb1Repulsion.y}px)` }}
+            ></div>
+            <div
+              className="absolute top-20 -right-40 w-[350px] h-[350px] md:w-[600px] md:h-[600px] bg-gradient-to-bl from-cyan-400/15 dark:from-cyan-500/35 via-blue-400/10 dark:via-blue-500/25 to-transparent rounded-full blur-3xl animate-float-delayed transition-transform duration-500 ease-out"
+              style={{ transform: `translate(${orb2Repulsion.x}px, ${orb2Repulsion.y}px)` }}
+            ></div>
+            <div
+              className="absolute -bottom-40 left-1/3 w-[320px] h-[320px] md:w-[550px] md:h-[550px] bg-gradient-to-tr from-pink-400/12 dark:from-pink-500/30 via-fuchsia-300/8 dark:via-fuchsia-400/20 to-transparent rounded-full blur-3xl animate-float-slow transition-transform duration-500 ease-out"
+              style={{ transform: `translate(${orb3Repulsion.x}px, ${orb3Repulsion.y}px)` }}
+            ></div>
+          </>
+        );
+      })()}
 
       {/* Vibrant accent orbs - reduced opacity, mobile-optimized */}
       <div className="absolute top-1/3 right-1/3 w-48 h-48 md:w-80 md:h-80 bg-gradient-to-br from-orange-300/10 dark:from-orange-400/25 to-transparent rounded-full blur-2xl animate-pulse-slow"></div>
@@ -43,39 +94,108 @@ export default function AnimatedBackground() {
       <div className="absolute top-1/5 left-1/2 w-36 h-36 md:w-64 md:h-64 bg-gradient-to-br from-violet-300/8 dark:from-violet-400/22 to-transparent rounded-full blur-2xl animate-float"></div>
 
       {/* Purple morphing hexagon - hidden on mobile, reduced opacity for text readability */}
-      <div className="hidden md:block absolute top-1/4 right-1/4 w-40 h-40 lg:w-56 lg:h-56 bg-gradient-to-br from-purple-500/12 dark:from-purple-500/30 via-purple-400/8 dark:via-purple-400/22 to-transparent border-2 border-purple-400/30 dark:border-purple-400/50 rounded-[3rem] rotate-12 animate-morph backdrop-blur-sm shadow-xl shadow-purple-500/25 dark:shadow-purple-400/45"></div>
+      {(() => {
+        const hexRepulsion = getRepulsion(75, 25, 10);
+        return (
+          <div
+            className="hidden md:block absolute top-1/4 right-1/4 w-40 h-40 lg:w-56 lg:h-56 bg-gradient-to-br from-purple-500/12 dark:from-purple-500/30 via-purple-400/8 dark:via-purple-400/22 to-transparent border-2 border-purple-400/30 dark:border-purple-400/50 rounded-[3rem] rotate-12 animate-morph backdrop-blur-sm shadow-xl shadow-purple-500/25 dark:shadow-purple-400/45 transition-transform duration-300 ease-out"
+            style={{ transform: `translate(${hexRepulsion.x}px, ${hexRepulsion.y}px) rotate(12deg)` }}
+          ></div>
+        );
+      })()}
 
       {/* Cyan/Blue floating shape - hidden on mobile */}
-      <div className="hidden md:block absolute top-1/3 left-1/5 w-44 h-44 lg:w-64 lg:h-64 bg-gradient-to-br from-cyan-500/10 dark:from-cyan-400/28 via-blue-500/12 dark:via-blue-400/32 to-sky-400/6 dark:to-sky-400/18 border-2 border-cyan-400/30 dark:border-cyan-400/50 rounded-[3.5rem] -rotate-6 animate-morph-delayed backdrop-blur-sm shadow-xl shadow-cyan-500/25 dark:shadow-cyan-400/48"></div>
+      {(() => {
+        const cyanRepulsion = getRepulsion(20, 33, 10);
+        return (
+          <div
+            className="hidden md:block absolute top-1/3 left-1/5 w-44 h-44 lg:w-64 lg:h-64 bg-gradient-to-br from-cyan-500/10 dark:from-cyan-400/28 via-blue-500/12 dark:via-blue-400/32 to-sky-400/6 dark:to-sky-400/18 border-2 border-cyan-400/30 dark:border-cyan-400/50 rounded-[3.5rem] -rotate-6 animate-morph-delayed backdrop-blur-sm shadow-xl shadow-cyan-500/25 dark:shadow-cyan-400/48 transition-transform duration-300 ease-out"
+            style={{ transform: `translate(${cyanRepulsion.x}px, ${cyanRepulsion.y}px) rotate(-6deg)` }}
+          ></div>
+        );
+      })()}
 
       {/* Pink/Magenta octagon - hidden on mobile */}
-      <div className="hidden md:block absolute bottom-1/3 right-1/3 w-36 h-36 lg:w-52 lg:h-52 bg-gradient-to-br from-pink-500/12 dark:from-pink-400/32 via-fuchsia-500/10 dark:via-fuchsia-400/24 to-rose-400/6 dark:to-rose-400/18 border-2 border-pink-500/30 dark:border-pink-400/50 rounded-[2.5rem] rotate-45 animate-morph backdrop-blur-sm shadow-xl shadow-pink-500/28 dark:shadow-pink-400/48" style={{
-        clipPath: "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)"
-      }}></div>
+      {(() => {
+        const pinkRepulsion = getRepulsion(66, 66, 10);
+        return (
+          <div
+            className="hidden md:block absolute bottom-1/3 right-1/3 w-36 h-36 lg:w-52 lg:h-52 bg-gradient-to-br from-pink-500/12 dark:from-pink-400/32 via-fuchsia-500/10 dark:from-fuchsia-400/24 to-rose-400/6 dark:to-rose-400/18 border-2 border-pink-500/30 dark:border-pink-400/50 rounded-[2.5rem] rotate-45 animate-morph backdrop-blur-sm shadow-xl shadow-pink-500/28 dark:shadow-pink-400/48 transition-transform duration-300 ease-out"
+            style={{
+              clipPath: "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
+              transform: `translate(${pinkRepulsion.x}px, ${pinkRepulsion.y}px) rotate(45deg)`
+            }}
+          ></div>
+        );
+      })()}
 
       {/* Orange/Amber circle - simplified for mobile */}
-      <div className="absolute top-1/2 left-1/2 w-32 h-32 md:w-48 md:h-48 bg-gradient-to-br from-orange-500/15 dark:from-orange-400/35 via-amber-500/12 dark:via-amber-400/28 to-yellow-400/8 dark:to-yellow-400/20 border-2 border-orange-500/30 dark:border-orange-400/50 rounded-full animate-pulse-slow backdrop-blur-sm shadow-xl shadow-orange-500/25 dark:shadow-orange-400/45"></div>
+      {(() => {
+        const orangeRepulsion = getRepulsion(50, 50, 12);
+        return (
+          <div
+            className="absolute top-1/2 left-1/2 w-32 h-32 md:w-48 md:h-48 bg-gradient-to-br from-orange-500/15 dark:from-orange-400/35 via-amber-500/12 dark:via-amber-400/28 to-yellow-400/8 dark:to-yellow-400/20 border-2 border-orange-500/30 dark:border-orange-400/50 rounded-full animate-pulse-slow backdrop-blur-sm shadow-xl shadow-orange-500/25 dark:shadow-orange-400/45 transition-transform duration-300 ease-out"
+            style={{ transform: `translate(${orangeRepulsion.x}px, ${orangeRepulsion.y}px)` }}
+          ></div>
+        );
+      })()}
 
       {/* Emerald star - hidden on mobile */}
-      <div className="hidden lg:block absolute bottom-1/4 left-1/4 w-48 h-48 bg-gradient-to-br from-emerald-500/10 dark:from-emerald-400/30 via-green-500/8 dark:via-green-400/24 to-teal-400/6 dark:to-teal-400/18 border-2 border-emerald-500/28 dark:border-emerald-400/50 animate-spin-slow backdrop-blur-sm shadow-xl shadow-emerald-500/22 dark:shadow-emerald-400/42" style={{
-        clipPath: "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
-        borderRadius: "15%"
-      }}></div>
+      {(() => {
+        const emeraldRepulsion = getRepulsion(25, 75, 10);
+        return (
+          <div
+            className="hidden lg:block absolute bottom-1/4 left-1/4 w-48 h-48 bg-gradient-to-br from-emerald-500/10 dark:from-emerald-400/30 via-green-500/8 dark:via-green-400/24 to-teal-400/6 dark:to-teal-400/18 border-2 border-emerald-500/28 dark:border-emerald-400/50 animate-spin-slow backdrop-blur-sm shadow-xl shadow-emerald-500/22 dark:shadow-emerald-400/42 transition-transform duration-300 ease-out"
+            style={{
+              clipPath: "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
+              borderRadius: "15%",
+              transform: `translate(${emeraldRepulsion.x}px, ${emeraldRepulsion.y}px)`
+            }}
+          ></div>
+        );
+      })()}
 
       {/* Violet triangle - hidden on mobile */}
-      <div className="hidden lg:block absolute top-2/3 right-1/5 w-44 h-44 bg-gradient-to-br from-violet-500/14 dark:from-violet-400/34 via-indigo-500/10 dark:via-indigo-400/26 to-purple-400/6 dark:to-purple-400/18 border-2 border-violet-500/30 dark:border-violet-400/50 rounded-[2rem] rotate-[30deg] animate-morph backdrop-blur-sm shadow-xl shadow-violet-500/25 dark:shadow-violet-400/45" style={{
-        clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)"
-      }}></div>
+      {(() => {
+        const violetRepulsion = getRepulsion(80, 66, 10);
+        return (
+          <div
+            className="hidden lg:block absolute top-2/3 right-1/5 w-44 h-44 bg-gradient-to-br from-violet-500/14 dark:from-violet-400/34 via-indigo-500/10 dark:via-indigo-400/26 to-purple-400/6 dark:to-purple-400/18 border-2 border-violet-500/30 dark:border-violet-400/50 rounded-[2rem] animate-morph backdrop-blur-sm shadow-xl shadow-violet-500/25 dark:shadow-violet-400/45 transition-transform duration-300 ease-out"
+            style={{
+              clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)",
+              transform: `translate(${violetRepulsion.x}px, ${violetRepulsion.y}px) rotate(30deg)`
+            }}
+          ></div>
+        );
+      })()}
 
       {/* Teal diamond - hidden on mobile */}
-      <div className="hidden lg:block absolute top-1/6 left-1/3 w-40 h-40 bg-gradient-to-br from-teal-500/14 dark:from-teal-400/34 via-cyan-400/10 dark:via-cyan-400/26 to-blue-400/6 dark:to-blue-400/18 border-2 border-teal-500/30 dark:border-teal-400/50 rounded-[1.8rem] rotate-45 animate-morph-delayed backdrop-blur-sm shadow-xl shadow-teal-500/25 dark:shadow-teal-400/45" style={{
-        clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)"
-      }}></div>
+      {(() => {
+        const tealRepulsion = getRepulsion(33, 16, 10);
+        return (
+          <div
+            className="hidden lg:block absolute top-1/6 left-1/3 w-40 h-40 bg-gradient-to-br from-teal-500/14 dark:from-teal-400/34 via-cyan-400/10 dark:via-cyan-400/26 to-blue-400/6 dark:to-blue-400/18 border-2 border-teal-500/30 dark:border-teal-400/50 rounded-[1.8rem] animate-morph-delayed backdrop-blur-sm shadow-xl shadow-teal-500/25 dark:shadow-teal-400/45 transition-transform duration-300 ease-out"
+            style={{
+              clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
+              transform: `translate(${tealRepulsion.x}px, ${tealRepulsion.y}px) rotate(45deg)`
+            }}
+          ></div>
+        );
+      })()}
 
       {/* Rose pentagon - hidden on mobile */}
-      <div className="hidden lg:block absolute bottom-1/5 right-2/5 w-36 h-36 bg-gradient-to-br from-rose-500/12 dark:from-rose-400/32 via-pink-400/8 dark:via-pink-400/22 to-fuchsia-400/6 dark:to-fuchsia-400/16 border-2 border-rose-500/30 dark:border-rose-400/50 rounded-[1.5rem] rotate-[72deg] animate-morph backdrop-blur-sm shadow-xl shadow-rose-500/24 dark:shadow-rose-400/44" style={{
-        clipPath: "polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)"
-      }}></div>
+      {(() => {
+        const roseRepulsion = getRepulsion(60, 80, 10);
+        return (
+          <div
+            className="hidden lg:block absolute bottom-1/5 right-2/5 w-36 h-36 bg-gradient-to-br from-rose-500/12 dark:from-rose-400/32 via-pink-400/8 dark:via-pink-400/22 to-fuchsia-400/6 dark:to-fuchsia-400/16 border-2 border-rose-500/30 dark:border-rose-400/50 rounded-[1.5rem] animate-morph backdrop-blur-sm shadow-xl shadow-rose-500/24 dark:shadow-rose-400/44 transition-transform duration-300 ease-out"
+            style={{
+              clipPath: "polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)",
+              transform: `translate(${roseRepulsion.x}px, ${roseRepulsion.y}px) rotate(72deg)`
+            }}
+          ></div>
+        );
+      })()}
 
       {/* Animated lines with rainbow gradients */}
       <div className="absolute top-1/2 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-purple-400/30 dark:via-purple-400/60 to-transparent animate-shimmer"></div>
