@@ -76,21 +76,21 @@ export default function AnimatedLogo() {
     return () => clearInterval(interval);
   }, [particles.length]);
 
-  // Handle click - create particle burst
+  // Handle click - create subtle particle burst
   const handleClick = () => {
     const newParticles: Particle[] = [];
 
-    // Create 12 particles bursting outward
-    for (let i = 0; i < 12; i++) {
+    // Create 6 particles bursting outward (more subtle)
+    for (let i = 0; i < 6; i++) {
       newParticles.push({
         id: Date.now() + i,
         x: 0,
         y: 0,
-        angle: (Math.PI * 2 * i) / 12,
-        speed: 3 + Math.random() * 2,
-        life: 60,
-        maxLife: 60,
-        size: 4 + Math.random() * 4,
+        angle: (Math.PI * 2 * i) / 6,
+        speed: 1.5 + Math.random() * 1,
+        life: 45,
+        maxLife: 45,
+        size: 3 + Math.random() * 2,
       });
     }
 
@@ -149,40 +149,9 @@ export default function AnimatedLogo() {
           </div>
         )}
 
-        {/* Orbit dots and lines (dark mode only) */}
+        {/* Orbit dots (dark mode only) - abstract, disconnected */}
         {mounted && orbitDots.length > 0 && (
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-            {/* Draw connecting lines between dots */}
-            <svg
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-              width="80"
-              height="80"
-              style={{
-                opacity: isHovered ? 0.6 : 0.3,
-                transition: 'opacity 0.3s ease',
-              }}
-            >
-              {orbitDots.map((dot, i) => {
-                const nextDot = orbitDots[(i + 1) % orbitDots.length];
-                const x1 = 40 + Math.cos(dot.angle) * dot.radius;
-                const y1 = 40 + Math.sin(dot.angle) * dot.radius;
-                const x2 = 40 + Math.cos(nextDot.angle) * nextDot.radius;
-                const y2 = 40 + Math.sin(nextDot.angle) * nextDot.radius;
-
-                return (
-                  <line
-                    key={`line-${dot.id}`}
-                    x1={x1}
-                    y1={y1}
-                    x2={x2}
-                    y2={y2}
-                    stroke="rgba(167, 139, 250, 0.4)"
-                    strokeWidth="1"
-                  />
-                );
-              })}
-            </svg>
-
             {/* Render orbit dots */}
             {orbitDots.map(dot => {
               const x = Math.cos(dot.angle) * dot.radius;
