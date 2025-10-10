@@ -139,16 +139,16 @@ export default function Products() {
             {/* Outcome Metrics */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 shadow-xl">
-                <div className="text-5xl font-black text-white mb-2">5,000+</div>
-                <div className="text-white/90 font-medium">Students using CoStudy</div>
+                <div className="text-5xl font-black text-white mb-2">10,000+</div>
+                <div className="text-white/90 font-medium">Students empowered</div>
               </div>
               <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 shadow-xl">
-                <div className="text-5xl font-black text-white mb-2">96%</div>
-                <div className="text-white/90 font-medium">Instructors report better grading</div>
+                <div className="text-5xl font-black text-white mb-2">98%</div>
+                <div className="text-white/90 font-medium">Satisfaction rate</div>
               </div>
               <div className="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 shadow-xl">
-                <div className="text-5xl font-black text-white mb-2">30hrs</div>
-                <div className="text-white/90 font-medium">Saved per course semester</div>
+                <div className="text-5xl font-black text-white mb-2">40hrs</div>
+                <div className="text-white/90 font-medium">Saved per semester</div>
               </div>
             </div>
           </div>
