@@ -22,9 +22,6 @@ export default function SchoolLogoScroller() {
     { name: "University of Arizona", logo: "/schools/arizona.png" },
   ];
 
-  // Triple the schools array for truly seamless infinite scroll
-  const duplicatedSchools = [...schools, ...schools, ...schools];
-
   if (!mounted) {
     return (
       <div className="py-8 overflow-hidden bg-gradient-to-r from-purple-50/30 via-blue-50/20 to-purple-50/30 dark:from-purple-900/10 dark:via-blue-900/5 dark:to-purple-900/10">
@@ -55,11 +52,38 @@ export default function SchoolLogoScroller() {
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-purple-100/50 via-purple-100/50 to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a] dark:to-transparent z-10 pointer-events-none"></div>
           <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-purple-100/50 via-purple-100/50 to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a] dark:to-transparent z-10 pointer-events-none"></div>
 
-          {/* Scrolling container */}
-          <div className="flex animate-scroll">
-            {duplicatedSchools.map((school, index) => (
+          {/* Scrolling container with two identical sets for seamless loop */}
+          <div className="flex animate-scroll-seamless">
+            {/* First set */}
+            {schools.map((school, index) => (
               <div
-                key={`${school.name}-${index}`}
+                key={`set1-${school.name}-${index}`}
+                className="flex-shrink-0 mx-8"
+              >
+                <div className="relative h-24 w-40 flex items-center justify-center bg-white/80 dark:bg-gray-800/40 rounded-xl p-5 backdrop-blur-md border-2 border-gray-300/70 dark:border-gray-700/50">
+                  <Image
+                    src={school.logo}
+                    alt={`${school.name} logo`}
+                    width={160}
+                    height={96}
+                    className="object-contain max-h-14 w-auto filter opacity-90 dark:brightness-0 dark:invert dark:opacity-80"
+                    onError={(e) => {
+                      // Fallback to text if image doesn't load
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const parent = target.parentElement;
+                      if (parent) {
+                        parent.innerHTML = `<div class="text-xs text-center font-semibold text-gray-500 dark:text-gray-400 px-2">${school.name}</div>`;
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+            {/* Second identical set for seamless loop */}
+            {schools.map((school, index) => (
+              <div
+                key={`set2-${school.name}-${index}`}
                 className="flex-shrink-0 mx-8"
               >
                 <div className="relative h-24 w-40 flex items-center justify-center bg-white/80 dark:bg-gray-800/40 rounded-xl p-5 backdrop-blur-md border-2 border-gray-300/70 dark:border-gray-700/50">
@@ -87,18 +111,19 @@ export default function SchoolLogoScroller() {
       </div>
 
       <style jsx>{`
-        @keyframes scroll {
+        @keyframes scrollSeamless {
           0% {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(calc(-100% / 3));
+            transform: translateX(-50%);
           }
         }
-        .animate-scroll {
-          animation: scroll 40s linear infinite;
+        .animate-scroll-seamless {
+          animation: scrollSeamless 40s linear infinite;
+          will-change: transform;
         }
-        .animate-scroll:hover {
+        .animate-scroll-seamless:hover {
           animation-play-state: paused;
         }
       `}</style>
