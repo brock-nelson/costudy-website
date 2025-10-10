@@ -168,13 +168,13 @@ export default function AnimatedBackground() {
     const animate = () => {
       setParticles(prevParticles => {
         return prevParticles.map((p, index) => {
-          // Add playful random forces
-          const forceX = (Math.random() - 0.5) * 0.015;
-          const forceY = (Math.random() - 0.5) * 0.015;
+          // Add playful random forces (increased for more movement)
+          const forceX = (Math.random() - 0.5) * 0.025;
+          const forceY = (Math.random() - 0.5) * 0.025;
 
           // Scroll creates upward/downward force with playful oscillation
           const scrollForce = scrollVelocity * 8;
-          const oscillation = Math.sin(Date.now() * 0.001 + index * 0.5) * 0.02;
+          const oscillation = Math.sin(Date.now() * 0.001 + index * 0.5) * 0.03;
 
           // Update velocity with forces, scroll impact, and damping
           let vx = p.vx + forceX;
@@ -201,33 +201,31 @@ export default function AnimatedBackground() {
 
           if (Math.abs(x) > maxDrift) {
             x = Math.sign(x) * maxDrift;
-            vx *= -0.7; // playful bounce
-            // Squish horizontally on impact
-            squishX = 0.7;
-            squishY = 1.3;
+            vx *= -0.8; // bouncy!
+            // Jello squish horizontally on impact
+            squishX = 0.6;
+            squishY = 1.4;
             hitWall = true;
           }
           if (Math.abs(y) > maxDrift) {
             y = Math.sign(y) * maxDrift;
-            vy *= -0.7; // playful bounce
-            // Squish vertically on impact
+            vy *= -0.8; // bouncy!
+            // Jello squish vertically on impact
             if (!hitWall) {
-              squishX = 1.3;
-              squishY = 0.7;
+              squishX = 1.4;
+              squishY = 0.6;
             }
             hitWall = true;
           }
 
-          // Smooth squish recovery (spring back to normal)
+          // Smooth jello squish recovery (spring back to normal)
           if (!hitWall) {
-            squishX += (1 - squishX) * 0.12;
-            squishY += (1 - squishY) * 0.12;
+            squishX += (1 - squishX) * 0.15;
+            squishY += (1 - squishY) * 0.15;
           }
 
-          // Update rotation with variable speed based on velocity
+          // No rotation - keep particles oriented
           const velocityMag = Math.sqrt(vx * vx + vy * vy);
-          const rotationSpeed = p.rotationSpeed + velocityMag * 2;
-          const rotation = (p.rotation + rotationSpeed) % 360;
 
           // Slow random pulse (independent per particle)
           const pulsePhase = p.pulsePhase + p.pulseSpeed;
@@ -242,8 +240,8 @@ export default function AnimatedBackground() {
             y,
             vx,
             vy,
-            rotation,
-            rotationSpeed,
+            rotation: 0, // No rotation
+            rotationSpeed: 0,
             scale: Math.max(0.8, Math.min(1.3, scale)),
             baseY: p.baseY,
             pulsePhase,
@@ -722,7 +720,6 @@ export default function AnimatedBackground() {
                 boxShadow: `0 ${4 * particleState.scale * particleState.squishY}px ${6 * particleState.scale}px -1px var(--particle-shadow-${i}),
                             0 ${2 * particleState.scale * particleState.squishY}px ${4 * particleState.scale}px -1px var(--particle-shadow-${i})`,
                 transform: `translate(${particleState.x}px, ${particleState.y}px)
-                           rotate(${particleState.rotation}deg)
                            scale(${particleState.scale * particleState.squishX}, ${particleState.scale * particleState.squishY})`,
                 transition: 'none',
                 opacity: mounted ? undefined : 0,
