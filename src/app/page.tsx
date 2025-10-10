@@ -62,7 +62,7 @@ export default function Home() {
             </Link>
             <Link
               href="/products"
-              className="group bg-white dark:bg-gray-800 text-[#4A12C0] dark:text-[#A78BFA] px-8 py-4 rounded-xl font-semibold border-2 border-purple-200 dark:border-purple-700 hover:border-purple-300 dark:hover:border-purple-600 hover:bg-purple-50/50 dark:hover:bg-purple-900/30 transition-all duration-300 hover:shadow-lg"
+              className="group bg-white dark:bg-[#1a1a1a] text-[#4A12C0] dark:text-[#A78BFA] px-8 py-4 rounded-xl font-semibold border-2 border-purple-200 dark:border-[#404040] hover:border-purple-300 dark:hover:border-[#606060] hover:bg-purple-50/50 dark:hover:bg-purple-900/30 transition-all duration-300 hover:shadow-lg"
               aria-label="Explore CoStudy products"
             >
               <span className="flex items-center gap-2">
@@ -124,7 +124,7 @@ export default function Home() {
         <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           <Link
             href="/for-professors"
-            className="group relative p-8 rounded-2xl border border-blue-100 dark:border-blue-900/50 hover:border-blue-200 dark:hover:border-blue-700 bg-gradient-to-br from-white dark:from-gray-900 to-blue-50/30 dark:to-blue-950/30 hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
+            className="group relative p-8 rounded-2xl border border-blue-100 dark:border-[#404040] hover:border-blue-200 dark:hover:border-[#606060] bg-gradient-to-br from-white dark:from-[#1a1a1a] to-blue-50/30 dark:to-blue-950/30 hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
             aria-label="Learn about CoStudy for professors"
           >
             <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/5 dark:bg-blue-400/10 rounded-bl-[100px] rounded-tr-2xl group-hover:bg-blue-500/10 dark:group-hover:bg-blue-400/20 transition-colors"></div>
@@ -137,7 +137,7 @@ export default function Home() {
 
           <Link
             href="/for-administrators"
-            className="group relative p-8 rounded-2xl border border-green-100 dark:border-green-900/50 hover:border-green-200 dark:hover:border-green-700 bg-gradient-to-br from-white dark:from-gray-900 to-green-50/30 dark:to-green-950/30 hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
+            className="group relative p-8 rounded-2xl border border-green-100 dark:border-[#404040] hover:border-green-200 dark:hover:border-[#606060] bg-gradient-to-br from-white dark:from-[#1a1a1a] to-green-50/30 dark:to-green-950/30 hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
             aria-label="Learn about CoStudy for administrators"
           >
             <div className="absolute top-0 right-0 w-20 h-20 bg-green-500/5 dark:bg-green-400/10 rounded-bl-[100px] rounded-tr-2xl group-hover:bg-green-500/10 dark:group-hover:bg-green-400/20 transition-colors"></div>
@@ -150,7 +150,7 @@ export default function Home() {
 
           <Link
             href="/for-students"
-            className="group relative p-8 rounded-2xl border border-purple-100 dark:border-purple-900/50 hover:border-purple-200 dark:hover:border-purple-700 bg-gradient-to-br from-white dark:from-gray-900 to-purple-50/30 dark:to-purple-950/30 hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
+            className="group relative p-8 rounded-2xl border border-purple-100 dark:border-[#404040] hover:border-purple-200 dark:hover:border-[#606060] bg-gradient-to-br from-white dark:from-[#1a1a1a] to-purple-50/30 dark:to-purple-950/30 hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
             aria-label="Learn about CoStudy for students"
           >
             <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/5 dark:bg-purple-400/10 rounded-bl-[100px] rounded-tr-2xl group-hover:bg-purple-500/10 dark:group-hover:bg-purple-400/20 transition-colors"></div>

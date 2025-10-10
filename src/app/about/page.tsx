@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-white dark:bg-[#121212]">
       {/* Hero Section - Creative & Student-Forward */}
       <section className="relative bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 dark:from-blue-700 dark:via-purple-700 dark:to-pink-700 text-white py-20 overflow-hidden">
         {/* Playful background elements */}
@@ -78,12 +78,12 @@ export default function About() {
       </section>
 
       {/* Values Section */}
-      <section className="bg-[#EDE7F9] dark:bg-gray-800 py-16">
+      <section className="bg-[#EDE7F9] dark:bg-[#1a1a1a] py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#C4B5FD]">Our Values</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="text-center">
-              <div className="bg-white dark:bg-gray-700 w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center shadow-md">
+              <div className="bg-white dark:bg-[#1a1a1a] w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center shadow-md">
                 <span className="text-4xl">🎯</span>
               </div>
               <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Student-Centered</h3>
@@ -93,7 +93,7 @@ export default function About() {
             </div>
 
             <div className="text-center">
-              <div className="bg-white dark:bg-gray-700 w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center shadow-md">
+              <div className="bg-white dark:bg-[#1a1a1a] w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center shadow-md">
                 <span className="text-4xl">🔬</span>
               </div>
               <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Evidence-Based</h3>
@@ -103,7 +103,7 @@ export default function About() {
             </div>
 
             <div className="text-center">
-              <div className="bg-white dark:bg-gray-700 w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center shadow-md">
+              <div className="bg-white dark:bg-[#1a1a1a] w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center shadow-md">
                 <span className="text-4xl">🤝</span>
               </div>
               <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Collaborative</h3>

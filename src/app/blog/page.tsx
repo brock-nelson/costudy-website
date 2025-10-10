@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function Blog() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-white dark:bg-[#121212]">
       {/* Hero Section */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-purple-50/30 via-transparent to-transparent dark:from-purple-900/10 pointer-events-none"></div>
@@ -28,7 +28,7 @@ export default function Blog() {
       {/* Coming Soon Section */}
       <section className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center p-12 border-2 border-dashed border-purple-200 dark:border-purple-700 rounded-2xl bg-purple-50/30 dark:bg-purple-900/20">
+          <div className="text-center p-12 border-2 border-dashed border-purple-200 dark:border-[#404040] rounded-2xl bg-purple-50/30 dark:bg-purple-900/20">
             <div className="text-6xl mb-6">📝</div>
             <h2 className="text-3xl font-bold mb-4 text-[#6B3DCB] dark:text-[#C4B5FD]">
               Coming Soon

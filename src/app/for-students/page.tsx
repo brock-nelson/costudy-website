@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function ForStudents() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-white dark:bg-[#121212]">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-purple-600 to-purple-700 dark:from-purple-700 dark:to-purple-900 text-white py-20" aria-labelledby="students-hero">
         <div className="container mx-auto px-4">
@@ -78,13 +78,13 @@ export default function ForStudents() {
       </section>
 
       {/* How It Works */}
-      <section className="bg-gray-50 dark:bg-gray-800 py-16" aria-labelledby="how-it-works-heading">
+      <section className="bg-gray-50 dark:bg-[#1a1a1a] py-16" aria-labelledby="how-it-works-heading">
         <div className="container mx-auto px-4">
           <h2 id="how-it-works-heading" className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#C4B5FD]">
             How CoStudy Works for You
           </h2>
           <div className="max-w-3xl mx-auto space-y-6">
-            <div className="flex gap-6 p-6 rounded-xl bg-white dark:bg-gray-700/50 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex gap-6 p-6 rounded-xl bg-white dark:bg-[#1a1a1a]/50 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-purple-600 to-purple-700 dark:from-purple-500 dark:to-purple-600 text-white rounded-full flex items-center justify-center font-bold text-xl shadow-md" aria-hidden="true">
                 1
               </div>
@@ -96,7 +96,7 @@ export default function ForStudents() {
               </div>
             </div>
 
-            <div className="flex gap-6 p-6 rounded-xl bg-white dark:bg-gray-700/50 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex gap-6 p-6 rounded-xl bg-white dark:bg-[#1a1a1a]/50 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-purple-600 to-purple-700 dark:from-purple-500 dark:to-purple-600 text-white rounded-full flex items-center justify-center font-bold text-xl shadow-md" aria-hidden="true">
                 2
               </div>
@@ -108,7 +108,7 @@ export default function ForStudents() {
               </div>
             </div>
 
-            <div className="flex gap-6 p-6 rounded-xl bg-white dark:bg-gray-700/50 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex gap-6 p-6 rounded-xl bg-white dark:bg-[#1a1a1a]/50 shadow-sm hover:shadow-md transition-shadow">
               <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-purple-600 to-purple-700 dark:from-purple-500 dark:to-purple-600 text-white rounded-full flex items-center justify-center font-bold text-xl shadow-md" aria-hidden="true">
                 3
               </div>

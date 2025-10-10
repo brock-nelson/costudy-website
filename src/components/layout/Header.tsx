@@ -10,7 +10,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white dark:bg-[#0a0a0a] border-b border-[#EAEDEF] dark:border-gray-800 sticky top-0 z-50 transition-colors header-container overflow-visible">
+    <header className="bg-white dark:bg-[#0a0a0a] border-b border-[#EAEDEF] dark:border-[#404040] sticky top-0 z-50 transition-colors header-container overflow-visible">
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Animated Logo */}
@@ -25,25 +25,25 @@ export default function Header() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div className="absolute left-0 top-full mt-3 w-56 bg-white/95 dark:bg-gray-900/95 rounded-lg shadow-xl border border-gray-200/60 dark:border-gray-700/60 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[60] overflow-hidden backdrop-blur-sm translate-y-2 group-hover:translate-y-0">
+              <div className="absolute left-0 top-full mt-3 w-56 bg-white/95 dark:bg-[#121212]/95 rounded-lg shadow-xl border border-gray-200/60 dark:border-[#404040]/60 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[60] overflow-hidden backdrop-blur-sm translate-y-2 group-hover:translate-y-0">
                 {/* Dropdown arrow */}
-                <div className="absolute left-6 -top-1 w-2 h-2 bg-white/95 dark:bg-gray-900/95 border-l border-t border-gray-200/60 dark:border-gray-700/60 rotate-45"></div>
+                <div className="absolute left-6 -top-1 w-2 h-2 bg-white/95 dark:bg-[#121212]/95 border-l border-t border-gray-200/60 dark:border-[#404040]/60 rotate-45"></div>
 
                 <Link
                   href="/for-professors"
-                  className="block px-4 py-3 text-[#374045] dark:text-gray-300 hover:bg-[#EDE7F9] dark:hover:bg-gray-800 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] transition-colors first:rounded-t-lg"
+                  className="block px-4 py-3 text-[#374045] dark:text-gray-300 hover:bg-[#EDE7F9] dark:hover:bg-[#1a1a1a] hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] transition-colors first:rounded-t-lg"
                 >
                   For Professors
                 </Link>
                 <Link
                   href="/for-administrators"
-                  className="block px-4 py-3 text-[#374045] dark:text-gray-300 hover:bg-[#EDE7F9] dark:hover:bg-gray-800 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] transition-colors"
+                  className="block px-4 py-3 text-[#374045] dark:text-gray-300 hover:bg-[#EDE7F9] dark:hover:bg-[#1a1a1a] hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] transition-colors"
                 >
                   For Administrators
                 </Link>
                 <Link
                   href="/for-students"
-                  className="block px-4 py-3 text-[#374045] dark:text-gray-300 hover:bg-[#EDE7F9] dark:hover:bg-gray-800 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] transition-colors last:rounded-b-lg"
+                  className="block px-4 py-3 text-[#374045] dark:text-gray-300 hover:bg-[#EDE7F9] dark:hover:bg-[#1a1a1a] hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] transition-colors last:rounded-b-lg"
                 >
                   For Students
                 </Link>
@@ -71,7 +71,7 @@ export default function Header() {
               About
             </Link>
 
-            <div className="flex items-center gap-2 ml-4 border-l border-gray-200 dark:border-gray-700 pl-4">
+            <div className="flex items-center gap-2 ml-4 border-l border-gray-200 dark:border-[#404040] pl-4">
               <DarkModeToggle />
               <HighContrastToggle />
             </div>

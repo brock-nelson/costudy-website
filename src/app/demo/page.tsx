@@ -176,7 +176,7 @@ export default function Demo() {
             </div>
 
             {/* Calendar Embed Container */}
-            <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-purple-100 dark:border-purple-800/50 overflow-hidden">
+            <div className="bg-white dark:bg-[#1a1a1a] rounded-2xl shadow-xl border border-purple-100 dark:border-[#404040]/50 overflow-hidden">
               {/* Professional header bar */}
               <div className="bg-gradient-to-r from-purple-600 to-blue-600 px-6 py-4">
                 <div className="flex items-center justify-between">
@@ -201,7 +201,7 @@ export default function Demo() {
               </div>
 
               {/* Cal.com Embed */}
-              <div className="p-4 bg-gray-50/50 dark:bg-gray-800/50">
+              <div className="p-4 bg-gray-50/50 dark:bg-[#1a1a1a]/50">
                 <CalEmbed
                   calLink="costudy-support-n8d1gq/30min"
                   className="min-h-[700px]"

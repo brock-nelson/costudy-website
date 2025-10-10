@@ -1,14 +1,56 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 
 export default function SchoolLogoScroller() {
   const [mounted, setMounted] = useState(false);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (!mounted || !scrollerRef.current) return;
+
+    const scroller = scrollerRef.current;
+    let animationId: number;
+    let position = 0;
+    const speed = 0.5; // pixels per frame
+
+    // Calculate the width of one set of logos
+    const firstChild = scroller.firstElementChild as HTMLElement;
+    if (!firstChild) return;
+
+    const animate = () => {
+      if (!isPaused && scroller) {
+        position += speed;
+
+        // Get the width of one complete set (half the total width since we duplicate)
+        const scrollWidth = scroller.scrollWidth / 2;
+
+        // When we've scrolled past one full set, reset to the start
+        // This creates the seamless loop effect
+        if (position >= scrollWidth) {
+          position = 0;
+        }
+
+        scroller.style.transform = `translate3d(-${position}px, 0, 0)`;
+      }
+
+      animationId = requestAnimationFrame(animate);
+    };
+
+    animationId = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+  }, [mounted, isPaused]);
 
   const schools = [
     { name: "Boston University", logo: "/schools/boston-university.png" },
@@ -47,44 +89,25 @@ export default function SchoolLogoScroller() {
         </p>
       </div>
 
-      {/* Gradient masks extending to viewport edges - positioned absolutely to parent section */}
+      {/* Gradient masks extending to viewport edges */}
       <div className="absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-purple-100/50 via-purple-100/30 to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a]/90 dark:to-transparent z-20 pointer-events-none"></div>
       <div className="absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-purple-100/50 via-purple-100/30 to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a]/90 dark:to-transparent z-20 pointer-events-none"></div>
 
-      {/* Scrolling container wrapper - full width */}
+      {/* Scrolling container wrapper */}
       <div className="relative overflow-hidden">
-        {/* Scrolling container with two identical sets for seamless loop */}
-        <div className="flex animate-scroll-seamless">
-          {/* First set */}
-          {schools.map((school, index) => (
+        <div
+          ref={scrollerRef}
+          className="flex"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          style={{
+            willChange: 'transform',
+          }}
+        >
+          {/* Render logos twice for seamless loop */}
+          {[...schools, ...schools].map((school, index) => (
             <div
-              key={`set1-${school.name}-${index}`}
-              className="flex-shrink-0 mx-8 first:ml-0"
-            >
-              <div className="relative h-24 w-40 flex items-center justify-center bg-white/80 dark:bg-gray-800/40 rounded-xl p-5 backdrop-blur-md border-2 border-gray-300/70 dark:border-gray-700/50">
-                <Image
-                  src={school.logo}
-                  alt={`${school.name} logo`}
-                  width={160}
-                  height={96}
-                  className="object-contain max-h-14 w-auto filter opacity-90 dark:brightness-0 dark:invert dark:opacity-80"
-                  onError={(e) => {
-                    // Fallback to text if image doesn't load
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const parent = target.parentElement;
-                    if (parent) {
-                      parent.innerHTML = `<div class="text-xs text-center font-semibold text-gray-500 dark:text-gray-400 px-2">${school.name}</div>`;
-                    }
-                  }}
-                />
-              </div>
-            </div>
-          ))}
-          {/* Second identical set for seamless loop */}
-          {schools.map((school, index) => (
-            <div
-              key={`set2-${school.name}-${index}`}
+              key={`logo-${index}`}
               className="flex-shrink-0 mx-8"
             >
               <div className="relative h-24 w-40 flex items-center justify-center bg-white/80 dark:bg-gray-800/40 rounded-xl p-5 backdrop-blur-md border-2 border-gray-300/70 dark:border-gray-700/50">
@@ -95,7 +118,6 @@ export default function SchoolLogoScroller() {
                   height={96}
                   className="object-contain max-h-14 w-auto filter opacity-90 dark:brightness-0 dark:invert dark:opacity-80"
                   onError={(e) => {
-                    // Fallback to text if image doesn't load
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
                     const parent = target.parentElement;
@@ -109,24 +131,6 @@ export default function SchoolLogoScroller() {
           ))}
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes scrollSeamless {
-          from {
-            transform: translate3d(0, 0, 0);
-          }
-          to {
-            transform: translate3d(-50%, 0, 0);
-          }
-        }
-        .animate-scroll-seamless {
-          animation: scrollSeamless 40s linear infinite;
-          will-change: transform;
-        }
-        .animate-scroll-seamless:hover {
-          animation-play-state: paused;
-        }
-      `}</style>
     </div>
   );
 }

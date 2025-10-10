@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function Community() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-white dark:bg-[#121212]">
       {/* Hero Section */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-purple-50/30 via-transparent to-transparent dark:from-purple-900/10 pointer-events-none"></div>
@@ -71,7 +71,7 @@ export default function Community() {
             Connect With Us
           </h2>
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            <div className="group relative p-8 rounded-2xl border border-purple-100 dark:border-purple-800 hover:border-purple-200 dark:hover:border-purple-700 bg-gradient-to-br from-white to-purple-50/30 dark:from-gray-800 dark:to-purple-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+            <div className="group relative p-8 rounded-2xl border border-purple-100 dark:border-[#404040] hover:border-purple-200 dark:hover:border-purple-700 bg-gradient-to-br from-white to-purple-50/30 dark:from-gray-800 dark:to-purple-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
               <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/5 dark:bg-purple-500/10 rounded-bl-[100px] rounded-tr-2xl"></div>
               <div className="text-4xl mb-4">💬</div>
               <h3 className="text-2xl font-bold mb-3 text-[#2D3748] dark:text-white relative">Discussion Forum</h3>
@@ -81,7 +81,7 @@ export default function Community() {
               <div className="text-sm text-purple-600 dark:text-purple-400 font-semibold">Coming Soon</div>
             </div>
 
-            <div className="group relative p-8 rounded-2xl border border-blue-100 dark:border-blue-800 hover:border-blue-200 dark:hover:border-blue-700 bg-gradient-to-br from-white to-blue-50/30 dark:from-gray-800 dark:to-blue-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+            <div className="group relative p-8 rounded-2xl border border-blue-100 dark:border-[#404040] hover:border-blue-200 dark:hover:border-blue-700 bg-gradient-to-br from-white to-blue-50/30 dark:from-gray-800 dark:to-blue-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
               <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/5 dark:bg-blue-500/10 rounded-bl-[100px] rounded-tr-2xl"></div>
               <div className="text-4xl mb-4">📅</div>
               <h3 className="text-2xl font-bold mb-3 text-[#2D3748] dark:text-white relative">Events & Webinars</h3>
@@ -91,7 +91,7 @@ export default function Community() {
               <div className="text-sm text-blue-600 dark:text-blue-400 font-semibold">Coming Soon</div>
             </div>
 
-            <div className="group relative p-8 rounded-2xl border border-green-100 dark:border-green-800 hover:border-green-200 dark:hover:border-green-700 bg-gradient-to-br from-white to-green-50/30 dark:from-gray-800 dark:to-green-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+            <div className="group relative p-8 rounded-2xl border border-green-100 dark:border-[#404040] hover:border-green-200 dark:hover:border-green-700 bg-gradient-to-br from-white to-green-50/30 dark:from-gray-800 dark:to-green-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
               <div className="absolute top-0 right-0 w-20 h-20 bg-green-500/5 dark:bg-green-500/10 rounded-bl-[100px] rounded-tr-2xl"></div>
               <div className="text-4xl mb-4">🌟</div>
               <h3 className="text-2xl font-bold mb-3 text-[#2D3748] dark:text-white relative">Success Stories</h3>
@@ -101,7 +101,7 @@ export default function Community() {
               <div className="text-sm text-green-600 dark:text-green-400 font-semibold">Coming Soon</div>
             </div>
 
-            <div className="group relative p-8 rounded-2xl border border-purple-100 dark:border-purple-800 hover:border-purple-200 dark:hover:border-purple-700 bg-gradient-to-br from-white to-purple-50/30 dark:from-gray-800 dark:to-purple-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+            <div className="group relative p-8 rounded-2xl border border-purple-100 dark:border-[#404040] hover:border-purple-200 dark:hover:border-purple-700 bg-gradient-to-br from-white to-purple-50/30 dark:from-gray-800 dark:to-purple-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
               <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/5 dark:bg-purple-500/10 rounded-bl-[100px] rounded-tr-2xl"></div>
               <div className="text-4xl mb-4">📚</div>
               <h3 className="text-2xl font-bold mb-3 text-[#2D3748] dark:text-white relative">Resource Library</h3>

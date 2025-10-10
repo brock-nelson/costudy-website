@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function ForProfessors() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-white dark:bg-[#121212]">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-blue-800 dark:from-blue-700 dark:to-blue-900 text-white py-20">
         <div className="container mx-auto px-4">
@@ -46,28 +46,28 @@ export default function ForProfessors() {
           Why Professors Choose CoStudy
         </h2>
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          <div className="border-l-4 border-blue-600 dark:border-blue-400 pl-6">
+          <div className="border-l-4 border-blue-600 dark:border-[#404040] pl-6">
             <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Save Time on Team Management</h3>
             <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
               Automated team formation, charter creation, and feedback collection eliminate hours of administrative work.
             </p>
           </div>
 
-          <div className="border-l-4 border-blue-600 dark:border-blue-400 pl-6">
+          <div className="border-l-4 border-blue-600 dark:border-[#404040] pl-6">
             <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Real-Time Collaboration Insights</h3>
             <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
               Monitor team health, identify struggling groups early, and intervene before issues escalate.
             </p>
           </div>
 
-          <div className="border-l-4 border-blue-600 dark:border-blue-400 pl-6">
+          <div className="border-l-4 border-blue-600 dark:border-[#404040] pl-6">
             <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Seamless LMS Integration</h3>
             <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
               Works with Canvas, Blackboard, Moodle, and more. No disruption to your existing workflow.
             </p>
           </div>
 
-          <div className="border-l-4 border-blue-600 dark:border-blue-400 pl-6">
+          <div className="border-l-4 border-blue-600 dark:border-[#404040] pl-6">
             <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Evidence-Based Pedagogy</h3>
             <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
               Built on research-backed principles of effective team learning and student development.
@@ -77,48 +77,48 @@ export default function ForProfessors() {
       </section>
 
       {/* Features Section */}
-      <section className="bg-gray-50 dark:bg-gray-800 py-16">
+      <section className="bg-gray-50 dark:bg-[#1a1a1a] py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#C4B5FD]">
             Powerful Features for Your Classroom
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md">
+            <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Smart Team Formation</h3>
               <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
                 Create balanced teams based on skills, schedules, and learning goals with one click.
               </p>
             </div>
 
-            <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md">
+            <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Team Charters</h3>
               <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
                 Guide students through creating effective team agreements with customizable templates.
               </p>
             </div>
 
-            <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md">
+            <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Peer Assessment</h3>
               <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
                 Structured peer feedback that promotes accountability and continuous improvement.
               </p>
             </div>
 
-            <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md">
+            <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Progress Tracking</h3>
               <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
                 Visualize team dynamics and individual contributions throughout the semester.
               </p>
             </div>
 
-            <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md">
+            <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Intervention Alerts</h3>
               <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
                 Get notified when teams show signs of dysfunction so you can help early.
               </p>
             </div>
 
-            <div className="bg-white dark:bg-gray-700 p-6 rounded-lg shadow-md">
+            <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
               <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Grade Integration</h3>
               <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
                 Export participation and peer feedback data directly to your gradebook.
@@ -145,7 +145,7 @@ export default function ForProfessors() {
           </Link>
           <Link
             href="/resources"
-            className="bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-300 px-8 py-4 rounded-lg font-semibold border-2 border-blue-600 dark:border-blue-400 hover:bg-blue-50 dark:hover:bg-gray-600 transition-colors"
+            className="bg-white dark:bg-[#1a1a1a] text-blue-600 dark:text-blue-300 px-8 py-4 rounded-lg font-semibold border-2 border-blue-600 dark:border-[#404040] hover:bg-blue-50 dark:hover:bg-[#2e2e2e] transition-colors"
           >
             View Case Studies
           </Link>

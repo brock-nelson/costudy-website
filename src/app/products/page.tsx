@@ -156,7 +156,7 @@ export default function Products() {
       </section>
 
       {/* 2. SOCIAL PROOF - Clean White Background */}
-      <section className="py-16 bg-white dark:bg-gray-900">
+      <section className="py-16 bg-white dark:bg-[#121212]">
         <div className="container mx-auto px-4">
           <p className="text-center text-gray-600 dark:text-gray-200 mb-10 text-sm uppercase tracking-wide font-semibold">
             Trusted by Leading Institutions Worldwide
@@ -190,7 +190,7 @@ export default function Products() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {/* Testimonial 1 */}
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-purple-100 dark:border-purple-700">
+            <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-purple-100 dark:border-[#404040]">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
                   DR
@@ -206,7 +206,7 @@ export default function Products() {
             </div>
 
             {/* Testimonial 2 */}
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-cyan-100 dark:border-cyan-700">
+            <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-cyan-100 dark:border-[#404040]">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
                   JK
@@ -222,7 +222,7 @@ export default function Products() {
             </div>
 
             {/* Testimonial 3 */}
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-emerald-100 dark:border-emerald-700">
+            <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-emerald-100 dark:border-[#404040]">
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
                   MT
@@ -241,7 +241,7 @@ export default function Products() {
       </section>
 
       {/* 4. CHALLENGES / PAIN POINTS - White Background */}
-      <section className="py-20 bg-white dark:bg-gray-900">
+      <section className="py-20 bg-white dark:bg-[#121212]">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl md:text-6xl font-black text-center mb-4 bg-gradient-to-r from-red-600 to-orange-600 dark:from-purple-400 dark:to-cyan-400 bg-clip-text text-transparent">
             The Collaboration Challenge
@@ -252,7 +252,7 @@ export default function Products() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             {/* Challenge 1 - Purple/Violet in dark mode */}
-            <div className="bg-gradient-to-br from-red-50 to-orange-50 dark:from-purple-900/30 dark:to-violet-900/30 p-8 rounded-3xl border-2 border-red-100 dark:border-purple-700/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <div className="bg-gradient-to-br from-red-50 to-orange-50 dark:from-purple-900/30 dark:to-violet-900/30 p-8 rounded-3xl border-2 border-red-100 dark:border-[#404040]/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div className="text-5xl mb-4">😤</div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Social Loafing</h3>
               <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
@@ -261,7 +261,7 @@ export default function Products() {
             </div>
 
             {/* Challenge 2 - Blue in dark mode */}
-            <div className="bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-blue-900/30 dark:to-indigo-900/30 p-8 rounded-3xl border-2 border-orange-100 dark:border-blue-700/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <div className="bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-blue-900/30 dark:to-indigo-900/30 p-8 rounded-3xl border-2 border-orange-100 dark:border-[#404040]/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div className="text-5xl mb-4">⏰</div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Grading Burden</h3>
               <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
@@ -270,7 +270,7 @@ export default function Products() {
             </div>
 
             {/* Challenge 3 - Cyan/Teal in dark mode */}
-            <div className="bg-gradient-to-br from-yellow-50 to-amber-50 dark:from-cyan-900/30 dark:to-teal-900/30 p-8 rounded-3xl border-2 border-yellow-100 dark:border-cyan-700/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <div className="bg-gradient-to-br from-yellow-50 to-amber-50 dark:from-cyan-900/30 dark:to-teal-900/30 p-8 rounded-3xl border-2 border-yellow-100 dark:border-[#404040]/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div className="text-5xl mb-4">👻</div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Late Discovery</h3>
               <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
@@ -279,7 +279,7 @@ export default function Products() {
             </div>
 
             {/* Challenge 4 - Deep Purple in dark mode */}
-            <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-purple-900/30 dark:to-fuchsia-900/30 p-8 rounded-3xl border-2 border-amber-100 dark:border-purple-700/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-purple-900/30 dark:to-fuchsia-900/30 p-8 rounded-3xl border-2 border-amber-100 dark:border-[#404040]/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div className="text-5xl mb-4">🎓</div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Missed Learning</h3>
               <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
@@ -621,7 +621,7 @@ export default function Products() {
       </section>
 
       {/* 6. ROLE-BASED BENEFITS - Clean White Background */}
-      <section className="py-20 bg-white dark:bg-gray-900">
+      <section className="py-20 bg-white dark:bg-[#121212]">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl md:text-6xl font-black text-center mb-4 bg-gradient-to-r from-violet-600 to-purple-600 dark:from-violet-400 dark:to-purple-400 bg-clip-text text-transparent">
             Benefits For Everyone
@@ -634,28 +634,28 @@ export default function Products() {
           <div className="max-w-5xl mx-auto">
             {selectedRole === "professor" && (
               <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 p-8 rounded-3xl border-2 border-purple-200 dark:border-purple-700">
+                <div className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 p-8 rounded-3xl border-2 border-purple-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">⏰</div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Save 30+ Hours Per Semester</h3>
                   <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
                     Automate peer assessment, track contributions automatically, and grade with confidence using data-driven insights.
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 p-8 rounded-3xl border-2 border-cyan-200 dark:border-cyan-700">
+                <div className="bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 p-8 rounded-3xl border-2 border-cyan-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">📊</div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Data-Backed Grading Fairness</h3>
                   <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
                     Move beyond guesswork with quantitative participation metrics and peer-validated contribution data.
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 p-8 rounded-3xl border-2 border-emerald-200 dark:border-emerald-700">
+                <div className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 p-8 rounded-3xl border-2 border-emerald-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">🚨</div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Early Intervention</h3>
                   <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
                     Identify struggling teams before the deadline with automated alerts and weekly check-in data.
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-indigo-100 to-violet-100 dark:from-indigo-900/30 dark:to-violet-900/30 p-8 rounded-3xl border-2 border-indigo-200 dark:border-indigo-700">
+                <div className="bg-gradient-to-br from-indigo-100 to-violet-100 dark:from-indigo-900/30 dark:to-violet-900/30 p-8 rounded-3xl border-2 border-indigo-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">🎓</div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Build Transferable Skills</h3>
                   <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
@@ -667,28 +667,28 @@ export default function Products() {
 
             {selectedRole === "student" && (
               <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 p-8 rounded-3xl border-2 border-purple-200 dark:border-purple-700">
+                <div className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 p-8 rounded-3xl border-2 border-purple-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">⚖️</div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Fair Recognition</h3>
                   <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
                     Your contributions are tracked and valued. No more carrying the team without credit.
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 p-8 rounded-3xl border-2 border-cyan-200 dark:border-cyan-700">
+                <div className="bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 p-8 rounded-3xl border-2 border-cyan-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">💡</div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Grow Real Skills</h3>
                   <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
                     Develop communication, conflict resolution, and teamwork abilities employers actually want.
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 p-8 rounded-3xl border-2 border-emerald-200 dark:border-emerald-700">
+                <div className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 p-8 rounded-3xl border-2 border-emerald-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">🎯</div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Clear Expectations</h3>
                   <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
                     Team charters and structured feedback eliminate confusion about roles and responsibilities.
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-indigo-100 to-violet-100 dark:from-indigo-900/30 dark:to-violet-900/30 p-8 rounded-3xl border-2 border-indigo-200 dark:border-indigo-700">
+                <div className="bg-gradient-to-br from-indigo-100 to-violet-100 dark:from-indigo-900/30 dark:to-violet-900/30 p-8 rounded-3xl border-2 border-indigo-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">📈</div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Track Your Progress</h3>
                   <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
@@ -700,28 +700,28 @@ export default function Products() {
 
             {selectedRole === "admin" && (
               <div className="grid md:grid-cols-2 gap-8">
-                <div className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 p-8 rounded-3xl border-2 border-purple-200 dark:border-purple-700">
+                <div className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 p-8 rounded-3xl border-2 border-purple-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">📊</div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Institution-Wide Analytics</h3>
                   <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
                     Track collaboration outcomes across departments, programs, and cohorts to inform strategic decisions.
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 p-8 rounded-3xl border-2 border-cyan-200 dark:border-cyan-700">
+                <div className="bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 p-8 rounded-3xl border-2 border-cyan-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">🎓</div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Accreditation Support</h3>
                   <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
                     Document learning outcomes with exportable reports that demonstrate teamwork competency development.
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 p-8 rounded-3xl border-2 border-emerald-200 dark:border-emerald-700">
+                <div className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 p-8 rounded-3xl border-2 border-emerald-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">💰</div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Measurable ROI</h3>
                   <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
                     Reduce faculty time burden, improve student satisfaction, and enhance employment outcomes.
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-indigo-100 to-violet-100 dark:from-indigo-900/30 dark:to-violet-900/30 p-8 rounded-3xl border-2 border-indigo-200 dark:border-indigo-700">
+                <div className="bg-gradient-to-br from-indigo-100 to-violet-100 dark:from-indigo-900/30 dark:to-violet-900/30 p-8 rounded-3xl border-2 border-indigo-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">🔒</div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Enterprise Security</h3>
                   <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
@@ -737,17 +737,17 @@ export default function Products() {
                   Select your role above to see how CoStudy benefits you specifically
                 </p>
                 <div className="grid md:grid-cols-3 gap-6">
-                  <div className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 p-6 rounded-2xl border border-purple-200 dark:border-purple-700">
+                  <div className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 p-6 rounded-2xl border border-purple-200 dark:border-[#404040]">
                     <div className="text-4xl mb-3">👨‍🏫</div>
                     <p className="font-semibold text-gray-900 dark:text-white">Professors</p>
                     <p className="text-sm text-gray-700 dark:text-gray-200">Save time & grade fairly</p>
                   </div>
-                  <div className="bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 p-6 rounded-2xl border border-cyan-200 dark:border-cyan-700">
+                  <div className="bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 p-6 rounded-2xl border border-cyan-200 dark:border-[#404040]">
                     <div className="text-4xl mb-3">🎓</div>
                     <p className="font-semibold text-gray-900 dark:text-white">Students</p>
                     <p className="text-sm text-gray-700 dark:text-gray-200">Build career skills</p>
                   </div>
-                  <div className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 p-6 rounded-2xl border border-emerald-200 dark:border-emerald-700">
+                  <div className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 p-6 rounded-2xl border border-emerald-200 dark:border-[#404040]">
                     <div className="text-4xl mb-3">🏛️</div>
                     <p className="font-semibold text-gray-900 dark:text-white">Administrators</p>
                     <p className="text-sm text-gray-700 dark:text-gray-200">Track outcomes</p>
@@ -773,7 +773,7 @@ export default function Products() {
             <div className="grid md:grid-cols-3 gap-8">
               {/* Step 1 */}
               <div className="relative">
-                <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-purple-200 dark:border-purple-700">
+                <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-purple-200 dark:border-[#404040]">
                   <div className="absolute -top-6 left-8 bg-gradient-to-br from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl font-black shadow-lg">
                     1
                   </div>
@@ -787,7 +787,7 @@ export default function Products() {
 
               {/* Step 2 */}
               <div className="relative">
-                <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-cyan-200 dark:border-cyan-700">
+                <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-cyan-200 dark:border-[#404040]">
                   <div className="absolute -top-6 left-8 bg-gradient-to-br from-cyan-600 to-blue-600 dark:from-cyan-500 dark:to-blue-500 text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl font-black shadow-lg">
                     2
                   </div>
@@ -801,7 +801,7 @@ export default function Products() {
 
               {/* Step 3 */}
               <div className="relative">
-                <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-emerald-200 dark:border-emerald-700">
+                <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-emerald-200 dark:border-[#404040]">
                   <div className="absolute -top-6 left-8 bg-gradient-to-br from-emerald-600 to-teal-600 dark:from-emerald-500 dark:to-teal-500 text-white w-12 h-12 rounded-full flex items-center justify-center text-2xl font-black shadow-lg">
                     3
                   </div>
@@ -818,7 +818,7 @@ export default function Products() {
       </section>
 
       {/* 8. RESEARCH & FAIRNESS - White Background */}
-      <section className="py-20 bg-white dark:bg-gray-900">
+      <section className="py-20 bg-white dark:bg-[#121212]">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl md:text-6xl font-black text-center mb-4 bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">
             Built on Research, Designed for Fairness
@@ -829,7 +829,7 @@ export default function Products() {
 
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
             {/* Research */}
-            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-10 rounded-3xl border-2 border-blue-200 dark:border-blue-700">
+            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-10 rounded-3xl border-2 border-blue-200 dark:border-[#404040]">
               <div className="text-6xl mb-6">🔬</div>
               <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Research-Backed Methodology</h3>
               <ul className="space-y-4">
@@ -861,7 +861,7 @@ export default function Products() {
             </div>
 
             {/* Fairness */}
-            <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 p-10 rounded-3xl border-2 border-indigo-200 dark:border-indigo-700">
+            <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 p-10 rounded-3xl border-2 border-indigo-200 dark:border-[#404040]">
               <div className="text-6xl mb-6">⚖️</div>
               <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">Equity & Accessibility First</h3>
               <ul className="space-y-4">
@@ -907,7 +907,7 @@ export default function Products() {
 
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Roadmap Item 1 */}
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-purple-200 dark:border-purple-700">
+            <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-purple-200 dark:border-[#404040]">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-purple-100 dark:bg-purple-900/40 rounded-full text-purple-700 dark:text-purple-300 text-sm font-bold mb-4">
                 Coming Q2 2025
               </div>
@@ -919,7 +919,7 @@ export default function Products() {
             </div>
 
             {/* Roadmap Item 2 */}
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-cyan-200 dark:border-cyan-700">
+            <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-cyan-200 dark:border-[#404040]">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-100 dark:bg-cyan-900/40 rounded-full text-cyan-700 dark:text-cyan-300 text-sm font-bold mb-4">
                 Coming Q2 2025
               </div>
@@ -931,7 +931,7 @@ export default function Products() {
             </div>
 
             {/* Roadmap Item 3 */}
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-blue-200 dark:border-blue-700">
+            <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-blue-200 dark:border-[#404040]">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 dark:bg-blue-900/40 rounded-full text-blue-700 dark:text-blue-300 text-sm font-bold mb-4">
                 Coming Q3 2025
               </div>
@@ -943,7 +943,7 @@ export default function Products() {
             </div>
 
             {/* Roadmap Item 4 */}
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-emerald-200 dark:border-emerald-700">
+            <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-emerald-200 dark:border-[#404040]">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-100 dark:bg-emerald-900/40 rounded-full text-emerald-700 dark:text-emerald-300 text-sm font-bold mb-4">
                 Coming Q3 2025
               </div>
@@ -955,7 +955,7 @@ export default function Products() {
             </div>
 
             {/* Roadmap Item 5 */}
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-indigo-200 dark:border-indigo-700">
+            <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-indigo-200 dark:border-[#404040]">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-100 dark:bg-indigo-900/40 rounded-full text-indigo-700 dark:text-indigo-300 text-sm font-bold mb-4">
                 Coming Q4 2025
               </div>
@@ -967,7 +967,7 @@ export default function Products() {
             </div>
 
             {/* Roadmap Item 6 */}
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-violet-200 dark:border-violet-700">
+            <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-violet-200 dark:border-[#404040]">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-violet-100 dark:bg-violet-900/40 rounded-full text-violet-700 dark:text-violet-300 text-sm font-bold mb-4">
                 Coming Q4 2025
               </div>
@@ -993,7 +993,7 @@ export default function Products() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Free Pilot */}
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-gray-200 dark:border-gray-700">
+            <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-gray-200 dark:border-[#404040]">
               <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Free Pilot</h3>
               <p className="text-gray-600 dark:text-gray-200 mb-6">Perfect for trying CoStudy</p>
               <div className="mb-8">
@@ -1022,7 +1022,7 @@ export default function Products() {
               </ul>
               <Link
                 href="/contact"
-                className="block text-center bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white px-6 py-4 rounded-xl font-bold text-lg transition-colors"
+                className="block text-center bg-gray-100 dark:bg-[#242424] hover:bg-gray-200 dark:hover:bg-[#2e2e2e] text-gray-900 dark:text-white px-6 py-4 rounded-xl font-bold text-lg transition-colors"
               >
                 Start Free Pilot
               </Link>
@@ -1073,7 +1073,7 @@ export default function Products() {
             </div>
 
             {/* Institution */}
-            <div className="bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-gray-200 dark:border-gray-700">
+            <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-gray-200 dark:border-[#404040]">
               <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Institution</h3>
               <p className="text-gray-600 dark:text-gray-200 mb-6">University-wide deployment</p>
               <div className="mb-8">
@@ -1107,7 +1107,7 @@ export default function Products() {
               </ul>
               <Link
                 href="/contact"
-                className="block text-center bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white px-6 py-4 rounded-xl font-bold text-lg transition-colors"
+                className="block text-center bg-gray-100 dark:bg-[#242424] hover:bg-gray-200 dark:hover:bg-[#2e2e2e] text-gray-900 dark:text-white px-6 py-4 rounded-xl font-bold text-lg transition-colors"
               >
                 Contact Sales
               </Link>

@@ -8,9 +8,9 @@ export const metadata: Metadata = {
 
 export default function Contact() {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="min-h-screen bg-white dark:bg-[#121212]">
       {/* Hero Section */}
-      <section className="bg-[#EDE7F9] dark:bg-gray-800 py-20">
+      <section className="bg-[#EDE7F9] dark:bg-[#1a1a1a] py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[#2D3748] dark:text-white">
@@ -29,14 +29,14 @@ export default function Contact() {
       </section>
 
       {/* Alternative Contact Methods */}
-      <section className="bg-[#EAEDEF] dark:bg-gray-800 py-16">
+      <section className="bg-[#EAEDEF] dark:bg-[#1a1a1a] py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold text-center mb-12 text-[#2D3748] dark:text-white">
             Other Ways to Connect
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
-              <div className="bg-white dark:bg-gray-700 w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center shadow-sm">
+              <div className="bg-white dark:bg-[#1a1a1a] w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center shadow-sm">
                 <span className="text-3xl">📧</span>
               </div>
               <h3 className="font-bold mb-2 text-[#2D3748] dark:text-white">Email Us</h3>
@@ -44,7 +44,7 @@ export default function Contact() {
             </div>
 
             <div className="text-center">
-              <div className="bg-white dark:bg-gray-700 w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center shadow-sm">
+              <div className="bg-white dark:bg-[#1a1a1a] w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center shadow-sm">
                 <span className="text-3xl">📅</span>
               </div>
               <h3 className="font-bold mb-2 text-[#2D3748] dark:text-white">Schedule a Demo</h3>
@@ -52,7 +52,7 @@ export default function Contact() {
             </div>
 
             <div className="text-center">
-              <div className="bg-white dark:bg-gray-700 w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center shadow-sm">
+              <div className="bg-white dark:bg-[#1a1a1a] w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center shadow-sm">
                 <span className="text-3xl">💬</span>
               </div>
               <h3 className="font-bold mb-2 text-[#2D3748] dark:text-white">Join the Community</h3>
