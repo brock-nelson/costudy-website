@@ -53,6 +53,22 @@ interface TrailPoint {
   opacity: number;
 }
 
+// Unique physics for each shape - defined outside component for performance
+const SHAPE_PHYSICS: Record<string, PhysicsProperties> = {
+  orb1: { damping: 0.995, maxVelocity: 0.05, forceMultiplier: 0.3, bounce: 0.3, maxDrift: 20, substance: 'heavy-liquid' },
+  orb2: { damping: 0.97, maxVelocity: 0.12, forceMultiplier: 1.5, bounce: 0.6, maxDrift: 25, substance: 'light-air' },
+  orb3: { damping: 0.99, maxVelocity: 0.04, forceMultiplier: 0.5, bounce: 0.2, maxDrift: 15, substance: 'thick-gel' },
+  hex: { damping: 0.94, maxVelocity: 0.1, forceMultiplier: 1.2, bounce: 0.8, maxDrift: 22, substance: 'jello' },
+  cyan: { damping: 0.96, maxVelocity: 0.09, forceMultiplier: 1.0, bounce: 0.5, maxDrift: 20, substance: 'water' },
+  pink: { damping: 0.93, maxVelocity: 0.11, forceMultiplier: 1.3, bounce: 0.85, maxDrift: 24, substance: 'rubber' },
+  square: { damping: 0.995, maxVelocity: 0.06, forceMultiplier: 0.4, bounce: 0.4, maxDrift: 18, substance: 'dense-metal' },
+  orange: { damping: 0.98, maxVelocity: 0.05, forceMultiplier: 0.6, bounce: 0.25, maxDrift: 16, substance: 'putty' },
+  emerald: { damping: 0.92, maxVelocity: 0.13, forceMultiplier: 1.4, bounce: 0.9, maxDrift: 26, substance: 'elastic' },
+  violet: { damping: 0.97, maxVelocity: 0.14, forceMultiplier: 1.6, bounce: 0.7, maxDrift: 28, substance: 'gas' },
+  teal: { damping: 0.91, maxVelocity: 0.08, forceMultiplier: 0.8, bounce: 0.6, maxDrift: 19, substance: 'glass' },
+  rose: { damping: 0.95, maxVelocity: 0.07, forceMultiplier: 0.9, bounce: 0.55, maxDrift: 21, substance: 'soft-gel' }
+};
+
 export default function AnimatedBackground() {
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const [textBounds, setTextBounds] = useState<DOMRect | null>(null);
@@ -66,22 +82,6 @@ export default function AnimatedBackground() {
   const lastScrollTimeRef = useRef(Date.now());
   const driftAnimationRef = useRef<number | null>(null);
   const particleAnimationRef = useRef<number | null>(null);
-
-  // Unique physics for each shape - different substances!
-  const shapePhysics: Record<string, PhysicsProperties> = {
-    orb1: { damping: 0.995, maxVelocity: 0.05, forceMultiplier: 0.3, bounce: 0.3, maxDrift: 20, substance: 'heavy-liquid' },
-    orb2: { damping: 0.97, maxVelocity: 0.12, forceMultiplier: 1.5, bounce: 0.6, maxDrift: 25, substance: 'light-air' },
-    orb3: { damping: 0.99, maxVelocity: 0.04, forceMultiplier: 0.5, bounce: 0.2, maxDrift: 15, substance: 'thick-gel' },
-    hex: { damping: 0.94, maxVelocity: 0.1, forceMultiplier: 1.2, bounce: 0.8, maxDrift: 22, substance: 'jello' },
-    cyan: { damping: 0.96, maxVelocity: 0.09, forceMultiplier: 1.0, bounce: 0.5, maxDrift: 20, substance: 'water' },
-    pink: { damping: 0.93, maxVelocity: 0.11, forceMultiplier: 1.3, bounce: 0.85, maxDrift: 24, substance: 'rubber' },
-    square: { damping: 0.995, maxVelocity: 0.06, forceMultiplier: 0.4, bounce: 0.4, maxDrift: 18, substance: 'dense-metal' },
-    orange: { damping: 0.98, maxVelocity: 0.05, forceMultiplier: 0.6, bounce: 0.25, maxDrift: 16, substance: 'putty' },
-    emerald: { damping: 0.92, maxVelocity: 0.13, forceMultiplier: 1.4, bounce: 0.9, maxDrift: 26, substance: 'elastic' },
-    violet: { damping: 0.97, maxVelocity: 0.14, forceMultiplier: 1.6, bounce: 0.7, maxDrift: 28, substance: 'gas' },
-    teal: { damping: 0.91, maxVelocity: 0.08, forceMultiplier: 0.8, bounce: 0.6, maxDrift: 19, substance: 'glass' },
-    rose: { damping: 0.95, maxVelocity: 0.07, forceMultiplier: 0.9, bounce: 0.55, maxDrift: 21, substance: 'soft-gel' }
-  };
 
   // Initialize drift states for all shapes
   useEffect(() => {
@@ -145,7 +145,7 @@ export default function AnimatedBackground() {
 
         Object.keys(prevDrift).forEach(key => {
           const d = prevDrift[key];
-          const physics = shapePhysics[key];
+          const physics = SHAPE_PHYSICS[key];
           if (!physics) return;
 
           // Add random drift force (scaled by substance properties)
@@ -195,7 +195,7 @@ export default function AnimatedBackground() {
         cancelAnimationFrame(driftAnimationRef.current);
       }
     };
-  }, [mounted, shapePhysics]);
+  }, [mounted]); // Removed shapePhysics dependency for better performance
 
   // Epic particle physics with scroll waves, spirals, and dark mode magic
   useEffect(() => {
@@ -206,33 +206,31 @@ export default function AnimatedBackground() {
         return prevParticles.map((p, index) => {
           const time = Date.now() * 0.001;
 
-          // Add playful random forces (increased for more movement)
-          const forceX = (Math.random() - 0.5) * 0.025;
-          const forceY = (Math.random() - 0.5) * 0.025;
+          // Playful random forces for gentle wandering
+          const forceX = (Math.random() - 0.5) * 0.015;
+          const forceY = (Math.random() - 0.5) * 0.015;
 
-          // EPIC SCROLL PHYSICS: Creates flowing wave/spiral patterns
+          // SMOOTH SCROLL PHYSICS: Gentle flowing movement (reduced from extreme values)
           const scrollMag = Math.abs(scrollVelocity);
           const scrollDir = Math.sign(scrollVelocity);
 
-          // Spiral rotation during scroll (each particle has offset phase)
-          const spiralPhase = time + index * 0.8;
-          const spiralX = Math.cos(spiralPhase) * scrollMag * 15;
-          const spiralY = scrollDir * scrollMag * 20; // Flow with scroll direction
+          // Gentle wave during scroll - each particle follows smooth sine pattern
+          const wavePhase = time * 1.5 + index * 1.2;
+          const waveX = Math.sin(wavePhase) * scrollMag * 3;
+          const waveY = Math.cos(wavePhase * 0.7) * scrollMag * 4;
 
-          // Wave oscillation (particles move in wave pattern)
-          const waveX = Math.sin(time * 2 + index) * scrollMag * 10;
+          // Subtle spiral during scroll (MUCH reduced for elegance)
+          const spiralPhase = time + index * 0.5;
+          const spiralX = Math.cos(spiralPhase) * scrollMag * 2;
+          const spiralY = scrollDir * scrollMag * 3;
 
-          // Circular orbit during intense scroll
-          const orbitX = Math.cos(time * 3 + index * 1.2) * scrollMag * 8;
-          const orbitY = Math.sin(time * 3 + index * 1.2) * scrollMag * 8;
+          // Combine scroll effects (subtle, not extreme)
+          const scrollForceX = (waveX + spiralX) * (isDarkMode ? 1.3 : 1);
+          const scrollForceY = (waveY + spiralY) * (isDarkMode ? 1.3 : 1);
 
-          // Combine all scroll effects
-          const scrollForceX = spiralX + waveX + orbitX + (isDarkMode ? orbitX * 0.5 : 0);
-          const scrollForceY = spiralY + orbitY + (isDarkMode ? spiralY * 0.3 : 0);
-
-          // Gentle floating oscillation when not scrolling
-          const floatX = Math.sin(time * 0.5 + index * 0.7) * 0.02;
-          const floatY = Math.cos(time * 0.7 + index * 0.5) * 0.03;
+          // Playful floating oscillation (always active)
+          const floatX = Math.sin(time * 0.8 + index * 0.9) * 0.03;
+          const floatY = Math.cos(time * 0.6 + index * 0.7) * 0.04;
 
           // Update velocity with all forces
           let vx = p.vx + forceX + scrollForceX + floatX;
@@ -251,35 +249,35 @@ export default function AnimatedBackground() {
           let x = p.x + vx;
           let y = p.y + vy;
 
-          // Jello squish physics - detect collisions and squish
+          // Playful bounce physics - subtle squish on wall impact
           let squishX = p.squishX;
           let squishY = p.squishY;
-          const maxDrift = 30;
+          const maxDrift = 35; // Increased boundary for more freedom
           let hitWall = false;
 
           if (Math.abs(x) > maxDrift) {
             x = Math.sign(x) * maxDrift;
-            vx *= -0.8; // bouncy!
-            // Jello squish horizontally on impact
-            squishX = 0.6;
-            squishY = 1.4;
+            vx *= -0.75; // Gentle bounce
+            // Subtle horizontal squish on impact (reduced from 0.6/1.4)
+            squishX = 0.85;
+            squishY = 1.15;
             hitWall = true;
           }
           if (Math.abs(y) > maxDrift) {
             y = Math.sign(y) * maxDrift;
-            vy *= -0.8; // bouncy!
-            // Jello squish vertically on impact
+            vy *= -0.75; // Gentle bounce
+            // Subtle vertical squish on impact
             if (!hitWall) {
-              squishX = 1.4;
-              squishY = 0.6;
+              squishX = 1.15;
+              squishY = 0.85;
             }
             hitWall = true;
           }
 
-          // Smooth jello squish recovery (spring back to normal)
+          // Quick spring-back to normal (faster recovery = less weird look)
           if (!hitWall) {
-            squishX += (1 - squishX) * 0.15;
-            squishY += (1 - squishY) * 0.15;
+            squishX += (1 - squishX) * 0.25; // Increased from 0.15 for faster recovery
+            squishY += (1 - squishY) * 0.25;
           }
 
           // No rotation - keep particles oriented
@@ -306,8 +304,8 @@ export default function AnimatedBackground() {
             pulseSpeed: p.pulseSpeed,
             colorIndex: p.colorIndex,
             colorTransition,
-            squishX: Math.max(0.6, Math.min(1.4, squishX)),
-            squishY: Math.max(0.6, Math.min(1.4, squishY)),
+            squishX: Math.max(0.85, Math.min(1.15, squishX)),
+            squishY: Math.max(0.85, Math.min(1.15, squishY)),
           };
         });
       });
@@ -322,7 +320,7 @@ export default function AnimatedBackground() {
         cancelAnimationFrame(particleAnimationRef.current);
       }
     };
-  }, [mounted, particles.length, scrollVelocity, isDarkMode]);
+  }, [mounted, scrollVelocity, isDarkMode]); // Optimized dependencies for performance
 
   useEffect(() => {
     setMounted(true);
@@ -467,18 +465,20 @@ export default function AnimatedBackground() {
   };
 
   // Calculate scroll-based physics for shapes
-  const getScrollPhysics = (shapeY: number) => {
+  const getScrollPhysics = (shapeY: number, scrollMultiplier: number = 1) => {
     try {
       // Scroll down = positive velocity, push shapes down
       // Scroll up = negative velocity, pull shapes up
-      const scrollForce = sanitizeNumber(scrollVelocity * 50, 0);
+      // REDUCED from 50 to 15 for subtler, more elegant movement
+      const scrollForce = sanitizeNumber(scrollVelocity * 15 * scrollMultiplier, 0);
 
       // Y position affects how much scroll impacts the shape
-      // Shapes at top are more affected, shapes at bottom less affected
-      const positionFactor = sanitizeNumber(1 - (shapeY / 100), 1);
+      // Shapes near center are MORE affected for better visual feedback
+      const centerDistance = Math.abs(shapeY - 50) / 50; // 0 at center, 1 at edges
+      const positionFactor = sanitizeNumber(1 - centerDistance * 0.5, 0.5); // 1 at center, 0.5 at edges
 
       return {
-        x: 0,
+        x: sanitizeNumber(scrollForce * 0.3, 0), // Subtle horizontal drift during scroll
         y: sanitizeNumber(scrollForce * positionFactor, 0),
       };
     } catch (error) {
@@ -545,21 +545,21 @@ export default function AnimatedBackground() {
             <div
               className="animated-orb absolute -top-40 -left-40 w-[400px] h-[400px] md:w-[700px] md:h-[700px] bg-gradient-to-br from-purple-400/10 dark:from-purple-500/20 via-purple-300/6 dark:via-purple-400/15 to-transparent rounded-full blur-3xl animate-float transition-all duration-300 ease-out will-change-transform"
               style={{
-                transform: `translate(${orb1Repulsion.x + orb1Text.x + orb1Drift.x}px, ${orb1Repulsion.y + orb1Text.y + orb1Scroll.y + orb1Drift.y}px)`,
+                transform: `translate(${orb1Repulsion.x + orb1Text.x + orb1Scroll.x + orb1Drift.x}px, ${orb1Repulsion.y + orb1Text.y + orb1Scroll.y + orb1Drift.y}px)`,
                 opacity: mounted ? undefined : 0
               }}
             ></div>
             <div
               className="animated-orb absolute top-20 -right-40 w-[350px] h-[350px] md:w-[600px] md:h-[600px] bg-gradient-to-bl from-cyan-400/10 dark:from-cyan-500/20 via-blue-400/6 dark:via-blue-500/15 to-transparent rounded-full blur-3xl animate-float-delayed transition-all duration-300 ease-out will-change-transform"
               style={{
-                transform: `translate(${orb2Repulsion.x + orb2Text.x + orb2Drift.x}px, ${orb2Repulsion.y + orb2Text.y + orb2Scroll.y + orb2Drift.y}px)`,
+                transform: `translate(${orb2Repulsion.x + orb2Text.x + orb2Scroll.x + orb2Drift.x}px, ${orb2Repulsion.y + orb2Text.y + orb2Scroll.y + orb2Drift.y}px)`,
                 opacity: mounted ? undefined : 0
               }}
             ></div>
             <div
               className="animated-orb absolute -bottom-40 left-1/3 w-[320px] h-[320px] md:w-[550px] md:h-[550px] bg-gradient-to-tr from-pink-400/8 dark:from-pink-500/18 via-fuchsia-300/5 dark:via-fuchsia-400/12 to-transparent rounded-full blur-3xl animate-float-slow transition-all duration-300 ease-out will-change-transform"
               style={{
-                transform: `translate(${orb3Repulsion.x + orb3Text.x + orb3Drift.x}px, ${orb3Repulsion.y + orb3Text.y + orb3Scroll.y + orb3Drift.y}px)`,
+                transform: `translate(${orb3Repulsion.x + orb3Text.x + orb3Scroll.x + orb3Drift.x}px, ${orb3Repulsion.y + orb3Text.y + orb3Scroll.y + orb3Drift.y}px)`,
                 opacity: mounted ? undefined : 0
               }}
             ></div>
@@ -582,7 +582,7 @@ export default function AnimatedBackground() {
           <div
             className="hidden md:block absolute top-1/4 right-1/4 w-40 h-40 lg:w-56 lg:h-56 bg-gradient-to-br from-purple-500/12 dark:from-purple-500/30 via-purple-400/8 dark:via-purple-400/22 to-transparent border-2 border-purple-400/30 dark:border-purple-400/50 rounded-[3rem] animate-morph backdrop-blur-sm shadow-xl shadow-purple-500/25 dark:shadow-purple-400/45 transition-transform duration-300 ease-out will-change-transform"
             style={{
-              transform: `translate(${hexRepulsion.x + hexDrift.x}px, ${hexRepulsion.y + hexScroll.y + hexDrift.y}px) rotate(12deg)`,
+              transform: `translate(${hexRepulsion.x + hexScroll.x + hexDrift.x}px, ${hexRepulsion.y + hexScroll.y + hexDrift.y}px) rotate(12deg)`,
               opacity: mounted ? undefined : 0
             }}
           ></div>
@@ -599,7 +599,7 @@ export default function AnimatedBackground() {
           <div
             className="hidden md:block absolute top-1/3 left-1/5 w-44 h-44 lg:w-64 lg:h-64 bg-gradient-to-br from-cyan-500/10 dark:from-cyan-400/28 via-blue-500/12 dark:via-blue-400/32 to-sky-400/6 dark:to-sky-400/18 border-2 border-cyan-400/30 dark:border-cyan-400/50 rounded-[3.5rem] animate-morph-delayed backdrop-blur-sm shadow-xl shadow-cyan-500/25 dark:shadow-cyan-400/48 transition-transform duration-300 ease-out will-change-transform"
             style={{
-              transform: `translate(${cyanRepulsion.x + cyanDrift.x}px, ${cyanRepulsion.y + cyanScroll.y + cyanDrift.y}px) rotate(-6deg)`,
+              transform: `translate(${cyanRepulsion.x + cyanScroll.x + cyanDrift.x}px, ${cyanRepulsion.y + cyanScroll.y + cyanDrift.y}px) rotate(-6deg)`,
               opacity: mounted ? undefined : 0
             }}
           ></div>
@@ -617,7 +617,7 @@ export default function AnimatedBackground() {
             className="hidden md:block absolute bottom-1/3 right-1/3 w-36 h-36 lg:w-52 lg:h-52 bg-gradient-to-br from-pink-500/12 dark:from-pink-400/32 via-fuchsia-500/10 dark:via-fuchsia-400/24 to-rose-400/6 dark:to-rose-400/18 border-2 border-pink-500/30 dark:border-pink-400/50 rounded-[2.5rem] animate-morph backdrop-blur-sm shadow-xl shadow-pink-500/28 dark:shadow-pink-400/48 transition-transform duration-300 ease-out will-change-transform"
             style={{
               clipPath: "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
-              transform: `translate(${pinkRepulsion.x + pinkDrift.x}px, ${pinkRepulsion.y + pinkScroll.y + pinkDrift.y}px) rotate(45deg)`,
+              transform: `translate(${pinkRepulsion.x + pinkScroll.x + pinkDrift.x}px, ${pinkRepulsion.y + pinkScroll.y + pinkDrift.y}px) rotate(45deg)`,
               opacity: mounted ? undefined : 0
             }}
           ></div>
@@ -634,7 +634,7 @@ export default function AnimatedBackground() {
           <div
             className="absolute top-[40%] left-1/2 w-24 h-24 md:w-36 md:h-36 bg-gradient-to-br from-amber-500/12 dark:from-amber-400/28 via-orange-500/10 dark:via-orange-400/24 to-yellow-400/6 dark:to-yellow-400/16 border-2 border-amber-500/25 dark:border-amber-400/45 backdrop-blur-sm shadow-lg shadow-amber-500/20 dark:shadow-amber-400/40 transition-transform duration-300 ease-out will-change-transform animate-spin-very-slow"
             style={{
-              transform: `translate(${squareRepulsion.x + squareDrift.x}px, ${squareRepulsion.y + squareScroll.y + squareDrift.y}px)`,
+              transform: `translate(${squareRepulsion.x + squareScroll.x + squareDrift.x}px, ${squareRepulsion.y + squareScroll.y + squareDrift.y}px)`,
               borderRadius: '1.5rem',
               opacity: mounted ? undefined : 0
             }}
@@ -652,7 +652,7 @@ export default function AnimatedBackground() {
           <div
             className="absolute top-1/2 left-1/2 w-32 h-32 md:w-48 md:h-48 bg-gradient-to-br from-orange-500/15 dark:from-orange-400/35 via-amber-500/12 dark:via-amber-400/28 to-yellow-400/8 dark:to-yellow-400/20 border-2 border-orange-500/30 dark:border-orange-400/50 animate-pulse-slow backdrop-blur-sm shadow-xl shadow-orange-500/25 dark:shadow-orange-400/45 transition-transform duration-300 ease-out will-change-transform animate-morph-to-circle"
             style={{
-              transform: `translate(${orangeDrift.x}px, ${orangeScroll.y + orangeDrift.y}px)`,
+              transform: `translate(${orangeScroll.x + orangeDrift.x}px, ${orangeScroll.y + orangeDrift.y}px)`,
               opacity: mounted ? undefined : 0
             }}
           ></div>
@@ -671,7 +671,7 @@ export default function AnimatedBackground() {
             style={{
               clipPath: "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
               borderRadius: "15%",
-              transform: `translate(${emeraldRepulsion.x + emeraldDrift.x}px, ${emeraldRepulsion.y + emeraldScroll.y + emeraldDrift.y}px)`,
+              transform: `translate(${emeraldRepulsion.x + emeraldScroll.x + emeraldDrift.x}px, ${emeraldRepulsion.y + emeraldScroll.y + emeraldDrift.y}px)`,
               opacity: mounted ? undefined : 0
             }}
           ></div>
@@ -689,7 +689,7 @@ export default function AnimatedBackground() {
             className="hidden lg:block absolute top-2/3 right-1/5 w-44 h-44 bg-gradient-to-br from-violet-500/14 dark:from-violet-400/34 via-indigo-500/10 dark:via-indigo-400/26 to-purple-400/6 dark:to-purple-400/18 border-2 border-violet-500/30 dark:border-violet-400/50 rounded-[2rem] animate-morph backdrop-blur-sm shadow-xl shadow-violet-500/25 dark:shadow-violet-400/45 transition-transform duration-300 ease-out will-change-transform"
             style={{
               clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)",
-              transform: `translate(${violetRepulsion.x + violetDrift.x}px, ${violetRepulsion.y + violetScroll.y + violetDrift.y}px) rotate(30deg)`,
+              transform: `translate(${violetRepulsion.x + violetScroll.x + violetDrift.x}px, ${violetRepulsion.y + violetScroll.y + violetDrift.y}px) rotate(30deg)`,
               opacity: mounted ? undefined : 0
             }}
           ></div>
@@ -707,7 +707,7 @@ export default function AnimatedBackground() {
             className="hidden lg:block absolute top-1/6 left-1/3 w-40 h-40 bg-gradient-to-br from-teal-500/14 dark:from-teal-400/34 via-cyan-400/10 dark:via-cyan-400/26 to-blue-400/6 dark:to-blue-400/18 border-2 border-teal-500/30 dark:border-teal-400/50 rounded-[1.8rem] animate-morph-delayed backdrop-blur-sm shadow-xl shadow-teal-500/25 dark:shadow-teal-400/45 transition-transform duration-300 ease-out will-change-transform"
             style={{
               clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
-              transform: `translate(${tealRepulsion.x + tealDrift.x}px, ${tealRepulsion.y + tealScroll.y + tealDrift.y}px) rotate(45deg)`,
+              transform: `translate(${tealRepulsion.x + tealScroll.x + tealDrift.x}px, ${tealRepulsion.y + tealScroll.y + tealDrift.y}px) rotate(45deg)`,
               opacity: mounted ? undefined : 0
             }}
           ></div>
@@ -725,7 +725,7 @@ export default function AnimatedBackground() {
             className="hidden lg:block absolute bottom-1/5 right-2/5 w-36 h-36 bg-gradient-to-br from-rose-500/12 dark:from-rose-400/32 via-pink-400/8 dark:via-pink-400/22 to-fuchsia-400/6 dark:to-fuchsia-400/16 border-2 border-rose-500/30 dark:border-rose-400/50 rounded-[1.5rem] animate-morph backdrop-blur-sm shadow-xl shadow-rose-500/24 dark:shadow-rose-400/44 transition-transform duration-300 ease-out will-change-transform"
             style={{
               clipPath: "polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)",
-              transform: `translate(${roseRepulsion.x + roseDrift.x}px, ${roseRepulsion.y + roseScroll.y + roseDrift.y}px) rotate(72deg)`,
+              transform: `translate(${roseRepulsion.x + roseScroll.x + roseDrift.x}px, ${roseRepulsion.y + roseScroll.y + roseDrift.y}px) rotate(72deg)`,
               opacity: mounted ? undefined : 0
             }}
           ></div>
