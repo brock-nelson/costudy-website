@@ -218,6 +218,7 @@ export default function AnimatedBackground() {
   const [drift, setDrift] = useState<Record<string, DriftState>>({});
   const [particles, setParticles] = useState<ParticleState[]>([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const lastScrollRef = useRef(0);
   const lastScrollTimeRef = useRef(Date.now());
   const driftAnimationRef = useRef<number | null>(null);
@@ -294,7 +295,7 @@ export default function AnimatedBackground() {
 
   // Shape drift animation with substance physics
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || prefersReducedMotion) return;
 
     const animate = () => {
       setDrift(prevDrift => {
@@ -352,11 +353,11 @@ export default function AnimatedBackground() {
         cancelAnimationFrame(driftAnimationRef.current);
       }
     };
-  }, [mounted]);
+  }, [mounted, prefersReducedMotion]);
 
   // Particle physics: Microgravity drift + Moon-trampoline scroll
   useEffect(() => {
-    if (!mounted || particles.length === 0) return;
+    if (!mounted || particles.length === 0 || prefersReducedMotion) return;
 
     const animate = () => {
       const time = Date.now() * 0.001;
@@ -461,7 +462,7 @@ export default function AnimatedBackground() {
         cancelAnimationFrame(particleAnimationRef.current);
       }
     };
-  }, [mounted, scrollVelocity, particles.length]);
+  }, [mounted, scrollVelocity, particles.length, prefersReducedMotion]);
 
   useEffect(() => {
     setMounted(true);
@@ -474,6 +475,18 @@ export default function AnimatedBackground() {
 
     const observer = new MutationObserver(checkDarkMode);
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    // Detect reduced motion preference
+    const checkReducedMotion = () => {
+      if (typeof window !== 'undefined' && window.matchMedia) {
+        setPrefersReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      }
+    };
+    checkReducedMotion();
+
+    const motionMediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handleMotionChange = () => checkReducedMotion();
+    motionMediaQuery.addEventListener('change', handleMotionChange);
 
     const handleMouseMove = (e: MouseEvent) => {
       try {
@@ -539,6 +552,7 @@ export default function AnimatedBackground() {
       window.removeEventListener('scroll', handleScroll);
       clearInterval(interval);
       observer.disconnect();
+      motionMediaQuery.removeEventListener('change', handleMotionChange);
     };
   }, []);
 
