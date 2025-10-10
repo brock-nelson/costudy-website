@@ -7,16 +7,67 @@ interface GradientTextProps {
   className?: string;
 }
 
+interface Spark {
+  id: number;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  life: number;
+  color: string;
+}
+
 export default function GradientText({ children, className = "" }: GradientTextProps) {
   const [mounted, setMounted] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
+  const [targetMousePos, setTargetMousePos] = useState({ x: 50, y: 50 });
+  const [scrollOffset, setScrollOffset] = useState(0);
   const [mouseSpeed, setMouseSpeed] = useState(0);
   const [isRapidMovement, setIsRapidMovement] = useState(false);
+  const [sparks, setSparks] = useState<Spark[]>([]);
   const containerRef = useRef<HTMLSpanElement>(null);
   const prevPosRef = useRef({ x: 50, y: 50 });
   const prevTimeRef = useRef(Date.now());
   const rapidMovementCountRef = useRef(0);
   const directionChangesRef = useRef<number[]>([]);
+  const sparkIdRef = useRef(0);
+
+  // Smooth interpolation for mouse position
+  useEffect(() => {
+    const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor;
+
+    const smoothUpdate = () => {
+      setMousePos(prev => ({
+        x: lerp(prev.x, targetMousePos.x, 0.1),
+        y: lerp(prev.y, targetMousePos.y, 0.1)
+      }));
+    };
+
+    const interval = setInterval(smoothUpdate, 16); // ~60fps
+    return () => clearInterval(interval);
+  }, [targetMousePos]);
+
+  // Spark animation loop
+  useEffect(() => {
+    if (sparks.length === 0) return;
+
+    const animate = () => {
+      setSparks(prevSparks =>
+        prevSparks
+          .map(spark => ({
+            ...spark,
+            x: spark.x + spark.vx,
+            y: spark.y + spark.vy,
+            vy: spark.vy + 0.3, // gravity
+            life: spark.life - 1
+          }))
+          .filter(spark => spark.life > 0)
+      );
+    };
+
+    const interval = setInterval(animate, 16);
+    return () => clearInterval(interval);
+  }, [sparks.length]);
 
   useEffect(() => {
     setMounted(true);
@@ -27,6 +78,9 @@ export default function GradientText({ children, className = "" }: GradientTextP
       const rect = containerRef.current.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / rect.width) * 100;
       const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+      // Update target for smooth following
+      setTargetMousePos({ x, y });
 
       // Calculate mouse speed
       const now = Date.now();
@@ -58,6 +112,23 @@ export default function GradientText({ children, className = "" }: GradientTextP
         if (changes >= 5 && speed > 0.5) {
           setIsRapidMovement(true);
           rapidMovementCountRef.current++;
+
+          // Create sparks!
+          const newSparks: Spark[] = [];
+          const colors = ['#8B5CF6', '#EC4899', '#06B6D4', '#F59E0B', '#10B981'];
+          for (let i = 0; i < 15; i++) {
+            newSparks.push({
+              id: sparkIdRef.current++,
+              x: x,
+              y: y,
+              vx: (Math.random() - 0.5) * 3,
+              vy: (Math.random() - 1) * 3,
+              life: 60 + Math.random() * 30,
+              color: colors[Math.floor(Math.random() * colors.length)]
+            });
+          }
+          setSparks(prev => [...prev, ...newSparks]);
+
           setTimeout(() => {
             setIsRapidMovement(false);
             rapidMovementCountRef.current = Math.max(0, rapidMovementCountRef.current - 1);
@@ -65,18 +136,28 @@ export default function GradientText({ children, className = "" }: GradientTextP
         }
       }
 
-      setMousePos({ x, y });
       setMouseSpeed(speed);
       prevPosRef.current = { x, y };
       prevTimeRef.current = now;
     };
 
+    // Track scroll for gradient shift
+    const handleScroll = () => {
+      const scroll = window.scrollY;
+      setScrollOffset(scroll * 0.1); // Slow scroll effect
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
-  // Calculate gradient angle based on mouse position
-  const angle = 135 + (mousePos.x - 50) * 0.8 + (mousePos.y - 50) * 0.3;
+  // Calculate gradient angle based on mouse position and scroll
+  const angle = 135 + (mousePos.x - 50) * 0.8 + (mousePos.y - 50) * 0.3 + scrollOffset;
 
   // Dynamic color selection based on x and y position
   const getColorPalette = (x: number, y: number, isDark: boolean): string[] => {
@@ -138,11 +219,12 @@ export default function GradientText({ children, className = "" }: GradientTextP
   // Speed-based intensity (faster = more vibrant)
   const speedIntensity = Math.min(mouseSpeed * 100, 50);
 
-  // Shift color stops based on mouse position and speed
-  const colorStop1 = Math.max(0, Math.min(100, mousePos.x - 20 - speedIntensity));
-  const colorStop2 = Math.max(0, Math.min(100, mousePos.x + 10));
-  const colorStop3 = Math.max(0, Math.min(100, mousePos.x + 30 + mousePos.y * 0.2));
-  const colorStop4 = Math.max(0, Math.min(100, mousePos.x + 50 + speedIntensity));
+  // Shift color stops based on mouse position, scroll, and speed
+  const scrollShift = scrollOffset * 0.5;
+  const colorStop1 = Math.max(0, Math.min(100, mousePos.x - 20 - speedIntensity + scrollShift));
+  const colorStop2 = Math.max(0, Math.min(100, mousePos.x + 10 + scrollShift));
+  const colorStop3 = Math.max(0, Math.min(100, mousePos.x + 30 + mousePos.y * 0.2 + scrollShift));
+  const colorStop4 = Math.max(0, Math.min(100, mousePos.x + 50 + speedIntensity + scrollShift));
 
   // Light mode gradient with dynamic colors
   const lightGradient = `linear-gradient(${angle}deg,
@@ -161,6 +243,7 @@ export default function GradientText({ children, className = "" }: GradientTextP
   // Animation classes for special effects
   const specialEffectClass = isRapidMovement ? 'animate-shimmer-text' : '';
   const pulseClass = rapidMovementCountRef.current > 0 ? 'animate-pulse' : '';
+  const glowIntensity = isRapidMovement ? 10 : 0;
 
   // Prevent flash by using a wrapper with consistent dimensions
   if (!mounted) {
@@ -186,8 +269,10 @@ export default function GradientText({ children, className = "" }: GradientTextP
         style={{
           backgroundImage: lightGradient,
           backgroundSize: isRapidMovement ? '200% 200%' : '100% 100%',
-          transition: 'background-image 0.15s ease-out, background-size 0.3s ease-out',
-          filter: isRapidMovement ? `brightness(${1.2 + mouseSpeed * 2}) saturate(${1.5 + mouseSpeed})` : 'none',
+          transition: 'background-image 0.8s ease-out, background-size 0.3s ease-out, filter 0.3s ease-out',
+          filter: isRapidMovement
+            ? `brightness(${1.2 + mouseSpeed * 2}) saturate(${1.5 + mouseSpeed}) drop-shadow(0 0 ${glowIntensity}px rgba(139, 92, 246, 0.8))`
+            : 'none',
         }}
       >
         {children}
@@ -206,12 +291,30 @@ export default function GradientText({ children, className = "" }: GradientTextP
         style={{
           backgroundImage: darkGradient,
           backgroundSize: isRapidMovement ? '200% 200%' : '100% 100%',
-          transition: 'background-image 0.15s ease-out, background-size 0.3s ease-out',
-          filter: isRapidMovement ? `brightness(${1.3 + mouseSpeed * 2}) saturate(${1.5 + mouseSpeed})` : 'none',
+          transition: 'background-image 0.8s ease-out, background-size 0.3s ease-out, filter 0.3s ease-out',
+          filter: isRapidMovement
+            ? `brightness(${1.3 + mouseSpeed * 2}) saturate(${1.5 + mouseSpeed}) drop-shadow(0 0 ${glowIntensity}px rgba(233, 213, 255, 0.9))`
+            : 'none',
         }}
       >
         {children}
       </span>
+
+      {/* Sparks */}
+      {sparks.map(spark => (
+        <div
+          key={spark.id}
+          className="absolute w-2 h-2 rounded-full pointer-events-none"
+          style={{
+            left: `${spark.x}%`,
+            top: `${spark.y}%`,
+            backgroundColor: spark.color,
+            opacity: spark.life / 90,
+            boxShadow: `0 0 ${4 + spark.life / 15}px ${spark.color}`,
+            transition: 'all 0.016s linear',
+          }}
+        />
+      ))}
     </span>
   );
 }

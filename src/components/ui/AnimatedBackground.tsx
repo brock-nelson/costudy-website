@@ -370,14 +370,37 @@ export default function AnimatedBackground() {
       <div className="absolute top-2/3 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400/25 dark:via-cyan-400/55 to-transparent animate-shimmer-delayed"></div>
       <div className="absolute top-1/3 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-pink-400/25 dark:via-pink-400/55 to-transparent animate-shimmer"></div>
 
-      {/* Rainbow floating particles */}
-      <div className="absolute top-1/4 left-1/3 w-3 h-3 bg-purple-500/70 dark:bg-purple-400/90 rounded-full animate-float-particle-1 shadow-lg shadow-purple-500/60 dark:shadow-purple-400/80"></div>
-      <div className="absolute top-2/3 right-1/4 w-4 h-4 bg-cyan-500/70 dark:bg-cyan-400/90 rounded-full animate-float-particle-2 shadow-lg shadow-cyan-500/60 dark:shadow-cyan-400/80"></div>
-      <div className="absolute top-1/2 left-2/3 w-3 h-3 bg-pink-500/75 dark:bg-pink-400/95 rounded-full animate-float-particle-3 shadow-lg shadow-pink-500/65 dark:shadow-pink-400/85"></div>
-      <div className="absolute bottom-1/4 left-1/2 w-4 h-4 bg-orange-500/70 dark:bg-orange-400/90 rounded-full animate-float-particle-1 shadow-lg shadow-orange-500/60 dark:shadow-orange-400/80"></div>
-      <div className="absolute top-1/5 right-2/5 w-3 h-3 bg-emerald-500/70 dark:bg-emerald-400/90 rounded-full animate-float-particle-2 shadow-lg shadow-emerald-500/60 dark:shadow-emerald-400/80"></div>
-      <div className="absolute bottom-1/3 left-1/5 w-3 h-3 bg-violet-500/75 dark:bg-violet-400/95 rounded-full animate-float-particle-3 shadow-lg shadow-violet-500/65 dark:shadow-violet-400/85"></div>
-      <div className="absolute top-3/4 right-1/3 w-4 h-4 bg-amber-500/70 dark:bg-amber-400/90 rounded-full animate-float-particle-1 shadow-lg shadow-amber-500/60 dark:shadow-amber-400/80"></div>
+      {/* Rainbow floating particles with scroll physics */}
+      {(() => {
+        const particles = [
+          { top: 25, left: 33.33, size: 3, color: 'purple', anim: 1 },
+          { top: 66.67, right: 25, size: 4, color: 'cyan', anim: 2 },
+          { top: 50, left: 66.67, size: 3, color: 'pink', anim: 3 },
+          { bottom: 25, left: 50, size: 4, color: 'orange', anim: 1 },
+          { top: 20, right: 40, size: 3, color: 'emerald', anim: 2 },
+          { bottom: 33.33, left: 20, size: 3, color: 'violet', anim: 3 },
+          { top: 75, right: 33.33, size: 4, color: 'amber', anim: 1 },
+        ];
+
+        return particles.map((particle, i) => {
+          const yPos = particle.top !== undefined ? particle.top : 100 - (particle.bottom || 0);
+          const scroll = getScrollPhysics(yPos);
+
+          const positionStyle: React.CSSProperties = {};
+          if (particle.top !== undefined) positionStyle.top = `calc(${particle.top}% + ${scroll.y}px)`;
+          if (particle.bottom !== undefined) positionStyle.bottom = `calc(${particle.bottom}% - ${scroll.y}px)`;
+          if (particle.left !== undefined) positionStyle.left = `${particle.left}%`;
+          if (particle.right !== undefined) positionStyle.right = `${particle.right}%`;
+
+          return (
+            <div
+              key={i}
+              className={`absolute w-${particle.size} h-${particle.size} bg-${particle.color}-500/70 dark:bg-${particle.color}-400/90 rounded-full animate-float-particle-${particle.anim} shadow-lg shadow-${particle.color}-500/60 dark:shadow-${particle.color}-400/80 transition-all duration-300 ease-out will-change-transform`}
+              style={positionStyle}
+            />
+          );
+        });
+      })()}
     </div>
   );
 }

@@ -19,6 +19,29 @@ export default function AnimatedLogo() {
 
   return (
     <Link href="/" onClick={handleClick} className="relative group cursor-pointer inline-flex items-center gap-3">
+      {/* Logo Image - Light Mode */}
+      <div className="dark:hidden">
+        <Image
+          src="/logo_purple.svg"
+          alt="CoStudy Logo"
+          width={40}
+          height={40}
+          className="transition-all duration-300 group-hover:scale-105"
+        />
+      </div>
+
+      {/* Logo Image - Dark Mode with shimmer effect */}
+      <div className="hidden dark:block">
+        <Image
+          src="/logo_upperleft.svg"
+          alt="CoStudy Logo"
+          width={40}
+          height={40}
+          className="transition-all duration-300 group-hover:scale-105 brightness-150"
+          style={{ filter: mounted ? 'brightness(1.5) drop-shadow(0 0 8px rgba(243, 232, 255, 0.5))' : undefined }}
+        />
+      </div>
+
       {/* Light mode logo */}
       <svg
         className="h-10 w-auto dark:hidden transition-all duration-300 group-hover:scale-105"
@@ -212,29 +235,6 @@ export default function AnimatedLogo() {
           </filter>
         </defs>
       </svg>
-
-      {/* Logo Image - Light Mode */}
-      <div className="dark:hidden">
-        <Image
-          src="/logo_purple.svg"
-          alt="CoStudy Logo"
-          width={40}
-          height={40}
-          className="transition-all duration-300 group-hover:scale-105"
-        />
-      </div>
-
-      {/* Logo Image - Dark Mode with shimmer effect */}
-      <div className="hidden dark:block">
-        <Image
-          src="/logo_upperleft.svg"
-          alt="CoStudy Logo"
-          width={40}
-          height={40}
-          className="transition-all duration-300 group-hover:scale-105 brightness-150"
-          style={{ filter: mounted ? 'brightness(1.5) drop-shadow(0 0 8px rgba(243, 232, 255, 0.5))' : undefined }}
-        />
-      </div>
 
       {/* Hover tooltip */}
       <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">

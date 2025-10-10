@@ -55,7 +55,7 @@ export default function Products() {
             </h1>
 
             {/* Sub-Headline */}
-            <p className="text-lg md:text-xl lg:text-2xl text-white dark:text-gray-100 mb-10 leading-relaxed max-w-4xl mx-auto">
+            <p className="text-lg md:text-xl lg:text-2xl text-white/95 dark:text-gray-50 mb-10 leading-relaxed max-w-4xl mx-auto font-medium">
               Research-based collaboration tools that support all learners, regardless of discipline, ability, or learning environment. Build professional skills, improve grading fairness, and save instructors time.
             </p>
 
