@@ -72,7 +72,7 @@ export default function Demo() {
           <div className="absolute bottom-32 right-1/4 w-40 h-px bg-gradient-to-r from-transparent via-pink-300/40 dark:via-pink-600/40 to-transparent"></div>
         </div>
 
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-[#6B3DCB] dark:text-[#E0E7FF]">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-[#6B3DCB] dark:text-[#E9EEFF]">
           What You&apos;ll Learn
         </h2>
         <p className="text-center text-[#5E6E76] dark:text-[#A0AEC0] mb-12 max-w-2xl mx-auto">
@@ -89,7 +89,7 @@ export default function Demo() {
               </div>
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-[#E0E7FF] group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-[#E9EEFF] group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                 Complete Platform Walkthrough
               </h3>
               <p className="text-[#5E6E76] dark:text-[#A0AEC0] leading-relaxed">
@@ -107,7 +107,7 @@ export default function Demo() {
               </div>
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-[#E0E7FF] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-[#E9EEFF] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                 Customized to Your Needs
               </h3>
               <p className="text-[#5E6E76] dark:text-[#A0AEC0] leading-relaxed">
@@ -125,7 +125,7 @@ export default function Demo() {
               </div>
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-[#E0E7FF] group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-[#E9EEFF] group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                 Implementation Guidance
               </h3>
               <p className="text-[#5E6E76] dark:text-[#A0AEC0] leading-relaxed">
@@ -143,7 +143,7 @@ export default function Demo() {
               </div>
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-[#E0E7FF] group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">
+              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-[#E9EEFF] group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">
                 Q&A with Our Team
               </h3>
               <p className="text-[#5E6E76] dark:text-[#A0AEC0] leading-relaxed">
@@ -166,7 +166,7 @@ export default function Demo() {
                 </svg>
                 <span className="text-sm font-medium text-[#4A12C0] dark:text-purple-300">Pick a Time That Works for You</span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-3 text-[#374045] dark:text-[#E0E7FF]">
+              <h2 className="text-3xl md:text-4xl font-bold mb-3 text-[#374045] dark:text-[#E9EEFF]">
                 Schedule Your Demo
               </h2>
               <p className="text-lg text-[#5E6E76] dark:text-[#A0AEC0] max-w-2xl mx-auto leading-relaxed">

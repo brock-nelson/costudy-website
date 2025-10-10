@@ -20,7 +20,7 @@ export default function Resources() {
         </div>
         <div className="container mx-auto px-4 relative">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[#2D3748] dark:text-[#E0E7FF]">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[#2D3748] dark:text-[#E9EEFF]">
               Resources & Guides
             </h1>
             <p className="text-xl text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
@@ -36,7 +36,7 @@ export default function Resources() {
           <div className="group relative p-8 rounded-2xl border border-blue-100 dark:border-[#404040] hover:border-blue-200 dark:hover:border-blue-700 bg-gradient-to-br from-white to-blue-50/30 dark:from-gray-800 dark:to-blue-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
             <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/5 dark:bg-blue-500/10 rounded-bl-[100px] rounded-tr-2xl"></div>
             <div className="text-4xl mb-4">📖</div>
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF] relative">Getting Started Guide</h3>
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF] relative">Getting Started Guide</h3>
             <p className="text-[#4A5568] dark:text-[#A0AEC0] relative leading-relaxed">
               Step-by-step instructions for setting up CoStudy in your classroom.
             </p>
@@ -46,7 +46,7 @@ export default function Resources() {
           <div className="group relative p-8 rounded-2xl border border-purple-100 dark:border-[#404040] hover:border-purple-200 dark:hover:border-purple-700 bg-gradient-to-br from-white to-purple-50/30 dark:from-gray-800 dark:to-purple-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
             <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/5 dark:bg-purple-500/10 rounded-bl-[100px] rounded-tr-2xl"></div>
             <div className="text-4xl mb-4">📋</div>
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF] relative">Team Charter Templates</h3>
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF] relative">Team Charter Templates</h3>
             <p className="text-[#4A5568] dark:text-[#A0AEC0] relative leading-relaxed">
               Ready-to-use templates for creating effective team agreements.
             </p>
@@ -56,7 +56,7 @@ export default function Resources() {
           <div className="group relative p-8 rounded-2xl border border-green-100 dark:border-[#404040] hover:border-green-200 dark:hover:border-green-700 bg-gradient-to-br from-white to-green-50/30 dark:from-gray-800 dark:to-green-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
             <div className="absolute top-0 right-0 w-20 h-20 bg-green-500/5 dark:bg-green-500/10 rounded-bl-[100px] rounded-tr-2xl"></div>
             <div className="text-4xl mb-4">🎯</div>
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF] relative">Assessment Rubrics</h3>
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF] relative">Assessment Rubrics</h3>
             <p className="text-[#4A5568] dark:text-[#A0AEC0] relative leading-relaxed">
               Rubrics for evaluating teamwork and collaboration skills.
             </p>
@@ -66,7 +66,7 @@ export default function Resources() {
           <div className="group relative p-8 rounded-2xl border border-blue-100 dark:border-[#404040] hover:border-blue-200 dark:hover:border-blue-700 bg-gradient-to-br from-white to-blue-50/30 dark:from-gray-800 dark:to-blue-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
             <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/5 dark:bg-blue-500/10 rounded-bl-[100px] rounded-tr-2xl"></div>
             <div className="text-4xl mb-4">🎬</div>
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF] relative">Video Tutorials</h3>
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF] relative">Video Tutorials</h3>
             <p className="text-[#4A5568] dark:text-[#A0AEC0] relative leading-relaxed">
               Watch demos and learn best practices from expert educators.
             </p>
@@ -76,7 +76,7 @@ export default function Resources() {
           <div className="group relative p-8 rounded-2xl border border-purple-100 dark:border-[#404040] hover:border-purple-200 dark:hover:border-purple-700 bg-gradient-to-br from-white to-purple-50/30 dark:from-gray-800 dark:to-purple-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
             <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/5 dark:bg-purple-500/10 rounded-bl-[100px] rounded-tr-2xl"></div>
             <div className="text-4xl mb-4">📊</div>
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF] relative">Case Studies</h3>
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF] relative">Case Studies</h3>
             <p className="text-[#4A5568] dark:text-[#A0AEC0] relative leading-relaxed">
               Real-world examples of successful team-based learning implementations.
             </p>
@@ -86,7 +86,7 @@ export default function Resources() {
           <div className="group relative p-8 rounded-2xl border border-green-100 dark:border-[#404040] hover:border-green-200 dark:hover:border-green-700 bg-gradient-to-br from-white to-green-50/30 dark:from-gray-800 dark:to-green-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
             <div className="absolute top-0 right-0 w-20 h-20 bg-green-500/5 dark:bg-green-500/10 rounded-bl-[100px] rounded-tr-2xl"></div>
             <div className="text-4xl mb-4">💡</div>
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF] relative">Best Practices</h3>
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF] relative">Best Practices</h3>
             <p className="text-[#4A5568] dark:text-[#A0AEC0] relative leading-relaxed">
               Tips and strategies from experienced educators in the CoStudy community.
             </p>
@@ -105,7 +105,7 @@ export default function Resources() {
         </div>
         <div className="container mx-auto px-4 text-center relative">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#2D3748] dark:text-[#E0E7FF]">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#2D3748] dark:text-[#E9EEFF]">
               Need Help Getting Started?
             </h2>
             <p className="text-xl text-[#4A5568] dark:text-[#A0AEC0] mb-10 leading-relaxed">

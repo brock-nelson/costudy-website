@@ -118,7 +118,7 @@ export default function Home() {
         </div>
 
         <div className="container mx-auto px-4 relative">
-        <h2 id="solutions-heading" className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#6B3DCB] dark:text-[#E0E7FF]">
+        <h2 id="solutions-heading" className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#6B3DCB] dark:text-[#E9EEFF]">
           Tailored Solutions for Every Role
         </h2>
         <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -181,7 +181,7 @@ export default function Home() {
           <div className="absolute top-1/2 left-10 w-20 h-20 bg-gradient-to-tr from-blue-200/10 to-transparent border border-blue-200/20 rounded-2xl -rotate-12 backdrop-blur-sm"></div>
         </div>
         <div className="container mx-auto px-4 relative">
-          <h2 id="features-heading" className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#6B3DCB] dark:text-[#E0E7FF]">
+          <h2 id="features-heading" className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#6B3DCB] dark:text-[#E9EEFF]">
             Powerful Tools for Better Teamwork
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -190,7 +190,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-200/0 to-purple-200/0 dark:from-purple-400/0 dark:to-purple-400/0 group-hover:from-purple-200/30 dark:group-hover:from-purple-400/20 group-hover:to-transparent rounded-2xl transition-all duration-300"></div>
                 <span className="text-4xl relative">📋</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Team Charters</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Team Charters</h3>
               <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Help teams establish clear expectations and working agreements from day one.
               </p>
@@ -201,7 +201,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-200/0 to-purple-200/0 dark:from-purple-400/0 dark:to-purple-400/0 group-hover:from-purple-200/30 dark:group-hover:from-purple-400/20 group-hover:to-transparent rounded-2xl transition-all duration-300"></div>
                 <span className="text-4xl relative">📈</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Growth-Goal Scales</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Growth-Goal Scales</h3>
               <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Track individual development and measure progress toward collaboration goals.
               </p>
@@ -212,7 +212,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-200/0 to-purple-200/0 dark:from-purple-400/0 dark:to-purple-400/0 group-hover:from-purple-200/30 dark:group-hover:from-purple-400/20 group-hover:to-transparent rounded-2xl transition-all duration-300"></div>
                 <span className="text-4xl relative">💬</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Peer Feedback</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Peer Feedback</h3>
               <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Facilitate constructive feedback that helps students grow and improve.
               </p>
@@ -241,7 +241,7 @@ export default function Home() {
         </div>
         <div className="container mx-auto px-4 text-center relative">
           <div className="max-w-3xl mx-auto">
-            <h2 id="cta-heading" className="text-3xl md:text-4xl font-bold mb-6 text-[#374045] dark:text-[#E0E7FF]">
+            <h2 id="cta-heading" className="text-3xl md:text-4xl font-bold mb-6 text-[#374045] dark:text-[#E9EEFF]">
               Ready to Transform Student Collaboration?
             </h2>
             <p className="text-xl text-[#5E6E76] dark:text-[#A0AEC0] mb-10 leading-relaxed">

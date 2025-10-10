@@ -113,20 +113,26 @@ body:not(.high-contrast) .dark {
   color: #ededed;
 }
 
+/* Hero h1 keeps original color */
 body:not(.high-contrast).dark h1,
+body:not(.high-contrast) .dark h1 {
+  color: #E0E7FF !important;
+  text-shadow: 0 0 30px rgba(224, 231, 255, 0.4), 0 0 15px rgba(224, 231, 255, 0.3) !important;
+}
+
+/* Section headings h2-h6 are 30% lighter */
 body:not(.high-contrast).dark h2,
 body:not(.high-contrast).dark h3,
 body:not(.high-contrast).dark h4,
 body:not(.high-contrast).dark h5,
 body:not(.high-contrast).dark h6,
-body:not(.high-contrast) .dark h1,
 body:not(.high-contrast) .dark h2,
 body:not(.high-contrast) .dark h3,
 body:not(.high-contrast) .dark h4,
 body:not(.high-contrast) .dark h5,
 body:not(.high-contrast) .dark h6 {
-  color: #E0E7FF !important;
-  text-shadow: 0 0 30px rgba(224, 231, 255, 0.4), 0 0 15px rgba(224, 231, 255, 0.3) !important;
+  color: #E9EEFF !important;
+  text-shadow: 0 0 30px rgba(233, 238, 255, 0.4), 0 0 15px rgba(233, 238, 255, 0.3) !important;
 }
 
 body:not(.high-contrast).dark p,

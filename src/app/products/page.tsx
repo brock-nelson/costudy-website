@@ -196,7 +196,7 @@ export default function Products() {
                   DR
                 </div>
                 <div>
-                  <div className="font-bold text-gray-900 dark:text-[#E0E7FF] text-lg">Dr. Rachel Martinez</div>
+                  <div className="font-bold text-gray-900 dark:text-[#E9EEFF] text-lg">Dr. Rachel Martinez</div>
                   <div className="text-sm text-gray-600 dark:text-[#A0AEC0]">Associate Professor, Boston College</div>
                 </div>
               </div>
@@ -212,7 +212,7 @@ export default function Products() {
                   JK
                 </div>
                 <div>
-                  <div className="font-bold text-gray-900 dark:text-[#E0E7FF] text-lg">Jamie Kim</div>
+                  <div className="font-bold text-gray-900 dark:text-[#E9EEFF] text-lg">Jamie Kim</div>
                   <div className="text-sm text-gray-600 dark:text-[#A0AEC0]">Computer Science Student, NYU</div>
                 </div>
               </div>
@@ -228,7 +228,7 @@ export default function Products() {
                   MT
                 </div>
                 <div>
-                  <div className="font-bold text-gray-900 dark:text-[#E0E7FF] text-lg">Michael Thompson</div>
+                  <div className="font-bold text-gray-900 dark:text-[#E9EEFF] text-lg">Michael Thompson</div>
                   <div className="text-sm text-gray-600 dark:text-[#A0AEC0]">Dean of Engineering, Carnegie Mellon</div>
                 </div>
               </div>
@@ -254,7 +254,7 @@ export default function Products() {
             {/* Challenge 1 - Purple/Violet in dark mode */}
             <div className="bg-gradient-to-br from-red-50 to-orange-50 dark:from-purple-900/30 dark:to-violet-900/30 p-8 rounded-3xl border-2 border-red-100 dark:border-[#404040]/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div className="text-5xl mb-4">😤</div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Social Loafing</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Social Loafing</h3>
               <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                 Some students do all the work while others coast along, making grading unfair and frustrating for everyone.
               </p>
@@ -263,7 +263,7 @@ export default function Products() {
             {/* Challenge 2 - Blue in dark mode */}
             <div className="bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-blue-900/30 dark:to-indigo-900/30 p-8 rounded-3xl border-2 border-orange-100 dark:border-[#404040]/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div className="text-5xl mb-4">⏰</div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Grading Burden</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Grading Burden</h3>
               <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                 Instructors spend hours trying to determine individual contributions from group submissions.
               </p>
@@ -272,7 +272,7 @@ export default function Products() {
             {/* Challenge 3 - Cyan/Teal in dark mode */}
             <div className="bg-gradient-to-br from-yellow-50 to-amber-50 dark:from-cyan-900/30 dark:to-teal-900/30 p-8 rounded-3xl border-2 border-yellow-100 dark:border-[#404040]/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div className="text-5xl mb-4">👻</div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Late Discovery</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Late Discovery</h3>
               <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                 Conflicts and dysfunction surface too late to intervene, often after the project deadline.
               </p>
@@ -281,7 +281,7 @@ export default function Products() {
             {/* Challenge 4 - Deep Purple in dark mode */}
             <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-purple-900/30 dark:to-fuchsia-900/30 p-8 rounded-3xl border-2 border-amber-100 dark:border-[#404040]/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div className="text-5xl mb-4">🎓</div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Missed Learning</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Missed Learning</h3>
               <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                 Students graduate without developing crucial collaboration skills employers demand.
               </p>
@@ -636,28 +636,28 @@ export default function Products() {
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 p-8 rounded-3xl border-2 border-purple-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">⏰</div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Save 30+ Hours Per Semester</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Save 30+ Hours Per Semester</h3>
                   <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                     Automate peer assessment, track contributions automatically, and grade with confidence using data-driven insights.
                   </p>
                 </div>
                 <div className="bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 p-8 rounded-3xl border-2 border-cyan-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">📊</div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Data-Backed Grading Fairness</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Data-Backed Grading Fairness</h3>
                   <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                     Move beyond guesswork with quantitative participation metrics and peer-validated contribution data.
                   </p>
                 </div>
                 <div className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 p-8 rounded-3xl border-2 border-emerald-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">🚨</div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Early Intervention</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Early Intervention</h3>
                   <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                     Identify struggling teams before the deadline with automated alerts and weekly check-in data.
                   </p>
                 </div>
                 <div className="bg-gradient-to-br from-indigo-100 to-violet-100 dark:from-indigo-900/30 dark:to-violet-900/30 p-8 rounded-3xl border-2 border-indigo-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">🎓</div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Build Transferable Skills</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Build Transferable Skills</h3>
                   <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                     Explicitly teach and assess collaboration competencies that students will use throughout their careers.
                   </p>
@@ -669,28 +669,28 @@ export default function Products() {
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 p-8 rounded-3xl border-2 border-purple-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">⚖️</div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Fair Recognition</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Fair Recognition</h3>
                   <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                     Your contributions are tracked and valued. No more carrying the team without credit.
                   </p>
                 </div>
                 <div className="bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 p-8 rounded-3xl border-2 border-cyan-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">💡</div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Grow Real Skills</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Grow Real Skills</h3>
                   <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                     Develop communication, conflict resolution, and teamwork abilities employers actually want.
                   </p>
                 </div>
                 <div className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 p-8 rounded-3xl border-2 border-emerald-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">🎯</div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Clear Expectations</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Clear Expectations</h3>
                   <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                     Team charters and structured feedback eliminate confusion about roles and responsibilities.
                   </p>
                 </div>
                 <div className="bg-gradient-to-br from-indigo-100 to-violet-100 dark:from-indigo-900/30 dark:to-violet-900/30 p-8 rounded-3xl border-2 border-indigo-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">📈</div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Track Your Progress</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Track Your Progress</h3>
                   <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                     Set personal growth goals and see yourself improve as a collaborator throughout the semester.
                   </p>
@@ -702,28 +702,28 @@ export default function Products() {
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 p-8 rounded-3xl border-2 border-purple-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">📊</div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Institution-Wide Analytics</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Institution-Wide Analytics</h3>
                   <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                     Track collaboration outcomes across departments, programs, and cohorts to inform strategic decisions.
                   </p>
                 </div>
                 <div className="bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 p-8 rounded-3xl border-2 border-cyan-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">🎓</div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Accreditation Support</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Accreditation Support</h3>
                   <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                     Document learning outcomes with exportable reports that demonstrate teamwork competency development.
                   </p>
                 </div>
                 <div className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 p-8 rounded-3xl border-2 border-emerald-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">💰</div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Measurable ROI</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Measurable ROI</h3>
                   <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                     Reduce faculty time burden, improve student satisfaction, and enhance employment outcomes.
                   </p>
                 </div>
                 <div className="bg-gradient-to-br from-indigo-100 to-violet-100 dark:from-indigo-900/30 dark:to-violet-900/30 p-8 rounded-3xl border-2 border-indigo-200 dark:border-[#404040]">
                   <div className="text-5xl mb-4">🔒</div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4">Enterprise Security</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4">Enterprise Security</h3>
                   <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed">
                     FERPA compliant, SOC 2 certified, SSO integration, and dedicated support for your institution.
                   </p>
@@ -739,17 +739,17 @@ export default function Products() {
                 <div className="grid md:grid-cols-3 gap-6">
                   <div className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 p-6 rounded-2xl border border-purple-200 dark:border-[#404040]">
                     <div className="text-4xl mb-3">👨‍🏫</div>
-                    <p className="font-semibold text-gray-900 dark:text-[#E0E7FF]">Professors</p>
+                    <p className="font-semibold text-gray-900 dark:text-[#E9EEFF]">Professors</p>
                     <p className="text-sm text-gray-700 dark:text-[#A0AEC0]">Save time & grade fairly</p>
                   </div>
                   <div className="bg-gradient-to-br from-cyan-100 to-blue-100 dark:from-cyan-900/30 dark:to-blue-900/30 p-6 rounded-2xl border border-cyan-200 dark:border-[#404040]">
                     <div className="text-4xl mb-3">🎓</div>
-                    <p className="font-semibold text-gray-900 dark:text-[#E0E7FF]">Students</p>
+                    <p className="font-semibold text-gray-900 dark:text-[#E9EEFF]">Students</p>
                     <p className="text-sm text-gray-700 dark:text-[#A0AEC0]">Build career skills</p>
                   </div>
                   <div className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/30 dark:to-teal-900/30 p-6 rounded-2xl border border-emerald-200 dark:border-[#404040]">
                     <div className="text-4xl mb-3">🏛️</div>
-                    <p className="font-semibold text-gray-900 dark:text-[#E0E7FF]">Administrators</p>
+                    <p className="font-semibold text-gray-900 dark:text-[#E9EEFF]">Administrators</p>
                     <p className="text-sm text-gray-700 dark:text-[#A0AEC0]">Track outcomes</p>
                   </div>
                 </div>
@@ -778,7 +778,7 @@ export default function Products() {
                     1
                   </div>
                   <div className="text-6xl mb-6 mt-4 text-center">🚀</div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4 text-center">Setup & Integration</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4 text-center">Setup & Integration</h3>
                   <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed text-center">
                     Connect CoStudy to your LMS, import your course rosters, and customize team formation settings. Takes less than 15 minutes.
                   </p>
@@ -792,7 +792,7 @@ export default function Products() {
                     2
                   </div>
                   <div className="text-6xl mb-6 mt-4 text-center">📝</div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4 text-center">Teams Collaborate</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4 text-center">Teams Collaborate</h3>
                   <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed text-center">
                     Students create team charters, give peer feedback, complete check-ins, and track their growth throughout the semester.
                   </p>
@@ -806,7 +806,7 @@ export default function Products() {
                     3
                   </div>
                   <div className="text-6xl mb-6 mt-4 text-center">🎯</div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-4 text-center">Insights & Grading</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-4 text-center">Insights & Grading</h3>
                   <p className="text-gray-700 dark:text-[#A0AEC0] leading-relaxed text-center">
                     Review analytics, identify struggling teams early, and grade individual contributions fairly with data-backed insights.
                   </p>
@@ -831,7 +831,7 @@ export default function Products() {
             {/* Research */}
             <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-10 rounded-3xl border-2 border-blue-200 dark:border-[#404040]">
               <div className="text-6xl mb-6">🔬</div>
-              <h3 className="text-3xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-6">Research-Backed Methodology</h3>
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-6">Research-Backed Methodology</h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
                   <svg className="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
@@ -863,7 +863,7 @@ export default function Products() {
             {/* Fairness */}
             <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 p-10 rounded-3xl border-2 border-indigo-200 dark:border-[#404040]">
               <div className="text-6xl mb-6">⚖️</div>
-              <h3 className="text-3xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-6">Equity & Accessibility First</h3>
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-6">Equity & Accessibility First</h3>
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
                   <svg className="w-6 h-6 text-indigo-600 dark:text-indigo-400 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
@@ -912,7 +912,7 @@ export default function Products() {
                 Coming Q2 2025
               </div>
               <div className="text-5xl mb-4">🤖</div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-3">AI-Powered Insights</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-3">AI-Powered Insights</h3>
               <p className="text-gray-700 dark:text-[#A0AEC0]">
                 Smart suggestions for team interventions and personalized coaching recommendations.
               </p>
@@ -924,7 +924,7 @@ export default function Products() {
                 Coming Q2 2025
               </div>
               <div className="text-5xl mb-4">📱</div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-3">Mobile App</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-3">Mobile App</h3>
               <p className="text-gray-700 dark:text-[#A0AEC0]">
                 Native iOS and Android apps for on-the-go check-ins and feedback.
               </p>
@@ -936,7 +936,7 @@ export default function Products() {
                 Coming Q3 2025
               </div>
               <div className="text-5xl mb-4">🎥</div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-3">Video Reflection</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-3">Video Reflection</h3>
               <p className="text-gray-700 dark:text-[#A0AEC0]">
                 Record and share video reflections on team experiences and growth.
               </p>
@@ -948,7 +948,7 @@ export default function Products() {
                 Coming Q3 2025
               </div>
               <div className="text-5xl mb-4">🌍</div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-3">Multi-Language Support</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-3">Multi-Language Support</h3>
               <p className="text-gray-700 dark:text-[#A0AEC0]">
                 Full interface translation for Spanish, Mandarin, and 10+ additional languages.
               </p>
@@ -960,7 +960,7 @@ export default function Products() {
                 Coming Q4 2025
               </div>
               <div className="text-5xl mb-4">🎮</div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-3">Gamification</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-3">Gamification</h3>
               <p className="text-gray-700 dark:text-[#A0AEC0]">
                 Badges, achievements, and friendly competition to boost engagement.
               </p>
@@ -972,7 +972,7 @@ export default function Products() {
                 Coming Q4 2025
               </div>
               <div className="text-5xl mb-4">📊</div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-3">Advanced Analytics</h3>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-3">Advanced Analytics</h3>
               <p className="text-gray-700 dark:text-[#A0AEC0]">
                 Predictive modeling for team success and longitudinal collaboration tracking.
               </p>
@@ -994,10 +994,10 @@ export default function Products() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {/* Free Pilot */}
             <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-gray-200 dark:border-[#404040]">
-              <h3 className="text-3xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-2">Free Pilot</h3>
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-2">Free Pilot</h3>
               <p className="text-gray-600 dark:text-[#A0AEC0] mb-6">Perfect for trying CoStudy</p>
               <div className="mb-8">
-                <span className="text-5xl font-black text-gray-900 dark:text-[#E0E7FF]">$0</span>
+                <span className="text-5xl font-black text-gray-900 dark:text-[#E9EEFF]">$0</span>
                 <span className="text-gray-600 dark:text-[#A0AEC0] text-lg">/semester</span>
               </div>
               <ul className="space-y-4 mb-8">
@@ -1022,7 +1022,7 @@ export default function Products() {
               </ul>
               <Link
                 href="/contact"
-                className="block text-center bg-gray-100 dark:bg-[#242424] hover:bg-gray-200 dark:hover:bg-[#2e2e2e] text-gray-900 dark:text-[#E0E7FF] px-6 py-4 rounded-xl font-bold text-lg transition-colors"
+                className="block text-center bg-gray-100 dark:bg-[#242424] hover:bg-gray-200 dark:hover:bg-[#2e2e2e] text-gray-900 dark:text-[#E9EEFF] px-6 py-4 rounded-xl font-bold text-lg transition-colors"
               >
                 Start Free Pilot
               </Link>
@@ -1074,10 +1074,10 @@ export default function Products() {
 
             {/* Institution */}
             <div className="bg-white dark:bg-[#1a1a1a] p-8 rounded-3xl shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border-2 border-gray-200 dark:border-[#404040]">
-              <h3 className="text-3xl font-bold text-gray-900 dark:text-[#E0E7FF] mb-2">Institution</h3>
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-[#E9EEFF] mb-2">Institution</h3>
               <p className="text-gray-600 dark:text-[#A0AEC0] mb-6">University-wide deployment</p>
               <div className="mb-8">
-                <span className="text-5xl font-black text-gray-900 dark:text-[#E0E7FF]">Custom</span>
+                <span className="text-5xl font-black text-gray-900 dark:text-[#E9EEFF]">Custom</span>
               </div>
               <ul className="space-y-4 mb-8">
                 <li className="flex items-start gap-3">
@@ -1107,7 +1107,7 @@ export default function Products() {
               </ul>
               <Link
                 href="/contact"
-                className="block text-center bg-gray-100 dark:bg-[#242424] hover:bg-gray-200 dark:hover:bg-[#2e2e2e] text-gray-900 dark:text-[#E0E7FF] px-6 py-4 rounded-xl font-bold text-lg transition-colors"
+                className="block text-center bg-gray-100 dark:bg-[#242424] hover:bg-gray-200 dark:hover:bg-[#2e2e2e] text-gray-900 dark:text-[#E9EEFF] px-6 py-4 rounded-xl font-bold text-lg transition-colors"
               >
                 Contact Sales
               </Link>

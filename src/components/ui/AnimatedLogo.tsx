@@ -4,71 +4,107 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-// Particle burst effect - commented out per user request
-// interface Particle {
-//   id: number;
-//   x: number;
-//   y: number;
-//   angle: number;
-//   speed: number;
-//   life: number;
-//   size: number;
-//   color: string;
-// }
+interface Particle {
+  id: number;
+  x: number;
+  y: number;
+  angle: number;
+  speed: number;
+  life: number;
+  maxLife: number;
+  size: number;
+}
+
+interface OrbitDot {
+  id: number;
+  angle: number;
+  radius: number;
+  speed: number;
+}
 
 export default function AnimatedLogo() {
   const [mounted, setMounted] = useState(false);
-  // const [particles, setParticles] = useState<Particle[]>([]);
+  const [isHovered, setIsHovered] = useState(false);
+  const [particles, setParticles] = useState<Particle[]>([]);
+  const [orbitDots, setOrbitDots] = useState<OrbitDot[]>([]);
 
   useEffect(() => {
     setMounted(true);
+
+    // Initialize 3 orbit dots for dark mode animation
+    const initialDots: OrbitDot[] = [
+      { id: 1, angle: 0, radius: 35, speed: 0.02 },
+      { id: 2, angle: Math.PI * 2 / 3, radius: 35, speed: 0.02 },
+      { id: 3, angle: Math.PI * 4 / 3, radius: 35, speed: 0.02 },
+    ];
+    setOrbitDots(initialDots);
   }, []);
 
-  // Particle animation - commented out per user request
-  // useEffect(() => {
-  //   if (particles.length === 0) return;
+  // Animate orbit dots
+  useEffect(() => {
+    if (!mounted || orbitDots.length === 0) return;
 
-  //   const animate = () => {
-  //     setParticles(prev =>
-  //       prev
-  //         .map(p => ({
-  //           ...p,
-  //           x: p.x + Math.cos(p.angle) * p.speed,
-  //           y: p.y + Math.sin(p.angle) * p.speed,
-  //           life: p.life - 0.02,
-  //         }))
-  //         .filter(p => p.life > 0)
-  //     );
-  //   };
+    const animate = () => {
+      setOrbitDots(prev => prev.map(dot => ({
+        ...dot,
+        angle: dot.angle + dot.speed
+      })));
+    };
 
-  //   const interval = setInterval(animate, 16);
-  //   return () => clearInterval(interval);
-  // }, [particles]);
+    const interval = setInterval(animate, 16);
+    return () => clearInterval(interval);
+  }, [mounted, orbitDots.length]);
 
-  // Particle burst handler - commented out per user request
-  // const handleClick = () => {
-  //   // Create particle burst!
-  //   const colors = ['#8B5CF6', '#A78BFA', '#EC4899', '#F472B6', '#06B6D4', '#22D3EE'];
-  //   const newParticles: Particle[] = [];
+  // Animate particles (burst on click)
+  useEffect(() => {
+    if (particles.length === 0) return;
 
-  //   for (let i = 0; i < 20; i++) {
-  //     newParticles.push({
-  //       id: Date.now() + i,
-  //       x: 0,
-  //       y: 0,
-  //       angle: (Math.PI * 2 * i) / 20 + (Math.random() - 0.5) * 0.5,
-  //       speed: 2 + Math.random() * 3,
-  //       life: 1,
-  //       size: 4 + Math.random() * 6,
-  //       color: colors[Math.floor(Math.random() * colors.length)],
-  //     });
-  //   }
+    const animate = () => {
+      setParticles(prev =>
+        prev
+          .map(p => ({
+            ...p,
+            x: p.x + Math.cos(p.angle) * p.speed,
+            y: p.y + Math.sin(p.angle) * p.speed,
+            life: p.life - 1,
+          }))
+          .filter(p => p.life > 0)
+      );
+    };
 
-  //   setParticles(newParticles);
-  // };
+    const interval = setInterval(animate, 16);
+    return () => clearInterval(interval);
+  }, [particles.length]);
+
+  // Handle click - create particle burst
+  const handleClick = () => {
+    const newParticles: Particle[] = [];
+
+    // Create 12 particles bursting outward
+    for (let i = 0; i < 12; i++) {
+      newParticles.push({
+        id: Date.now() + i,
+        x: 0,
+        y: 0,
+        angle: (Math.PI * 2 * i) / 12,
+        speed: 3 + Math.random() * 2,
+        life: 60,
+        maxLife: 60,
+        size: 4 + Math.random() * 4,
+      });
+    }
+
+    setParticles(newParticles);
+  };
 
   return (
-    <Link href="/" className="relative group cursor-pointer inline-flex items-center gap-3">
+    <Link
+      href="/"
+      className="relative group cursor-pointer inline-flex items-center gap-3"
+      onClick={handleClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {/* Light mode: Unified logo with brand purple colors */}
       <div className="dark:hidden relative">
         <Image
@@ -81,7 +117,7 @@ export default function AnimatedLogo() {
         />
       </div>
 
-      {/* Dark mode: Full logo image with neon effect */}
+      {/* Dark mode: Full logo image with reduced shadow + animations */}
       <div className="hidden dark:block relative">
         <Image
           src="/logo_upperleft.svg"
@@ -91,7 +127,7 @@ export default function AnimatedLogo() {
           className="h-10 w-auto transition-all duration-300 group-hover:scale-105"
           style={{
             filter: mounted
-              ? 'invert(1) brightness(2.5) saturate(0.9) drop-shadow(0 0 6px rgba(243, 232, 255, 0.6)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.4))'
+              ? 'invert(1) brightness(2.5) saturate(0.9) drop-shadow(0 0 3px rgba(243, 232, 255, 0.4)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.2))'
               : undefined
           }}
         />
@@ -112,6 +148,85 @@ export default function AnimatedLogo() {
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer-logo" />
           </div>
         )}
+
+        {/* Orbit dots and lines (dark mode only) */}
+        {mounted && orbitDots.length > 0 && (
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+            {/* Draw connecting lines between dots */}
+            <svg
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+              width="80"
+              height="80"
+              style={{
+                opacity: isHovered ? 0.6 : 0.3,
+                transition: 'opacity 0.3s ease',
+              }}
+            >
+              {orbitDots.map((dot, i) => {
+                const nextDot = orbitDots[(i + 1) % orbitDots.length];
+                const x1 = 40 + Math.cos(dot.angle) * dot.radius;
+                const y1 = 40 + Math.sin(dot.angle) * dot.radius;
+                const x2 = 40 + Math.cos(nextDot.angle) * nextDot.radius;
+                const y2 = 40 + Math.sin(nextDot.angle) * nextDot.radius;
+
+                return (
+                  <line
+                    key={`line-${dot.id}`}
+                    x1={x1}
+                    y1={y1}
+                    x2={x2}
+                    y2={y2}
+                    stroke="rgba(167, 139, 250, 0.4)"
+                    strokeWidth="1"
+                  />
+                );
+              })}
+            </svg>
+
+            {/* Render orbit dots */}
+            {orbitDots.map(dot => {
+              const x = Math.cos(dot.angle) * dot.radius;
+              const y = Math.sin(dot.angle) * dot.radius;
+
+              return (
+                <div
+                  key={`dot-${dot.id}`}
+                  className="absolute rounded-full border-2 border-purple-400"
+                  style={{
+                    left: `${x}px`,
+                    top: `${y}px`,
+                    width: isHovered ? '8px' : '6px',
+                    height: isHovered ? '8px' : '6px',
+                    transform: 'translate(-50%, -50%)',
+                    backgroundColor: 'transparent',
+                    boxShadow: isHovered
+                      ? '0 0 8px rgba(167, 139, 250, 0.8)'
+                      : '0 0 4px rgba(167, 139, 250, 0.5)',
+                    transition: 'all 0.3s ease',
+                  }}
+                />
+              );
+            })}
+          </div>
+        )}
+
+        {/* Particle burst on click */}
+        {mounted && particles.map(particle => (
+          <div
+            key={particle.id}
+            className="absolute pointer-events-none rounded-full"
+            style={{
+              left: '50%',
+              top: '50%',
+              transform: `translate(calc(-50% + ${particle.x}px), calc(-50% + ${particle.y}px))`,
+              width: `${particle.size}px`,
+              height: `${particle.size}px`,
+              backgroundColor: 'rgba(167, 139, 250, 0.8)',
+              opacity: particle.life / particle.maxLife,
+              boxShadow: `0 0 ${particle.size * 2}px rgba(167, 139, 250, 0.6)`,
+            }}
+          />
+        ))}
       </div>
 
       <style jsx>{`
@@ -138,24 +253,6 @@ export default function AnimatedLogo() {
           <div className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-2 h-2 bg-white/95 dark:bg-gray-800/95 border-r border-b border-gray-200/60 dark:border-gray-700/60 rotate-45"></div>
         </div>
       </div>
-
-      {/* Particle burst effect on click - commented out per user request */}
-      {/* {mounted && particles.map(particle => (
-        <div
-          key={particle.id}
-          className="absolute pointer-events-none rounded-full"
-          style={{
-            left: `${50 + particle.x}px`,
-            top: `${20 + particle.y}px`,
-            width: `${particle.size}px`,
-            height: `${particle.size}px`,
-            backgroundColor: particle.color,
-            opacity: particle.life,
-            boxShadow: `0 0 ${particle.size * 2}px ${particle.color}`,
-            transition: 'opacity 0.1s',
-          }}
-        />
-      ))} */}
     </Link>
   );
 }

@@ -43,33 +43,33 @@ export default function ForStudents() {
 
       {/* Benefits Section */}
       <section className="container mx-auto px-4 py-16" aria-labelledby="benefits-heading">
-        <h2 id="benefits-heading" className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E0E7FF]">
+        <h2 id="benefits-heading" className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E9EEFF]">
           Why Students Love CoStudy
         </h2>
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <div className="border-l-4 border-purple-600 dark:border-purple-400 pl-6">
-            <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-[#E0E7FF]">Clear Expectations</h3>
+            <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-[#E9EEFF]">Clear Expectations</h3>
             <p className="text-[#5E6E76] dark:text-[#A0AEC0] leading-relaxed">
               Team charters help everyone understand roles, responsibilities, and how you&apos;ll work together.
             </p>
           </div>
 
           <div className="border-l-4 border-purple-600 dark:border-purple-400 pl-6">
-            <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-[#E0E7FF]">Track Your Growth</h3>
+            <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-[#E9EEFF]">Track Your Growth</h3>
             <p className="text-[#5E6E76] dark:text-[#A0AEC0] leading-relaxed">
               Set personal collaboration goals and see your progress throughout the semester.
             </p>
           </div>
 
           <div className="border-l-4 border-purple-600 dark:border-purple-400 pl-6">
-            <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-[#E0E7FF]">Give Better Feedback</h3>
+            <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-[#E9EEFF]">Give Better Feedback</h3>
             <p className="text-[#5E6E76] dark:text-[#A0AEC0] leading-relaxed">
               Learn to provide constructive feedback that helps your teammates improve.
             </p>
           </div>
 
           <div className="border-l-4 border-purple-600 dark:border-purple-400 pl-6">
-            <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-[#E0E7FF]">Build Your Portfolio</h3>
+            <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-[#E9EEFF]">Build Your Portfolio</h3>
             <p className="text-[#5E6E76] dark:text-[#A0AEC0] leading-relaxed">
               Document your teamwork skills and experiences for internships and job applications.
             </p>
@@ -80,7 +80,7 @@ export default function ForStudents() {
       {/* How It Works */}
       <section className="bg-gray-50 dark:bg-[#1a1a1a] py-16" aria-labelledby="how-it-works-heading">
         <div className="container mx-auto px-4">
-          <h2 id="how-it-works-heading" className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E0E7FF]">
+          <h2 id="how-it-works-heading" className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E9EEFF]">
             How CoStudy Works for You
           </h2>
           <div className="max-w-3xl mx-auto space-y-6">
@@ -89,7 +89,7 @@ export default function ForStudents() {
                 1
               </div>
               <div>
-                <h3 className="text-lg font-bold mb-2 text-[#2D3748] dark:text-[#E0E7FF]">Build Your Foundation</h3>
+                <h3 className="text-lg font-bold mb-2 text-[#2D3748] dark:text-[#E9EEFF]">Build Your Foundation</h3>
                 <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                   Create a team charter and set personal collaboration goals that align with your growth.
                 </p>
@@ -101,7 +101,7 @@ export default function ForStudents() {
                 2
               </div>
               <div>
-                <h3 className="text-lg font-bold mb-2 text-[#2D3748] dark:text-[#E0E7FF]">Collaborate & Learn</h3>
+                <h3 className="text-lg font-bold mb-2 text-[#2D3748] dark:text-[#E9EEFF]">Collaborate & Learn</h3>
                 <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                   Work on projects while CoStudy helps you reflect on team dynamics and individual contributions.
                 </p>
@@ -113,7 +113,7 @@ export default function ForStudents() {
                 3
               </div>
               <div>
-                <h3 className="text-lg font-bold mb-2 text-[#2D3748] dark:text-[#E0E7FF]">Grow Together</h3>
+                <h3 className="text-lg font-bold mb-2 text-[#2D3748] dark:text-[#E9EEFF]">Grow Together</h3>
                 <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                   Exchange constructive feedback and track your progress toward becoming an exceptional teammate.
                 </p>
@@ -125,47 +125,47 @@ export default function ForStudents() {
 
       {/* Skills You'll Build */}
       <section className="container mx-auto px-4 py-16" aria-labelledby="skills-heading">
-        <h2 id="skills-heading" className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E0E7FF]">
+        <h2 id="skills-heading" className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E9EEFF]">
           Skills You&apos;ll Develop
         </h2>
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-lg">
-            <h3 className="font-semibold mb-2 text-[#374045] dark:text-[#E0E7FF]">Communication</h3>
+            <h3 className="font-semibold mb-2 text-[#374045] dark:text-[#E9EEFF]">Communication</h3>
             <p className="text-[#5E6E76] dark:text-[#A0AEC0] text-sm leading-relaxed">
               Express ideas clearly, listen actively, and adapt your style to different contexts.
             </p>
           </div>
 
           <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-lg">
-            <h3 className="font-semibold mb-2 text-[#374045] dark:text-[#E0E7FF]">Accountability</h3>
+            <h3 className="font-semibold mb-2 text-[#374045] dark:text-[#E9EEFF]">Accountability</h3>
             <p className="text-[#5E6E76] dark:text-[#A0AEC0] text-sm leading-relaxed">
               Follow through on commitments and take responsibility for your contributions.
             </p>
           </div>
 
           <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-lg">
-            <h3 className="font-semibold mb-2 text-[#374045] dark:text-[#E0E7FF]">Conflict Resolution</h3>
+            <h3 className="font-semibold mb-2 text-[#374045] dark:text-[#E9EEFF]">Conflict Resolution</h3>
             <p className="text-[#5E6E76] dark:text-[#A0AEC0] text-sm leading-relaxed">
               Navigate disagreements constructively and find win-win solutions.
             </p>
           </div>
 
           <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-lg">
-            <h3 className="font-semibold mb-2 text-[#374045] dark:text-[#E0E7FF]">Leadership</h3>
+            <h3 className="font-semibold mb-2 text-[#374045] dark:text-[#E9EEFF]">Leadership</h3>
             <p className="text-[#5E6E76] dark:text-[#A0AEC0] text-sm leading-relaxed">
               Take initiative, motivate others, and guide teams toward shared goals.
             </p>
           </div>
 
           <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-lg">
-            <h3 className="font-semibold mb-2 text-[#374045] dark:text-[#E0E7FF]">Empathy</h3>
+            <h3 className="font-semibold mb-2 text-[#374045] dark:text-[#E9EEFF]">Empathy</h3>
             <p className="text-[#5E6E76] dark:text-[#A0AEC0] text-sm leading-relaxed">
               Understand diverse perspectives and build inclusive team environments.
             </p>
           </div>
 
           <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-lg">
-            <h3 className="font-semibold mb-2 text-[#374045] dark:text-[#E0E7FF]">Adaptability</h3>
+            <h3 className="font-semibold mb-2 text-[#374045] dark:text-[#E9EEFF]">Adaptability</h3>
             <p className="text-[#5E6E76] dark:text-[#A0AEC0] text-sm leading-relaxed">
               Adjust to changing team dynamics and respond flexibly to challenges.
             </p>

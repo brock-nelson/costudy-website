@@ -136,24 +136,31 @@ export default function GradientText({ children, className = "" }: GradientTextP
 
   // Dynamic gradient colors that shift with scroll
   // Light mode: Brand purple → lavender/rose
-  // Dark mode: Neon indigo → cyan
+  // Dark mode: Starts dark left, shifts to light left / dark right on scroll
   const getBrandColors = (isDark: boolean, scroll: number): string[] => {
     try {
       // Normalize scroll to 0-1 range (transition over 500px)
       const scrollProgress = Math.min(scroll / 500, 1);
 
       if (isDark) {
-        // Dark mode: Neon indigo → cyan transition
-        // Start: Indigo shades (high contrast on dark bg)
-        const start = ['#818CF8', '#6366F1', '#4F46E5', '#4338CA']; // Indigo 400-700
-        // End: Cyan shades (neon cyan)
-        const end = ['#22D3EE', '#06B6D4', '#0891B2', '#0E7490']; // Cyan 400-700
+        // Dark mode: Shifts from dark-left to light-left/dark-right on scroll
+        // At top (scroll 0): Dark purple/indigo on left → lighter on right
+        // Scrolled down (scroll 1): Light lavender/cyan on left → dark purple/indigo on right
 
-        // Interpolate between indigo and cyan
+        // Dark colors for starting position (left side at top, right side when scrolled)
+        const darkShades = ['#4338CA', '#4F46E5', '#6366F1', '#7C3AED']; // Dark indigo/purple
+        // Light colors for ending position (right side at top, left side when scrolled)
+        const lightShades = ['#A78BFA', '#C4B5FD', '#DDD6FE', '#E9D5FF']; // Light purple/lavender
+
+        // Reverse the gradient direction as user scrolls
+        // At scroll 0: [dark, dark, light, light] - dark on left
+        // At scroll 1: [light, light, dark, dark] - light on left
         if (scrollProgress < 0.5) {
-          return start;
+          // Top of page: dark → light gradient
+          return [darkShades[0], darkShades[1], lightShades[0], lightShades[1]];
         } else {
-          return end;
+          // Scrolled down: light → dark gradient (reversed)
+          return [lightShades[1], lightShades[2], darkShades[2], darkShades[3]];
         }
       } else {
         // Light mode: Brand purple → lavender/rose transition
@@ -173,7 +180,7 @@ export default function GradientText({ children, className = "" }: GradientTextP
       console.debug('getBrandColors error:', error);
       // Return default purple palette on error
       return isDark
-        ? ['#818CF8', '#6366F1', '#4F46E5', '#4338CA']
+        ? ['#4338CA', '#4F46E5', '#A78BFA', '#C4B5FD']
         : ['#6B21A8', '#7C3AED', '#8B5CF6', '#A78BFA'];
     }
   };

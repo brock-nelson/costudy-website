@@ -43,33 +43,33 @@ export default function ForAdministrators() {
 
       {/* Benefits Section */}
       <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E0E7FF]">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E9EEFF]">
           Strategic Insights for Institutional Leaders
         </h2>
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <div className="border-l-4 border-green-600 dark:border-[#404040] pl-6">
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Measure Student Outcomes</h3>
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Measure Student Outcomes</h3>
             <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
               Track collaboration skills, retention rates, and career readiness across departments and cohorts.
             </p>
           </div>
 
           <div className="border-l-4 border-green-600 dark:border-[#404040] pl-6">
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Demonstrate ROI</h3>
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Demonstrate ROI</h3>
             <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
               Quantify the impact of teamwork initiatives with clear metrics on student success and satisfaction.
             </p>
           </div>
 
           <div className="border-l-4 border-green-600 dark:border-[#404040] pl-6">
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Support Faculty Adoption</h3>
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Support Faculty Adoption</h3>
             <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
               Easy onboarding, training resources, and ongoing support ensure high faculty engagement.
             </p>
           </div>
 
           <div className="border-l-4 border-green-600 dark:border-[#404040] pl-6">
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Institutional Scalability</h3>
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Institutional Scalability</h3>
             <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
               From single departments to university-wide deployment, CoStudy scales with your needs.
             </p>
@@ -80,13 +80,13 @@ export default function ForAdministrators() {
       {/* Analytics Dashboard Preview */}
       <section className="bg-gray-50 dark:bg-[#1a1a1a] py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E0E7FF]">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E9EEFF]">
             Comprehensive Analytics & Reporting
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
               <div className="text-4xl mb-4">📊</div>
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Institutional Dashboards</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Institutional Dashboards</h3>
               <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Real-time visibility into collaboration metrics across all courses and programs.
               </p>
@@ -94,7 +94,7 @@ export default function ForAdministrators() {
 
             <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
               <div className="text-4xl mb-4">📈</div>
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Skill Development Tracking</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Skill Development Tracking</h3>
               <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Monitor student growth in communication, leadership, and teamwork competencies.
               </p>
@@ -102,7 +102,7 @@ export default function ForAdministrators() {
 
             <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
               <div className="text-4xl mb-4">🎯</div>
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Success Metrics</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Success Metrics</h3>
               <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Track retention, engagement, and satisfaction rates with actionable insights.
               </p>
@@ -110,7 +110,7 @@ export default function ForAdministrators() {
 
             <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
               <div className="text-4xl mb-4">🔍</div>
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Equity Analysis</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Equity Analysis</h3>
               <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Identify and address disparities in student collaboration experiences.
               </p>
@@ -118,7 +118,7 @@ export default function ForAdministrators() {
 
             <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
               <div className="text-4xl mb-4">📋</div>
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Custom Reports</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Custom Reports</h3>
               <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Generate reports for accreditation, grants, and stakeholder communications.
               </p>
@@ -126,7 +126,7 @@ export default function ForAdministrators() {
 
             <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
               <div className="text-4xl mb-4">💰</div>
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">ROI Calculator</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">ROI Calculator</h3>
               <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Quantify cost savings and impact on student outcomes with our interactive tool.
               </p>
@@ -144,33 +144,33 @@ export default function ForAdministrators() {
 
       {/* Implementation Section */}
       <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E0E7FF]">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E9EEFF]">
           Enterprise-Ready Implementation
         </h2>
         <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Secure & Compliant</h3>
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Secure & Compliant</h3>
             <p className="text-[#4A5568] dark:text-[#A0AEC0] mb-4 leading-relaxed">
               FERPA-compliant, SOC 2 certified, and enterprise-grade security to protect student data.
             </p>
           </div>
 
           <div>
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Flexible Integration</h3>
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Flexible Integration</h3>
             <p className="text-[#4A5568] dark:text-[#A0AEC0] mb-4 leading-relaxed">
               Works with your existing LMS, SIS, and data warehouse infrastructure.
             </p>
           </div>
 
           <div>
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Dedicated Support</h3>
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Dedicated Support</h3>
             <p className="text-[#4A5568] dark:text-[#A0AEC0] mb-4 leading-relaxed">
               White-glove onboarding, training, and ongoing technical support for your team.
             </p>
           </div>
 
           <div>
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Custom Solutions</h3>
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Custom Solutions</h3>
             <p className="text-[#4A5568] dark:text-[#A0AEC0] mb-4 leading-relaxed">
               Tailored features and workflows to match your institutional needs and policies.
             </p>

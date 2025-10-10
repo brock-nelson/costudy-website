@@ -60,7 +60,7 @@ export default function About() {
           <div className="absolute bottom-10 left-1/4 w-40 h-40 bg-gradient-to-tr from-blue-200/20 dark:from-blue-600/20 to-transparent rounded-full blur-2xl"></div>
         </div>
         <div className="max-w-4xl mx-auto relative">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#6B3DCB] dark:text-[#E0E7FF]">Our Mission</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#6B3DCB] dark:text-[#E9EEFF]">Our Mission</h2>
           <p className="text-lg text-[#4A5568] dark:text-[#A0AEC0] mb-4 leading-relaxed">
             Student collaboration is essential for deep learning, yet it&apos;s often left to chance.
             Teams struggle with unclear expectations, poor communication, and unequal participation.
@@ -80,13 +80,13 @@ export default function About() {
       {/* Values Section */}
       <section className="bg-[#EDE7F9] dark:bg-[#1a1a1a] py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E0E7FF]">Our Values</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E9EEFF]">Our Values</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="text-center">
               <div className="bg-white dark:bg-[#1a1a1a] w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center shadow-md">
                 <span className="text-4xl">🎯</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Student-Centered</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Student-Centered</h3>
               <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Everything we build is designed to help students grow and succeed.
               </p>
@@ -96,7 +96,7 @@ export default function About() {
               <div className="bg-white dark:bg-[#1a1a1a] w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center shadow-md">
                 <span className="text-4xl">🔬</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Evidence-Based</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Evidence-Based</h3>
               <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Our approach is grounded in research on effective learning and teamwork.
               </p>
@@ -106,7 +106,7 @@ export default function About() {
               <div className="bg-white dark:bg-[#1a1a1a] w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center shadow-md">
                 <span className="text-4xl">🤝</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Collaborative</h3>
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF]">Collaborative</h3>
               <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 We partner with educators to continuously improve and innovate.
               </p>
@@ -123,7 +123,7 @@ export default function About() {
           <div className="absolute bottom-10 right-10 w-36 h-36 bg-gradient-to-tl from-cyan-200/20 dark:from-cyan-600/20 to-transparent rounded-full blur-2xl"></div>
         </div>
         <div className="max-w-4xl mx-auto relative">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E0E7FF]">Our Team</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E9EEFF]">Our Team</h2>
           <p className="text-lg text-[#4A5568] dark:text-[#A0AEC0] text-center mb-12 leading-relaxed">
             We&apos;re a team of educators, researchers, and technologists passionate about
             transforming how students learn to work together.
