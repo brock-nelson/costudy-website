@@ -117,8 +117,8 @@ export default function AnimatedBackground() {
       return {
         x: 0,
         y: 0,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
+        vx: (Math.random() - 0.5) * 0.1, // Reduced initial velocity
+        vy: (Math.random() - 0.5) * 0.1,
         rotation: 0, // No rotation
         rotationSpeed: 0, // No rotation
         scale: 1,
@@ -206,42 +206,37 @@ export default function AnimatedBackground() {
         return prevParticles.map((p, index) => {
           const time = Date.now() * 0.001;
 
-          // Playful random forces for gentle wandering
-          const forceX = (Math.random() - 0.5) * 0.015;
-          const forceY = (Math.random() - 0.5) * 0.015;
+          // Very gentle random forces - barely noticeable drift
+          const forceX = (Math.random() - 0.5) * 0.005;
+          const forceY = (Math.random() - 0.5) * 0.005;
 
-          // SMOOTH SCROLL PHYSICS: Gentle flowing movement (reduced from extreme values)
+          // CALM SCROLL PHYSICS: Subtle hint of movement during scroll
           const scrollMag = Math.abs(scrollVelocity);
           const scrollDir = Math.sign(scrollVelocity);
 
-          // Gentle wave during scroll - each particle follows smooth sine pattern
-          const wavePhase = time * 1.5 + index * 1.2;
-          const waveX = Math.sin(wavePhase) * scrollMag * 3;
-          const waveY = Math.cos(wavePhase * 0.7) * scrollMag * 4;
+          // Very gentle wave during scroll - barely perceptible
+          const wavePhase = time * 0.8 + index * 0.8;
+          const waveX = Math.sin(wavePhase) * scrollMag * 1;
+          const waveY = Math.cos(wavePhase * 0.5) * scrollMag * 1.5;
 
-          // Subtle spiral during scroll (MUCH reduced for elegance)
-          const spiralPhase = time + index * 0.5;
-          const spiralX = Math.cos(spiralPhase) * scrollMag * 2;
-          const spiralY = scrollDir * scrollMag * 3;
+          // Subtle flow with scroll direction
+          const scrollForceX = waveX * (isDarkMode ? 1.2 : 1);
+          const scrollForceY = waveY * scrollDir * (isDarkMode ? 1.2 : 1);
 
-          // Combine scroll effects (subtle, not extreme)
-          const scrollForceX = (waveX + spiralX) * (isDarkMode ? 1.3 : 1);
-          const scrollForceY = (waveY + spiralY) * (isDarkMode ? 1.3 : 1);
-
-          // Playful floating oscillation (always active)
-          const floatX = Math.sin(time * 0.8 + index * 0.9) * 0.03;
-          const floatY = Math.cos(time * 0.6 + index * 0.7) * 0.04;
+          // Gentle breathing oscillation - calm and hypnotic
+          const floatX = Math.sin(time * 0.4 + index * 0.6) * 0.015;
+          const floatY = Math.cos(time * 0.3 + index * 0.5) * 0.02;
 
           // Update velocity with all forces
           let vx = p.vx + forceX + scrollForceX + floatX;
           let vy = p.vy + forceY + scrollForceY + floatY;
 
-          // Playful damping (less damping = more bouncy)
-          vx *= 0.95;
-          vy *= 0.95;
+          // Strong damping for calm, gentle movement
+          vx *= 0.97; // Increased damping slows everything down
+          vy *= 0.97;
 
-          // Limit max velocity but allow more playful movement
-          const maxVel = 0.5;
+          // Tight velocity limits - keep movement subtle
+          const maxVel = 0.2; // Reduced from 0.5 for calmer movement
           vx = Math.max(-maxVel, Math.min(maxVel, vx));
           vy = Math.max(-maxVel, Math.min(maxVel, vy));
 
@@ -249,44 +244,43 @@ export default function AnimatedBackground() {
           let x = p.x + vx;
           let y = p.y + vy;
 
-          // Playful bounce physics - subtle squish on wall impact
+          // Gentle containment - barely noticeable bounce
           let squishX = p.squishX;
           let squishY = p.squishY;
-          const maxDrift = 35; // Increased boundary for more freedom
+          const maxDrift = 25; // Reduced boundary - keep them closer to origin
           let hitWall = false;
 
           if (Math.abs(x) > maxDrift) {
             x = Math.sign(x) * maxDrift;
-            vx *= -0.75; // Gentle bounce
-            // Subtle horizontal squish on impact (reduced from 0.6/1.4)
-            squishX = 0.85;
-            squishY = 1.15;
+            vx *= -0.6; // Soft bounce, quickly dampens
+            // Barely visible squish
+            squishX = 0.95;
+            squishY = 1.05;
             hitWall = true;
           }
           if (Math.abs(y) > maxDrift) {
             y = Math.sign(y) * maxDrift;
-            vy *= -0.75; // Gentle bounce
-            // Subtle vertical squish on impact
+            vy *= -0.6; // Soft bounce
             if (!hitWall) {
-              squishX = 1.15;
-              squishY = 0.85;
+              squishX = 1.05;
+              squishY = 0.95;
             }
             hitWall = true;
           }
 
-          // Quick spring-back to normal (faster recovery = less weird look)
+          // Very quick return to normal - squish is barely noticeable
           if (!hitWall) {
-            squishX += (1 - squishX) * 0.25; // Increased from 0.15 for faster recovery
-            squishY += (1 - squishY) * 0.25;
+            squishX += (1 - squishX) * 0.35; // Very fast recovery
+            squishY += (1 - squishY) * 0.35;
           }
 
           // No rotation - keep particles oriented
           const velocityMag = Math.sqrt(vx * vx + vy * vy);
 
-          // Slow random pulse (independent per particle)
+          // Very slow, gentle pulse (independent per particle)
           const pulsePhase = p.pulsePhase + p.pulseSpeed;
-          const pulseFactor = Math.sin(pulsePhase) * 0.08 + 1; // ±8% size variation
-          const scale = pulseFactor + velocityMag * 0.2;
+          const pulseFactor = Math.sin(pulsePhase) * 0.04 + 1; // ±4% size variation (reduced from 8%)
+          const scale = pulseFactor + velocityMag * 0.1; // Reduced velocity impact on scale
 
           // Slow color transition (cycle through rainbow over time)
           const colorTransition = (p.colorTransition + 0.0003) % 1;
@@ -304,8 +298,8 @@ export default function AnimatedBackground() {
             pulseSpeed: p.pulseSpeed,
             colorIndex: p.colorIndex,
             colorTransition,
-            squishX: Math.max(0.85, Math.min(1.15, squishX)),
-            squishY: Math.max(0.85, Math.min(1.15, squishY)),
+            squishX: Math.max(0.95, Math.min(1.05, squishX)),
+            squishY: Math.max(0.95, Math.min(1.05, squishY)),
           };
         });
       });
