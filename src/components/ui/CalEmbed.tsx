@@ -67,7 +67,7 @@ export default function CalEmbed({ calLink, className = "" }: CalEmbedProps) {
               Calendar not loading?
             </h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              If you're using a privacy blocker or ad blocker, you may need to allow Cal.com to display the scheduler.
+              If you&apos;re using a privacy blocker or ad blocker, you may need to allow Cal.com to display the scheduler.
             </p>
             <a
               href={`https://cal.com/${calLink}`}

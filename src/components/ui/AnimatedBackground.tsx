@@ -7,7 +7,6 @@ export default function AnimatedBackground() {
   const [textBounds, setTextBounds] = useState<DOMRect | null>(null);
   const [mounted, setMounted] = useState(false);
   const [scrollVelocity, setScrollVelocity] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
   const lastScrollRef = useRef(0);
   const lastScrollTimeRef = useRef(Date.now());
 

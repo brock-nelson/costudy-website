@@ -238,7 +238,7 @@ export default function Products() {
             The Collaboration Challenge
           </h2>
           <p className="text-center text-gray-600 dark:text-gray-200 mb-16 max-w-3xl mx-auto text-lg">
-            Group work is essential, but it's broken. Here's what instructors and students face every day:
+            Group work is essential, but it&apos;s broken. Here&apos;s what instructors and students face every day:
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
@@ -828,7 +828,7 @@ export default function Products() {
                   <svg className="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-gray-700 dark:text-gray-200">Based on Tuckman's stages of team development</span>
+                  <span className="text-gray-700 dark:text-gray-200">Based on Tuckman&apos;s stages of team development</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <svg className="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
@@ -890,10 +890,10 @@ export default function Products() {
       <section className="py-20 bg-gradient-to-br from-purple-50 via-blue-50 to-cyan-50 dark:from-purple-900/20 dark:via-blue-900/20 dark:to-cyan-900/20">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl md:text-6xl font-black text-center mb-4 bg-gradient-to-r from-purple-600 to-cyan-600 dark:from-purple-400 dark:to-cyan-400 bg-clip-text text-transparent">
-            What's Next
+            What&apos;s Next
           </h2>
           <p className="text-center text-gray-600 dark:text-gray-200 mb-16 max-w-3xl mx-auto text-lg">
-            We're constantly improving CoStudy based on your feedback. Here's what's coming soon:
+            We&apos;re constantly improving CoStudy based on your feedback. Here&apos;s what&apos;s coming soon:
           </p>
 
           <div className="max-w-5xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -979,7 +979,7 @@ export default function Products() {
             Flexible Pricing
           </h2>
           <p className="text-center text-gray-600 dark:text-gray-200 mb-16 max-w-3xl mx-auto text-lg">
-            Choose the plan that fits your institution's needs
+            Choose the plan that fits your institution&apos;s needs
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
