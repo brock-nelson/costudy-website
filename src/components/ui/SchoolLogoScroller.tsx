@@ -40,83 +40,83 @@ export default function SchoolLogoScroller() {
   }
 
   return (
-    <div className="py-16 bg-gradient-to-r from-purple-100/50 via-blue-100/40 to-purple-100/50 dark:from-purple-900/10 dark:via-blue-900/5 dark:to-purple-900/10 border-y border-purple-200/70 dark:border-purple-800/30 shadow-inner overflow-hidden">
+    <div className="relative py-16 bg-gradient-to-r from-purple-100/50 via-blue-100/40 to-purple-100/50 dark:from-purple-900/10 dark:via-blue-900/5 dark:to-purple-900/10 border-y border-purple-200/70 dark:border-purple-800/30 shadow-inner overflow-hidden">
       <div className="container mx-auto px-4">
         <p className="text-center text-base font-bold text-gray-700 dark:text-gray-300 mb-10 uppercase tracking-wider">
           Trusted by Leading Institutions
         </p>
+      </div>
 
-        {/* Infinite scroll slider - no interactive elements */}
-        <div className="relative">
-          {/* Gradient masks for smooth fade */}
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-purple-100/50 via-purple-100/50 to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a] dark:to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-purple-100/50 via-purple-100/50 to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a] dark:to-transparent z-10 pointer-events-none"></div>
+      {/* Gradient masks extending to viewport edges - positioned absolutely to parent section */}
+      <div className="absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-purple-100/50 via-purple-100/30 to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a]/90 dark:to-transparent z-20 pointer-events-none"></div>
+      <div className="absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-purple-100/50 via-purple-100/30 to-transparent dark:from-[#0a0a0a] dark:via-[#0a0a0a]/90 dark:to-transparent z-20 pointer-events-none"></div>
 
-          {/* Scrolling container with two identical sets for seamless loop */}
-          <div className="flex animate-scroll-seamless">
-            {/* First set */}
-            {schools.map((school, index) => (
-              <div
-                key={`set1-${school.name}-${index}`}
-                className="flex-shrink-0 mx-8"
-              >
-                <div className="relative h-24 w-40 flex items-center justify-center bg-white/80 dark:bg-gray-800/40 rounded-xl p-5 backdrop-blur-md border-2 border-gray-300/70 dark:border-gray-700/50">
-                  <Image
-                    src={school.logo}
-                    alt={`${school.name} logo`}
-                    width={160}
-                    height={96}
-                    className="object-contain max-h-14 w-auto filter opacity-90 dark:brightness-0 dark:invert dark:opacity-80"
-                    onError={(e) => {
-                      // Fallback to text if image doesn't load
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const parent = target.parentElement;
-                      if (parent) {
-                        parent.innerHTML = `<div class="text-xs text-center font-semibold text-gray-500 dark:text-gray-400 px-2">${school.name}</div>`;
-                      }
-                    }}
-                  />
-                </div>
+      {/* Scrolling container wrapper - full width */}
+      <div className="relative overflow-hidden">
+        {/* Scrolling container with two identical sets for seamless loop */}
+        <div className="flex animate-scroll-seamless">
+          {/* First set */}
+          {schools.map((school, index) => (
+            <div
+              key={`set1-${school.name}-${index}`}
+              className="flex-shrink-0 mx-8 first:ml-0"
+            >
+              <div className="relative h-24 w-40 flex items-center justify-center bg-white/80 dark:bg-gray-800/40 rounded-xl p-5 backdrop-blur-md border-2 border-gray-300/70 dark:border-gray-700/50">
+                <Image
+                  src={school.logo}
+                  alt={`${school.name} logo`}
+                  width={160}
+                  height={96}
+                  className="object-contain max-h-14 w-auto filter opacity-90 dark:brightness-0 dark:invert dark:opacity-80"
+                  onError={(e) => {
+                    // Fallback to text if image doesn't load
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    const parent = target.parentElement;
+                    if (parent) {
+                      parent.innerHTML = `<div class="text-xs text-center font-semibold text-gray-500 dark:text-gray-400 px-2">${school.name}</div>`;
+                    }
+                  }}
+                />
               </div>
-            ))}
-            {/* Second identical set for seamless loop */}
-            {schools.map((school, index) => (
-              <div
-                key={`set2-${school.name}-${index}`}
-                className="flex-shrink-0 mx-8"
-              >
-                <div className="relative h-24 w-40 flex items-center justify-center bg-white/80 dark:bg-gray-800/40 rounded-xl p-5 backdrop-blur-md border-2 border-gray-300/70 dark:border-gray-700/50">
-                  <Image
-                    src={school.logo}
-                    alt={`${school.name} logo`}
-                    width={160}
-                    height={96}
-                    className="object-contain max-h-14 w-auto filter opacity-90 dark:brightness-0 dark:invert dark:opacity-80"
-                    onError={(e) => {
-                      // Fallback to text if image doesn't load
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      const parent = target.parentElement;
-                      if (parent) {
-                        parent.innerHTML = `<div class="text-xs text-center font-semibold text-gray-500 dark:text-gray-400 px-2">${school.name}</div>`;
-                      }
-                    }}
-                  />
-                </div>
+            </div>
+          ))}
+          {/* Second identical set for seamless loop */}
+          {schools.map((school, index) => (
+            <div
+              key={`set2-${school.name}-${index}`}
+              className="flex-shrink-0 mx-8"
+            >
+              <div className="relative h-24 w-40 flex items-center justify-center bg-white/80 dark:bg-gray-800/40 rounded-xl p-5 backdrop-blur-md border-2 border-gray-300/70 dark:border-gray-700/50">
+                <Image
+                  src={school.logo}
+                  alt={`${school.name} logo`}
+                  width={160}
+                  height={96}
+                  className="object-contain max-h-14 w-auto filter opacity-90 dark:brightness-0 dark:invert dark:opacity-80"
+                  onError={(e) => {
+                    // Fallback to text if image doesn't load
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    const parent = target.parentElement;
+                    if (parent) {
+                      parent.innerHTML = `<div class="text-xs text-center font-semibold text-gray-500 dark:text-gray-400 px-2">${school.name}</div>`;
+                    }
+                  }}
+                />
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
 
       <style jsx>{`
         @keyframes scrollSeamless {
-          0% {
-            transform: translateX(0);
+          from {
+            transform: translate3d(0, 0, 0);
           }
-          100% {
-            transform: translateX(-50%);
+          to {
+            transform: translate3d(-50%, 0, 0);
           }
         }
         .animate-scroll-seamless {
