@@ -125,13 +125,13 @@ body:not(.high-contrast) .dark h3,
 body:not(.high-contrast) .dark h4,
 body:not(.high-contrast) .dark h5,
 body:not(.high-contrast) .dark h6 {
-  color: #E0E7FF;
-  text-shadow: 0 0 20px rgba(224, 231, 255, 0.15);
+  color: #E0E7FF !important;
+  text-shadow: 0 0 30px rgba(224, 231, 255, 0.4), 0 0 15px rgba(224, 231, 255, 0.3) !important;
 }
 
 body:not(.high-contrast).dark p,
 body:not(.high-contrast) .dark p {
-  color: #A0AEC0;
+  color: #A0AEC0 !important;
 }
 
 /* Blur and reduce animated background activity in normal mode */
