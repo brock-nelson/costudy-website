@@ -12,41 +12,62 @@ export default function AnimatedBackground() {
 
   useEffect(() => {
     setMounted(true);
+
     const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth) * 100;
-      const y = (e.clientY / window.innerHeight) * 100;
-      setMousePos({ x, y });
+      try {
+        if (!e || typeof window === 'undefined') return;
+        const width = window.innerWidth || 1;
+        const height = window.innerHeight || 1;
+        const x = ((e.clientX || 0) / width) * 100;
+        const y = ((e.clientY || 0) / height) * 100;
+        setMousePos({ x, y });
+      } catch (error) {
+        // Silently handle any errors to prevent crashes
+        console.debug('MouseMove error:', error);
+      }
     };
 
     // Track title text position for orb interactions
     const updateTextBounds = () => {
-      // Look for hero title specifically
-      const titleElement = document.querySelector('h1') || document.querySelector('[id="hero-heading"]');
-      if (titleElement) {
-        setTextBounds(titleElement.getBoundingClientRect());
+      try {
+        if (typeof document === 'undefined') return;
+        // Look for hero title specifically
+        const titleElement = document.querySelector('h1') || document.querySelector('[id="hero-heading"]');
+        if (titleElement && titleElement.getBoundingClientRect) {
+          setTextBounds(titleElement.getBoundingClientRect());
+        }
+      } catch (error) {
+        // Silently handle any errors
+        console.debug('UpdateTextBounds error:', error);
       }
     };
 
     // Handle scroll for physics
     const handleScroll = () => {
-      const now = Date.now();
-      const currentScroll = window.scrollY;
-      const deltaTime = now - lastScrollTimeRef.current;
-      const deltaScroll = currentScroll - lastScrollRef.current;
+      try {
+        if (typeof window === 'undefined') return;
+        const now = Date.now();
+        const currentScroll = window.scrollY || 0;
+        const deltaTime = now - lastScrollTimeRef.current;
+        const deltaScroll = currentScroll - lastScrollRef.current;
 
-      if (deltaTime > 0) {
-        const velocity = deltaScroll / deltaTime;
-        setScrollVelocity(velocity);
+        if (deltaTime > 0) {
+          const velocity = deltaScroll / deltaTime;
+          setScrollVelocity(velocity);
 
-        // Decay scroll velocity over time
-        setTimeout(() => {
-          setScrollVelocity(v => v * 0.9);
-        }, 100);
+          // Decay scroll velocity over time
+          setTimeout(() => {
+            setScrollVelocity(v => v * 0.9);
+          }, 100);
+        }
+
+        lastScrollRef.current = currentScroll;
+        lastScrollTimeRef.current = now;
+        updateTextBounds();
+      } catch (error) {
+        // Silently handle any errors
+        console.debug('HandleScroll error:', error);
       }
-
-      lastScrollRef.current = currentScroll;
-      lastScrollTimeRef.current = now;
-      updateTextBounds();
     };
 
     // Initial update after a small delay to ensure DOM is ready
@@ -86,10 +107,12 @@ export default function AnimatedBackground() {
 
   // Calculate gentle attraction/orbit around text elements
   const getTextInteraction = (orbX: number, orbY: number) => {
-    if (!textBounds) return { x: 0, y: 0 };
+    if (!textBounds || typeof window === 'undefined') return { x: 0, y: 0 };
 
-    const textCenterX = ((textBounds.left + textBounds.width / 2) / window.innerWidth) * 100;
-    const textCenterY = ((textBounds.top + textBounds.height / 2) / window.innerHeight) * 100;
+    const width = window.innerWidth || 1;
+    const height = window.innerHeight || 1;
+    const textCenterX = ((textBounds.left + textBounds.width / 2) / width) * 100;
+    const textCenterY = ((textBounds.top + textBounds.height / 2) / height) * 100;
 
     const dx = textCenterX - orbX;
     const dy = textCenterY - orbY;
