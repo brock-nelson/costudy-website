@@ -10,13 +10,222 @@ const sanitizeNumber = (value: number, fallback: number = 0): number => {
   return value;
 };
 
+// Physics drift state for smooth floating motion
+interface DriftState {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+}
+
+// Playful particle state with rotation and scale
+interface ParticleState {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  rotation: number;
+  rotationSpeed: number;
+  scale: number;
+  baseY: number;
+}
+
 export default function AnimatedBackground() {
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const [textBounds, setTextBounds] = useState<DOMRect | null>(null);
   const [mounted, setMounted] = useState(false);
   const [scrollVelocity, setScrollVelocity] = useState(0);
+  const [drift, setDrift] = useState<Record<string, DriftState>>({});
+  const [particles, setParticles] = useState<ParticleState[]>([]);
   const lastScrollRef = useRef(0);
   const lastScrollTimeRef = useRef(Date.now());
+  const driftAnimationRef = useRef<number | null>(null);
+  const particleAnimationRef = useRef<number | null>(null);
+
+  // Initialize drift states for all shapes
+  useEffect(() => {
+    const shapes = ['orb1', 'orb2', 'orb3', 'hex', 'cyan', 'pink', 'square', 'orange', 'emerald', 'violet', 'teal', 'rose'];
+    const initialDrift: Record<string, DriftState> = {};
+
+    shapes.forEach(shape => {
+      initialDrift[shape] = {
+        x: 0,
+        y: 0,
+        vx: (Math.random() - 0.5) * 0.05,
+        vy: (Math.random() - 0.5) * 0.05,
+      };
+    });
+
+    setDrift(initialDrift);
+  }, []);
+
+  // Initialize playful particle states (7 particles)
+  useEffect(() => {
+    const particleData = [
+      { top: 25, left: 33.33 },
+      { top: 66.67, right: 25 },
+      { top: 50, left: 66.67 },
+      { bottom: 25, left: 50 },
+      { top: 20, right: 40 },
+      { bottom: 33.33, left: 20 },
+      { top: 75, right: 33.33 },
+    ];
+
+    const initialParticles: ParticleState[] = particleData.map((p) => {
+      const baseY = p.top !== undefined ? p.top : 100 - (p.bottom || 0);
+      return {
+        x: 0,
+        y: 0,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        rotation: Math.random() * 360,
+        rotationSpeed: (Math.random() - 0.5) * 2,
+        scale: 1,
+        baseY,
+      };
+    });
+
+    setParticles(initialParticles);
+  }, []);
+
+  // Physics-based drift animation loop for large shapes
+  useEffect(() => {
+    if (!mounted) return;
+
+    const animate = () => {
+      setDrift(prevDrift => {
+        const newDrift: Record<string, DriftState> = {};
+
+        Object.keys(prevDrift).forEach(key => {
+          const d = prevDrift[key];
+
+          // Add random drift force (very gentle)
+          const forceX = (Math.random() - 0.5) * 0.002;
+          const forceY = (Math.random() - 0.5) * 0.002;
+
+          // Update velocity with forces and damping
+          let vx = d.vx + forceX;
+          let vy = d.vy + forceY;
+
+          // Apply damping to prevent runaway motion
+          vx *= 0.98;
+          vy *= 0.98;
+
+          // Limit max velocity
+          const maxVel = 0.08;
+          vx = Math.max(-maxVel, Math.min(maxVel, vx));
+          vy = Math.max(-maxVel, Math.min(maxVel, vy));
+
+          // Update position
+          let x = d.x + vx;
+          let y = d.y + vy;
+
+          // Keep within bounds (-20 to 20 pixels)
+          const maxDrift = 20;
+          if (Math.abs(x) > maxDrift) {
+            x = Math.sign(x) * maxDrift;
+            vx *= -0.5; // bounce back
+          }
+          if (Math.abs(y) > maxDrift) {
+            y = Math.sign(y) * maxDrift;
+            vy *= -0.5; // bounce back
+          }
+
+          newDrift[key] = { x, y, vx, vy };
+        });
+
+        return newDrift;
+      });
+
+      driftAnimationRef.current = requestAnimationFrame(animate);
+    };
+
+    driftAnimationRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (driftAnimationRef.current) {
+        cancelAnimationFrame(driftAnimationRef.current);
+      }
+    };
+  }, [mounted]);
+
+  // Playful particle physics animation loop with scroll interaction
+  useEffect(() => {
+    if (!mounted || particles.length === 0) return;
+
+    const animate = () => {
+      setParticles(prevParticles => {
+        return prevParticles.map((p, index) => {
+          // Add playful random forces
+          const forceX = (Math.random() - 0.5) * 0.015;
+          const forceY = (Math.random() - 0.5) * 0.015;
+
+          // Scroll creates upward/downward force with playful oscillation
+          const scrollForce = scrollVelocity * 8;
+          const oscillation = Math.sin(Date.now() * 0.001 + index * 0.5) * 0.02;
+
+          // Update velocity with forces, scroll impact, and damping
+          let vx = p.vx + forceX;
+          let vy = p.vy + forceY + scrollForce + oscillation;
+
+          // Playful damping (less damping = more bouncy)
+          vx *= 0.95;
+          vy *= 0.95;
+
+          // Limit max velocity but allow more playful movement
+          const maxVel = 0.5;
+          vx = Math.max(-maxVel, Math.min(maxVel, vx));
+          vy = Math.max(-maxVel, Math.min(maxVel, vy));
+
+          // Update position
+          let x = p.x + vx;
+          let y = p.y + vy;
+
+          // Bouncy bounds (-30 to 30 pixels) with playful elastic collision
+          const maxDrift = 30;
+          if (Math.abs(x) > maxDrift) {
+            x = Math.sign(x) * maxDrift;
+            vx *= -0.7; // playful bounce
+          }
+          if (Math.abs(y) > maxDrift) {
+            y = Math.sign(y) * maxDrift;
+            vy *= -0.7; // playful bounce
+          }
+
+          // Update rotation with variable speed based on velocity
+          const velocityMag = Math.sqrt(vx * vx + vy * vy);
+          const rotationSpeed = p.rotationSpeed + velocityMag * 2;
+          const rotation = (p.rotation + rotationSpeed) % 360;
+
+          // Playful scale pulsing based on velocity and time
+          const pulseSpeed = 0.002 + velocityMag * 0.05;
+          const timePulse = Math.sin(Date.now() * pulseSpeed + index) * 0.15;
+          const scale = 1 + timePulse + velocityMag * 0.3;
+
+          return {
+            x,
+            y,
+            vx,
+            vy,
+            rotation,
+            rotationSpeed,
+            scale: Math.max(0.7, Math.min(1.4, scale)),
+            baseY: p.baseY,
+          };
+        });
+      });
+
+      particleAnimationRef.current = requestAnimationFrame(animate);
+    };
+
+    particleAnimationRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (particleAnimationRef.current) {
+        cancelAnimationFrame(particleAnimationRef.current);
+      }
+    };
+  }, [mounted, particles.length, scrollVelocity]);
 
   useEffect(() => {
     setMounted(true);
@@ -219,19 +428,32 @@ export default function AnimatedBackground() {
         const orb2Scroll = getScrollPhysics(orb2Pos.y);
         const orb3Scroll = getScrollPhysics(orb3Pos.y);
 
+        const orb1Drift = drift.orb1 || { x: 0, y: 0 };
+        const orb2Drift = drift.orb2 || { x: 0, y: 0 };
+        const orb3Drift = drift.orb3 || { x: 0, y: 0 };
+
         return (
           <>
             <div
               className="animated-orb absolute -top-40 -left-40 w-[400px] h-[400px] md:w-[700px] md:h-[700px] bg-gradient-to-br from-purple-400/10 dark:from-purple-500/20 via-purple-300/6 dark:via-purple-400/15 to-transparent rounded-full blur-3xl animate-float transition-all duration-300 ease-out will-change-transform"
-              style={{ transform: `translate(${orb1Repulsion.x + orb1Text.x}px, ${orb1Repulsion.y + orb1Text.y + orb1Scroll.y}px)` }}
+              style={{
+                transform: `translate(${orb1Repulsion.x + orb1Text.x + orb1Drift.x}px, ${orb1Repulsion.y + orb1Text.y + orb1Scroll.y + orb1Drift.y}px)`,
+                opacity: mounted ? undefined : 0
+              }}
             ></div>
             <div
               className="animated-orb absolute top-20 -right-40 w-[350px] h-[350px] md:w-[600px] md:h-[600px] bg-gradient-to-bl from-cyan-400/10 dark:from-cyan-500/20 via-blue-400/6 dark:via-blue-500/15 to-transparent rounded-full blur-3xl animate-float-delayed transition-all duration-300 ease-out will-change-transform"
-              style={{ transform: `translate(${orb2Repulsion.x + orb2Text.x}px, ${orb2Repulsion.y + orb2Text.y + orb2Scroll.y}px)` }}
+              style={{
+                transform: `translate(${orb2Repulsion.x + orb2Text.x + orb2Drift.x}px, ${orb2Repulsion.y + orb2Text.y + orb2Scroll.y + orb2Drift.y}px)`,
+                opacity: mounted ? undefined : 0
+              }}
             ></div>
             <div
               className="animated-orb absolute -bottom-40 left-1/3 w-[320px] h-[320px] md:w-[550px] md:h-[550px] bg-gradient-to-tr from-pink-400/8 dark:from-pink-500/18 via-fuchsia-300/5 dark:via-fuchsia-400/12 to-transparent rounded-full blur-3xl animate-float-slow transition-all duration-300 ease-out will-change-transform"
-              style={{ transform: `translate(${orb3Repulsion.x + orb3Text.x}px, ${orb3Repulsion.y + orb3Text.y + orb3Scroll.y}px)` }}
+              style={{
+                transform: `translate(${orb3Repulsion.x + orb3Text.x + orb3Drift.x}px, ${orb3Repulsion.y + orb3Text.y + orb3Scroll.y + orb3Drift.y}px)`,
+                opacity: mounted ? undefined : 0
+              }}
             ></div>
           </>
         );
@@ -247,10 +469,14 @@ export default function AnimatedBackground() {
         const hexPos = { x: 75, y: 25 };
         const hexRepulsion = getRepulsion(hexPos.x, hexPos.y, 10);
         const hexScroll = getScrollPhysics(hexPos.y);
+        const hexDrift = drift.hex || { x: 0, y: 0 };
         return (
           <div
             className="hidden md:block absolute top-1/4 right-1/4 w-40 h-40 lg:w-56 lg:h-56 bg-gradient-to-br from-purple-500/12 dark:from-purple-500/30 via-purple-400/8 dark:via-purple-400/22 to-transparent border-2 border-purple-400/30 dark:border-purple-400/50 rounded-[3rem] animate-morph backdrop-blur-sm shadow-xl shadow-purple-500/25 dark:shadow-purple-400/45 transition-transform duration-300 ease-out will-change-transform"
-            style={{ transform: `translate(${hexRepulsion.x}px, ${hexRepulsion.y + hexScroll.y}px) rotate(12deg)` }}
+            style={{
+              transform: `translate(${hexRepulsion.x + hexDrift.x}px, ${hexRepulsion.y + hexScroll.y + hexDrift.y}px) rotate(12deg)`,
+              opacity: mounted ? undefined : 0
+            }}
           ></div>
         );
       })()}
@@ -260,10 +486,14 @@ export default function AnimatedBackground() {
         const cyanPos = { x: 20, y: 33 };
         const cyanRepulsion = getRepulsion(cyanPos.x, cyanPos.y, 10);
         const cyanScroll = getScrollPhysics(cyanPos.y);
+        const cyanDrift = drift.cyan || { x: 0, y: 0 };
         return (
           <div
-            className="hidden md:block absolute top-1/3 left-1/5 w-44 h-44 lg:w-64 lg:h-64 bg-gradient-to-br from-cyan-500/10 dark:from-cyan-400/28 via-blue-500/12 dark:via-blue-400/32 to-sky-400/6 dark:to-sky-400/18 border-2 border-cyan-400/30 dark:border-cyan-400/50 rounded-[3.5rem] -rotate-6 animate-morph-delayed backdrop-blur-sm shadow-xl shadow-cyan-500/25 dark:shadow-cyan-400/48 transition-transform duration-300 ease-out will-change-transform"
-            style={{ transform: `translate(${cyanRepulsion.x}px, ${cyanRepulsion.y + cyanScroll.y}px) rotate(-6deg)` }}
+            className="hidden md:block absolute top-1/3 left-1/5 w-44 h-44 lg:w-64 lg:h-64 bg-gradient-to-br from-cyan-500/10 dark:from-cyan-400/28 via-blue-500/12 dark:via-blue-400/32 to-sky-400/6 dark:to-sky-400/18 border-2 border-cyan-400/30 dark:border-cyan-400/50 rounded-[3.5rem] animate-morph-delayed backdrop-blur-sm shadow-xl shadow-cyan-500/25 dark:shadow-cyan-400/48 transition-transform duration-300 ease-out will-change-transform"
+            style={{
+              transform: `translate(${cyanRepulsion.x + cyanDrift.x}px, ${cyanRepulsion.y + cyanScroll.y + cyanDrift.y}px) rotate(-6deg)`,
+              opacity: mounted ? undefined : 0
+            }}
           ></div>
         );
       })()}
@@ -273,12 +503,14 @@ export default function AnimatedBackground() {
         const pinkPos = { x: 66, y: 66 };
         const pinkRepulsion = getRepulsion(pinkPos.x, pinkPos.y, 10);
         const pinkScroll = getScrollPhysics(pinkPos.y);
+        const pinkDrift = drift.pink || { x: 0, y: 0 };
         return (
           <div
-            className="hidden md:block absolute bottom-1/3 right-1/3 w-36 h-36 lg:w-52 lg:h-52 bg-gradient-to-br from-pink-500/12 dark:from-pink-400/32 via-fuchsia-500/10 dark:via-fuchsia-400/24 to-rose-400/6 dark:to-rose-400/18 border-2 border-pink-500/30 dark:border-pink-400/50 rounded-[2.5rem] rotate-45 animate-morph backdrop-blur-sm shadow-xl shadow-pink-500/28 dark:shadow-pink-400/48 transition-transform duration-300 ease-out will-change-transform"
+            className="hidden md:block absolute bottom-1/3 right-1/3 w-36 h-36 lg:w-52 lg:h-52 bg-gradient-to-br from-pink-500/12 dark:from-pink-400/32 via-fuchsia-500/10 dark:via-fuchsia-400/24 to-rose-400/6 dark:to-rose-400/18 border-2 border-pink-500/30 dark:border-pink-400/50 rounded-[2.5rem] animate-morph backdrop-blur-sm shadow-xl shadow-pink-500/28 dark:shadow-pink-400/48 transition-transform duration-300 ease-out will-change-transform"
             style={{
               clipPath: "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
-              transform: `translate(${pinkRepulsion.x}px, ${pinkRepulsion.y + pinkScroll.y}px) rotate(45deg)`
+              transform: `translate(${pinkRepulsion.x + pinkDrift.x}px, ${pinkRepulsion.y + pinkScroll.y + pinkDrift.y}px) rotate(45deg)`,
+              opacity: mounted ? undefined : 0
             }}
           ></div>
         );
@@ -289,12 +521,14 @@ export default function AnimatedBackground() {
         const squarePos = { x: 50, y: 40 };
         const squareRepulsion = getRepulsion(squarePos.x, squarePos.y, 8);
         const squareScroll = getScrollPhysics(squarePos.y);
+        const squareDrift = drift.square || { x: 0, y: 0 };
         return (
           <div
             className="absolute top-[40%] left-1/2 w-24 h-24 md:w-36 md:h-36 bg-gradient-to-br from-amber-500/12 dark:from-amber-400/28 via-orange-500/10 dark:via-orange-400/24 to-yellow-400/6 dark:to-yellow-400/16 border-2 border-amber-500/25 dark:border-amber-400/45 backdrop-blur-sm shadow-lg shadow-amber-500/20 dark:shadow-amber-400/40 transition-transform duration-300 ease-out will-change-transform animate-spin-very-slow"
             style={{
-              transform: `translate(${squareRepulsion.x}px, ${squareRepulsion.y + squareScroll.y}px)`,
-              borderRadius: '1.5rem'
+              transform: `translate(${squareRepulsion.x + squareDrift.x}px, ${squareRepulsion.y + squareScroll.y + squareDrift.y}px)`,
+              borderRadius: '1.5rem',
+              opacity: mounted ? undefined : 0
             }}
           ></div>
         );
@@ -303,13 +537,15 @@ export default function AnimatedBackground() {
       {/* Orange/Amber morphing shape - starts as square, morphs to circle */}
       {(() => {
         const orangePos = { x: 50, y: 50 };
-        const orangeRepulsion = getRepulsion(orangePos.x, orangePos.y, 12);
+        // No mouse repulsion for this shape - only drift and scroll
         const orangeScroll = getScrollPhysics(orangePos.y);
+        const orangeDrift = drift.orange || { x: 0, y: 0 };
         return (
           <div
             className="absolute top-1/2 left-1/2 w-32 h-32 md:w-48 md:h-48 bg-gradient-to-br from-orange-500/15 dark:from-orange-400/35 via-amber-500/12 dark:via-amber-400/28 to-yellow-400/8 dark:to-yellow-400/20 border-2 border-orange-500/30 dark:border-orange-400/50 animate-pulse-slow backdrop-blur-sm shadow-xl shadow-orange-500/25 dark:shadow-orange-400/45 transition-transform duration-300 ease-out will-change-transform animate-morph-to-circle"
             style={{
-              transform: `translate(${orangeRepulsion.x}px, ${orangeRepulsion.y + orangeScroll.y}px)`
+              transform: `translate(${orangeDrift.x}px, ${orangeScroll.y + orangeDrift.y}px)`,
+              opacity: mounted ? undefined : 0
             }}
           ></div>
         );
@@ -320,13 +556,15 @@ export default function AnimatedBackground() {
         const emeraldPos = { x: 25, y: 75 };
         const emeraldRepulsion = getRepulsion(emeraldPos.x, emeraldPos.y, 10);
         const emeraldScroll = getScrollPhysics(emeraldPos.y);
+        const emeraldDrift = drift.emerald || { x: 0, y: 0 };
         return (
           <div
             className="hidden lg:block absolute bottom-1/4 left-1/4 w-48 h-48 bg-gradient-to-br from-emerald-500/10 dark:from-emerald-400/30 via-green-500/8 dark:via-green-400/24 to-teal-400/6 dark:to-teal-400/18 border-2 border-emerald-500/28 dark:border-emerald-400/50 animate-spin-slow backdrop-blur-sm shadow-xl shadow-emerald-500/22 dark:shadow-emerald-400/42 transition-transform duration-300 ease-out will-change-transform"
             style={{
               clipPath: "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
               borderRadius: "15%",
-              transform: `translate(${emeraldRepulsion.x}px, ${emeraldRepulsion.y + emeraldScroll.y}px)`
+              transform: `translate(${emeraldRepulsion.x + emeraldDrift.x}px, ${emeraldRepulsion.y + emeraldScroll.y + emeraldDrift.y}px)`,
+              opacity: mounted ? undefined : 0
             }}
           ></div>
         );
@@ -337,12 +575,14 @@ export default function AnimatedBackground() {
         const violetPos = { x: 80, y: 66 };
         const violetRepulsion = getRepulsion(violetPos.x, violetPos.y, 10);
         const violetScroll = getScrollPhysics(violetPos.y);
+        const violetDrift = drift.violet || { x: 0, y: 0 };
         return (
           <div
             className="hidden lg:block absolute top-2/3 right-1/5 w-44 h-44 bg-gradient-to-br from-violet-500/14 dark:from-violet-400/34 via-indigo-500/10 dark:via-indigo-400/26 to-purple-400/6 dark:to-purple-400/18 border-2 border-violet-500/30 dark:border-violet-400/50 rounded-[2rem] animate-morph backdrop-blur-sm shadow-xl shadow-violet-500/25 dark:shadow-violet-400/45 transition-transform duration-300 ease-out will-change-transform"
             style={{
               clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)",
-              transform: `translate(${violetRepulsion.x}px, ${violetRepulsion.y + violetScroll.y}px) rotate(30deg)`
+              transform: `translate(${violetRepulsion.x + violetDrift.x}px, ${violetRepulsion.y + violetScroll.y + violetDrift.y}px) rotate(30deg)`,
+              opacity: mounted ? undefined : 0
             }}
           ></div>
         );
@@ -353,12 +593,14 @@ export default function AnimatedBackground() {
         const tealPos = { x: 33, y: 16 };
         const tealRepulsion = getRepulsion(tealPos.x, tealPos.y, 10);
         const tealScroll = getScrollPhysics(tealPos.y);
+        const tealDrift = drift.teal || { x: 0, y: 0 };
         return (
           <div
             className="hidden lg:block absolute top-1/6 left-1/3 w-40 h-40 bg-gradient-to-br from-teal-500/14 dark:from-teal-400/34 via-cyan-400/10 dark:via-cyan-400/26 to-blue-400/6 dark:to-blue-400/18 border-2 border-teal-500/30 dark:border-teal-400/50 rounded-[1.8rem] animate-morph-delayed backdrop-blur-sm shadow-xl shadow-teal-500/25 dark:shadow-teal-400/45 transition-transform duration-300 ease-out will-change-transform"
             style={{
               clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
-              transform: `translate(${tealRepulsion.x}px, ${tealRepulsion.y + tealScroll.y}px) rotate(45deg)`
+              transform: `translate(${tealRepulsion.x + tealDrift.x}px, ${tealRepulsion.y + tealScroll.y + tealDrift.y}px) rotate(45deg)`,
+              opacity: mounted ? undefined : 0
             }}
           ></div>
         );
@@ -369,12 +611,14 @@ export default function AnimatedBackground() {
         const rosePos = { x: 60, y: 80 };
         const roseRepulsion = getRepulsion(rosePos.x, rosePos.y, 10);
         const roseScroll = getScrollPhysics(rosePos.y);
+        const roseDrift = drift.rose || { x: 0, y: 0 };
         return (
           <div
             className="hidden lg:block absolute bottom-1/5 right-2/5 w-36 h-36 bg-gradient-to-br from-rose-500/12 dark:from-rose-400/32 via-pink-400/8 dark:via-pink-400/22 to-fuchsia-400/6 dark:to-fuchsia-400/16 border-2 border-rose-500/30 dark:border-rose-400/50 rounded-[1.5rem] animate-morph backdrop-blur-sm shadow-xl shadow-rose-500/24 dark:shadow-rose-400/44 transition-transform duration-300 ease-out will-change-transform"
             style={{
               clipPath: "polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)",
-              transform: `translate(${roseRepulsion.x}px, ${roseRepulsion.y + roseScroll.y}px) rotate(72deg)`
+              transform: `translate(${roseRepulsion.x + roseDrift.x}px, ${roseRepulsion.y + roseScroll.y + roseDrift.y}px) rotate(72deg)`,
+              opacity: mounted ? undefined : 0
             }}
           ></div>
         );
@@ -385,44 +629,47 @@ export default function AnimatedBackground() {
       <div className="absolute top-2/3 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400/25 dark:via-cyan-400/55 to-transparent animate-shimmer-delayed"></div>
       <div className="absolute top-1/3 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-pink-400/25 dark:via-pink-400/55 to-transparent animate-shimmer"></div>
 
-      {/* Rainbow floating particles with scroll physics */}
+      {/* Rainbow floating particles with playful physics */}
       {(() => {
-        const particles = [
-          { top: 25, left: 33.33, size: 12, lightColor: 'rgba(139, 92, 246, 0.7)', darkColor: 'rgba(168, 85, 247, 0.9)', shadowLight: 'rgba(139, 92, 246, 0.6)', shadowDark: 'rgba(168, 85, 247, 0.8)', anim: 1 },
-          { top: 66.67, right: 25, size: 16, lightColor: 'rgba(6, 182, 212, 0.7)', darkColor: 'rgba(34, 211, 238, 0.9)', shadowLight: 'rgba(6, 182, 212, 0.6)', shadowDark: 'rgba(34, 211, 238, 0.8)', anim: 2 },
-          { top: 50, left: 66.67, size: 12, lightColor: 'rgba(236, 72, 153, 0.7)', darkColor: 'rgba(244, 114, 182, 0.9)', shadowLight: 'rgba(236, 72, 153, 0.6)', shadowDark: 'rgba(244, 114, 182, 0.8)', anim: 3 },
-          { bottom: 25, left: 50, size: 16, lightColor: 'rgba(249, 115, 22, 0.7)', darkColor: 'rgba(251, 146, 60, 0.9)', shadowLight: 'rgba(249, 115, 22, 0.6)', shadowDark: 'rgba(251, 146, 60, 0.8)', anim: 1 },
-          { top: 20, right: 40, size: 12, lightColor: 'rgba(16, 185, 129, 0.7)', darkColor: 'rgba(52, 211, 153, 0.9)', shadowLight: 'rgba(16, 185, 129, 0.6)', shadowDark: 'rgba(52, 211, 153, 0.8)', anim: 2 },
-          { bottom: 33.33, left: 20, size: 12, lightColor: 'rgba(124, 58, 237, 0.7)', darkColor: 'rgba(167, 139, 250, 0.9)', shadowLight: 'rgba(124, 58, 237, 0.6)', shadowDark: 'rgba(167, 139, 250, 0.8)', anim: 3 },
-          { top: 75, right: 33.33, size: 16, lightColor: 'rgba(245, 158, 11, 0.7)', darkColor: 'rgba(251, 191, 36, 0.9)', shadowLight: 'rgba(245, 158, 11, 0.6)', shadowDark: 'rgba(251, 191, 36, 0.8)', anim: 1 },
+        const particleData = [
+          { top: 25, left: 33.33, size: 12, lightColor: 'rgba(139, 92, 246, 0.7)', darkColor: 'rgba(168, 85, 247, 0.9)', shadowLight: 'rgba(139, 92, 246, 0.6)', shadowDark: 'rgba(168, 85, 247, 0.8)' },
+          { top: 66.67, right: 25, size: 16, lightColor: 'rgba(6, 182, 212, 0.7)', darkColor: 'rgba(34, 211, 238, 0.9)', shadowLight: 'rgba(6, 182, 212, 0.6)', shadowDark: 'rgba(34, 211, 238, 0.8)' },
+          { top: 50, left: 66.67, size: 12, lightColor: 'rgba(236, 72, 153, 0.7)', darkColor: 'rgba(244, 114, 182, 0.9)', shadowLight: 'rgba(236, 72, 153, 0.6)', shadowDark: 'rgba(244, 114, 182, 0.8)' },
+          { bottom: 25, left: 50, size: 16, lightColor: 'rgba(249, 115, 22, 0.7)', darkColor: 'rgba(251, 146, 60, 0.9)', shadowLight: 'rgba(249, 115, 22, 0.6)', shadowDark: 'rgba(251, 146, 60, 0.8)' },
+          { top: 20, right: 40, size: 12, lightColor: 'rgba(16, 185, 129, 0.7)', darkColor: 'rgba(52, 211, 153, 0.9)', shadowLight: 'rgba(16, 185, 129, 0.6)', shadowDark: 'rgba(52, 211, 153, 0.8)' },
+          { bottom: 33.33, left: 20, size: 12, lightColor: 'rgba(124, 58, 237, 0.7)', darkColor: 'rgba(167, 139, 250, 0.9)', shadowLight: 'rgba(124, 58, 237, 0.6)', shadowDark: 'rgba(167, 139, 250, 0.8)' },
+          { top: 75, right: 33.33, size: 16, lightColor: 'rgba(245, 158, 11, 0.7)', darkColor: 'rgba(251, 191, 36, 0.9)', shadowLight: 'rgba(245, 158, 11, 0.6)', shadowDark: 'rgba(251, 191, 36, 0.8)' },
         ];
 
-        return particles.map((particle, i) => {
-          const yPos = particle.top !== undefined ? particle.top : 100 - (particle.bottom || 0);
-          const scroll = getScrollPhysics(yPos);
+        return particleData.map((particle, i) => {
+          const particleState = particles[i];
+          if (!particleState) return null;
 
           const positionStyle: React.CSSProperties = {
             width: `${particle.size}px`,
             height: `${particle.size}px`,
           };
 
-          if (particle.top !== undefined) positionStyle.top = `calc(${particle.top}% + ${scroll.y}px)`;
-          if (particle.bottom !== undefined) positionStyle.bottom = `calc(${particle.bottom}% - ${scroll.y}px)`;
+          // Apply physics-based position with playful transform
+          if (particle.top !== undefined) positionStyle.top = `${particle.top}%`;
+          if (particle.bottom !== undefined) positionStyle.bottom = `${particle.bottom}%`;
           if (particle.left !== undefined) positionStyle.left = `${particle.left}%`;
           if (particle.right !== undefined) positionStyle.right = `${particle.right}%`;
-
-          const animClass = particle.anim === 1 ? 'animate-float-particle-1' :
-                           particle.anim === 2 ? 'animate-float-particle-2' :
-                           'animate-float-particle-3';
 
           return (
             <div
               key={i}
-              className={`absolute rounded-full transition-all duration-300 ease-out will-change-transform ${animClass}`}
+              className="absolute rounded-full will-change-transform"
               style={{
                 ...positionStyle,
                 background: `var(--particle-bg-${i})`,
-                boxShadow: `0 4px 6px -1px var(--particle-shadow-${i}), 0 2px 4px -1px var(--particle-shadow-${i})`,
+                boxShadow: `0 ${4 * particleState.scale}px ${6 * particleState.scale}px -1px var(--particle-shadow-${i}),
+                            0 ${2 * particleState.scale}px ${4 * particleState.scale}px -1px var(--particle-shadow-${i})`,
+                transform: `translate(${particleState.x}px, ${particleState.y}px)
+                           rotate(${particleState.rotation}deg)
+                           scale(${particleState.scale})`,
+                transition: 'none',
+                opacity: mounted ? undefined : 0,
               }}
             />
           );

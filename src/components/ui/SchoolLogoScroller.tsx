@@ -59,16 +59,16 @@ export default function SchoolLogoScroller() {
             {duplicatedSchools.map((school, index) => (
               <div
                 key={`${school.name}-${index}`}
-                className="flex-shrink-0 mx-8 grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300"
+                className="flex-shrink-0 mx-8 group transition-all duration-300"
                 style={{ width: "160px" }}
               >
-                <div className="relative h-20 flex items-center justify-center">
+                <div className="relative h-20 flex items-center justify-center bg-white/40 dark:bg-gray-800/40 rounded-xl p-4 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 group-hover:border-purple-300 dark:group-hover:border-purple-600 group-hover:scale-105 transition-all duration-300">
                   <Image
                     src={school.logo}
                     alt={`${school.name} logo`}
                     width={160}
                     height={80}
-                    className="object-contain max-h-16 w-auto"
+                    className="object-contain max-h-12 w-auto filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 dark:brightness-0 dark:invert dark:opacity-80 dark:group-hover:opacity-100"
                     onError={(e) => {
                       // Fallback to text if image doesn't load
                       const target = e.target as HTMLImageElement;

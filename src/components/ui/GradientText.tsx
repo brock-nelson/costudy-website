@@ -86,11 +86,11 @@ export default function GradientText({ children, className = "" }: GradientTextP
           }
         }
 
-        // If 5+ direction changes in recent movements, trigger sparks
-        if (changes >= 5 && speed > 0.5) {
+        // If 10+ direction changes in recent movements (within 2 seconds), trigger explosive sparks
+        if (changes >= 10 && speed > 0.5) {
           setIsRapidMovement(true);
 
-          // Create sparks!
+          // Create explosive sparks!
           const newSparks: Spark[] = [];
           const colors = ['#8B5CF6', '#EC4899', '#06B6D4', '#F59E0B', '#10B981'];
           for (let i = 0; i < 15; i++) {

@@ -266,13 +266,14 @@ body {
   opacity: 0.15 !important;
 }
 
-/* Hero content blur box only in high contrast mode */
+/* Hero content blur - borderless with heavy blur in high contrast mode */
 .high-contrast .hero-content {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(8px);
-  border-radius: 1.5rem;
-  padding: 2rem 3rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background: transparent;
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
 }
 
 /* Light mode high contrast - all text black */
