@@ -217,22 +217,27 @@ export default function AnimatedBackground() {
           // Advance angle in orbit based on orbital speed
           const orbitAngle = p.orbitAngle + p.orbitSpeed;
 
-          // Scroll gently influences the orbit - makes it drift smoothly
+          // Scroll creates a gentle "bump" effect - each particle reacts individually
           const scrollMag = Math.abs(scrollVelocity);
           const scrollDir = Math.sign(scrollVelocity);
-          const scrollInfluence = scrollMag * 8; // Gentle scroll influence on orbit
 
           // Calculate position on elliptical orbit
           const baseOrbitX = Math.cos(orbitAngle + p.orbitPhase) * p.orbitRadius * p.ellipseRatioX;
           const baseOrbitY = Math.sin(orbitAngle + p.orbitPhase) * p.orbitRadius * p.ellipseRatioY;
 
-          // Scroll adds gentle drift to the orbit center (reduced for larger orbits)
-          const scrollDriftX = Math.sin(time * 0.5 + index * 0.3) * scrollInfluence * 0.3;
-          const scrollDriftY = scrollDir * scrollInfluence * 0.8;
+          // Gentle "bump" when scrolling - each particle bumps at different timing
+          const bumpPhase = time * 2 + index * 0.8; // Staggered timing per particle
+          const bumpX = Math.sin(bumpPhase) * scrollMag * 25; // Horizontal wiggle during scroll
+          const bumpY = scrollDir * scrollMag * 35; // Vertical bump in scroll direction
 
-          // Final smooth position
-          const x = baseOrbitX + scrollDriftX;
-          const y = baseOrbitY + scrollDriftY;
+          // Smooth decay of bump effect
+          const bumpDecay = Math.exp(-scrollMag * 2); // Faster decay = smoother
+          const smoothBumpX = bumpX * (1 - bumpDecay);
+          const smoothBumpY = bumpY * (1 - bumpDecay);
+
+          // Final smooth position with gentle bump
+          const x = baseOrbitX + smoothBumpX;
+          const y = baseOrbitY + smoothBumpY;
 
           // Smooth orbital motion - no squish needed
           let squishX = p.squishX;
