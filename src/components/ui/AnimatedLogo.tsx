@@ -129,11 +129,15 @@ export default function AnimatedLogo() {
         }
       `}</style>
 
-      {/* Hover tooltip */}
-      <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-50">
-        <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap bg-white/90 dark:bg-gray-800/90 px-3 py-1.5 rounded-lg shadow-lg backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50">
-          Back to home
-        </span>
+      {/* Hover tooltip - appears above logo */}
+      <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 ease-out pointer-events-none z-50 group-hover:-translate-y-1">
+        <div className="relative">
+          <span className="text-xs text-gray-600 dark:text-gray-300 whitespace-nowrap bg-white/95 dark:bg-gray-800/95 px-3 py-1.5 rounded-md shadow-lg backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 font-medium">
+            Home
+          </span>
+          {/* Tooltip arrow */}
+          <div className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-2 h-2 bg-white/95 dark:bg-gray-800/95 border-r border-b border-gray-200/60 dark:border-gray-700/60 rotate-45"></div>
+        </div>
       </div>
     </Link>
   );

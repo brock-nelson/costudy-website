@@ -10,7 +10,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white dark:bg-[#0a0a0a] border-b border-[#EAEDEF] dark:border-gray-800 sticky top-0 z-50 transition-colors header-container">
+    <header className="bg-white dark:bg-[#0a0a0a] border-b border-[#EAEDEF] dark:border-gray-800 sticky top-0 z-50 transition-colors header-container overflow-visible">
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Animated Logo */}
@@ -21,11 +21,14 @@ export default function Header() {
             <div className="relative group">
               <button className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-colors flex items-center gap-1">
                 Solutions
-                <svg className="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div className="absolute left-0 top-full mt-2 w-56 bg-white dark:bg-gray-900 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden backdrop-blur-sm">
+              <div className="absolute left-0 top-full mt-3 w-56 bg-white/95 dark:bg-gray-900/95 rounded-lg shadow-xl border border-gray-200/60 dark:border-gray-700/60 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[60] overflow-hidden backdrop-blur-sm translate-y-2 group-hover:translate-y-0">
+                {/* Dropdown arrow */}
+                <div className="absolute left-6 -top-1 w-2 h-2 bg-white/95 dark:bg-gray-900/95 border-l border-t border-gray-200/60 dark:border-gray-700/60 rotate-45"></div>
+
                 <Link
                   href="/for-professors"
                   className="block px-4 py-3 text-[#374045] dark:text-gray-300 hover:bg-[#EDE7F9] dark:hover:bg-gray-800 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] transition-colors first:rounded-t-lg"
