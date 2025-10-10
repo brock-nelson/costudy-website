@@ -284,17 +284,32 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Orange/Amber circle - simplified for mobile */}
+      {/* Rotating square - perfect square above the morphing circle */}
+      {(() => {
+        const squarePos = { x: 50, y: 40 };
+        const squareRepulsion = getRepulsion(squarePos.x, squarePos.y, 8);
+        const squareScroll = getScrollPhysics(squarePos.y);
+        return (
+          <div
+            className="absolute top-[40%] left-1/2 w-24 h-24 md:w-36 md:h-36 bg-gradient-to-br from-amber-500/12 dark:from-amber-400/28 via-orange-500/10 dark:via-orange-400/24 to-yellow-400/6 dark:to-yellow-400/16 border-2 border-amber-500/25 dark:border-amber-400/45 backdrop-blur-sm shadow-lg shadow-amber-500/20 dark:shadow-amber-400/40 transition-transform duration-300 ease-out will-change-transform animate-spin-very-slow"
+            style={{
+              transform: `translate(${squareRepulsion.x}px, ${squareRepulsion.y + squareScroll.y}px)`,
+              borderRadius: '1.5rem'
+            }}
+          ></div>
+        );
+      })()}
+
+      {/* Orange/Amber morphing shape - starts as square, morphs to circle */}
       {(() => {
         const orangePos = { x: 50, y: 50 };
         const orangeRepulsion = getRepulsion(orangePos.x, orangePos.y, 12);
         const orangeScroll = getScrollPhysics(orangePos.y);
         return (
           <div
-            className="absolute top-1/2 left-1/2 w-32 h-32 md:w-48 md:h-48 bg-gradient-to-br from-orange-500/15 dark:from-orange-400/35 via-amber-500/12 dark:via-amber-400/28 to-yellow-400/8 dark:to-yellow-400/20 border-2 border-orange-500/30 dark:border-orange-400/50 rounded-full animate-pulse-slow backdrop-blur-sm shadow-xl shadow-orange-500/25 dark:shadow-orange-400/45 transition-transform duration-300 ease-out will-change-transform"
+            className="absolute top-1/2 left-1/2 w-32 h-32 md:w-48 md:h-48 bg-gradient-to-br from-orange-500/15 dark:from-orange-400/35 via-amber-500/12 dark:via-amber-400/28 to-yellow-400/8 dark:to-yellow-400/20 border-2 border-orange-500/30 dark:border-orange-400/50 animate-pulse-slow backdrop-blur-sm shadow-xl shadow-orange-500/25 dark:shadow-orange-400/45 transition-transform duration-300 ease-out will-change-transform animate-morph-to-circle"
             style={{
-              transform: `translate(${orangeRepulsion.x}px, ${orangeRepulsion.y + orangeScroll.y}px)`,
-              borderRadius: '9999px' // Force circular shape immediately to prevent flash
+              transform: `translate(${orangeRepulsion.x}px, ${orangeRepulsion.y + orangeScroll.y}px)`
             }}
           ></div>
         );

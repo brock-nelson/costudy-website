@@ -375,6 +375,24 @@ body {
   }
 }
 
+@keyframes spin-very-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes morph-to-circle {
+  0% {
+    border-radius: 1.5rem;
+  }
+  100% {
+    border-radius: 9999px;
+  }
+}
+
 @keyframes morph {
   0%, 100% {
     border-radius: 40% 60% 60% 40% / 60% 30% 70% 40%;
@@ -436,6 +454,10 @@ body {
   animation: spin-slow 40s linear infinite;
 }
 
+.animate-spin-very-slow {
+  animation: spin-very-slow 60s linear infinite;
+}
+
 .animate-pulse-slow {
   animation: pulse-slow 8s ease-in-out infinite;
 }
@@ -446,6 +468,10 @@ body {
 
 .animate-morph-delayed {
   animation: morph-delayed 25s ease-in-out infinite 2s;
+}
+
+.animate-morph-to-circle {
+  animation: morph-to-circle 2s ease-in-out forwards;
 }
 
 /* Gradient Animation */

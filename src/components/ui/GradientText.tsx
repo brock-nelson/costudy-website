@@ -19,33 +19,14 @@ interface Spark {
 
 export default function GradientText({ children, className = "" }: GradientTextProps) {
   const [mounted, setMounted] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
-  const [targetMousePos, setTargetMousePos] = useState({ x: 50, y: 50 });
   const [scrollOffset, setScrollOffset] = useState(0);
-  const [mouseSpeed, setMouseSpeed] = useState(0);
   const [isRapidMovement, setIsRapidMovement] = useState(false);
   const [sparks, setSparks] = useState<Spark[]>([]);
   const containerRef = useRef<HTMLSpanElement>(null);
   const prevPosRef = useRef({ x: 50, y: 50 });
   const prevTimeRef = useRef(Date.now());
-  const rapidMovementCountRef = useRef(0);
   const directionChangesRef = useRef<number[]>([]);
   const sparkIdRef = useRef(0);
-
-  // Smooth interpolation for mouse position
-  useEffect(() => {
-    const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor;
-
-    const smoothUpdate = () => {
-      setMousePos(prev => ({
-        x: lerp(prev.x, targetMousePos.x, 0.1),
-        y: lerp(prev.y, targetMousePos.y, 0.1)
-      }));
-    };
-
-    const interval = setInterval(smoothUpdate, 16); // ~60fps
-    return () => clearInterval(interval);
-  }, [targetMousePos]);
 
   // Spark animation loop
   useEffect(() => {
@@ -79,10 +60,7 @@ export default function GradientText({ children, className = "" }: GradientTextP
       const x = ((e.clientX - rect.left) / rect.width) * 100;
       const y = ((e.clientY - rect.top) / rect.height) * 100;
 
-      // Update target for smooth following
-      setTargetMousePos({ x, y });
-
-      // Calculate mouse speed
+      // Calculate mouse speed for spark detection only
       const now = Date.now();
       const deltaTime = now - prevTimeRef.current;
       const deltaX = x - prevPosRef.current.x;
@@ -90,7 +68,7 @@ export default function GradientText({ children, className = "" }: GradientTextP
       const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
       const speed = deltaTime > 0 ? distance / deltaTime : 0;
 
-      // Detect direction changes for gesture recognition
+      // Detect direction changes for gesture recognition (sparks only)
       if (Math.abs(deltaX) > 2) {
         const direction = deltaX > 0 ? 1 : -1;
         directionChangesRef.current.push(direction);
@@ -108,10 +86,9 @@ export default function GradientText({ children, className = "" }: GradientTextP
           }
         }
 
-        // If 5+ direction changes in recent movements, trigger special effect
+        // If 5+ direction changes in recent movements, trigger sparks
         if (changes >= 5 && speed > 0.5) {
           setIsRapidMovement(true);
-          rapidMovementCountRef.current++;
 
           // Create sparks!
           const newSparks: Spark[] = [];
@@ -131,12 +108,10 @@ export default function GradientText({ children, className = "" }: GradientTextP
 
           setTimeout(() => {
             setIsRapidMovement(false);
-            rapidMovementCountRef.current = Math.max(0, rapidMovementCountRef.current - 1);
           }, 1500);
         }
       }
 
-      setMouseSpeed(speed);
       prevPosRef.current = { x, y };
       prevTimeRef.current = now;
     };
@@ -196,9 +171,6 @@ export default function GradientText({ children, className = "" }: GradientTextP
   const safeLightColors = getBrandColors(false, scrollOffset);
   const safeDarkColors = getBrandColors(true, scrollOffset);
 
-  // Speed-based intensity (faster = more vibrant)
-  const speedIntensity = Math.min(mouseSpeed * 100, 50);
-
   // Shift color stops based on scroll only
   const scrollShift = scrollOffset * 0.3;
   const colorStop1 = Math.max(0, Math.min(100, 0 + scrollShift));
@@ -222,7 +194,7 @@ export default function GradientText({ children, className = "" }: GradientTextP
 
   // Animation classes for special effects
   const specialEffectClass = isRapidMovement ? 'animate-shimmer-text' : '';
-  const pulseClass = rapidMovementCountRef.current > 0 ? 'animate-pulse' : '';
+  const pulseClass = isRapidMovement ? 'animate-pulse' : '';
   const glowIntensity = isRapidMovement ? 10 : 0;
 
   // Prevent flash by using a wrapper with consistent dimensions
@@ -250,7 +222,7 @@ export default function GradientText({ children, className = "" }: GradientTextP
           backgroundSize: isRapidMovement ? '200% 200%' : '100% 100%',
           transition: 'background-image 0.8s ease-out, background-size 0.3s ease-out, filter 0.3s ease-out',
           filter: isRapidMovement
-            ? `brightness(${1.2 + mouseSpeed * 2}) saturate(${1.5 + mouseSpeed}) drop-shadow(0 0 ${glowIntensity}px rgba(139, 92, 246, 0.8))`
+            ? `brightness(1.3) saturate(1.6) drop-shadow(0 0 ${glowIntensity}px rgba(139, 92, 246, 0.8))`
             : 'none',
           // @ts-ignore - CSS custom properties
           '--gradient-light': lightGradient,
@@ -284,7 +256,7 @@ export default function GradientText({ children, className = "" }: GradientTextP
           span {
             background-image: ${darkGradient};
             filter: ${isRapidMovement
-              ? `brightness(${1.3 + mouseSpeed * 2}) saturate(${1.5 + mouseSpeed}) drop-shadow(0 0 ${glowIntensity}px rgba(233, 213, 255, 0.9))`
+              ? `brightness(1.4) saturate(1.6) drop-shadow(0 0 ${glowIntensity}px rgba(233, 213, 255, 0.9))`
               : 'none'} !important;
           }
         }
