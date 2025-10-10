@@ -28,12 +28,10 @@ interface PhysicsProperties {
   substance: string;        // For reference
 }
 
-// Playful particle state with rotation, scale, and color
+// Playful particle state with orbital physics
 interface ParticleState {
   x: number;
   y: number;
-  vx: number;
-  vy: number;
   rotation: number;
   rotationSpeed: number;
   scale: number;
@@ -44,6 +42,13 @@ interface ParticleState {
   colorTransition: number;
   squishX: number;
   squishY: number;
+  // Orbital physics properties
+  orbitRadius: number;      // Size of circular orbit
+  orbitSpeed: number;       // How fast it orbits
+  orbitAngle: number;       // Current angle in orbit
+  orbitPhase: number;       // Offset phase for variety
+  ellipseRatioX: number;    // Make orbits elliptical, not circular
+  ellipseRatioY: number;
 }
 
 // Particle trail for dark mode magic
@@ -117,18 +122,23 @@ export default function AnimatedBackground() {
       return {
         x: 0,
         y: 0,
-        vx: (Math.random() - 0.5) * 0.1, // Reduced initial velocity
-        vy: (Math.random() - 0.5) * 0.1,
-        rotation: 0, // No rotation
-        rotationSpeed: 0, // No rotation
+        rotation: 0,
+        rotationSpeed: 0,
         scale: 1,
         baseY,
         pulsePhase: Math.random() * Math.PI * 2,
-        pulseSpeed: 0.0008 + Math.random() * 0.0012, // Very slow random pulse
+        pulseSpeed: 0.0008 + Math.random() * 0.0012,
         colorIndex: index,
         colorTransition: 0,
         squishX: 1,
         squishY: 1,
+        // Each particle gets its own unique orbital path
+        orbitRadius: 8 + Math.random() * 12, // Orbit size between 8-20px
+        orbitSpeed: 0.0003 + Math.random() * 0.0004, // Slow, varied orbital speeds
+        orbitAngle: Math.random() * Math.PI * 2, // Random starting position
+        orbitPhase: index * 0.5, // Phase offset based on index
+        ellipseRatioX: 0.8 + Math.random() * 0.4, // Ellipse ratio 0.8-1.2
+        ellipseRatioY: 0.8 + Math.random() * 0.4,
       };
     });
 
@@ -206,81 +216,39 @@ export default function AnimatedBackground() {
         return prevParticles.map((p, index) => {
           const time = Date.now() * 0.001;
 
-          // Very gentle random forces - barely noticeable drift
-          const forceX = (Math.random() - 0.5) * 0.005;
-          const forceY = (Math.random() - 0.5) * 0.005;
+          // SMOOTH ORBITAL PHYSICS: Each particle follows a clean elliptical path
+          // Advance angle in orbit based on orbital speed
+          let orbitAngle = p.orbitAngle + p.orbitSpeed;
 
-          // CALM SCROLL PHYSICS: Subtle hint of movement during scroll
+          // Scroll gently influences the orbit - makes it drift smoothly
           const scrollMag = Math.abs(scrollVelocity);
           const scrollDir = Math.sign(scrollVelocity);
+          const scrollInfluence = scrollMag * 8; // Gentle scroll influence on orbit
 
-          // Very gentle wave during scroll - barely perceptible
-          const wavePhase = time * 0.8 + index * 0.8;
-          const waveX = Math.sin(wavePhase) * scrollMag * 1;
-          const waveY = Math.cos(wavePhase * 0.5) * scrollMag * 1.5;
+          // Calculate position on elliptical orbit
+          const baseOrbitX = Math.cos(orbitAngle + p.orbitPhase) * p.orbitRadius * p.ellipseRatioX;
+          const baseOrbitY = Math.sin(orbitAngle + p.orbitPhase) * p.orbitRadius * p.ellipseRatioY;
 
-          // Subtle flow with scroll direction
-          const scrollForceX = waveX * (isDarkMode ? 1.2 : 1);
-          const scrollForceY = waveY * scrollDir * (isDarkMode ? 1.2 : 1);
+          // Scroll adds gentle drift to the orbit center
+          const scrollDriftX = Math.sin(time * 0.5 + index * 0.3) * scrollInfluence * 0.5;
+          const scrollDriftY = scrollDir * scrollInfluence;
 
-          // Gentle breathing oscillation - calm and hypnotic
-          const floatX = Math.sin(time * 0.4 + index * 0.6) * 0.015;
-          const floatY = Math.cos(time * 0.3 + index * 0.5) * 0.02;
+          // Final smooth position
+          const x = baseOrbitX + scrollDriftX;
+          const y = baseOrbitY + scrollDriftY;
 
-          // Update velocity with all forces
-          let vx = p.vx + forceX + scrollForceX + floatX;
-          let vy = p.vy + forceY + scrollForceY + floatY;
-
-          // Strong damping for calm, gentle movement
-          vx *= 0.97; // Increased damping slows everything down
-          vy *= 0.97;
-
-          // Tight velocity limits - keep movement subtle
-          const maxVel = 0.2; // Reduced from 0.5 for calmer movement
-          vx = Math.max(-maxVel, Math.min(maxVel, vx));
-          vy = Math.max(-maxVel, Math.min(maxVel, vy));
-
-          // Update position
-          let x = p.x + vx;
-          let y = p.y + vy;
-
-          // Gentle containment - barely noticeable bounce
+          // Smooth orbital motion - no squish needed
           let squishX = p.squishX;
           let squishY = p.squishY;
-          const maxDrift = 25; // Reduced boundary - keep them closer to origin
-          let hitWall = false;
 
-          if (Math.abs(x) > maxDrift) {
-            x = Math.sign(x) * maxDrift;
-            vx *= -0.6; // Soft bounce, quickly dampens
-            // Barely visible squish
-            squishX = 0.95;
-            squishY = 1.05;
-            hitWall = true;
-          }
-          if (Math.abs(y) > maxDrift) {
-            y = Math.sign(y) * maxDrift;
-            vy *= -0.6; // Soft bounce
-            if (!hitWall) {
-              squishX = 1.05;
-              squishY = 0.95;
-            }
-            hitWall = true;
-          }
-
-          // Very quick return to normal - squish is barely noticeable
-          if (!hitWall) {
-            squishX += (1 - squishX) * 0.35; // Very fast recovery
-            squishY += (1 - squishY) * 0.35;
-          }
-
-          // No rotation - keep particles oriented
-          const velocityMag = Math.sqrt(vx * vx + vy * vy);
+          // Quick return to normal shape
+          squishX += (1 - squishX) * 0.2;
+          squishY += (1 - squishY) * 0.2;
 
           // Very slow, gentle pulse (independent per particle)
           const pulsePhase = p.pulsePhase + p.pulseSpeed;
-          const pulseFactor = Math.sin(pulsePhase) * 0.04 + 1; // ±4% size variation (reduced from 8%)
-          const scale = pulseFactor + velocityMag * 0.1; // Reduced velocity impact on scale
+          const pulseFactor = Math.sin(pulsePhase) * 0.03 + 1; // ±3% size variation
+          const scale = pulseFactor;
 
           // Slow color transition (cycle through rainbow over time)
           const colorTransition = (p.colorTransition + 0.0003) % 1;
@@ -288,18 +256,22 @@ export default function AnimatedBackground() {
           return {
             x,
             y,
-            vx,
-            vy,
-            rotation: 0, // No rotation
+            rotation: 0,
             rotationSpeed: 0,
-            scale: Math.max(0.8, Math.min(1.3, scale)),
+            scale: Math.max(0.9, Math.min(1.15, scale)),
             baseY: p.baseY,
             pulsePhase,
             pulseSpeed: p.pulseSpeed,
             colorIndex: p.colorIndex,
             colorTransition,
-            squishX: Math.max(0.95, Math.min(1.05, squishX)),
-            squishY: Math.max(0.95, Math.min(1.05, squishY)),
+            squishX: Math.max(0.98, Math.min(1.02, squishX)),
+            squishY: Math.max(0.98, Math.min(1.02, squishY)),
+            orbitRadius: p.orbitRadius,
+            orbitSpeed: p.orbitSpeed,
+            orbitAngle,
+            orbitPhase: p.orbitPhase,
+            ellipseRatioX: p.ellipseRatioX,
+            ellipseRatioY: p.ellipseRatioY,
           };
         });
       });
