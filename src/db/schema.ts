@@ -1,0 +1,167 @@
+import { pgTable, text, timestamp, uuid, varchar, integer, boolean, jsonb, index } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
+
+// Admin users table
+export const users = pgTable("users", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  password: text("password").notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+// Features table - for both upcoming features and user requests
+export const features = pgTable("features", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description").notNull(),
+  status: varchar("status", { length: 50 }).notNull().default("proposed"), // proposed, approved, in-progress, completed, declined
+  voteCount: integer("vote_count").notNull().default(0),
+  category: varchar("category", { length: 100 }), // feature category
+  isUserSubmitted: boolean("is_user_submitted").notNull().default(false),
+  submitterEmail: varchar("submitter_email", { length: 255 }),
+  submitterName: varchar("submitter_name", { length: 255 }),
+  createdBy: uuid("created_by").references(() => users.id), // admin who approved/created
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  completedAt: timestamp("completed_at"),
+}, (table) => ({
+  statusIdx: index("features_status_idx").on(table.status),
+  voteCountIdx: index("features_vote_count_idx").on(table.voteCount),
+}));
+
+// Votes table - tracks all user votes
+export const votes = pgTable("votes", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  featureId: uuid("feature_id").notNull().references(() => features.id, { onDelete: "cascade" }),
+  userEmail: varchar("user_email", { length: 255 }).notNull(),
+  userName: varchar("user_name", { length: 255 }),
+  ipAddress: varchar("ip_address", { length: 45 }).notNull(), // IPv4 or IPv6
+  userAgent: text("user_agent"),
+  metadata: jsonb("metadata"), // Store any additional context
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => ({
+  featureIdx: index("votes_feature_idx").on(table.featureId),
+  emailIdx: index("votes_email_idx").on(table.userEmail),
+  ipIdx: index("votes_ip_idx").on(table.ipAddress),
+  createdAtIdx: index("votes_created_at_idx").on(table.createdAt),
+}));
+
+// Release log entries
+export const releases = pgTable("releases", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  version: varchar("version", { length: 50 }).notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description").notNull(),
+  type: varchar("type", { length: 50 }).notNull(), // feature, improvement, bugfix, security
+  isPublished: boolean("is_published").notNull().default(false),
+  publishedAt: timestamp("published_at"),
+  featuredImageUrl: text("featured_image_url"),
+  createdBy: uuid("created_by").notNull().references(() => users.id),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => ({
+  publishedIdx: index("releases_published_idx").on(table.isPublished),
+  publishedAtIdx: index("releases_published_at_idx").on(table.publishedAt),
+}));
+
+// Email subscriptions - newsletter opt-ins
+export const emailSubscriptions = pgTable("email_subscriptions", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  email: varchar("email", { length: 255 }).notNull().unique(),
+  name: varchar("name", { length: 255 }),
+  isActive: boolean("is_active").notNull().default(true),
+  source: varchar("source", { length: 100 }).notNull(), // vote, contact-form, direct
+  ipAddress: varchar("ip_address", { length: 45 }).notNull(),
+  userAgent: text("user_agent"),
+  confirmedAt: timestamp("confirmed_at"),
+  unsubscribedAt: timestamp("unsubscribed_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => ({
+  emailIdx: index("subscriptions_email_idx").on(table.email),
+  activeIdx: index("subscriptions_active_idx").on(table.isActive),
+}));
+
+// Analytics events - comprehensive tracking for AI analysis
+export const analyticsEvents = pgTable("analytics_events", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  eventType: varchar("event_type", { length: 100 }).notNull(), // page_view, button_click, form_submit, scroll_depth, etc.
+  eventName: varchar("event_name", { length: 255 }).notNull(), // specific event identifier
+  page: varchar("page", { length: 255 }).notNull(), // URL path
+  userEmail: varchar("user_email", { length: 255 }), // if identified
+  sessionId: varchar("session_id", { length: 255 }).notNull(), // client-side session tracking
+  ipAddress: varchar("ip_address", { length: 45 }).notNull(),
+  userAgent: text("user_agent").notNull(),
+  referrer: text("referrer"),
+  properties: jsonb("properties").notNull(), // flexible event data
+  timestamp: timestamp("timestamp").defaultNow().notNull(),
+}, (table) => ({
+  typeIdx: index("analytics_type_idx").on(table.eventType),
+  nameIdx: index("analytics_name_idx").on(table.eventName),
+  pageIdx: index("analytics_page_idx").on(table.page),
+  emailIdx: index("analytics_email_idx").on(table.userEmail),
+  sessionIdx: index("analytics_session_idx").on(table.sessionId),
+  timestampIdx: index("analytics_timestamp_idx").on(table.timestamp),
+}));
+
+// Rate limiting - track requests per IP/email
+export const rateLimits = pgTable("rate_limits", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  identifier: varchar("identifier", { length: 255 }).notNull(), // IP address or email
+  type: varchar("type", { length: 50 }).notNull(), // vote, demo, api, etc.
+  count: integer("count").notNull().default(1),
+  windowStart: timestamp("window_start").notNull(),
+  windowEnd: timestamp("window_end").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => ({
+  identifierTypeIdx: index("rate_limits_identifier_type_idx").on(table.identifier, table.type),
+  windowEndIdx: index("rate_limits_window_end_idx").on(table.windowEnd),
+}));
+
+// Relations
+export const featuresRelations = relations(features, ({ one, many }) => ({
+  creator: one(users, {
+    fields: [features.createdBy],
+    references: [users.id],
+  }),
+  votes: many(votes),
+}));
+
+export const votesRelations = relations(votes, ({ one }) => ({
+  feature: one(features, {
+    fields: [votes.featureId],
+    references: [features.id],
+  }),
+}));
+
+export const releasesRelations = relations(releases, ({ one }) => ({
+  creator: one(users, {
+    fields: [releases.createdBy],
+    references: [users.id],
+  }),
+}));
+
+// Types
+export type User = typeof users.$inferSelect;
+export type NewUser = typeof users.$inferInsert;
+
+export type Feature = typeof features.$inferSelect;
+export type NewFeature = typeof features.$inferInsert;
+
+export type Vote = typeof votes.$inferSelect;
+export type NewVote = typeof votes.$inferInsert;
+
+export type Release = typeof releases.$inferSelect;
+export type NewRelease = typeof releases.$inferInsert;
+
+export type EmailSubscription = typeof emailSubscriptions.$inferSelect;
+export type NewEmailSubscription = typeof emailSubscriptions.$inferInsert;
+
+export type AnalyticsEvent = typeof analyticsEvents.$inferSelect;
+export type NewAnalyticsEvent = typeof analyticsEvents.$inferInsert;
+
+export type RateLimit = typeof rateLimits.$inferSelect;
+export type NewRateLimit = typeof rateLimits.$inferInsert;
