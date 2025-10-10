@@ -400,9 +400,15 @@ export default function AnimatedBackground() {
             scrollDisplacement += (scrollTarget - scrollDisplacement) * 0.15;
           }
 
+          // ========== PARALLAX DEPTH EFFECT ==========
+          // Particles with higher z-index move more (closer to viewer)
+          const parallaxFactor = p.zIndex / 3;  // 0.33, 0.66, or 1.0
+          const parallaxDriftX = driftX * (0.5 + parallaxFactor * 0.5);  // Range: 0.5x to 1.0x
+          const parallaxScrollY = scrollDisplacement * (0.5 + parallaxFactor * 0.5);
+
           // ========== COMBINE ALL FORCES ==========
-          const x = driftX;
-          const y = driftY + scrollDisplacement;
+          const x = parallaxDriftX;
+          const y = driftY + parallaxScrollY;
 
           // ========== VISUAL PROPERTIES ==========
           // Gentle pulse
@@ -988,7 +994,10 @@ export default function AnimatedBackground() {
 
         // Calculate text-aware opacity for better readability
         let textOpacity = 1;
-        if (textBounds && typeof window !== 'undefined') {
+        let hoverScale = 1;
+        let hoverGlow = 0;
+
+        if (typeof window !== 'undefined') {
           const width = window.innerWidth || 1;
           const height = window.innerHeight || 1;
 
@@ -997,25 +1006,53 @@ export default function AnimatedBackground() {
           const particleScreenY = (particle.baseY / 100) * height + particle.y;
 
           // Check if particle is near text
-          const textPadding = 100; // Padding around text area
-          const isNearText =
-            particleScreenX > textBounds.left - textPadding &&
-            particleScreenX < textBounds.right + textPadding &&
-            particleScreenY > textBounds.top - textPadding &&
-            particleScreenY < textBounds.bottom + textPadding;
+          if (textBounds) {
+            const textPadding = 100;
+            const isNearText =
+              particleScreenX > textBounds.left - textPadding &&
+              particleScreenX < textBounds.right + textPadding &&
+              particleScreenY > textBounds.top - textPadding &&
+              particleScreenY < textBounds.bottom + textPadding;
 
-          if (isNearText) {
-            // Reduce opacity when near text for better legibility
-            textOpacity = isDarkMode ? 0.4 : 0.3;
+            if (isNearText) {
+              // Reduce opacity when near text for better legibility
+              textOpacity = isDarkMode ? 0.4 : 0.3;
+            }
+          }
+
+          // Hover effect: check mouse proximity
+          const mouseScreenX = (mousePos.x / 100) * width;
+          const mouseScreenY = (mousePos.y / 100) * height;
+          const mouseDx = mouseScreenX - particleScreenX;
+          const mouseDy = mouseScreenY - particleScreenY;
+          const mouseDistance = Math.sqrt(mouseDx * mouseDx + mouseDy * mouseDy);
+
+          // Apply hover effect within 80px radius
+          if (mouseDistance < 80) {
+            const hoverStrength = 1 - (mouseDistance / 80);
+            hoverScale = 1 + (hoverStrength * 0.3);  // Scale up to 1.3x
+            hoverGlow = hoverStrength * 15;  // Glow up to 15px
           }
         }
 
         const finalOpacity = mounted ? textOpacity : 0;
 
+        // Combine base scale with hover scale
+        const combinedScale = particle.scale * hoverScale;
+
+        // Enhance box shadow with hover glow
+        const enhancedShadow = hoverGlow > 0
+          ? (visualConfig.glowShadow !== 'none'
+              ? `${visualConfig.shadow}, ${visualConfig.glowShadow}, 0 0 ${hoverGlow}px ${visualConfig.borderColor}`
+              : `${visualConfig.shadow}, 0 0 ${hoverGlow}px ${visualConfig.borderColor}`)
+          : (visualConfig.glowShadow !== 'none'
+              ? `${visualConfig.shadow}, ${visualConfig.glowShadow}`
+              : visualConfig.shadow);
+
         return (
           <div
             key={i}
-            className="absolute rounded-full will-change-transform transition-opacity duration-300"
+            className="absolute rounded-full will-change-transform transition-all duration-200"
             style={{
               left: `${particle.baseX}%`,
               top: `${particle.baseY}%`,
@@ -1023,10 +1060,8 @@ export default function AnimatedBackground() {
               height: `${particle.size}px`,
               background: visualConfig.innerGradient,
               border: `${visualConfig.borderWidth} solid ${visualConfig.borderColor}`,
-              boxShadow: visualConfig.glowShadow !== 'none'
-                ? `${visualConfig.shadow}, ${visualConfig.glowShadow}`
-                : visualConfig.shadow,
-              transform: `translate(${particle.x}px, ${particle.y}px) scale(${particle.scale}) rotate(${particle.rotation}deg)`,
+              boxShadow: enhancedShadow,
+              transform: `translate(${particle.x}px, ${particle.y}px) scale(${combinedScale}) rotate(${particle.rotation}deg)`,
               opacity: finalOpacity,
               zIndex: particle.zIndex,
               mixBlendMode: particle.blendMode as any,
