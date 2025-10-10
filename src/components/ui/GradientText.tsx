@@ -79,39 +79,61 @@ export default function GradientText({ children, className = "" }: GradientTextP
   const angle = 135 + (mousePos.x - 50) * 0.8 + (mousePos.y - 50) * 0.3;
 
   // Dynamic color selection based on x and y position
-  const getColorPalette = (x: number, y: number, isDark: boolean) => {
-    // Divide the area into regions for different color palettes
-    const region = Math.floor((x / 25)) + Math.floor((y / 25)) * 4;
+  const getColorPalette = (x: number, y: number, isDark: boolean): string[] => {
+    try {
+      // Sanitize inputs to prevent NaN
+      const safeX = typeof x === 'number' && isFinite(x) ? x : 50;
+      const safeY = typeof y === 'number' && isFinite(y) ? y : 50;
 
-    if (isDark) {
-      const palettes = [
-        ['#E9D5FF', '#C4B5FD', '#DDD6FE', '#F3E8FF'], // Purple
-        ['#BFDBFE', '#93C5FD', '#DBEAFE', '#E0F2FE'], // Blue
-        ['#A7F3D0', '#6EE7B7', '#D1FAE5', '#ECFDF5'], // Green
-        ['#FED7AA', '#FDBA74', '#FEF3C7', '#FEF9C3'], // Orange
-        ['#FBCFE8', '#F9A8D4', '#FCE7F3', '#FDF2F8'], // Pink
-        ['#DDD6FE', '#C4B5FD', '#EDE9FE', '#F5F3FF'], // Violet
-        ['#BAE6FD', '#7DD3FC', '#E0F2FE', '#F0F9FF'], // Sky
-        ['#D9F99D', '#BEF264', '#ECFCCB', '#F7FEE7'], // Lime
-      ];
-      return palettes[region % palettes.length];
-    } else {
-      const palettes = [
-        ['#4A12C0', '#6B3DCB', '#8B5CF6', '#A855F7'], // Purple
-        ['#1E40AF', '#3B82F6', '#2563EB', '#1D4ED8'], // Blue
-        ['#059669', '#10B981', '#14B8A6', '#0D9488'], // Green/Teal
-        ['#D97706', '#F59E0B', '#FBBF24', '#FCD34D'], // Orange/Yellow
-        ['#DB2777', '#EC4899', '#F472B6', '#F9A8D4'], // Pink
-        ['#7C3AED', '#8B5CF6', '#A78BFA', '#C4B5FD'], // Violet
-        ['#0284C7', '#0EA5E9', '#38BDF8', '#7DD3FC'], // Sky
-        ['#65A30D', '#84CC16', '#A3E635', '#BEF264'], // Lime
-      ];
-      return palettes[region % palettes.length];
+      // Divide the area into regions for different color palettes
+      const region = Math.floor((safeX / 25)) + Math.floor((safeY / 25)) * 4;
+
+      if (isDark) {
+        const palettes = [
+          ['#E9D5FF', '#C4B5FD', '#DDD6FE', '#F3E8FF'], // Purple
+          ['#BFDBFE', '#93C5FD', '#DBEAFE', '#E0F2FE'], // Blue
+          ['#A7F3D0', '#6EE7B7', '#D1FAE5', '#ECFDF5'], // Green
+          ['#FED7AA', '#FDBA74', '#FEF3C7', '#FEF9C3'], // Orange
+          ['#FBCFE8', '#F9A8D4', '#FCE7F3', '#FDF2F8'], // Pink
+          ['#DDD6FE', '#C4B5FD', '#EDE9FE', '#F5F3FF'], // Violet
+          ['#BAE6FD', '#7DD3FC', '#E0F2FE', '#F0F9FF'], // Sky
+          ['#D9F99D', '#BEF264', '#ECFCCB', '#F7FEE7'], // Lime
+        ];
+        const palette = palettes[Math.abs(region) % palettes.length];
+        return palette || palettes[0]; // Fallback to first palette
+      } else {
+        const palettes = [
+          ['#4A12C0', '#6B3DCB', '#8B5CF6', '#A855F7'], // Purple
+          ['#1E40AF', '#3B82F6', '#2563EB', '#1D4ED8'], // Blue
+          ['#059669', '#10B981', '#14B8A6', '#0D9488'], // Green/Teal
+          ['#D97706', '#F59E0B', '#FBBF24', '#FCD34D'], // Orange/Yellow
+          ['#DB2777', '#EC4899', '#F472B6', '#F9A8D4'], // Pink
+          ['#7C3AED', '#8B5CF6', '#A78BFA', '#C4B5FD'], // Violet
+          ['#0284C7', '#0EA5E9', '#38BDF8', '#7DD3FC'], // Sky
+          ['#65A30D', '#84CC16', '#A3E635', '#BEF264'], // Lime
+        ];
+        const palette = palettes[Math.abs(region) % palettes.length];
+        return palette || palettes[0]; // Fallback to first palette
+      }
+    } catch (error) {
+      console.debug('getColorPalette error:', error);
+      // Return default purple palette on error
+      return isDark
+        ? ['#E9D5FF', '#C4B5FD', '#DDD6FE', '#F3E8FF']
+        : ['#4A12C0', '#6B3DCB', '#8B5CF6', '#A855F7'];
     }
   };
 
   const lightColors = getColorPalette(mousePos.x, mousePos.y, false);
   const darkColors = getColorPalette(mousePos.x, mousePos.y, true);
+
+  // Ensure we have valid color arrays
+  const safeLightColors = Array.isArray(lightColors) && lightColors.length >= 4
+    ? lightColors
+    : ['#4A12C0', '#6B3DCB', '#8B5CF6', '#A855F7'];
+  const safeDarkColors = Array.isArray(darkColors) && darkColors.length >= 4
+    ? darkColors
+    : ['#E9D5FF', '#C4B5FD', '#DDD6FE', '#F3E8FF'];
 
   // Speed-based intensity (faster = more vibrant)
   const speedIntensity = Math.min(mouseSpeed * 100, 50);
@@ -124,17 +146,17 @@ export default function GradientText({ children, className = "" }: GradientTextP
 
   // Light mode gradient with dynamic colors
   const lightGradient = `linear-gradient(${angle}deg,
-    ${lightColors[0]} ${colorStop1}%,
-    ${lightColors[1]} ${colorStop2}%,
-    ${lightColors[2]} ${colorStop3}%,
-    ${lightColors[3]} ${colorStop4}%)`;
+    ${safeLightColors[0]} ${colorStop1}%,
+    ${safeLightColors[1]} ${colorStop2}%,
+    ${safeLightColors[2]} ${colorStop3}%,
+    ${safeLightColors[3]} ${colorStop4}%)`;
 
   // Dark mode gradient with dynamic colors
   const darkGradient = `linear-gradient(${angle}deg,
-    ${darkColors[0]} ${colorStop1}%,
-    ${darkColors[1]} ${colorStop2}%,
-    ${darkColors[2]} ${colorStop3}%,
-    ${darkColors[3]} ${colorStop4}%)`;
+    ${safeDarkColors[0]} ${colorStop1}%,
+    ${safeDarkColors[1]} ${colorStop2}%,
+    ${safeDarkColors[2]} ${colorStop3}%,
+    ${safeDarkColors[3]} ${colorStop4}%)`;
 
   // Animation classes for special effects
   const specialEffectClass = isRapidMovement ? 'animate-shimmer-text' : '';
