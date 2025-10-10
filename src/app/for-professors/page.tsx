@@ -26,7 +26,7 @@ export default function ForProfessors() {
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               For Professors: Make Team-Based Learning Effortless
             </h1>
-            <p className="text-xl mb-8 leading-relaxed">
+            <p className="text-xl mb-8 leading-relaxed text-white/95">
               Spend less time managing teams and more time teaching. CoStudy automates the logistics
               while giving you powerful insights into student collaboration.
             </p>

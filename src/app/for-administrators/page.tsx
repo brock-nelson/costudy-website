@@ -27,7 +27,7 @@ export default function ForAdministrators() {
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               For Administrators: Data-Driven Student Success
             </h1>
-            <p className="text-xl mb-8 leading-relaxed">
+            <p className="text-xl mb-8 leading-relaxed text-white/95">
               Make informed decisions with comprehensive analytics on student collaboration,
               skill development, and learning outcomes across your institution.
             </p>

@@ -26,7 +26,7 @@ export default function ForStudents() {
             <h1 id="students-hero" className="text-4xl md:text-5xl font-bold mb-6">
               For Students: Master the Art of Teamwork
             </h1>
-            <p className="text-xl mb-8 leading-relaxed">
+            <p className="text-xl mb-8 leading-relaxed text-white/95">
               Build the collaboration skills that employers value most. CoStudy helps you become
               a more effective team member and leader.
             </p>
