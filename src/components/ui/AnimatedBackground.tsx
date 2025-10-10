@@ -119,15 +119,15 @@ const noise1D = (x: number): number => {
   return Math.sin(x) * 0.5 + Math.sin(x * 2.5) * 0.3 + Math.sin(x * 5.2) * 0.2;
 };
 
-// Smooth easing function for spring physics
-const easeOutElastic = (x: number): number => {
-  const c4 = (2 * Math.PI) / 3;
-  return x === 0
-    ? 0
-    : x === 1
-    ? 1
-    : Math.pow(2, -10 * x) * Math.sin((x * 10 - 0.75) * c4) + 1;
-};
+// Smooth easing function for spring physics (reserved for future use)
+// const easeOutElastic = (x: number): number => {
+//   const c4 = (2 * Math.PI) / 3;
+//   return x === 0
+//     ? 0
+//     : x === 1
+//     ? 1
+//     : Math.pow(2, -10 * x) * Math.sin((x * 10 - 0.75) * c4) + 1;
+// };
 
 // ============================================================================
 // INTERFACES
@@ -360,8 +360,6 @@ export default function AnimatedBackground() {
     if (!mounted || particles.length === 0 || prefersReducedMotion) return;
 
     const animate = () => {
-      const time = Date.now() * 0.001;
-
       setParticles(prevParticles => {
         return prevParticles.map((p) => {
           // ========== MICROGRAVITY DRIFT (Perlin noise-based) ==========
@@ -374,8 +372,8 @@ export default function AnimatedBackground() {
           const targetDriftY = noise1D(noiseOffsetY) * PHYSICS_CONFIG.driftScale;
 
           // Smooth interpolation to target drift position
-          let driftX = p.driftX + (targetDriftX - p.driftX) * (1 - PHYSICS_CONFIG.driftDamping);
-          let driftY = p.driftY + (targetDriftY - p.driftY) * (1 - PHYSICS_CONFIG.driftDamping);
+          const driftX = p.driftX + (targetDriftX - p.driftX) * (1 - PHYSICS_CONFIG.driftDamping);
+          const driftY = p.driftY + (targetDriftY - p.driftY) * (1 - PHYSICS_CONFIG.driftDamping);
 
           // ========== MOON-TRAMPOLINE SCROLL PHYSICS ==========
           // Target position when not scrolling: 0 (resting position)
@@ -1078,7 +1076,7 @@ export default function AnimatedBackground() {
               transform: `translate(${particle.x}px, ${particle.y}px) scale(${combinedScale}) rotate(${particle.rotation}deg)`,
               opacity: finalOpacity,
               zIndex: particle.zIndex,
-              mixBlendMode: particle.blendMode as any,
+              mixBlendMode: particle.blendMode as React.CSSProperties['mixBlendMode'],
             }}
           />
         );
