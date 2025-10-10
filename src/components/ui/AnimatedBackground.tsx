@@ -388,34 +388,83 @@ export default function AnimatedBackground() {
       {/* Rainbow floating particles with scroll physics */}
       {(() => {
         const particles = [
-          { top: 25, left: 33.33, size: 3, color: 'purple', anim: 1 },
-          { top: 66.67, right: 25, size: 4, color: 'cyan', anim: 2 },
-          { top: 50, left: 66.67, size: 3, color: 'pink', anim: 3 },
-          { bottom: 25, left: 50, size: 4, color: 'orange', anim: 1 },
-          { top: 20, right: 40, size: 3, color: 'emerald', anim: 2 },
-          { bottom: 33.33, left: 20, size: 3, color: 'violet', anim: 3 },
-          { top: 75, right: 33.33, size: 4, color: 'amber', anim: 1 },
+          { top: 25, left: 33.33, size: 12, lightColor: 'rgba(139, 92, 246, 0.7)', darkColor: 'rgba(168, 85, 247, 0.9)', shadowLight: 'rgba(139, 92, 246, 0.6)', shadowDark: 'rgba(168, 85, 247, 0.8)', anim: 1 },
+          { top: 66.67, right: 25, size: 16, lightColor: 'rgba(6, 182, 212, 0.7)', darkColor: 'rgba(34, 211, 238, 0.9)', shadowLight: 'rgba(6, 182, 212, 0.6)', shadowDark: 'rgba(34, 211, 238, 0.8)', anim: 2 },
+          { top: 50, left: 66.67, size: 12, lightColor: 'rgba(236, 72, 153, 0.7)', darkColor: 'rgba(244, 114, 182, 0.9)', shadowLight: 'rgba(236, 72, 153, 0.6)', shadowDark: 'rgba(244, 114, 182, 0.8)', anim: 3 },
+          { bottom: 25, left: 50, size: 16, lightColor: 'rgba(249, 115, 22, 0.7)', darkColor: 'rgba(251, 146, 60, 0.9)', shadowLight: 'rgba(249, 115, 22, 0.6)', shadowDark: 'rgba(251, 146, 60, 0.8)', anim: 1 },
+          { top: 20, right: 40, size: 12, lightColor: 'rgba(16, 185, 129, 0.7)', darkColor: 'rgba(52, 211, 153, 0.9)', shadowLight: 'rgba(16, 185, 129, 0.6)', shadowDark: 'rgba(52, 211, 153, 0.8)', anim: 2 },
+          { bottom: 33.33, left: 20, size: 12, lightColor: 'rgba(124, 58, 237, 0.7)', darkColor: 'rgba(167, 139, 250, 0.9)', shadowLight: 'rgba(124, 58, 237, 0.6)', shadowDark: 'rgba(167, 139, 250, 0.8)', anim: 3 },
+          { top: 75, right: 33.33, size: 16, lightColor: 'rgba(245, 158, 11, 0.7)', darkColor: 'rgba(251, 191, 36, 0.9)', shadowLight: 'rgba(245, 158, 11, 0.6)', shadowDark: 'rgba(251, 191, 36, 0.8)', anim: 1 },
         ];
 
         return particles.map((particle, i) => {
           const yPos = particle.top !== undefined ? particle.top : 100 - (particle.bottom || 0);
           const scroll = getScrollPhysics(yPos);
 
-          const positionStyle: React.CSSProperties = {};
+          const positionStyle: React.CSSProperties = {
+            width: `${particle.size}px`,
+            height: `${particle.size}px`,
+          };
+
           if (particle.top !== undefined) positionStyle.top = `calc(${particle.top}% + ${scroll.y}px)`;
           if (particle.bottom !== undefined) positionStyle.bottom = `calc(${particle.bottom}% - ${scroll.y}px)`;
           if (particle.left !== undefined) positionStyle.left = `${particle.left}%`;
           if (particle.right !== undefined) positionStyle.right = `${particle.right}%`;
 
+          const animClass = particle.anim === 1 ? 'animate-float-particle-1' :
+                           particle.anim === 2 ? 'animate-float-particle-2' :
+                           'animate-float-particle-3';
+
           return (
             <div
               key={i}
-              className={`absolute w-${particle.size} h-${particle.size} bg-${particle.color}-500/70 dark:bg-${particle.color}-400/90 rounded-full animate-float-particle-${particle.anim} shadow-lg shadow-${particle.color}-500/60 dark:shadow-${particle.color}-400/80 transition-all duration-300 ease-out will-change-transform`}
-              style={positionStyle}
+              className={`absolute rounded-full transition-all duration-300 ease-out will-change-transform ${animClass}`}
+              style={{
+                ...positionStyle,
+                background: `var(--particle-bg-${i})`,
+                boxShadow: `0 4px 6px -1px var(--particle-shadow-${i}), 0 2px 4px -1px var(--particle-shadow-${i})`,
+              }}
             />
           );
         });
       })()}
+
+      <style jsx>{`
+        :global(body:not(.dark)) {
+          ${[0, 1, 2, 3, 4, 5, 6].map(i => {
+            const particles = [
+              { lightColor: 'rgba(139, 92, 246, 0.7)', shadowLight: 'rgba(139, 92, 246, 0.6)' },
+              { lightColor: 'rgba(6, 182, 212, 0.7)', shadowLight: 'rgba(6, 182, 212, 0.6)' },
+              { lightColor: 'rgba(236, 72, 153, 0.7)', shadowLight: 'rgba(236, 72, 153, 0.6)' },
+              { lightColor: 'rgba(249, 115, 22, 0.7)', shadowLight: 'rgba(249, 115, 22, 0.6)' },
+              { lightColor: 'rgba(16, 185, 129, 0.7)', shadowLight: 'rgba(16, 185, 129, 0.6)' },
+              { lightColor: 'rgba(124, 58, 237, 0.7)', shadowLight: 'rgba(124, 58, 237, 0.6)' },
+              { lightColor: 'rgba(245, 158, 11, 0.7)', shadowLight: 'rgba(245, 158, 11, 0.6)' },
+            ];
+            return `
+              --particle-bg-${i}: ${particles[i].lightColor};
+              --particle-shadow-${i}: ${particles[i].shadowLight};
+            `;
+          }).join('')}
+        }
+        :global(body.dark) {
+          ${[0, 1, 2, 3, 4, 5, 6].map(i => {
+            const particles = [
+              { darkColor: 'rgba(168, 85, 247, 0.9)', shadowDark: 'rgba(168, 85, 247, 0.8)' },
+              { darkColor: 'rgba(34, 211, 238, 0.9)', shadowDark: 'rgba(34, 211, 238, 0.8)' },
+              { darkColor: 'rgba(244, 114, 182, 0.9)', shadowDark: 'rgba(244, 114, 182, 0.8)' },
+              { darkColor: 'rgba(251, 146, 60, 0.9)', shadowDark: 'rgba(251, 146, 60, 0.8)' },
+              { darkColor: 'rgba(52, 211, 153, 0.9)', shadowDark: 'rgba(52, 211, 153, 0.8)' },
+              { darkColor: 'rgba(167, 139, 250, 0.9)', shadowDark: 'rgba(167, 139, 250, 0.8)' },
+              { darkColor: 'rgba(251, 191, 36, 0.9)', shadowDark: 'rgba(251, 191, 36, 0.8)' },
+            ];
+            return `
+              --particle-bg-${i}: ${particles[i].darkColor};
+              --particle-shadow-${i}: ${particles[i].shadowDark};
+            `;
+          }).join('')}
+        }
+      `}</style>
     </div>
   );
 }
