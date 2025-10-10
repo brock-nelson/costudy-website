@@ -41,14 +41,54 @@ const VISUAL_CONFIG = {
   },
   dark: {
     particleCount: 7,              // More particles in dark mode for richness
+    // Neon color palette: teal, magenta, violet, cyan
+    neonColors: [
+      {
+        name: 'neon-magenta',
+        borderColor: 'rgba(236, 72, 153, 0.9)',      // Bright magenta border
+        innerGradient: 'radial-gradient(circle, rgba(219, 39, 119, 0.85), rgba(190, 24, 93, 0.7))',
+        glowShadow: '0 0 20px rgba(236, 72, 153, 0.7), 0 0 35px rgba(219, 39, 119, 0.4)',
+      },
+      {
+        name: 'neon-cyan',
+        borderColor: 'rgba(34, 211, 238, 0.9)',      // Bright cyan border
+        innerGradient: 'radial-gradient(circle, rgba(6, 182, 212, 0.85), rgba(8, 145, 178, 0.7))',
+        glowShadow: '0 0 20px rgba(34, 211, 238, 0.7), 0 0 35px rgba(6, 182, 212, 0.4)',
+      },
+      {
+        name: 'neon-violet',
+        borderColor: 'rgba(167, 139, 250, 0.9)',     // Bright violet border
+        innerGradient: 'radial-gradient(circle, rgba(139, 92, 246, 0.85), rgba(124, 58, 237, 0.7))',
+        glowShadow: '0 0 20px rgba(167, 139, 250, 0.7), 0 0 35px rgba(139, 92, 246, 0.4)',
+      },
+      {
+        name: 'neon-teal',
+        borderColor: 'rgba(45, 212, 191, 0.9)',      // Bright teal border
+        innerGradient: 'radial-gradient(circle, rgba(20, 184, 166, 0.85), rgba(13, 148, 136, 0.7))',
+        glowShadow: '0 0 20px rgba(45, 212, 191, 0.7), 0 0 35px rgba(20, 184, 166, 0.4)',
+      },
+      {
+        name: 'neon-purple',
+        borderColor: 'rgba(192, 132, 252, 0.9)',     // Bright purple border
+        innerGradient: 'radial-gradient(circle, rgba(168, 85, 247, 0.85), rgba(147, 51, 234, 0.7))',
+        glowShadow: '0 0 20px rgba(192, 132, 252, 0.7), 0 0 35px rgba(168, 85, 247, 0.4)',
+      },
+      {
+        name: 'neon-fuchsia',
+        borderColor: 'rgba(240, 171, 252, 0.9)',     // Bright fuchsia border
+        innerGradient: 'radial-gradient(circle, rgba(217, 70, 239, 0.85), rgba(192, 38, 211, 0.7))',
+        glowShadow: '0 0 20px rgba(240, 171, 252, 0.7), 0 0 35px rgba(217, 70, 239, 0.4)',
+      },
+      {
+        name: 'neon-blue',
+        borderColor: 'rgba(96, 165, 250, 0.9)',      // Bright blue border
+        innerGradient: 'radial-gradient(circle, rgba(59, 130, 246, 0.85), rgba(37, 99, 235, 0.7))',
+        glowShadow: '0 0 20px rgba(96, 165, 250, 0.7), 0 0 35px rgba(59, 130, 246, 0.4)',
+      },
+    ],
     particles: {
-      // Neon purple with bright border and glow
-      borderColor: 'rgba(192, 132, 252, 0.8)',      // Bright neon border
       borderWidth: '2px',
-      innerGradient: 'radial-gradient(circle, rgba(168, 85, 247, 0.9), rgba(147, 51, 234, 0.7))',
-      outerGradient: 'radial-gradient(circle, rgba(126, 34, 206, 0.8), rgba(107, 33, 168, 0.6))',
-      shadow: '0 4px 12px rgba(168, 85, 247, 0.4)',
-      glowShadow: '0 0 20px rgba(168, 85, 247, 0.6), 0 0 40px rgba(124, 58, 237, 0.3)',
+      shadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
     }
   }
 };
@@ -109,6 +149,7 @@ interface ParticleState {
   pulsePhase: number;
   pulseSpeed: number;
   scale: number;
+  colorIndex: number;    // Index into neon colors array (dark mode)
 
   // Scroll spring physics
   scrollDisplacement: number;  // How far pushed by scroll
@@ -219,6 +260,7 @@ export default function AnimatedBackground() {
         pulsePhase: Math.random() * Math.PI * 2,
         pulseSpeed: PHYSICS_CONFIG.pulseSpeed + Math.random() * PHYSICS_CONFIG.pulseSpeed,
         scale: 1,
+        colorIndex: index % VISUAL_CONFIG.dark.neonColors.length,  // Cycle through neon colors
         scrollDisplacement: 0,
         scrollVelocity: 0,
       };
@@ -809,7 +851,22 @@ export default function AnimatedBackground() {
 
       {/* Microgravity particles with moon-trampoline scroll */}
       {particles.map((particle, i) => {
-        const visualConfig = isDarkMode ? VISUAL_CONFIG.dark.particles : VISUAL_CONFIG.light.particles;
+        let visualConfig;
+
+        if (isDarkMode) {
+          // Get the specific neon color for this particle
+          const neonColor = VISUAL_CONFIG.dark.neonColors[particle.colorIndex];
+          visualConfig = {
+            borderWidth: VISUAL_CONFIG.dark.particles.borderWidth,
+            borderColor: neonColor.borderColor,
+            innerGradient: neonColor.innerGradient,
+            shadow: VISUAL_CONFIG.dark.particles.shadow,
+            glowShadow: neonColor.glowShadow,
+          };
+        } else {
+          // Light mode: single pastel style
+          visualConfig = VISUAL_CONFIG.light.particles;
+        }
 
         return (
           <div
