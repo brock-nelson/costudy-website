@@ -43,9 +43,9 @@ export default function SchoolLogoScroller() {
   }
 
   return (
-    <div className="py-12 overflow-hidden bg-gradient-to-r from-purple-50/30 via-blue-50/20 to-purple-50/30 dark:from-purple-900/10 dark:via-blue-900/5 dark:to-purple-900/10 border-y border-purple-100/50 dark:border-purple-800/30">
+    <div className="py-16 overflow-hidden bg-gradient-to-r from-purple-100/50 via-blue-100/40 to-purple-100/50 dark:from-purple-900/10 dark:via-blue-900/5 dark:to-purple-900/10 border-y border-purple-200/70 dark:border-purple-800/30 shadow-inner">
       <div className="container mx-auto px-4">
-        <p className="text-center text-sm font-semibold text-gray-600 dark:text-gray-300 mb-8 uppercase tracking-wide">
+        <p className="text-center text-base font-bold text-gray-700 dark:text-gray-300 mb-10 uppercase tracking-wider">
           Trusted by Leading Institutions
         </p>
 
@@ -62,13 +62,13 @@ export default function SchoolLogoScroller() {
                 className="flex-shrink-0 mx-8 group transition-all duration-300"
                 style={{ width: "160px" }}
               >
-                <div className="relative h-20 flex items-center justify-center bg-white/40 dark:bg-gray-800/40 rounded-xl p-4 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 group-hover:border-purple-300 dark:group-hover:border-purple-600 group-hover:scale-105 transition-all duration-300">
+                <div className="relative h-24 flex items-center justify-center bg-white/80 dark:bg-gray-800/40 rounded-xl p-5 backdrop-blur-md border-2 border-gray-300/70 dark:border-gray-700/50 group-hover:border-purple-400 dark:group-hover:border-purple-600 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-purple-200/50 dark:group-hover:shadow-purple-900/30 transition-all duration-300">
                   <Image
                     src={school.logo}
                     alt={`${school.name} logo`}
                     width={160}
-                    height={80}
-                    className="object-contain max-h-12 w-auto filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 dark:brightness-0 dark:invert dark:opacity-80 dark:group-hover:opacity-100"
+                    height={96}
+                    className="object-contain max-h-14 w-auto filter opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300 dark:brightness-0 dark:invert dark:opacity-80 dark:group-hover:opacity-100"
                     onError={(e) => {
                       // Fallback to text if image doesn't load
                       const target = e.target as HTMLImageElement;
