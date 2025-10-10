@@ -109,7 +109,7 @@ export default function Home() {
       </div>
 
       {/* Audience Sections */}
-      <section className="py-20 relative overflow-hidden bg-white dark:bg-[#0a0a0a]" aria-labelledby="solutions-heading">
+      <section className="py-20 relative overflow-visible bg-white dark:bg-[#0a0a0a]" aria-labelledby="solutions-heading">
         {/* Subtle background elements for visual continuity */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-20 right-10 w-32 h-32 bg-gradient-to-br from-purple-200/20 to-transparent rounded-full blur-2xl"></div>
