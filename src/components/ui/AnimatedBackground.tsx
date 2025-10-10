@@ -18,7 +18,7 @@ interface DriftState {
   vy: number;
 }
 
-// Playful particle state with rotation and scale
+// Playful particle state with rotation, scale, and color
 interface ParticleState {
   x: number;
   y: number;
@@ -28,6 +28,12 @@ interface ParticleState {
   rotationSpeed: number;
   scale: number;
   baseY: number;
+  pulsePhase: number;
+  pulseSpeed: number;
+  colorIndex: number;
+  colorTransition: number;
+  squishX: number;
+  squishY: number;
 }
 
 export default function AnimatedBackground() {
@@ -71,7 +77,7 @@ export default function AnimatedBackground() {
       { top: 75, right: 33.33 },
     ];
 
-    const initialParticles: ParticleState[] = particleData.map((p) => {
+    const initialParticles: ParticleState[] = particleData.map((p, index) => {
       const baseY = p.top !== undefined ? p.top : 100 - (p.bottom || 0);
       return {
         x: 0,
@@ -82,6 +88,12 @@ export default function AnimatedBackground() {
         rotationSpeed: (Math.random() - 0.5) * 2,
         scale: 1,
         baseY,
+        pulsePhase: Math.random() * Math.PI * 2,
+        pulseSpeed: 0.0008 + Math.random() * 0.0012, // Very slow random pulse
+        colorIndex: index,
+        colorTransition: 0,
+        squishX: 1,
+        squishY: 1,
       };
     });
 
@@ -149,7 +161,7 @@ export default function AnimatedBackground() {
     };
   }, [mounted]);
 
-  // Playful particle physics animation loop with scroll interaction
+  // Playful particle physics animation loop with jello squish and slow pulse
   useEffect(() => {
     if (!mounted || particles.length === 0) return;
 
@@ -181,15 +193,35 @@ export default function AnimatedBackground() {
           let x = p.x + vx;
           let y = p.y + vy;
 
-          // Bouncy bounds (-30 to 30 pixels) with playful elastic collision
+          // Jello squish physics - detect collisions and squish
+          let squishX = p.squishX;
+          let squishY = p.squishY;
           const maxDrift = 30;
+          let hitWall = false;
+
           if (Math.abs(x) > maxDrift) {
             x = Math.sign(x) * maxDrift;
             vx *= -0.7; // playful bounce
+            // Squish horizontally on impact
+            squishX = 0.7;
+            squishY = 1.3;
+            hitWall = true;
           }
           if (Math.abs(y) > maxDrift) {
             y = Math.sign(y) * maxDrift;
             vy *= -0.7; // playful bounce
+            // Squish vertically on impact
+            if (!hitWall) {
+              squishX = 1.3;
+              squishY = 0.7;
+            }
+            hitWall = true;
+          }
+
+          // Smooth squish recovery (spring back to normal)
+          if (!hitWall) {
+            squishX += (1 - squishX) * 0.12;
+            squishY += (1 - squishY) * 0.12;
           }
 
           // Update rotation with variable speed based on velocity
@@ -197,10 +229,13 @@ export default function AnimatedBackground() {
           const rotationSpeed = p.rotationSpeed + velocityMag * 2;
           const rotation = (p.rotation + rotationSpeed) % 360;
 
-          // Playful scale pulsing based on velocity and time
-          const pulseSpeed = 0.002 + velocityMag * 0.05;
-          const timePulse = Math.sin(Date.now() * pulseSpeed + index) * 0.15;
-          const scale = 1 + timePulse + velocityMag * 0.3;
+          // Slow random pulse (independent per particle)
+          const pulsePhase = p.pulsePhase + p.pulseSpeed;
+          const pulseFactor = Math.sin(pulsePhase) * 0.08 + 1; // ±8% size variation
+          const scale = pulseFactor + velocityMag * 0.2;
+
+          // Slow color transition (cycle through rainbow over time)
+          const colorTransition = (p.colorTransition + 0.0003) % 1;
 
           return {
             x,
@@ -209,8 +244,14 @@ export default function AnimatedBackground() {
             vy,
             rotation,
             rotationSpeed,
-            scale: Math.max(0.7, Math.min(1.4, scale)),
+            scale: Math.max(0.8, Math.min(1.3, scale)),
             baseY: p.baseY,
+            pulsePhase,
+            pulseSpeed: p.pulseSpeed,
+            colorIndex: p.colorIndex,
+            colorTransition,
+            squishX: Math.max(0.6, Math.min(1.4, squishX)),
+            squishY: Math.max(0.6, Math.min(1.4, squishY)),
           };
         });
       });
@@ -629,7 +670,7 @@ export default function AnimatedBackground() {
       <div className="absolute top-2/3 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400/25 dark:via-cyan-400/55 to-transparent animate-shimmer-delayed"></div>
       <div className="absolute top-1/3 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-pink-400/25 dark:via-pink-400/55 to-transparent animate-shimmer"></div>
 
-      {/* Rainbow floating particles with playful physics */}
+      {/* Rainbow floating particles with jello physics and color transitions */}
       {(() => {
         const particleData = [
           { top: 25, left: 33.33, size: 12, lightColor: 'rgba(139, 92, 246, 0.7)', darkColor: 'rgba(168, 85, 247, 0.9)', shadowLight: 'rgba(139, 92, 246, 0.6)', shadowDark: 'rgba(168, 85, 247, 0.8)' },
@@ -641,9 +682,24 @@ export default function AnimatedBackground() {
           { top: 75, right: 33.33, size: 16, lightColor: 'rgba(245, 158, 11, 0.7)', darkColor: 'rgba(251, 191, 36, 0.9)', shadowLight: 'rgba(245, 158, 11, 0.6)', shadowDark: 'rgba(251, 191, 36, 0.8)' },
         ];
 
+        // Color palette for transitions
+        const rainbowColors = [
+          'rgba(139, 92, 246, 0.7)',   // Purple
+          'rgba(236, 72, 153, 0.7)',   // Pink
+          'rgba(6, 182, 212, 0.7)',    // Cyan
+          'rgba(16, 185, 129, 0.7)',   // Green
+          'rgba(245, 158, 11, 0.7)',   // Amber
+          'rgba(249, 115, 22, 0.7)',   // Orange
+        ];
+
         return particleData.map((particle, i) => {
           const particleState = particles[i];
           if (!particleState) return null;
+
+          // Calculate transitioning color
+          const colorIndex1 = Math.floor(particleState.colorTransition * rainbowColors.length);
+          const colorIndex2 = (colorIndex1 + 1) % rainbowColors.length;
+          const colorMix = (particleState.colorTransition * rainbowColors.length) % 1;
 
           const positionStyle: React.CSSProperties = {
             width: `${particle.size}px`,
@@ -663,11 +719,11 @@ export default function AnimatedBackground() {
               style={{
                 ...positionStyle,
                 background: `var(--particle-bg-${i})`,
-                boxShadow: `0 ${4 * particleState.scale}px ${6 * particleState.scale}px -1px var(--particle-shadow-${i}),
-                            0 ${2 * particleState.scale}px ${4 * particleState.scale}px -1px var(--particle-shadow-${i})`,
+                boxShadow: `0 ${4 * particleState.scale * particleState.squishY}px ${6 * particleState.scale}px -1px var(--particle-shadow-${i}),
+                            0 ${2 * particleState.scale * particleState.squishY}px ${4 * particleState.scale}px -1px var(--particle-shadow-${i})`,
                 transform: `translate(${particleState.x}px, ${particleState.y}px)
                            rotate(${particleState.rotation}deg)
-                           scale(${particleState.scale})`,
+                           scale(${particleState.scale * particleState.squishX}, ${particleState.scale * particleState.squishY})`,
                 transition: 'none',
                 opacity: mounted ? undefined : 0,
               }}

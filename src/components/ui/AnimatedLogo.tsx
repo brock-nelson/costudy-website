@@ -92,7 +92,7 @@ export default function AnimatedLogo() {
           className="h-10 w-auto transition-all duration-300 group-hover:scale-105"
           style={{
             filter: mounted
-              ? 'invert(1) brightness(2.5) saturate(0.9) drop-shadow(0 0 16px rgba(243, 232, 255, 1)) drop-shadow(0 0 8px rgba(255, 255, 255, 0.8))'
+              ? 'invert(1) brightness(2.5) saturate(0.9) drop-shadow(0 0 6px rgba(243, 232, 255, 0.6)) drop-shadow(0 0 3px rgba(255, 255, 255, 0.4))'
               : undefined
           }}
         />

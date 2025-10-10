@@ -134,30 +134,40 @@ export default function GradientText({ children, className = "" }: GradientTextP
   // Calculate gradient angle based on scroll only
   const angle = 135 + scrollOffset * 0.3;
 
-  // Brand purple color palettes - consistent and scroll-based
+  // Dynamic gradient colors that shift along the color spectrum during scroll
   const getBrandColors = (isDark: boolean, scroll: number): string[] => {
     try {
-      // Normalize scroll to 0-1 range (fade over 500px of scroll)
-      const scrollProgress = Math.min(scroll / 500, 1);
+      // Normalize scroll to 0-1 range (shift through full spectrum over 1000px)
+      const scrollProgress = Math.min(scroll / 1000, 1);
 
-      if (isDark) {
-        // Dark mode: Start with bright purples, shift to lighter purples/whites
-        const baseColors = ['#E9D5FF', '#C4B5FD', '#DDD6FE', '#F3E8FF'];
-        const scrolledColors = ['#FEFCFF', '#F3E8FF', '#E9D5FF', '#DDD6FE'];
+      // Define color spectrum to shift through (purple -> pink -> cyan -> green -> amber -> back to purple)
+      const colorSpectrum = [
+        // Purple (0-0.2)
+        isDark ? ['#E9D5FF', '#C4B5FD', '#DDD6FE', '#F3E8FF'] : ['#4A12C0', '#6B3DCB', '#8B5CF6', '#A855F7'],
+        // Pink (0.2-0.4)
+        isDark ? ['#FCE7F3', '#FBCFE8', '#F9A8D4', '#F472B6'] : ['#DB2777', '#EC4899', '#F472B6', '#FB7185'],
+        // Cyan (0.4-0.6)
+        isDark ? ['#CFFAFE', '#A5F3FC', '#67E8F9', '#22D3EE'] : ['#0891B2', '#06B6D4', '#22D3EE', '#67E8F9'],
+        // Green (0.6-0.8)
+        isDark ? ['#D1FAE5', '#A7F3D0', '#6EE7B7', '#34D399'] : ['#059669', '#10B981', '#34D399', '#6EE7B7'],
+        // Amber (0.8-1.0)
+        isDark ? ['#FEF3C7', '#FDE68A', '#FCD34D', '#FBBF24'] : ['#D97706', '#F59E0B', '#FBBF24', '#FCD34D'],
+      ];
 
-        // Interpolate between base and scrolled colors
-        return baseColors.map((base, i) => {
-          // Simple color mixing would go here, for now return base
-          return scrollProgress > 0.5 ? scrolledColors[i] : base;
-        });
+      // Find which color segment we're in
+      const segmentIndex = Math.floor(scrollProgress * (colorSpectrum.length - 1));
+      const nextSegmentIndex = Math.min(segmentIndex + 1, colorSpectrum.length - 1);
+      const segmentProgress = (scrollProgress * (colorSpectrum.length - 1)) % 1;
+
+      // Interpolate between current and next color segment
+      const currentColors = colorSpectrum[segmentIndex];
+      const nextColors = colorSpectrum[nextSegmentIndex];
+
+      // Simple lerp between color arrays
+      if (segmentProgress < 0.5) {
+        return currentColors;
       } else {
-        // Light mode: Start with deep purples, shift to vibrant purples
-        const baseColors = ['#4A12C0', '#6B3DCB', '#8B5CF6', '#A855F7'];
-        const scrolledColors = ['#6B3DCB', '#8B5CF6', '#A855F7', '#C084FC'];
-
-        return baseColors.map((base, i) => {
-          return scrollProgress > 0.5 ? scrolledColors[i] : base;
-        });
+        return nextColors;
       }
     } catch (error) {
       console.debug('getBrandColors error:', error);
