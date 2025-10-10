@@ -132,13 +132,13 @@ export default function AnimatedBackground() {
         colorTransition: 0,
         squishX: 1,
         squishY: 1,
-        // Each particle gets its own unique orbital path
-        orbitRadius: 8 + Math.random() * 12, // Orbit size between 8-20px
-        orbitSpeed: 0.0003 + Math.random() * 0.0004, // Slow, varied orbital speeds
+        // Each particle gets its own unique orbital path - MUCH LARGER roaming area
+        orbitRadius: 20 + Math.random() * 40, // Orbit size between 20-60px (3x larger!)
+        orbitSpeed: 0.0002 + Math.random() * 0.0003, // Slower for larger orbits
         orbitAngle: Math.random() * Math.PI * 2, // Random starting position
         orbitPhase: index * 0.5, // Phase offset based on index
-        ellipseRatioX: 0.8 + Math.random() * 0.4, // Ellipse ratio 0.8-1.2
-        ellipseRatioY: 0.8 + Math.random() * 0.4,
+        ellipseRatioX: 0.6 + Math.random() * 0.8, // Ellipse ratio 0.6-1.4 (more variety)
+        ellipseRatioY: 0.6 + Math.random() * 0.8,
       };
     });
 
@@ -229,9 +229,9 @@ export default function AnimatedBackground() {
           const baseOrbitX = Math.cos(orbitAngle + p.orbitPhase) * p.orbitRadius * p.ellipseRatioX;
           const baseOrbitY = Math.sin(orbitAngle + p.orbitPhase) * p.orbitRadius * p.ellipseRatioY;
 
-          // Scroll adds gentle drift to the orbit center
-          const scrollDriftX = Math.sin(time * 0.5 + index * 0.3) * scrollInfluence * 0.5;
-          const scrollDriftY = scrollDir * scrollInfluence;
+          // Scroll adds gentle drift to the orbit center (reduced for larger orbits)
+          const scrollDriftX = Math.sin(time * 0.5 + index * 0.3) * scrollInfluence * 0.3;
+          const scrollDriftY = scrollDir * scrollInfluence * 0.8;
 
           // Final smooth position
           const x = baseOrbitX + scrollDriftX;
@@ -430,25 +430,26 @@ export default function AnimatedBackground() {
     }
   };
 
-  // Calculate scroll-based physics for shapes
-  const getScrollPhysics = (shapeY: number, scrollMultiplier: number = 1) => {
+  // Calculate parallax scroll for shapes - creates depth effect
+  // depthLayer: 0 (far back, slow) to 1 (close, fast)
+  const getParallaxScroll = (shapeY: number, depthLayer: number = 0.5) => {
     try {
-      // Scroll down = positive velocity, push shapes down
-      // Scroll up = negative velocity, pull shapes up
-      // REDUCED from 50 to 15 for subtler, more elegant movement
-      const scrollForce = sanitizeNumber(scrollVelocity * 15 * scrollMultiplier, 0);
+      // Parallax: closer layers move faster, distant layers move slower
+      const baseScrollForce = sanitizeNumber(scrollVelocity * 10, 0);
 
-      // Y position affects how much scroll impacts the shape
-      // Shapes near center are MORE affected for better visual feedback
-      const centerDistance = Math.abs(shapeY - 50) / 50; // 0 at center, 1 at edges
-      const positionFactor = sanitizeNumber(1 - centerDistance * 0.5, 0.5); // 1 at center, 0.5 at edges
+      // Depth multiplier: 0.2 (far) to 1.0 (close)
+      const depthMultiplier = 0.2 + (depthLayer * 0.8);
+
+      // Y position adds subtle variation
+      const centerDistance = Math.abs(shapeY - 50) / 50;
+      const positionFactor = sanitizeNumber(1 - centerDistance * 0.3, 0.7);
 
       return {
-        x: sanitizeNumber(scrollForce * 0.3, 0), // Subtle horizontal drift during scroll
-        y: sanitizeNumber(scrollForce * positionFactor, 0),
+        x: sanitizeNumber(baseScrollForce * depthMultiplier * 0.2, 0), // Subtle horizontal parallax
+        y: sanitizeNumber(baseScrollForce * depthMultiplier * positionFactor, 0),
       };
     } catch (error) {
-      console.debug('Scroll physics error:', error);
+      console.debug('Parallax scroll error:', error);
       return { x: 0, y: 0 };
     }
   };
@@ -498,9 +499,9 @@ export default function AnimatedBackground() {
         const orb2Text = getTextInteraction(orb2Pos.x, orb2Pos.y);
         const orb3Text = getTextInteraction(orb3Pos.x, orb3Pos.y);
 
-        const orb1Scroll = getScrollPhysics(orb1Pos.y);
-        const orb2Scroll = getScrollPhysics(orb2Pos.y);
-        const orb3Scroll = getScrollPhysics(orb3Pos.y);
+        const orb1Scroll = getParallaxScroll(orb1Pos.y, 0.8); // Close layer - moves faster
+        const orb2Scroll = getParallaxScroll(orb2Pos.y, 0.6); // Mid layer
+        const orb3Scroll = getParallaxScroll(orb3Pos.y, 0.4); // Far layer - moves slower
 
         const orb1Drift = drift.orb1 || { x: 0, y: 0 };
         const orb2Drift = drift.orb2 || { x: 0, y: 0 };
@@ -542,7 +543,7 @@ export default function AnimatedBackground() {
       {(() => {
         const hexPos = { x: 75, y: 25 };
         const hexRepulsion = getRepulsion(hexPos.x, hexPos.y, 10);
-        const hexScroll = getScrollPhysics(hexPos.y);
+        const hexScroll = getParallaxScroll(hexPos.y, 0.7); // Close-mid layer
         const hexDrift = drift.hex || { x: 0, y: 0 };
         return (
           <div
@@ -559,7 +560,7 @@ export default function AnimatedBackground() {
       {(() => {
         const cyanPos = { x: 20, y: 33 };
         const cyanRepulsion = getRepulsion(cyanPos.x, cyanPos.y, 10);
-        const cyanScroll = getScrollPhysics(cyanPos.y);
+        const cyanScroll = getParallaxScroll(cyanPos.y, 0.5); // Mid layer
         const cyanDrift = drift.cyan || { x: 0, y: 0 };
         return (
           <div
@@ -576,7 +577,7 @@ export default function AnimatedBackground() {
       {(() => {
         const pinkPos = { x: 66, y: 66 };
         const pinkRepulsion = getRepulsion(pinkPos.x, pinkPos.y, 10);
-        const pinkScroll = getScrollPhysics(pinkPos.y);
+        const pinkScroll = getParallaxScroll(pinkPos.y, 0.3); // Far layer
         const pinkDrift = drift.pink || { x: 0, y: 0 };
         return (
           <div
@@ -594,7 +595,7 @@ export default function AnimatedBackground() {
       {(() => {
         const squarePos = { x: 50, y: 40 };
         const squareRepulsion = getRepulsion(squarePos.x, squarePos.y, 8);
-        const squareScroll = getScrollPhysics(squarePos.y);
+        const squareScroll = getParallaxScroll(squarePos.y, 0.9); // Very close layer - moves fastest
         const squareDrift = drift.square || { x: 0, y: 0 };
         return (
           <div
@@ -611,14 +612,14 @@ export default function AnimatedBackground() {
       {/* Orange/Amber morphing shape - starts as square, morphs to circle */}
       {(() => {
         const orangePos = { x: 50, y: 50 };
-        // No mouse repulsion for this shape - only drift and scroll
-        const orangeScroll = getScrollPhysics(orangePos.y);
+        const orangeRepulsion = getRepulsion(orangePos.x, orangePos.y, 8); // NOW has mouse repulsion like others
+        const orangeScroll = getParallaxScroll(orangePos.y, 0.5); // Mid layer - same as others
         const orangeDrift = drift.orange || { x: 0, y: 0 };
         return (
           <div
             className="absolute top-1/2 left-1/2 w-32 h-32 md:w-48 md:h-48 bg-gradient-to-br from-orange-500/15 dark:from-orange-400/35 via-amber-500/12 dark:via-amber-400/28 to-yellow-400/8 dark:to-yellow-400/20 border-2 border-orange-500/30 dark:border-orange-400/50 animate-pulse-slow backdrop-blur-sm shadow-xl shadow-orange-500/25 dark:shadow-orange-400/45 transition-transform duration-300 ease-out will-change-transform animate-morph-to-circle"
             style={{
-              transform: `translate(${orangeScroll.x + orangeDrift.x}px, ${orangeScroll.y + orangeDrift.y}px)`,
+              transform: `translate(${orangeRepulsion.x + orangeScroll.x + orangeDrift.x}px, ${orangeRepulsion.y + orangeScroll.y + orangeDrift.y}px)`,
               opacity: mounted ? undefined : 0
             }}
           ></div>
@@ -629,7 +630,7 @@ export default function AnimatedBackground() {
       {(() => {
         const emeraldPos = { x: 25, y: 75 };
         const emeraldRepulsion = getRepulsion(emeraldPos.x, emeraldPos.y, 10);
-        const emeraldScroll = getScrollPhysics(emeraldPos.y);
+        const emeraldScroll = getParallaxScroll(emeraldPos.y, 0.4); // Far layer
         const emeraldDrift = drift.emerald || { x: 0, y: 0 };
         return (
           <div
@@ -648,7 +649,7 @@ export default function AnimatedBackground() {
       {(() => {
         const violetPos = { x: 80, y: 66 };
         const violetRepulsion = getRepulsion(violetPos.x, violetPos.y, 10);
-        const violetScroll = getScrollPhysics(violetPos.y);
+        const violetScroll = getParallaxScroll(violetPos.y, 0.6); // Mid layer
         const violetDrift = drift.violet || { x: 0, y: 0 };
         return (
           <div
@@ -666,7 +667,7 @@ export default function AnimatedBackground() {
       {(() => {
         const tealPos = { x: 33, y: 16 };
         const tealRepulsion = getRepulsion(tealPos.x, tealPos.y, 10);
-        const tealScroll = getScrollPhysics(tealPos.y);
+        const tealScroll = getParallaxScroll(tealPos.y, 0.2); // Very far layer - moves slowest
         const tealDrift = drift.teal || { x: 0, y: 0 };
         return (
           <div
@@ -684,7 +685,7 @@ export default function AnimatedBackground() {
       {(() => {
         const rosePos = { x: 60, y: 80 };
         const roseRepulsion = getRepulsion(rosePos.x, rosePos.y, 10);
-        const roseScroll = getScrollPhysics(rosePos.y);
+        const roseScroll = getParallaxScroll(rosePos.y, 0.35); // Far layer
         const roseDrift = drift.rose || { x: 0, y: 0 };
         return (
           <div
