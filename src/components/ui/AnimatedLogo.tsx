@@ -5,20 +5,14 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function AnimatedLogo() {
-  const [isAnimating, setIsAnimating] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const handleClick = () => {
-    setIsAnimating(true);
-    setTimeout(() => setIsAnimating(false), 1500);
-  };
-
   return (
-    <Link href="/" onClick={handleClick} className="relative group cursor-pointer inline-flex items-center gap-3">
+    <Link href="/" className="relative group cursor-pointer inline-flex items-center gap-3">
       {/* Light mode: Unified logo with brand purple colors */}
       <div className="dark:hidden relative">
         <Image

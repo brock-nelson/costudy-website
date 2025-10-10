@@ -22,9 +22,6 @@ export default function SchoolLogoScroller() {
     { name: "University of Arizona", logo: "/schools/arizona.png" },
   ];
 
-  // Duplicate the schools array for seamless infinite scroll
-  const duplicatedSchools = [...schools, ...schools];
-
   if (!mounted) {
     return (
       <div className="py-8 overflow-hidden bg-gradient-to-r from-purple-50/30 via-blue-50/20 to-purple-50/30 dark:from-purple-900/10 dark:via-blue-900/5 dark:to-purple-900/10">

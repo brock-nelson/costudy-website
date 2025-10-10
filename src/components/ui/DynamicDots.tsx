@@ -20,7 +20,7 @@ export default function DynamicDots() {
   const [mounted, setMounted] = useState(false);
   const dotsRef = useRef<Dot[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     setMounted(true);
