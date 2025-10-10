@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import AnimatedBackground from "@/components/ui/AnimatedBackground";
-import GradientText from "@/components/ui/GradientText";
 
 type UserRole = "professor" | "student" | "admin" | null;
 
@@ -192,7 +191,7 @@ export default function Products() {
                 </div>
               </div>
               <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
-                "CoStudy has transformed how I assess group work. I can finally see who's contributing and intervene before conflicts escalate. It's saved me countless hours."
+                &quot;CoStudy has transformed how I assess group work. I can finally see who&apos;s contributing and intervene before conflicts escalate. It&apos;s saved me countless hours.&quot;
               </p>
             </div>
 
@@ -208,7 +207,7 @@ export default function Products() {
                 </div>
               </div>
               <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
-                "The peer feedback helped me identify my communication weak spots early on. I actually learned how to collaborate professionally, not just complete assignments."
+                &quot;The peer feedback helped me identify my communication weak spots early on. I actually learned how to collaborate professionally, not just complete assignments.&quot;
               </p>
             </div>
 
@@ -224,7 +223,7 @@ export default function Products() {
                 </div>
               </div>
               <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
-                "CoStudy's analytics give us unprecedented insight into student collaboration outcomes. The ROI in terms of student success and faculty satisfaction is remarkable."
+                &quot;CoStudy&apos;s analytics give us unprecedented insight into student collaboration outcomes. The ROI in terms of student success and faculty satisfaction is remarkable.&quot;
               </p>
             </div>
           </div>
