@@ -71,7 +71,11 @@ const SHAPE_PHYSICS: Record<string, PhysicsProperties> = {
   emerald: { damping: 0.92, maxVelocity: 0.13, forceMultiplier: 1.4, bounce: 0.9, maxDrift: 26, substance: 'elastic' },
   violet: { damping: 0.97, maxVelocity: 0.14, forceMultiplier: 1.6, bounce: 0.7, maxDrift: 28, substance: 'gas' },
   teal: { damping: 0.91, maxVelocity: 0.08, forceMultiplier: 0.8, bounce: 0.6, maxDrift: 19, substance: 'glass' },
-  rose: { damping: 0.95, maxVelocity: 0.07, forceMultiplier: 0.9, bounce: 0.55, maxDrift: 21, substance: 'soft-gel' }
+  rose: { damping: 0.95, maxVelocity: 0.07, forceMultiplier: 0.9, bounce: 0.55, maxDrift: 21, substance: 'soft-gel' },
+  // Vibrant accent orbs
+  accentOrange: { damping: 0.98, maxVelocity: 0.06, forceMultiplier: 0.7, bounce: 0.3, maxDrift: 18, substance: 'mist' },
+  accentEmerald: { damping: 0.97, maxVelocity: 0.07, forceMultiplier: 0.8, bounce: 0.4, maxDrift: 20, substance: 'mist' },
+  accentViolet: { damping: 0.96, maxVelocity: 0.06, forceMultiplier: 0.7, bounce: 0.35, maxDrift: 19, substance: 'mist' }
 };
 
 export default function AnimatedBackground() {
@@ -88,9 +92,9 @@ export default function AnimatedBackground() {
   const driftAnimationRef = useRef<number | null>(null);
   const particleAnimationRef = useRef<number | null>(null);
 
-  // Initialize drift states for all shapes
+  // Initialize drift states for all shapes (including vibrant accent orbs)
   useEffect(() => {
-    const shapes = ['orb1', 'orb2', 'orb3', 'hex', 'cyan', 'pink', 'square', 'orange', 'emerald', 'violet', 'teal', 'rose'];
+    const shapes = ['orb1', 'orb2', 'orb3', 'hex', 'cyan', 'pink', 'square', 'orange', 'emerald', 'violet', 'teal', 'rose', 'accentOrange', 'accentEmerald', 'accentViolet'];
     const initialDrift: Record<string, DriftState> = {};
 
     shapes.forEach(shape => {
@@ -534,10 +538,41 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Vibrant accent orbs - reduced opacity, mobile-optimized */}
-      <div className="absolute top-1/3 right-1/3 w-48 h-48 md:w-80 md:h-80 bg-gradient-to-br from-orange-300/10 dark:from-orange-400/25 to-transparent rounded-full blur-2xl animate-pulse-slow"></div>
-      <div className="absolute bottom-1/4 left-1/4 w-40 h-40 md:w-72 md:h-72 bg-gradient-to-br from-emerald-300/10 dark:from-emerald-400/25 to-transparent rounded-full blur-2xl animate-float-delayed"></div>
-      <div className="absolute top-1/5 left-1/2 w-36 h-36 md:w-64 md:h-64 bg-gradient-to-br from-violet-300/8 dark:from-violet-400/22 to-transparent rounded-full blur-2xl animate-float"></div>
+      {/* Vibrant accent orbs with drift physics - reduced opacity, mobile-optimized */}
+      {(() => {
+        const accentOrangeDrift = drift.accentOrange || { x: 0, y: 0 };
+        const accentEmeraldDrift = drift.accentEmerald || { x: 0, y: 0 };
+        const accentVioletDrift = drift.accentViolet || { x: 0, y: 0 };
+        const accentOrangeScroll = getParallaxScroll(33, 0.45);
+        const accentEmeraldScroll = getParallaxScroll(75, 0.38);
+        const accentVioletScroll = getParallaxScroll(20, 0.55);
+
+        return (
+          <>
+            <div
+              className="absolute top-1/3 right-1/3 w-48 h-48 md:w-80 md:h-80 bg-gradient-to-br from-orange-300/10 dark:from-orange-400/25 to-transparent rounded-full blur-2xl animate-pulse-slow transition-transform duration-300 ease-out will-change-transform"
+              style={{
+                transform: `translate(${accentOrangeScroll.x + accentOrangeDrift.x}px, ${accentOrangeScroll.y + accentOrangeDrift.y}px)`,
+                opacity: mounted ? undefined : 0
+              }}
+            ></div>
+            <div
+              className="absolute bottom-1/4 left-1/4 w-40 h-40 md:w-72 md:h-72 bg-gradient-to-br from-emerald-300/10 dark:from-emerald-400/25 to-transparent rounded-full blur-2xl animate-float-delayed transition-transform duration-300 ease-out will-change-transform"
+              style={{
+                transform: `translate(${accentEmeraldScroll.x + accentEmeraldDrift.x}px, ${accentEmeraldScroll.y + accentEmeraldDrift.y}px)`,
+                opacity: mounted ? undefined : 0
+              }}
+            ></div>
+            <div
+              className="absolute top-1/5 left-1/2 w-36 h-36 md:w-64 md:h-64 bg-gradient-to-br from-violet-300/8 dark:from-violet-400/22 to-transparent rounded-full blur-2xl animate-float transition-transform duration-300 ease-out will-change-transform"
+              style={{
+                transform: `translate(${accentVioletScroll.x + accentVioletDrift.x}px, ${accentVioletScroll.y + accentVioletDrift.y}px)`,
+                opacity: mounted ? undefined : 0
+              }}
+            ></div>
+          </>
+        );
+      })()}
 
       {/* Purple morphing hexagon - hidden on mobile, reduced opacity for text readability */}
       {(() => {
