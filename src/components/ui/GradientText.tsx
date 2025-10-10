@@ -208,25 +208,44 @@ export default function GradientText({ children, className = "" }: GradientTextP
 
   return (
     <span className="inline-block relative" ref={containerRef}>
-      {/* Combined text - single element for both light and dark mode */}
+      {/* Light mode text */}
       <span
         className={`
           inline-block font-extrabold tracking-tight
+          bg-clip-text text-transparent
+          dark:hidden
+          transition-opacity duration-300
+          ${specialEffectClass} ${pulseClass}
+          ${className}
+        `}
+        style={{
+          backgroundImage: lightGradient,
+          backgroundSize: isRapidMovement ? '200% 200%' : '100% 100%',
+          transition: 'background-image 0.8s ease-out, background-size 0.3s ease-out, filter 0.3s ease-out',
+          filter: isRapidMovement
+            ? `brightness(1.3) saturate(1.6) drop-shadow(0 0 ${glowIntensity}px rgba(139, 92, 246, 0.8))`
+            : 'none',
+        }}
+      >
+        {children}
+      </span>
+
+      {/* Dark mode text */}
+      <span
+        className={`
+          hidden dark:inline-block font-extrabold tracking-tight
           bg-clip-text text-transparent
           transition-opacity duration-300
           ${specialEffectClass} ${pulseClass}
           ${className}
         `}
         style={{
-          backgroundImage: `var(--gradient-light)`,
+          backgroundImage: darkGradient,
           backgroundSize: isRapidMovement ? '200% 200%' : '100% 100%',
           transition: 'background-image 0.8s ease-out, background-size 0.3s ease-out, filter 0.3s ease-out',
           filter: isRapidMovement
-            ? `brightness(1.3) saturate(1.6) drop-shadow(0 0 ${glowIntensity}px rgba(139, 92, 246, 0.8))`
+            ? `brightness(1.4) saturate(1.6) drop-shadow(0 0 ${glowIntensity}px rgba(233, 213, 255, 0.9))`
             : 'none',
-          // @ts-ignore - CSS custom properties
-          '--gradient-light': lightGradient,
-          '--gradient-dark': darkGradient,
         }}
       >
         {children}
@@ -247,20 +266,6 @@ export default function GradientText({ children, className = "" }: GradientTextP
           }}
         />
       ))}
-
-      <style jsx>{`
-        span {
-          background-image: ${lightGradient};
-        }
-        @media (prefers-color-scheme: dark) {
-          span {
-            background-image: ${darkGradient};
-            filter: ${isRapidMovement
-              ? `brightness(1.4) saturate(1.6) drop-shadow(0 0 ${glowIntensity}px rgba(233, 213, 255, 0.9))`
-              : 'none'} !important;
-          }
-        }
-      `}</style>
     </span>
   );
 }

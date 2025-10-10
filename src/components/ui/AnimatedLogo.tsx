@@ -30,7 +30,7 @@ export default function AnimatedLogo() {
         />
       </div>
 
-      {/* Logo Image - Dark Mode with shimmer effect */}
+      {/* Logo Image - Dark Mode with electric glow effect */}
       <div className="hidden dark:block">
         <Image
           src="/logo_upperleft.svg"
@@ -40,7 +40,7 @@ export default function AnimatedLogo() {
           className="transition-all duration-300 group-hover:scale-105"
           style={{
             filter: mounted
-              ? 'invert(1) brightness(2) saturate(0.8) drop-shadow(0 0 12px rgba(243, 232, 255, 0.8))'
+              ? 'invert(1) brightness(2.5) saturate(0.9) drop-shadow(0 0 16px rgba(243, 232, 255, 1)) drop-shadow(0 0 8px rgba(255, 255, 255, 0.8))'
               : undefined
           }}
         />

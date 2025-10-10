@@ -257,6 +257,15 @@ body {
   --background-gray: #ffffff;
 }
 
+/* Heavy blur on distracting backgrounds in high contrast mode */
+.high-contrast .animated-background-blur,
+.high-contrast .animated-orb {
+  backdrop-filter: blur(200px) !important;
+  -webkit-backdrop-filter: blur(200px) !important;
+  filter: blur(150px) !important;
+  opacity: 0.15 !important;
+}
+
 /* Hero content blur box only in high contrast mode */
 .high-contrast .hero-content {
   background: rgba(255, 255, 255, 0.95);
@@ -266,19 +275,36 @@ body {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-.high-contrast h1,
-.high-contrast h2,
-.high-contrast h3,
-.high-contrast h4,
-.high-contrast h5,
-.high-contrast h6 {
+/* Light mode high contrast - all text black */
+.high-contrast:not(.dark) h1,
+.high-contrast:not(.dark) h2,
+.high-contrast:not(.dark) h3,
+.high-contrast:not(.dark) h4,
+.high-contrast:not(.dark) h5,
+.high-contrast:not(.dark) h6 {
   color: #000000 !important;
 }
 
-.high-contrast p,
-.high-contrast span,
-.high-contrast a:not(.bg-blue-600):not(.bg-purple-600):not(.bg-green-600):not([class*="bg-"]) {
+.high-contrast:not(.dark) p,
+.high-contrast:not(.dark) span,
+.high-contrast:not(.dark) a:not(.bg-blue-600):not(.bg-purple-600):not(.bg-green-600):not([class*="bg-"]) {
   color: #000000 !important;
+}
+
+/* Dark mode high contrast - all text white */
+.high-contrast.dark h1,
+.high-contrast.dark h2,
+.high-contrast.dark h3,
+.high-contrast.dark h4,
+.high-contrast.dark h5,
+.high-contrast.dark h6 {
+  color: #ffffff !important;
+}
+
+.high-contrast.dark p,
+.high-contrast.dark span,
+.high-contrast.dark a:not(.bg-blue-600):not(.bg-purple-600):not(.bg-green-600):not([class*="bg-"]) {
+  color: #ffffff !important;
 }
 
 .high-contrast .bg-blue-600,
