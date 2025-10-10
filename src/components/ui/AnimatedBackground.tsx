@@ -25,6 +25,34 @@ const PHYSICS_CONFIG = {
   pulseSpeed: 0.0008,
 };
 
+// Visual styling configuration for light/dark modes
+const VISUAL_CONFIG = {
+  light: {
+    particleCount: 5,              // Fewer particles in light mode for subtlety
+    particles: {
+      // Pastel lavender with thin border
+      borderColor: 'rgba(167, 139, 250, 0.35)',     // Soft purple border
+      borderWidth: '1.5px',
+      innerGradient: 'radial-gradient(circle, rgba(237, 233, 254, 0.6), rgba(221, 214, 254, 0.4))',  // Very light pastel
+      outerGradient: 'radial-gradient(circle, rgba(196, 181, 253, 0.3), rgba(167, 139, 250, 0.2))',
+      shadow: '0 2px 8px rgba(167, 139, 250, 0.15)',
+      glowShadow: 'none',
+    }
+  },
+  dark: {
+    particleCount: 7,              // More particles in dark mode for richness
+    particles: {
+      // Neon purple with bright border and glow
+      borderColor: 'rgba(192, 132, 252, 0.8)',      // Bright neon border
+      borderWidth: '2px',
+      innerGradient: 'radial-gradient(circle, rgba(168, 85, 247, 0.9), rgba(147, 51, 234, 0.7))',
+      outerGradient: 'radial-gradient(circle, rgba(126, 34, 206, 0.8), rgba(107, 33, 168, 0.6))',
+      shadow: '0 4px 12px rgba(168, 85, 247, 0.4)',
+      glowShadow: '0 0 20px rgba(168, 85, 247, 0.6), 0 0 40px rgba(124, 58, 237, 0.3)',
+    }
+  }
+};
+
 // ============================================================================
 // UTILITY FUNCTIONS
 // ============================================================================
@@ -161,7 +189,7 @@ export default function AnimatedBackground() {
 
   // Initialize particles with microgravity physics
   useEffect(() => {
-    const particleData = [
+    const allParticleData = [
       { baseX: 33.33, baseY: 25 },
       { baseX: 75, baseY: 66.67 },
       { baseX: 66.67, baseY: 50 },
@@ -170,6 +198,10 @@ export default function AnimatedBackground() {
       { baseX: 20, baseY: 66.67 },
       { baseX: 66.67, baseY: 75 },
     ];
+
+    // Use fewer particles in light mode for subtlety
+    const particleCount = isDarkMode ? VISUAL_CONFIG.dark.particleCount : VISUAL_CONFIG.light.particleCount;
+    const particleData = allParticleData.slice(0, particleCount);
 
     const initialParticles: ParticleState[] = particleData.map((p, index) => {
       return {
@@ -193,7 +225,7 @@ export default function AnimatedBackground() {
     });
 
     setParticles(initialParticles);
-  }, []);
+  }, [isDarkMode]);
 
   // Shape drift animation with substance physics
   useEffect(() => {
@@ -777,6 +809,8 @@ export default function AnimatedBackground() {
 
       {/* Microgravity particles with moon-trampoline scroll */}
       {particles.map((particle, i) => {
+        const visualConfig = isDarkMode ? VISUAL_CONFIG.dark.particles : VISUAL_CONFIG.light.particles;
+
         return (
           <div
             key={i}
@@ -786,12 +820,11 @@ export default function AnimatedBackground() {
               top: `${particle.baseY}%`,
               width: `${particle.size}px`,
               height: `${particle.size}px`,
-              background: isDarkMode
-                ? `radial-gradient(circle, rgba(168, 85, 247, 0.9), rgba(124, 58, 237, 0.7))`
-                : `radial-gradient(circle, rgba(139, 92, 246, 0.7), rgba(109, 40, 217, 0.5))`,
-              boxShadow: isDarkMode
-                ? `0 0 20px rgba(168, 85, 247, 0.6), 0 0 40px rgba(124, 58, 237, 0.3)`
-                : `0 4px 6px rgba(139, 92, 246, 0.3)`,
+              background: visualConfig.innerGradient,
+              border: `${visualConfig.borderWidth} solid ${visualConfig.borderColor}`,
+              boxShadow: visualConfig.glowShadow !== 'none'
+                ? `${visualConfig.shadow}, ${visualConfig.glowShadow}`
+                : visualConfig.shadow,
               transform: `translate(${particle.x}px, ${particle.y}px) scale(${particle.scale})`,
               opacity: mounted ? 1 : 0,
             }}
