@@ -2,6 +2,14 @@
 
 import { useEffect, useState, useRef } from "react";
 
+// Sanitize numeric values to prevent NaN/Infinity
+const sanitizeNumber = (value: number, fallback: number = 0): number => {
+  if (typeof value !== 'number' || !isFinite(value) || isNaN(value)) {
+    return fallback;
+  }
+  return value;
+};
+
 export default function AnimatedBackground() {
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const [textBounds, setTextBounds] = useState<DOMRect | null>(null);
@@ -18,8 +26,8 @@ export default function AnimatedBackground() {
         if (!e || typeof window === 'undefined') return;
         const width = window.innerWidth || 1;
         const height = window.innerHeight || 1;
-        const x = ((e.clientX || 0) / width) * 100;
-        const y = ((e.clientY || 0) / height) * 100;
+        const x = sanitizeNumber(((e.clientX || 0) / width) * 100, 50);
+        const y = sanitizeNumber(((e.clientY || 0) / height) * 100, 50);
         setMousePos({ x, y });
       } catch (error) {
         // Silently handle any errors to prevent crashes
@@ -90,62 +98,76 @@ export default function AnimatedBackground() {
 
   // Calculate repulsion for shapes based on mouse proximity
   const getRepulsion = (shapeX: number, shapeY: number, strength: number = 20) => {
-    const dx = mousePos.x - shapeX;
-    const dy = mousePos.y - shapeY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    const maxDistance = 30; // pixels of influence
+    try {
+      const dx = sanitizeNumber(mousePos.x - shapeX, 0);
+      const dy = sanitizeNumber(mousePos.y - shapeY, 0);
+      const distance = sanitizeNumber(Math.sqrt(dx * dx + dy * dy), 0);
+      const maxDistance = 30; // pixels of influence
 
-    if (distance < maxDistance) {
-      const force = (1 - distance / maxDistance) * strength;
-      return {
-        x: -dx * force * 0.3,
-        y: -dy * force * 0.3,
-      };
+      if (distance < maxDistance && distance > 0) {
+        const force = sanitizeNumber((1 - distance / maxDistance) * strength, 0);
+        return {
+          x: sanitizeNumber(-dx * force * 0.3, 0),
+          y: sanitizeNumber(-dy * force * 0.3, 0),
+        };
+      }
+    } catch (error) {
+      console.debug('Repulsion calculation error:', error);
     }
     return { x: 0, y: 0 };
   };
 
   // Calculate gentle attraction/orbit around text elements
   const getTextInteraction = (orbX: number, orbY: number) => {
-    if (!textBounds || typeof window === 'undefined') return { x: 0, y: 0 };
+    try {
+      if (!textBounds || typeof window === 'undefined') return { x: 0, y: 0 };
 
-    const width = window.innerWidth || 1;
-    const height = window.innerHeight || 1;
-    const textCenterX = ((textBounds.left + textBounds.width / 2) / width) * 100;
-    const textCenterY = ((textBounds.top + textBounds.height / 2) / height) * 100;
+      const width = window.innerWidth || 1;
+      const height = window.innerHeight || 1;
+      const textCenterX = sanitizeNumber(((textBounds.left + textBounds.width / 2) / width) * 100, 50);
+      const textCenterY = sanitizeNumber(((textBounds.top + textBounds.height / 2) / height) * 100, 50);
 
-    const dx = textCenterX - orbX;
-    const dy = textCenterY - orbY;
-    const distance = Math.sqrt(dx * dx + dy * dy);
+      const dx = sanitizeNumber(textCenterX - orbX, 0);
+      const dy = sanitizeNumber(textCenterY - orbY, 0);
+      const distance = sanitizeNumber(Math.sqrt(dx * dx + dy * dy), 0);
 
-    // Create orbital motion around text
-    const orbitalRadius = 15; // ideal orbital distance
-    const attraction = (distance - orbitalRadius) * 0.3;
+      // Create orbital motion around text
+      const orbitalRadius = 15; // ideal orbital distance
+      const attraction = sanitizeNumber((distance - orbitalRadius) * 0.3, 0);
 
-    // Add perpendicular force for orbital motion
-    const orbitalX = -dy * 0.2;
-    const orbitalY = dx * 0.2;
+      // Add perpendicular force for orbital motion
+      const orbitalX = sanitizeNumber(-dy * 0.2, 0);
+      const orbitalY = sanitizeNumber(dx * 0.2, 0);
 
-    return {
-      x: (dx * attraction * 0.1) + orbitalX,
-      y: (dy * attraction * 0.1) + orbitalY,
-    };
+      return {
+        x: sanitizeNumber((dx * attraction * 0.1) + orbitalX, 0),
+        y: sanitizeNumber((dy * attraction * 0.1) + orbitalY, 0),
+      };
+    } catch (error) {
+      console.debug('Text interaction error:', error);
+      return { x: 0, y: 0 };
+    }
   };
 
   // Calculate scroll-based physics for shapes
   const getScrollPhysics = (shapeY: number) => {
-    // Scroll down = positive velocity, push shapes down
-    // Scroll up = negative velocity, pull shapes up
-    const scrollForce = scrollVelocity * 50;
+    try {
+      // Scroll down = positive velocity, push shapes down
+      // Scroll up = negative velocity, pull shapes up
+      const scrollForce = sanitizeNumber(scrollVelocity * 50, 0);
 
-    // Y position affects how much scroll impacts the shape
-    // Shapes at top are more affected, shapes at bottom less affected
-    const positionFactor = 1 - (shapeY / 100);
+      // Y position affects how much scroll impacts the shape
+      // Shapes at top are more affected, shapes at bottom less affected
+      const positionFactor = sanitizeNumber(1 - (shapeY / 100), 1);
 
-    return {
-      x: 0,
-      y: scrollForce * positionFactor,
-    };
+      return {
+        x: 0,
+        y: sanitizeNumber(scrollForce * positionFactor, 0),
+      };
+    } catch (error) {
+      console.debug('Scroll physics error:', error);
+      return { x: 0, y: 0 };
+    }
   };
 
   return (
