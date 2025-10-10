@@ -243,7 +243,7 @@ export default function Products() {
       {/* 4. CHALLENGES / PAIN POINTS - White Background */}
       <section className="py-20 bg-white dark:bg-gray-900">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-6xl font-black text-center mb-4 bg-gradient-to-r from-red-600 to-orange-600 dark:from-red-400 dark:to-orange-400 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-6xl font-black text-center mb-4 bg-gradient-to-r from-red-600 to-orange-600 dark:from-purple-400 dark:to-cyan-400 bg-clip-text text-transparent">
             The Collaboration Challenge
           </h2>
           <p className="text-center text-gray-600 dark:text-gray-200 mb-16 max-w-3xl mx-auto text-lg">
@@ -251,8 +251,8 @@ export default function Products() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-            {/* Challenge 1 */}
-            <div className="bg-gradient-to-br from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 p-8 rounded-3xl border-2 border-red-100 dark:border-red-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            {/* Challenge 1 - Purple/Violet in dark mode */}
+            <div className="bg-gradient-to-br from-red-50 to-orange-50 dark:from-purple-900/30 dark:to-violet-900/30 p-8 rounded-3xl border-2 border-red-100 dark:border-purple-700/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div className="text-5xl mb-4">😤</div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Social Loafing</h3>
               <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
@@ -260,8 +260,8 @@ export default function Products() {
               </p>
             </div>
 
-            {/* Challenge 2 */}
-            <div className="bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 p-8 rounded-3xl border-2 border-orange-100 dark:border-orange-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            {/* Challenge 2 - Blue in dark mode */}
+            <div className="bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-blue-900/30 dark:to-indigo-900/30 p-8 rounded-3xl border-2 border-orange-100 dark:border-blue-700/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div className="text-5xl mb-4">⏰</div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Grading Burden</h3>
               <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
@@ -269,8 +269,8 @@ export default function Products() {
               </p>
             </div>
 
-            {/* Challenge 3 */}
-            <div className="bg-gradient-to-br from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 p-8 rounded-3xl border-2 border-yellow-100 dark:border-yellow-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            {/* Challenge 3 - Cyan/Teal in dark mode */}
+            <div className="bg-gradient-to-br from-yellow-50 to-amber-50 dark:from-cyan-900/30 dark:to-teal-900/30 p-8 rounded-3xl border-2 border-yellow-100 dark:border-cyan-700/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div className="text-5xl mb-4">👻</div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Late Discovery</h3>
               <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
@@ -278,8 +278,8 @@ export default function Products() {
               </p>
             </div>
 
-            {/* Challenge 4 */}
-            <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 p-8 rounded-3xl border-2 border-amber-100 dark:border-amber-800 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+            {/* Challenge 4 - Deep Purple in dark mode */}
+            <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-purple-900/30 dark:to-fuchsia-900/30 p-8 rounded-3xl border-2 border-amber-100 dark:border-purple-700/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
               <div className="text-5xl mb-4">🎓</div>
               <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Missed Learning</h3>
               <p className="text-gray-700 dark:text-gray-200 leading-relaxed">
