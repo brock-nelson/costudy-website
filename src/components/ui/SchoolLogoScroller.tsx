@@ -18,7 +18,7 @@ export default function SchoolLogoScroller() {
     const scroller = scrollerRef.current;
     let animationId: number;
     let position = 0;
-    const speed = 0.5; // pixels per frame
+    const speed = 0.4; // pixels per frame (reduced by 20%)
 
     // Calculate the width of one set of logos
     const firstChild = scroller.firstElementChild as HTMLElement;
@@ -110,13 +110,13 @@ export default function SchoolLogoScroller() {
               key={`logo-${index}`}
               className="flex-shrink-0 mx-8"
             >
-              <div className="relative h-24 w-40 flex items-center justify-center bg-white dark:bg-gray-800/40 rounded-xl p-5 border-2 border-gray-300/70 dark:border-gray-700/50">
+              <div className="relative h-24 w-40 flex items-center justify-center bg-white dark:bg-white rounded-xl p-5 border-2 border-gray-300/70 dark:border-gray-700/50">
                 <Image
                   src={school.logo}
                   alt={`${school.name} logo`}
                   width={160}
                   height={96}
-                  className="object-contain max-h-14 w-auto filter dark:brightness-0 dark:invert"
+                  className="object-contain max-h-14 w-auto"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
