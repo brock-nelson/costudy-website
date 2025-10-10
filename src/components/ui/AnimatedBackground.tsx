@@ -152,6 +152,8 @@ interface ParticleState {
   colorIndex: number;    // Index into neon colors array (dark mode)
   zIndex: number;        // Z-index for parallax layering
   blendMode: string;     // CSS blend mode for visual effects
+  rotation: number;      // Current rotation angle (degrees)
+  rotationSpeed: number; // Rotation speed (degrees per frame)
 
   // Scroll spring physics
   scrollDisplacement: number;  // How far pushed by scroll
@@ -272,6 +274,8 @@ export default function AnimatedBackground() {
         colorIndex: index % VISUAL_CONFIG.dark.neonColors.length,  // Cycle through neon colors
         zIndex,
         blendMode,
+        rotation: Math.random() * 360,  // Random starting rotation
+        rotationSpeed: (Math.random() - 0.5) * 0.3,  // Slow rotation (-0.15 to +0.15 deg/frame)
         scrollDisplacement: 0,
         scrollVelocity: 0,
       };
@@ -396,7 +400,16 @@ export default function AnimatedBackground() {
           // Gentle pulse
           const pulsePhase = p.pulsePhase + p.pulseSpeed;
           const pulseFactor = Math.sin(pulsePhase) * PHYSICS_CONFIG.pulseAmount + 1;
-          const scale = pulseFactor;
+
+          // Light-responsive scale: squish based on scroll velocity
+          const scrollSquish = Math.min(Math.abs(scrollVelocity) * 0.8, 0.15);  // Max 15% squish
+          const scrollScaleFactor = 1 - scrollSquish;
+
+          // Combine pulse and scroll effects
+          const scale = pulseFactor * scrollScaleFactor;
+
+          // Slow rotation
+          const rotation = (p.rotation + p.rotationSpeed) % 360;
 
           return {
             x,
@@ -412,7 +425,12 @@ export default function AnimatedBackground() {
             size: p.size,
             pulsePhase,
             pulseSpeed: p.pulseSpeed,
-            scale: Math.max(0.9, Math.min(1.15, scale)),
+            scale: Math.max(0.85, Math.min(1.15, scale)),  // Wider range for squish
+            colorIndex: p.colorIndex,
+            zIndex: p.zIndex,
+            blendMode: p.blendMode,
+            rotation,
+            rotationSpeed: p.rotationSpeed,
             scrollDisplacement,
             scrollVelocity: scrollVel,
           };
@@ -919,7 +937,7 @@ export default function AnimatedBackground() {
               boxShadow: visualConfig.glowShadow !== 'none'
                 ? `${visualConfig.shadow}, ${visualConfig.glowShadow}`
                 : visualConfig.shadow,
-              transform: `translate(${particle.x}px, ${particle.y}px) scale(${particle.scale})`,
+              transform: `translate(${particle.x}px, ${particle.y}px) scale(${particle.scale}) rotate(${particle.rotation}deg)`,
               opacity: finalOpacity,
               zIndex: particle.zIndex,
               mixBlendMode: particle.blendMode as any,
