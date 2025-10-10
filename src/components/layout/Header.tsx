@@ -19,13 +19,16 @@ export default function Header() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             <div className="relative group">
-              <button className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-colors">
+              <button className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-colors flex items-center gap-1">
                 Solutions
+                <svg className="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
               </button>
-              <div className="absolute left-0 mt-2 w-48 bg-white dark:bg-gray-900 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <div className="absolute left-0 top-full mt-2 w-56 bg-white dark:bg-gray-900 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden backdrop-blur-sm">
                 <Link
                   href="/for-professors"
-                  className="block px-4 py-3 text-[#374045] dark:text-gray-300 hover:bg-[#EDE7F9] dark:hover:bg-gray-800 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] transition-colors"
+                  className="block px-4 py-3 text-[#374045] dark:text-gray-300 hover:bg-[#EDE7F9] dark:hover:bg-gray-800 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] transition-colors first:rounded-t-lg"
                 >
                   For Professors
                 </Link>
@@ -37,7 +40,7 @@ export default function Header() {
                 </Link>
                 <Link
                   href="/for-students"
-                  className="block px-4 py-3 text-[#374045] dark:text-gray-300 hover:bg-[#EDE7F9] dark:hover:bg-gray-800 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] transition-colors"
+                  className="block px-4 py-3 text-[#374045] dark:text-gray-300 hover:bg-[#EDE7F9] dark:hover:bg-gray-800 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] transition-colors last:rounded-b-lg"
                 >
                   For Students
                 </Link>

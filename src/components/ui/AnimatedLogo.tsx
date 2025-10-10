@@ -130,8 +130,8 @@ export default function AnimatedLogo() {
       `}</style>
 
       {/* Hover tooltip */}
-      <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-        <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
+      <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-50">
+        <span className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap bg-white/90 dark:bg-gray-800/90 px-3 py-1.5 rounded-lg shadow-lg backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50">
           Back to home
         </span>
       </div>
