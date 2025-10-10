@@ -150,6 +150,8 @@ interface ParticleState {
   pulseSpeed: number;
   scale: number;
   colorIndex: number;    // Index into neon colors array (dark mode)
+  zIndex: number;        // Z-index for parallax layering
+  blendMode: string;     // CSS blend mode for visual effects
 
   // Scroll spring physics
   scrollDisplacement: number;  // How far pushed by scroll
@@ -245,6 +247,13 @@ export default function AnimatedBackground() {
     const particleData = allParticleData.slice(0, particleCount);
 
     const initialParticles: ParticleState[] = particleData.map((p, index) => {
+      // Assign z-index for parallax layering (1-3, higher = closer to viewer)
+      const zIndex = (index % 3) + 1;
+
+      // Assign blend mode based on z-index for depth effect
+      const blendModes = ['screen', 'normal', 'overlay'];
+      const blendMode = isDarkMode ? blendModes[zIndex - 1] : 'normal';
+
       return {
         x: 0,
         y: 0,
@@ -261,6 +270,8 @@ export default function AnimatedBackground() {
         pulseSpeed: PHYSICS_CONFIG.pulseSpeed + Math.random() * PHYSICS_CONFIG.pulseSpeed,
         scale: 1,
         colorIndex: index % VISUAL_CONFIG.dark.neonColors.length,  // Cycle through neon colors
+        zIndex,
+        blendMode,
         scrollDisplacement: 0,
         scrollVelocity: 0,
       };
@@ -868,10 +879,36 @@ export default function AnimatedBackground() {
           visualConfig = VISUAL_CONFIG.light.particles;
         }
 
+        // Calculate text-aware opacity for better readability
+        let textOpacity = 1;
+        if (textBounds && typeof window !== 'undefined') {
+          const width = window.innerWidth || 1;
+          const height = window.innerHeight || 1;
+
+          // Convert particle position to screen coordinates
+          const particleScreenX = (particle.baseX / 100) * width + particle.x;
+          const particleScreenY = (particle.baseY / 100) * height + particle.y;
+
+          // Check if particle is near text
+          const textPadding = 100; // Padding around text area
+          const isNearText =
+            particleScreenX > textBounds.left - textPadding &&
+            particleScreenX < textBounds.right + textPadding &&
+            particleScreenY > textBounds.top - textPadding &&
+            particleScreenY < textBounds.bottom + textPadding;
+
+          if (isNearText) {
+            // Reduce opacity when near text for better legibility
+            textOpacity = isDarkMode ? 0.4 : 0.3;
+          }
+        }
+
+        const finalOpacity = mounted ? textOpacity : 0;
+
         return (
           <div
             key={i}
-            className="absolute rounded-full will-change-transform transition-none"
+            className="absolute rounded-full will-change-transform transition-opacity duration-300"
             style={{
               left: `${particle.baseX}%`,
               top: `${particle.baseY}%`,
@@ -883,7 +920,9 @@ export default function AnimatedBackground() {
                 ? `${visualConfig.shadow}, ${visualConfig.glowShadow}`
                 : visualConfig.shadow,
               transform: `translate(${particle.x}px, ${particle.y}px) scale(${particle.scale})`,
-              opacity: mounted ? 1 : 0,
+              opacity: finalOpacity,
+              zIndex: particle.zIndex,
+              mixBlendMode: particle.blendMode as any,
             }}
           />
         );
