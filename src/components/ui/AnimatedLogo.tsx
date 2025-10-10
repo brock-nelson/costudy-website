@@ -4,15 +4,69 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
+interface Particle {
+  id: number;
+  x: number;
+  y: number;
+  angle: number;
+  speed: number;
+  life: number;
+  size: number;
+  color: string;
+}
+
 export default function AnimatedLogo() {
   const [mounted, setMounted] = useState(false);
+  const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // Animate particles
+  useEffect(() => {
+    if (particles.length === 0) return;
+
+    const animate = () => {
+      setParticles(prev =>
+        prev
+          .map(p => ({
+            ...p,
+            x: p.x + Math.cos(p.angle) * p.speed,
+            y: p.y + Math.sin(p.angle) * p.speed,
+            life: p.life - 0.02,
+          }))
+          .filter(p => p.life > 0)
+      );
+    };
+
+    const interval = setInterval(animate, 16);
+    return () => clearInterval(interval);
+  }, [particles]);
+
+  const handleClick = () => {
+    // Create particle burst!
+    const colors = ['#8B5CF6', '#A78BFA', '#EC4899', '#F472B6', '#06B6D4', '#22D3EE'];
+    const newParticles: Particle[] = [];
+
+    for (let i = 0; i < 20; i++) {
+      newParticles.push({
+        id: Date.now() + i,
+        x: 0,
+        y: 0,
+        angle: (Math.PI * 2 * i) / 20 + (Math.random() - 0.5) * 0.5,
+        speed: 2 + Math.random() * 3,
+        life: 1,
+        size: 4 + Math.random() * 6,
+        color: colors[Math.floor(Math.random() * colors.length)],
+      });
+    }
+
+    setParticles(newParticles);
+  };
+
   return (
-    <Link href="/" className="relative group cursor-pointer inline-flex items-center gap-3">
+    <Link href="/" onClick={handleClick} className="relative group cursor-pointer inline-flex items-center gap-3">
       {/* Light mode: Unified logo with brand purple colors */}
       <div className="dark:hidden relative">
         <Image
@@ -82,6 +136,24 @@ export default function AnimatedLogo() {
           <div className="absolute left-1/2 -translate-x-1/2 -bottom-1 w-2 h-2 bg-white/95 dark:bg-gray-800/95 border-r border-b border-gray-200/60 dark:border-gray-700/60 rotate-45"></div>
         </div>
       </div>
+
+      {/* Particle burst effect on click */}
+      {mounted && particles.map(particle => (
+        <div
+          key={particle.id}
+          className="absolute pointer-events-none rounded-full"
+          style={{
+            left: `${50 + particle.x}px`,
+            top: `${20 + particle.y}px`,
+            width: `${particle.size}px`,
+            height: `${particle.size}px`,
+            backgroundColor: particle.color,
+            opacity: particle.life,
+            boxShadow: `0 0 ${particle.size * 2}px ${particle.color}`,
+            transition: 'opacity 0.1s',
+          }}
+        />
+      ))}
     </Link>
   );
 }
