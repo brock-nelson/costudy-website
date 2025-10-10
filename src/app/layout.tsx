@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import SkipToContent from "@/components/ui/SkipToContent";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -91,6 +92,7 @@ export default function RootLayout({
         <Header />
         <main id="main-content" tabIndex={-1}>{children}</main>
         <Footer />
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>
