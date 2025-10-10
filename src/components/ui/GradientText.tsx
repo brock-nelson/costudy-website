@@ -156,48 +156,36 @@ export default function GradientText({ children, className = "" }: GradientTextP
     };
   }, []);
 
-  // Calculate gradient angle based on mouse position and scroll
-  const angle = 135 + (mousePos.x - 50) * 0.8 + (mousePos.y - 50) * 0.3 + scrollOffset;
+  // Calculate gradient angle based on scroll only
+  const angle = 135 + scrollOffset * 0.3;
 
-  // Dynamic color selection based on x and y position
-  const getColorPalette = (x: number, y: number, isDark: boolean): string[] => {
+  // Brand purple color palettes - consistent and scroll-based
+  const getBrandColors = (isDark: boolean, scroll: number): string[] => {
     try {
-      // Sanitize inputs to prevent NaN
-      const safeX = typeof x === 'number' && isFinite(x) ? x : 50;
-      const safeY = typeof y === 'number' && isFinite(y) ? y : 50;
-
-      // Divide the area into regions for different color palettes
-      const region = Math.floor((safeX / 25)) + Math.floor((safeY / 25)) * 4;
+      // Normalize scroll to 0-1 range (fade over 500px of scroll)
+      const scrollProgress = Math.min(scroll / 500, 1);
 
       if (isDark) {
-        const palettes = [
-          ['#E9D5FF', '#C4B5FD', '#DDD6FE', '#F3E8FF'], // Purple
-          ['#BFDBFE', '#93C5FD', '#DBEAFE', '#E0F2FE'], // Blue
-          ['#A7F3D0', '#6EE7B7', '#D1FAE5', '#ECFDF5'], // Green
-          ['#FED7AA', '#FDBA74', '#FEF3C7', '#FEF9C3'], // Orange
-          ['#FBCFE8', '#F9A8D4', '#FCE7F3', '#FDF2F8'], // Pink
-          ['#DDD6FE', '#C4B5FD', '#EDE9FE', '#F5F3FF'], // Violet
-          ['#BAE6FD', '#7DD3FC', '#E0F2FE', '#F0F9FF'], // Sky
-          ['#D9F99D', '#BEF264', '#ECFCCB', '#F7FEE7'], // Lime
-        ];
-        const palette = palettes[Math.abs(region) % palettes.length];
-        return palette || palettes[0]; // Fallback to first palette
+        // Dark mode: Start with bright purples, shift to lighter purples/whites
+        const baseColors = ['#E9D5FF', '#C4B5FD', '#DDD6FE', '#F3E8FF'];
+        const scrolledColors = ['#FEFCFF', '#F3E8FF', '#E9D5FF', '#DDD6FE'];
+
+        // Interpolate between base and scrolled colors
+        return baseColors.map((base, i) => {
+          // Simple color mixing would go here, for now return base
+          return scrollProgress > 0.5 ? scrolledColors[i] : base;
+        });
       } else {
-        const palettes = [
-          ['#4A12C0', '#6B3DCB', '#8B5CF6', '#A855F7'], // Purple
-          ['#1E40AF', '#3B82F6', '#2563EB', '#1D4ED8'], // Blue
-          ['#059669', '#10B981', '#14B8A6', '#0D9488'], // Green/Teal
-          ['#D97706', '#F59E0B', '#FBBF24', '#FCD34D'], // Orange/Yellow
-          ['#DB2777', '#EC4899', '#F472B6', '#F9A8D4'], // Pink
-          ['#7C3AED', '#8B5CF6', '#A78BFA', '#C4B5FD'], // Violet
-          ['#0284C7', '#0EA5E9', '#38BDF8', '#7DD3FC'], // Sky
-          ['#65A30D', '#84CC16', '#A3E635', '#BEF264'], // Lime
-        ];
-        const palette = palettes[Math.abs(region) % palettes.length];
-        return palette || palettes[0]; // Fallback to first palette
+        // Light mode: Start with deep purples, shift to vibrant purples
+        const baseColors = ['#4A12C0', '#6B3DCB', '#8B5CF6', '#A855F7'];
+        const scrolledColors = ['#6B3DCB', '#8B5CF6', '#A855F7', '#C084FC'];
+
+        return baseColors.map((base, i) => {
+          return scrollProgress > 0.5 ? scrolledColors[i] : base;
+        });
       }
     } catch (error) {
-      console.debug('getColorPalette error:', error);
+      console.debug('getBrandColors error:', error);
       // Return default purple palette on error
       return isDark
         ? ['#E9D5FF', '#C4B5FD', '#DDD6FE', '#F3E8FF']
@@ -205,26 +193,18 @@ export default function GradientText({ children, className = "" }: GradientTextP
     }
   };
 
-  const lightColors = getColorPalette(mousePos.x, mousePos.y, false);
-  const darkColors = getColorPalette(mousePos.x, mousePos.y, true);
-
-  // Ensure we have valid color arrays
-  const safeLightColors = Array.isArray(lightColors) && lightColors.length >= 4
-    ? lightColors
-    : ['#4A12C0', '#6B3DCB', '#8B5CF6', '#A855F7'];
-  const safeDarkColors = Array.isArray(darkColors) && darkColors.length >= 4
-    ? darkColors
-    : ['#E9D5FF', '#C4B5FD', '#DDD6FE', '#F3E8FF'];
+  const safeLightColors = getBrandColors(false, scrollOffset);
+  const safeDarkColors = getBrandColors(true, scrollOffset);
 
   // Speed-based intensity (faster = more vibrant)
   const speedIntensity = Math.min(mouseSpeed * 100, 50);
 
-  // Shift color stops based on mouse position, scroll, and speed
-  const scrollShift = scrollOffset * 0.5;
-  const colorStop1 = Math.max(0, Math.min(100, mousePos.x - 20 - speedIntensity + scrollShift));
-  const colorStop2 = Math.max(0, Math.min(100, mousePos.x + 10 + scrollShift));
-  const colorStop3 = Math.max(0, Math.min(100, mousePos.x + 30 + mousePos.y * 0.2 + scrollShift));
-  const colorStop4 = Math.max(0, Math.min(100, mousePos.x + 50 + speedIntensity + scrollShift));
+  // Shift color stops based on scroll only
+  const scrollShift = scrollOffset * 0.3;
+  const colorStop1 = Math.max(0, Math.min(100, 0 + scrollShift));
+  const colorStop2 = Math.max(0, Math.min(100, 30 + scrollShift));
+  const colorStop3 = Math.max(0, Math.min(100, 60 + scrollShift));
+  const colorStop4 = Math.max(0, Math.min(100, 100 + scrollShift));
 
   // Light mode gradient with dynamic colors
   const lightGradient = `linear-gradient(${angle}deg,
@@ -256,45 +236,25 @@ export default function GradientText({ children, className = "" }: GradientTextP
 
   return (
     <span className="inline-block relative" ref={containerRef}>
-      {/* Light mode text */}
+      {/* Combined text - single element for both light and dark mode */}
       <span
         className={`
           inline-block font-extrabold tracking-tight
           bg-clip-text text-transparent
-          dark:hidden
           transition-opacity duration-300
           ${specialEffectClass} ${pulseClass}
           ${className}
         `}
         style={{
-          backgroundImage: lightGradient,
+          backgroundImage: `var(--gradient-light)`,
           backgroundSize: isRapidMovement ? '200% 200%' : '100% 100%',
           transition: 'background-image 0.8s ease-out, background-size 0.3s ease-out, filter 0.3s ease-out',
           filter: isRapidMovement
             ? `brightness(${1.2 + mouseSpeed * 2}) saturate(${1.5 + mouseSpeed}) drop-shadow(0 0 ${glowIntensity}px rgba(139, 92, 246, 0.8))`
             : 'none',
-        }}
-      >
-        {children}
-      </span>
-
-      {/* Dark mode text */}
-      <span
-        className={`
-          hidden dark:inline-block font-extrabold tracking-tight
-          bg-clip-text text-transparent
-          absolute top-0 left-0
-          transition-opacity duration-300
-          ${specialEffectClass} ${pulseClass}
-          ${className}
-        `}
-        style={{
-          backgroundImage: darkGradient,
-          backgroundSize: isRapidMovement ? '200% 200%' : '100% 100%',
-          transition: 'background-image 0.8s ease-out, background-size 0.3s ease-out, filter 0.3s ease-out',
-          filter: isRapidMovement
-            ? `brightness(${1.3 + mouseSpeed * 2}) saturate(${1.5 + mouseSpeed}) drop-shadow(0 0 ${glowIntensity}px rgba(233, 213, 255, 0.9))`
-            : 'none',
+          // @ts-ignore - CSS custom properties
+          '--gradient-light': lightGradient,
+          '--gradient-dark': darkGradient,
         }}
       >
         {children}
@@ -315,6 +275,20 @@ export default function GradientText({ children, className = "" }: GradientTextP
           }}
         />
       ))}
+
+      <style jsx>{`
+        span {
+          background-image: ${lightGradient};
+        }
+        @media (prefers-color-scheme: dark) {
+          span {
+            background-image: ${darkGradient};
+            filter: ${isRapidMovement
+              ? `brightness(${1.3 + mouseSpeed * 2}) saturate(${1.5 + mouseSpeed}) drop-shadow(0 0 ${glowIntensity}px rgba(233, 213, 255, 0.9))`
+              : 'none'} !important;
+          }
+        }
+      `}</style>
     </span>
   );
 }

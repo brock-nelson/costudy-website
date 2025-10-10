@@ -37,8 +37,12 @@ export default function AnimatedLogo() {
           alt="CoStudy Logo"
           width={40}
           height={40}
-          className="transition-all duration-300 group-hover:scale-105 brightness-150"
-          style={{ filter: mounted ? 'brightness(1.5) drop-shadow(0 0 8px rgba(243, 232, 255, 0.5))' : undefined }}
+          className="transition-all duration-300 group-hover:scale-105"
+          style={{
+            filter: mounted
+              ? 'invert(1) brightness(2) saturate(0.8) drop-shadow(0 0 12px rgba(243, 232, 255, 0.8))'
+              : undefined
+          }}
         />
       </div>
 

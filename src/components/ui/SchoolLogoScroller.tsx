@@ -1,0 +1,109 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Image from "next/image";
+
+export default function SchoolLogoScroller() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const schools = [
+    { name: "Boston University", logo: "/schools/boston-university.png" },
+    { name: "Indiana University Kelley School", logo: "/schools/indiana-kelley.png" },
+    { name: "BU PRLab", logo: "/schools/bu-prlab.png" },
+    { name: "University of San Francisco", logo: "/schools/usf.png" },
+    { name: "City College of San Francisco", logo: "/schools/ccsf.png" },
+    { name: "UC Berkeley", logo: "/schools/ucb.png" },
+    { name: "NYU", logo: "/schools/nyu.png" },
+    { name: "Boston College", logo: "/schools/boston-college.png" },
+    { name: "University of Arizona", logo: "/schools/arizona.png" },
+  ];
+
+  // Duplicate the schools array for seamless infinite scroll
+  const duplicatedSchools = [...schools, ...schools];
+
+  if (!mounted) {
+    return (
+      <div className="py-8 overflow-hidden bg-gradient-to-r from-purple-50/30 via-blue-50/20 to-purple-50/30 dark:from-purple-900/10 dark:via-blue-900/5 dark:to-purple-900/10">
+        <div className="container mx-auto px-4">
+          <p className="text-center text-sm font-semibold text-gray-600 dark:text-gray-300 mb-6 uppercase tracking-wide">
+            Trusted by Leading Institutions
+          </p>
+          <div className="flex justify-center gap-8 opacity-50">
+            <div className="w-32 h-16 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+            <div className="w-32 h-16 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+            <div className="w-32 h-16 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="py-12 overflow-hidden bg-gradient-to-r from-purple-50/30 via-blue-50/20 to-purple-50/30 dark:from-purple-900/10 dark:via-blue-900/5 dark:to-purple-900/10 border-y border-purple-100/50 dark:border-purple-800/30">
+      <div className="container mx-auto px-4">
+        <p className="text-center text-sm font-semibold text-gray-600 dark:text-gray-300 mb-8 uppercase tracking-wide">
+          Trusted by Leading Institutions
+        </p>
+
+        <div className="relative">
+          {/* Gradient masks for fade effect */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white dark:from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white dark:from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
+
+          {/* Scrolling container */}
+          <div className="flex animate-scroll">
+            {duplicatedSchools.map((school, index) => (
+              <div
+                key={`${school.name}-${index}`}
+                className="flex-shrink-0 mx-8 grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300"
+                style={{ width: "160px" }}
+              >
+                <div className="relative h-20 flex items-center justify-center">
+                  <Image
+                    src={school.logo}
+                    alt={`${school.name} logo`}
+                    width={160}
+                    height={80}
+                    className="object-contain max-h-16 w-auto"
+                    onError={(e) => {
+                      // Fallback to text if image doesn't load
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = 'none';
+                      const parent = target.parentElement;
+                      if (parent) {
+                        parent.innerHTML = `<div class="text-xs text-center font-semibold text-gray-500 dark:text-gray-400 px-2">${school.name}</div>`;
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <style jsx>{`
+          @keyframes scroll {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+
+          .animate-scroll {
+            animation: scroll 40s linear infinite;
+          }
+
+          .animate-scroll:hover {
+            animation-play-state: paused;
+          }
+        `}</style>
+      </div>
+    </div>
+  );
+}

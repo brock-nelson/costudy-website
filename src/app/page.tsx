@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import AnimatedBackground from "@/components/ui/AnimatedBackground";
 import GradientText from "@/components/ui/GradientText";
+import SchoolLogoScroller from "@/components/ui/SchoolLogoScroller";
 
 export const metadata: Metadata = {
   title: "CoStudy - Transform Student Collaboration & Teamwork",
@@ -97,7 +98,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Transition element from hero to next section */}
+      {/* School Logo Scroller */}
+      <SchoolLogoScroller />
+
+      {/* Transition element */}
       <div className="relative h-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-[#0a0a0a] via-purple-50/10 dark:via-purple-900/10 to-white dark:to-[#0a0a0a]"></div>
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-purple-300/30 dark:via-purple-600/40 to-transparent"></div>
