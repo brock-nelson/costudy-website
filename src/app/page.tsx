@@ -129,8 +129,8 @@ export default function Home() {
           >
             <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/5 dark:bg-blue-400/10 rounded-bl-[100px] rounded-tr-2xl group-hover:bg-blue-500/10 dark:group-hover:bg-blue-400/20 transition-colors"></div>
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-100/0 via-blue-100/0 to-blue-100/0 dark:from-blue-900/0 dark:via-blue-900/0 dark:to-blue-900/0 group-hover:from-blue-100/10 dark:group-hover:from-blue-900/20 group-hover:via-blue-50/5 dark:group-hover:via-blue-900/10 transition-all duration-300 pointer-events-none"></div>
-            <h3 className="text-2xl font-bold mb-4 text-blue-600 dark:text-blue-300 relative">For Professors</h3>
-            <p className="text-[#5E6E76] dark:text-gray-300 relative leading-relaxed">
+            <h3 className="text-2xl font-bold mb-4 text-blue-600 dark:text-blue-200 relative">For Professors</h3>
+            <p className="text-[#5E6E76] dark:text-gray-100 relative leading-relaxed">
               Streamline team formation, monitor collaboration, and integrate seamlessly with your LMS.
             </p>
           </Link>
@@ -142,8 +142,8 @@ export default function Home() {
           >
             <div className="absolute top-0 right-0 w-20 h-20 bg-green-500/5 dark:bg-green-400/10 rounded-bl-[100px] rounded-tr-2xl group-hover:bg-green-500/10 dark:group-hover:bg-green-400/20 transition-colors"></div>
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-green-100/0 via-green-100/0 to-green-100/0 dark:from-green-900/0 dark:via-green-900/0 dark:to-green-900/0 group-hover:from-green-100/10 dark:group-hover:from-green-900/20 group-hover:via-green-50/5 dark:group-hover:via-green-900/10 transition-all duration-300 pointer-events-none"></div>
-            <h3 className="text-2xl font-bold mb-4 text-green-600 dark:text-green-300 relative">For Administrators</h3>
-            <p className="text-[#5E6E76] dark:text-gray-300 relative leading-relaxed">
+            <h3 className="text-2xl font-bold mb-4 text-green-600 dark:text-green-200 relative">For Administrators</h3>
+            <p className="text-[#5E6E76] dark:text-gray-100 relative leading-relaxed">
               Track institutional impact, measure student success, and demonstrate ROI with data-driven insights.
             </p>
           </Link>
@@ -155,8 +155,8 @@ export default function Home() {
           >
             <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/5 dark:bg-purple-400/10 rounded-bl-[100px] rounded-tr-2xl group-hover:bg-purple-500/10 dark:group-hover:bg-purple-400/20 transition-colors"></div>
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-100/0 via-purple-100/0 to-purple-100/0 dark:from-purple-900/0 dark:via-purple-900/0 dark:to-purple-900/0 group-hover:from-purple-100/10 dark:group-hover:from-purple-900/20 group-hover:via-purple-50/5 dark:group-hover:via-purple-900/10 transition-all duration-300 pointer-events-none"></div>
-            <h3 className="text-2xl font-bold mb-4 text-purple-600 dark:text-purple-300 relative">For Students</h3>
-            <p className="text-[#5E6E76] dark:text-gray-300 relative leading-relaxed">
+            <h3 className="text-2xl font-bold mb-4 text-purple-600 dark:text-purple-200 relative">For Students</h3>
+            <p className="text-[#5E6E76] dark:text-gray-100 relative leading-relaxed">
               Build teamwork skills, set clear goals, and give meaningful feedback to teammates.
             </p>
           </Link>
@@ -191,7 +191,7 @@ export default function Home() {
                 <span className="text-4xl relative">📋</span>
               </div>
               <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-gray-100">Team Charters</h3>
-              <p className="text-[#5E6E76] dark:text-gray-300 leading-relaxed">
+              <p className="text-[#5E6E76] dark:text-gray-100 leading-relaxed">
                 Help teams establish clear expectations and working agreements from day one.
               </p>
             </div>
@@ -202,7 +202,7 @@ export default function Home() {
                 <span className="text-4xl relative">📈</span>
               </div>
               <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-gray-100">Growth-Goal Scales</h3>
-              <p className="text-[#5E6E76] dark:text-gray-300 leading-relaxed">
+              <p className="text-[#5E6E76] dark:text-gray-100 leading-relaxed">
                 Track individual development and measure progress toward collaboration goals.
               </p>
             </div>
@@ -213,7 +213,7 @@ export default function Home() {
                 <span className="text-4xl relative">💬</span>
               </div>
               <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-gray-100">Peer Feedback</h3>
-              <p className="text-[#5E6E76] dark:text-gray-300 leading-relaxed">
+              <p className="text-[#5E6E76] dark:text-gray-100 leading-relaxed">
                 Facilitate constructive feedback that helps students grow and improve.
               </p>
             </div>
@@ -244,7 +244,7 @@ export default function Home() {
             <h2 id="cta-heading" className="text-3xl md:text-4xl font-bold mb-6 text-[#374045] dark:text-gray-50">
               Ready to Transform Student Collaboration?
             </h2>
-            <p className="text-xl text-[#5E6E76] dark:text-gray-300 mb-10 leading-relaxed">
+            <p className="text-xl text-[#5E6E76] dark:text-gray-100 mb-10 leading-relaxed">
               Join leading educators who are using CoStudy to build essential teamwork skills.
             </p>
             <Link

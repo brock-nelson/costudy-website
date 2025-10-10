@@ -134,47 +134,47 @@ export default function GradientText({ children, className = "" }: GradientTextP
   // Calculate gradient angle based on scroll only
   const angle = 135 + scrollOffset * 0.3;
 
-  // Dynamic gradient colors that shift along the color spectrum during scroll
+  // Dynamic gradient colors that shift with scroll
+  // Light mode: Brand purple → lavender/rose
+  // Dark mode: Neon indigo → cyan
   const getBrandColors = (isDark: boolean, scroll: number): string[] => {
     try {
-      // Normalize scroll to 0-1 range (shift through full spectrum over 1000px)
-      const scrollProgress = Math.min(scroll / 1000, 1);
+      // Normalize scroll to 0-1 range (transition over 500px)
+      const scrollProgress = Math.min(scroll / 500, 1);
 
-      // Define color spectrum to shift through (purple -> pink -> cyan -> green -> amber -> back to purple)
-      const colorSpectrum = [
-        // Purple (0-0.2)
-        isDark ? ['#E9D5FF', '#C4B5FD', '#DDD6FE', '#F3E8FF'] : ['#4A12C0', '#6B3DCB', '#8B5CF6', '#A855F7'],
-        // Pink (0.2-0.4)
-        isDark ? ['#FCE7F3', '#FBCFE8', '#F9A8D4', '#F472B6'] : ['#DB2777', '#EC4899', '#F472B6', '#FB7185'],
-        // Cyan (0.4-0.6)
-        isDark ? ['#CFFAFE', '#A5F3FC', '#67E8F9', '#22D3EE'] : ['#0891B2', '#06B6D4', '#22D3EE', '#67E8F9'],
-        // Green (0.6-0.8)
-        isDark ? ['#D1FAE5', '#A7F3D0', '#6EE7B7', '#34D399'] : ['#059669', '#10B981', '#34D399', '#6EE7B7'],
-        // Amber (0.8-1.0)
-        isDark ? ['#FEF3C7', '#FDE68A', '#FCD34D', '#FBBF24'] : ['#D97706', '#F59E0B', '#FBBF24', '#FCD34D'],
-      ];
+      if (isDark) {
+        // Dark mode: Neon indigo → cyan transition
+        // Start: Indigo shades (high contrast on dark bg)
+        const start = ['#818CF8', '#6366F1', '#4F46E5', '#4338CA']; // Indigo 400-700
+        // End: Cyan shades (neon cyan)
+        const end = ['#22D3EE', '#06B6D4', '#0891B2', '#0E7490']; // Cyan 400-700
 
-      // Find which color segment we're in
-      const segmentIndex = Math.floor(scrollProgress * (colorSpectrum.length - 1));
-      const nextSegmentIndex = Math.min(segmentIndex + 1, colorSpectrum.length - 1);
-      const segmentProgress = (scrollProgress * (colorSpectrum.length - 1)) % 1;
-
-      // Interpolate between current and next color segment
-      const currentColors = colorSpectrum[segmentIndex];
-      const nextColors = colorSpectrum[nextSegmentIndex];
-
-      // Simple lerp between color arrays
-      if (segmentProgress < 0.5) {
-        return currentColors;
+        // Interpolate between indigo and cyan
+        if (scrollProgress < 0.5) {
+          return start;
+        } else {
+          return end;
+        }
       } else {
-        return nextColors;
+        // Light mode: Brand purple → lavender/rose transition
+        // Start: Deep purple (WCAG AA compliant 4.5:1 on white)
+        const start = ['#6B21A8', '#7C3AED', '#8B5CF6', '#A78BFA']; // Purple 800-400
+        // End: Lavender/rose mix
+        const end = ['#A855F7', '#C084FC', '#E879F9', '#F0ABFC']; // Purple 500 → Fuchsia 300
+
+        // Interpolate between purple and lavender/rose
+        if (scrollProgress < 0.5) {
+          return start;
+        } else {
+          return end;
+        }
       }
     } catch (error) {
       console.debug('getBrandColors error:', error);
       // Return default purple palette on error
       return isDark
-        ? ['#E9D5FF', '#C4B5FD', '#DDD6FE', '#F3E8FF']
-        : ['#4A12C0', '#6B3DCB', '#8B5CF6', '#A855F7'];
+        ? ['#818CF8', '#6366F1', '#4F46E5', '#4338CA']
+        : ['#6B21A8', '#7C3AED', '#8B5CF6', '#A78BFA'];
     }
   };
 

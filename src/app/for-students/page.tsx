@@ -198,12 +198,20 @@ export default function ForStudents() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-purple-600 dark:bg-purple-700 text-white py-16" aria-labelledby="students-cta">
-        <div className="container mx-auto px-4 text-center">
+      <section className="relative bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 dark:from-purple-700 dark:via-purple-800 dark:to-purple-900 text-white py-16 overflow-hidden" aria-labelledby="students-cta">
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-10 right-10 w-32 h-32 bg-purple-400/20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 left-10 w-40 h-40 bg-purple-300/15 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-white/5 border border-white/10 rounded-3xl rotate-12 backdrop-blur-sm"></div>
+          <div className="absolute bottom-1/4 right-1/3 w-20 h-20 bg-white/5 border border-white/10 rounded-2xl -rotate-12 backdrop-blur-sm"></div>
+        </div>
+
+        <div className="container mx-auto px-4 text-center relative">
           <h2 id="students-cta" className="text-3xl md:text-4xl font-bold mb-6">
             Ready to Level Up Your Teamwork Skills?
           </h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl mb-8 max-w-2xl mx-auto leading-relaxed text-white/95">
             Ask your professor about using CoStudy in your course, or join our student community to learn more.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

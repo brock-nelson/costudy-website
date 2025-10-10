@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import AnimatedBackground from "@/components/ui/AnimatedBackground";
 
 type UserRole = "professor" | "student" | "admin" | null;
 
@@ -13,11 +12,22 @@ export default function Products() {
     <div className="min-h-screen">
       {/* 1. HERO SECTION - Vibrant Gradient Background */}
       <section className="relative py-20 md:py-32 overflow-hidden bg-gradient-to-br from-purple-500 via-purple-400 to-pink-400 dark:from-purple-600 dark:via-purple-500 dark:to-pink-500">
-        <AnimatedBackground />
+        {/* New Geometric Background Elements - No Dots */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Large gradient orbs */}
+          <div className="absolute top-20 right-0 w-96 h-96 bg-pink-400/30 dark:bg-pink-600/20 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-400/30 dark:bg-cyan-600/20 rounded-full blur-3xl"></div>
 
-        {/* Decorative gradient orbs */}
-        <div className="absolute top-20 right-0 w-96 h-96 bg-pink-400/30 dark:bg-pink-600/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-cyan-400/30 dark:bg-cyan-600/20 rounded-full blur-3xl"></div>
+          {/* Geometric shapes */}
+          <div className="absolute top-10 left-1/4 w-32 h-32 bg-white/5 border border-white/20 rounded-3xl rotate-12 backdrop-blur-sm"></div>
+          <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-white/5 border border-white/20 rounded-2xl -rotate-12 backdrop-blur-sm"></div>
+          <div className="absolute bottom-20 left-1/3 w-28 h-28 bg-white/5 border border-white/20 rounded-full backdrop-blur-sm"></div>
+          <div className="absolute top-1/3 right-1/3 w-20 h-20 bg-white/10 border-2 border-white/30 rounded-xl rotate-45 backdrop-blur-sm"></div>
+
+          {/* Accent lines */}
+          <div className="absolute top-1/4 left-0 w-40 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+          <div className="absolute bottom-1/3 right-0 w-48 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+        </div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-5xl mx-auto text-center">

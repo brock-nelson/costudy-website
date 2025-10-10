@@ -4,25 +4,25 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#374045] text-white">
+    <footer className="bg-[#2a2f33] dark:bg-[#0a0a0a] text-white border-t border-gray-700 dark:border-gray-800">
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-bold mb-4">CoStudy</h3>
-            <p className="text-[#92A2AA] mb-4">
+            <h3 className="text-2xl font-black mb-4 text-white">CoStudy</h3>
+            <p className="text-gray-300 dark:text-gray-400 mb-4 leading-relaxed">
               Transforming student collaboration through structured teamwork tools.
             </p>
           </div>
 
           {/* Solutions */}
           <div>
-            <h4 className="font-semibold mb-4">Solutions</h4>
-            <ul className="space-y-2">
+            <h4 className="font-bold text-white mb-4 uppercase text-sm tracking-wide">Solutions</h4>
+            <ul className="space-y-3">
               <li>
                 <Link
                   href="/for-professors"
-                  className="text-[#92A2AA] hover:text-white transition-colors"
+                  className="text-gray-300 dark:text-gray-400 hover:text-purple-400 dark:hover:text-purple-300 transition-colors"
                 >
                   For Professors
                 </Link>
@@ -30,7 +30,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/for-administrators"
-                  className="text-[#92A2AA] hover:text-white transition-colors"
+                  className="text-gray-300 dark:text-gray-400 hover:text-purple-400 dark:hover:text-purple-300 transition-colors"
                 >
                   For Administrators
                 </Link>
@@ -38,7 +38,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/for-students"
-                  className="text-[#92A2AA] hover:text-white transition-colors"
+                  className="text-gray-300 dark:text-gray-400 hover:text-purple-400 dark:hover:text-purple-300 transition-colors"
                 >
                   For Students
                 </Link>
@@ -48,12 +48,12 @@ export default function Footer() {
 
           {/* Resources */}
           <div>
-            <h4 className="font-semibold mb-4">Resources</h4>
-            <ul className="space-y-2">
+            <h4 className="font-bold text-white mb-4 uppercase text-sm tracking-wide">Resources</h4>
+            <ul className="space-y-3">
               <li>
                 <Link
                   href="/products"
-                  className="text-[#92A2AA] hover:text-white transition-colors"
+                  className="text-gray-300 dark:text-gray-400 hover:text-purple-400 dark:hover:text-purple-300 transition-colors"
                 >
                   Products
                 </Link>
@@ -61,7 +61,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/blog"
-                  className="text-[#92A2AA] hover:text-white transition-colors"
+                  className="text-gray-300 dark:text-gray-400 hover:text-purple-400 dark:hover:text-purple-300 transition-colors"
                 >
                   Blog
                 </Link>
@@ -69,7 +69,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/resources"
-                  className="text-[#92A2AA] hover:text-white transition-colors"
+                  className="text-gray-300 dark:text-gray-400 hover:text-purple-400 dark:hover:text-purple-300 transition-colors"
                 >
                   Case Studies
                 </Link>
@@ -77,7 +77,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/community"
-                  className="text-[#92A2AA] hover:text-white transition-colors"
+                  className="text-gray-300 dark:text-gray-400 hover:text-purple-400 dark:hover:text-purple-300 transition-colors"
                 >
                   Community
                 </Link>
@@ -87,12 +87,12 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="font-semibold mb-4">Company</h4>
-            <ul className="space-y-2">
+            <h4 className="font-bold text-white mb-4 uppercase text-sm tracking-wide">Company</h4>
+            <ul className="space-y-3">
               <li>
                 <Link
                   href="/about"
-                  className="text-[#92A2AA] hover:text-white transition-colors"
+                  className="text-gray-300 dark:text-gray-400 hover:text-purple-400 dark:hover:text-purple-300 transition-colors"
                 >
                   About Us
                 </Link>
@@ -100,7 +100,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/contact"
-                  className="text-[#92A2AA] hover:text-white transition-colors"
+                  className="text-gray-300 dark:text-gray-400 hover:text-purple-400 dark:hover:text-purple-300 transition-colors"
                 >
                   Contact
                 </Link>
@@ -108,7 +108,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/demo"
-                  className="text-[#92A2AA] hover:text-white transition-colors"
+                  className="text-gray-300 dark:text-gray-400 hover:text-purple-400 dark:hover:text-purple-300 transition-colors"
                 >
                   Request Demo
                 </Link>
@@ -118,21 +118,21 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-[#5E6E76] mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-[#92A2AA] text-sm mb-4 md:mb-0">
+        <div className="border-t border-gray-600 dark:border-gray-800 mt-10 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-gray-400 dark:text-gray-500 text-sm mb-4 md:mb-0">
             &copy; {currentYear} CoStudy. All rights reserved.
           </p>
 
           <div className="flex space-x-6">
             <Link
               href="/privacy"
-              className="text-[#92A2AA] hover:text-white text-sm transition-colors"
+              className="text-gray-400 dark:text-gray-500 hover:text-white dark:hover:text-gray-300 text-sm transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms"
-              className="text-[#92A2AA] hover:text-white text-sm transition-colors"
+              className="text-gray-400 dark:text-gray-500 hover:text-white dark:hover:text-gray-300 text-sm transition-colors"
             >
               Terms of Service
             </Link>

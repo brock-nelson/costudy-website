@@ -43,26 +43,21 @@ export default function SchoolLogoScroller() {
   }
 
   return (
-    <div className="py-16 overflow-hidden bg-gradient-to-r from-purple-100/50 via-blue-100/40 to-purple-100/50 dark:from-purple-900/10 dark:via-blue-900/5 dark:to-purple-900/10 border-y border-purple-200/70 dark:border-purple-800/30 shadow-inner">
+    <div className="py-16 bg-gradient-to-r from-purple-100/50 via-blue-100/40 to-purple-100/50 dark:from-purple-900/10 dark:via-blue-900/5 dark:to-purple-900/10 border-y border-purple-200/70 dark:border-purple-800/30 shadow-inner">
       <div className="container mx-auto px-4">
         <p className="text-center text-base font-bold text-gray-700 dark:text-gray-300 mb-10 uppercase tracking-wider">
           Trusted by Leading Institutions
         </p>
 
-        <div className="relative">
-          {/* Gradient masks for fade effect */}
-          <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white dark:from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white dark:from-[#0a0a0a] to-transparent z-10 pointer-events-none" />
-
-          {/* Scrolling container */}
-          <div className="flex animate-scroll">
-            {duplicatedSchools.map((school, index) => (
+        {/* Static grid layout - organized in rows */}
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {schools.map((school, index) => (
               <div
                 key={`${school.name}-${index}`}
-                className="flex-shrink-0 mx-8 group transition-all duration-300"
-                style={{ width: "160px" }}
+                className="group transition-all duration-300"
               >
-                <div className="relative h-24 flex items-center justify-center bg-white/80 dark:bg-gray-800/40 rounded-xl p-5 backdrop-blur-md border-2 border-gray-300/70 dark:border-gray-700/50 group-hover:border-purple-400 dark:group-hover:border-purple-600 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-purple-200/50 dark:group-hover:shadow-purple-900/30 transition-all duration-300">
+                <div className="relative h-24 flex items-center justify-center bg-white/80 dark:bg-gray-800/40 rounded-xl p-5 backdrop-blur-md border-2 border-gray-300/70 dark:border-gray-700/50 group-hover:border-purple-400 dark:group-hover:border-purple-600 group-hover:scale-105 group-hover:shadow-xl group-hover:shadow-purple-200/50 dark:group-hover:shadow-purple-900/30 transition-all duration-300">
                   <Image
                     src={school.logo}
                     alt={`${school.name} logo`}
@@ -84,25 +79,6 @@ export default function SchoolLogoScroller() {
             ))}
           </div>
         </div>
-
-        <style jsx>{`
-          @keyframes scroll {
-            0% {
-              transform: translateX(0);
-            }
-            100% {
-              transform: translateX(-50%);
-            }
-          }
-
-          .animate-scroll {
-            animation: scroll 40s linear infinite;
-          }
-
-          .animate-scroll:hover {
-            animation-play-state: paused;
-          }
-        `}</style>
       </div>
     </div>
   );

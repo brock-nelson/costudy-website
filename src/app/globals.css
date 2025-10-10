@@ -331,8 +331,15 @@ body {
   border-color: #000000 !important;
 }
 
+/* Remove all shadows in high-contrast mode for better clarity */
 .high-contrast [class*="shadow"] {
-  box-shadow: 0 0 0 2px #000000 !important;
+  box-shadow: none !important;
+}
+
+.high-contrast * {
+  /* Remove CSS filter drop-shadows */
+  filter: none !important;
+  text-shadow: none !important;
 }
 
 /* Screen Reader Only */

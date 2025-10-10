@@ -19,70 +19,19 @@ export default function AnimatedLogo() {
 
   return (
     <Link href="/" onClick={handleClick} className="relative group cursor-pointer inline-flex items-center gap-3">
-      {/* Light mode: Logo icon + SVG text */}
-      <div className="dark:hidden">
+      {/* Light mode: Unified logo with brand purple colors */}
+      <div className="dark:hidden relative">
         <Image
-          src="/logo_purple.svg"
+          src="/logo_upperleft.svg"
           alt="CoStudy Logo"
-          width={40}
-          height={40}
-          className="transition-all duration-300 group-hover:scale-105"
+          width={200}
+          height={50}
+          className="h-10 w-auto transition-all duration-300 group-hover:scale-105"
+          style={{ display: mounted ? undefined : 'block' }}
         />
       </div>
 
-      {/* Light mode logo */}
-      <svg
-        className="h-10 w-auto dark:hidden transition-all duration-300 group-hover:scale-105"
-        viewBox="0 0 200 50"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        style={{ display: mounted ? undefined : 'block' }}
-      >
-        {/* Animated underline */}
-        <path
-          d="M10 45 L190 45"
-          stroke="url(#gradient-light)"
-          strokeWidth="3"
-          strokeLinecap="round"
-          className={`transition-all duration-700 ${isAnimating ? 'animate-draw-line' : ''}`}
-          style={{
-            strokeDasharray: isAnimating ? 180 : 0,
-            strokeDashoffset: isAnimating ? 180 : 0,
-          }}
-        />
-
-        {/* CoStudy Text */}
-        <text
-          x="10"
-          y="30"
-          fontFamily="system-ui, -apple-system, sans-serif"
-          fontSize="32"
-          fontWeight="800"
-          fill="url(#gradient-light)"
-          className="transition-all duration-300 group-hover:opacity-90"
-        >
-          CoStudy
-        </text>
-
-        {/* Animated dot */}
-        <circle
-          cx="185"
-          cy="28"
-          r="4"
-          fill="#4A12C0"
-          className={mounted ? 'animate-pulse' : ''}
-        />
-
-        <defs>
-          <linearGradient id="gradient-light" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#4A12C0" />
-            <stop offset="50%" stopColor="#6B3DCB" />
-            <stop offset="100%" stopColor="#8B5CF6" />
-          </linearGradient>
-        </defs>
-      </svg>
-
-      {/* Dark mode: Full logo image with text and icon (logo_upperleft.svg already has both) */}
+      {/* Dark mode: Full logo image with neon effect */}
       <div className="hidden dark:block relative">
         <Image
           src="/logo_upperleft.svg"
