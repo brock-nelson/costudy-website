@@ -8,15 +8,15 @@ export const metadata: Metadata = {
 
 export default function Contact() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       {/* Hero Section */}
-      <section className="bg-[#EDE7F9] py-20">
+      <section className="bg-[#EDE7F9] dark:bg-gray-800 py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[#374045]">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[#2D3748] dark:text-white">
               Get in Touch
             </h1>
-            <p className="text-xl text-[#5E6E76]">
+            <p className="text-xl text-[#4A5568] dark:text-gray-200">
               Have questions about CoStudy? We&apos;d love to hear from you.
             </p>
           </div>
@@ -29,34 +29,34 @@ export default function Contact() {
       </section>
 
       {/* Alternative Contact Methods */}
-      <section className="bg-[#EAEDEF] py-16">
+      <section className="bg-[#EAEDEF] dark:bg-gray-800 py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold text-center mb-12 text-[#374045]">
+          <h2 className="text-2xl font-bold text-center mb-12 text-[#2D3748] dark:text-white">
             Other Ways to Connect
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center">
-              <div className="bg-white w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <div className="bg-white dark:bg-gray-700 w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center shadow-sm">
                 <span className="text-3xl">📧</span>
               </div>
-              <h3 className="font-semibold mb-2 text-[#374045]">Email Us</h3>
-              <p className="text-[#5E6E76]">hello@costudy.co</p>
+              <h3 className="font-bold mb-2 text-[#2D3748] dark:text-white">Email Us</h3>
+              <p className="text-[#4A5568] dark:text-gray-200">hello@costudy.co</p>
             </div>
 
             <div className="text-center">
-              <div className="bg-white w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <div className="bg-white dark:bg-gray-700 w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center shadow-sm">
                 <span className="text-3xl">📅</span>
               </div>
-              <h3 className="font-semibold mb-2 text-[#374045]">Schedule a Demo</h3>
-              <p className="text-[#5E6E76]">See CoStudy in action</p>
+              <h3 className="font-bold mb-2 text-[#2D3748] dark:text-white">Schedule a Demo</h3>
+              <p className="text-[#4A5568] dark:text-gray-200">See CoStudy in action</p>
             </div>
 
             <div className="text-center">
-              <div className="bg-white w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <div className="bg-white dark:bg-gray-700 w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center shadow-sm">
                 <span className="text-3xl">💬</span>
               </div>
-              <h3 className="font-semibold mb-2 text-[#374045]">Join the Community</h3>
-              <p className="text-[#5E6E76]">Connect with other educators</p>
+              <h3 className="font-bold mb-2 text-[#2D3748] dark:text-white">Join the Community</h3>
+              <p className="text-[#4A5568] dark:text-gray-200">Connect with other educators</p>
             </div>
           </div>
         </div>
