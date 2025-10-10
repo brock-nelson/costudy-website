@@ -18,6 +18,16 @@ interface DriftState {
   vy: number;
 }
 
+// Unique physics properties for each shape (substance-based)
+interface PhysicsProperties {
+  damping: number;          // How quickly motion decays (0.9-0.99)
+  maxVelocity: number;      // Maximum drift speed
+  forceMultiplier: number;  // How responsive to random forces
+  bounce: number;           // Velocity retained after collision (0-1)
+  maxDrift: number;         // Maximum distance from origin
+  substance: string;        // For reference
+}
+
 // Playful particle state with rotation, scale, and color
 interface ParticleState {
   x: number;
@@ -47,6 +57,22 @@ export default function AnimatedBackground() {
   const lastScrollTimeRef = useRef(Date.now());
   const driftAnimationRef = useRef<number | null>(null);
   const particleAnimationRef = useRef<number | null>(null);
+
+  // Unique physics for each shape - different substances!
+  const shapePhysics: Record<string, PhysicsProperties> = {
+    orb1: { damping: 0.995, maxVelocity: 0.05, forceMultiplier: 0.3, bounce: 0.3, maxDrift: 20, substance: 'heavy-liquid' },
+    orb2: { damping: 0.97, maxVelocity: 0.12, forceMultiplier: 1.5, bounce: 0.6, maxDrift: 25, substance: 'light-air' },
+    orb3: { damping: 0.99, maxVelocity: 0.04, forceMultiplier: 0.5, bounce: 0.2, maxDrift: 15, substance: 'thick-gel' },
+    hex: { damping: 0.94, maxVelocity: 0.1, forceMultiplier: 1.2, bounce: 0.8, maxDrift: 22, substance: 'jello' },
+    cyan: { damping: 0.96, maxVelocity: 0.09, forceMultiplier: 1.0, bounce: 0.5, maxDrift: 20, substance: 'water' },
+    pink: { damping: 0.93, maxVelocity: 0.11, forceMultiplier: 1.3, bounce: 0.85, maxDrift: 24, substance: 'rubber' },
+    square: { damping: 0.995, maxVelocity: 0.06, forceMultiplier: 0.4, bounce: 0.4, maxDrift: 18, substance: 'dense-metal' },
+    orange: { damping: 0.98, maxVelocity: 0.05, forceMultiplier: 0.6, bounce: 0.25, maxDrift: 16, substance: 'putty' },
+    emerald: { damping: 0.92, maxVelocity: 0.13, forceMultiplier: 1.4, bounce: 0.9, maxDrift: 26, substance: 'elastic' },
+    violet: { damping: 0.97, maxVelocity: 0.14, forceMultiplier: 1.6, bounce: 0.7, maxDrift: 28, substance: 'gas' },
+    teal: { damping: 0.91, maxVelocity: 0.08, forceMultiplier: 0.8, bounce: 0.6, maxDrift: 19, substance: 'glass' },
+    rose: { damping: 0.95, maxVelocity: 0.07, forceMultiplier: 0.9, bounce: 0.55, maxDrift: 21, substance: 'soft-gel' }
+  };
 
   // Initialize drift states for all shapes
   useEffect(() => {
@@ -84,8 +110,8 @@ export default function AnimatedBackground() {
         y: 0,
         vx: (Math.random() - 0.5) * 0.3,
         vy: (Math.random() - 0.5) * 0.3,
-        rotation: Math.random() * 360,
-        rotationSpeed: (Math.random() - 0.5) * 2,
+        rotation: 0, // No rotation
+        rotationSpeed: 0, // No rotation
         scale: 1,
         baseY,
         pulsePhase: Math.random() * Math.PI * 2,
@@ -100,7 +126,7 @@ export default function AnimatedBackground() {
     setParticles(initialParticles);
   }, []);
 
-  // Physics-based drift animation loop for large shapes
+  // Physics-based drift animation loop with unique substance physics per shape
   useEffect(() => {
     if (!mounted) return;
 
@@ -110,37 +136,38 @@ export default function AnimatedBackground() {
 
         Object.keys(prevDrift).forEach(key => {
           const d = prevDrift[key];
+          const physics = shapePhysics[key];
+          if (!physics) return;
 
-          // Add random drift force (very gentle)
-          const forceX = (Math.random() - 0.5) * 0.002;
-          const forceY = (Math.random() - 0.5) * 0.002;
+          // Add random drift force (scaled by substance properties)
+          const baseForce = 0.002;
+          const forceX = (Math.random() - 0.5) * baseForce * physics.forceMultiplier;
+          const forceY = (Math.random() - 0.5) * baseForce * physics.forceMultiplier;
 
-          // Update velocity with forces and damping
+          // Update velocity with forces
           let vx = d.vx + forceX;
           let vy = d.vy + forceY;
 
-          // Apply damping to prevent runaway motion
-          vx *= 0.98;
-          vy *= 0.98;
+          // Apply substance-specific damping
+          vx *= physics.damping;
+          vy *= physics.damping;
 
-          // Limit max velocity
-          const maxVel = 0.08;
-          vx = Math.max(-maxVel, Math.min(maxVel, vx));
-          vy = Math.max(-maxVel, Math.min(maxVel, vy));
+          // Limit to substance-specific max velocity
+          vx = Math.max(-physics.maxVelocity, Math.min(physics.maxVelocity, vx));
+          vy = Math.max(-physics.maxVelocity, Math.min(physics.maxVelocity, vy));
 
           // Update position
           let x = d.x + vx;
           let y = d.y + vy;
 
-          // Keep within bounds (-20 to 20 pixels)
-          const maxDrift = 20;
-          if (Math.abs(x) > maxDrift) {
-            x = Math.sign(x) * maxDrift;
-            vx *= -0.5; // bounce back
+          // Keep within substance-specific bounds with substance-specific bounce
+          if (Math.abs(x) > physics.maxDrift) {
+            x = Math.sign(x) * physics.maxDrift;
+            vx *= -physics.bounce; // substance-specific bounce
           }
-          if (Math.abs(y) > maxDrift) {
-            y = Math.sign(y) * maxDrift;
-            vy *= -0.5; // bounce back
+          if (Math.abs(y) > physics.maxDrift) {
+            y = Math.sign(y) * physics.maxDrift;
+            vy *= -physics.bounce; // substance-specific bounce
           }
 
           newDrift[key] = { x, y, vx, vy };
@@ -159,7 +186,7 @@ export default function AnimatedBackground() {
         cancelAnimationFrame(driftAnimationRef.current);
       }
     };
-  }, [mounted]);
+  }, [mounted, shapePhysics]);
 
   // Playful particle physics animation loop with jello squish and slow pulse
   useEffect(() => {
