@@ -2,7 +2,34 @@
 
 import { useEffect, useState, useRef } from "react";
 
-// Sanitize numeric values to prevent NaN/Infinity
+// ============================================================================
+// CONFIGURATION CONSTANTS - Easily adjustable parameters
+// ============================================================================
+
+const PHYSICS_CONFIG = {
+  // Microgravity drift
+  driftSpeed: 0.00015,           // Speed of Perlin noise drift
+  driftScale: 30,                // Scale of drift movement (px)
+  driftDamping: 0.98,            // How quickly drift settles (0.9-0.99)
+
+  // Moon-trampoline scroll physics
+  scrollSinkStrength: 50,        // How much dots sink when scrolled
+  scrollSpringK: 0.08,           // Spring constant (higher = snappier)
+  scrollDamping: 0.88,           // Spring damping (lower = bouncier)
+
+  // Particle properties
+  particleCount: 7,
+  minSize: 10,
+  maxSize: 18,
+  pulseAmount: 0.04,             // ±4% size variation
+  pulseSpeed: 0.0008,
+};
+
+// ============================================================================
+// UTILITY FUNCTIONS
+// ============================================================================
+
+// Sanitize numeric values
 const sanitizeNumber = (value: number, fallback: number = 0): number => {
   if (typeof value !== 'number' || !isFinite(value) || isNaN(value)) {
     return fallback;
@@ -10,7 +37,56 @@ const sanitizeNumber = (value: number, fallback: number = 0): number => {
   return value;
 };
 
-// Physics drift state for smooth floating motion
+// Simple 1D Perlin-like noise function
+const noise1D = (x: number): number => {
+  // Simplified noise using sine waves for smooth organic motion
+  return Math.sin(x) * 0.5 + Math.sin(x * 2.5) * 0.3 + Math.sin(x * 5.2) * 0.2;
+};
+
+// Smooth easing function for spring physics
+const easeOutElastic = (x: number): number => {
+  const c4 = (2 * Math.PI) / 3;
+  return x === 0
+    ? 0
+    : x === 1
+    ? 1
+    : Math.pow(2, -10 * x) * Math.sin((x * 10 - 0.75) * c4) + 1;
+};
+
+// ============================================================================
+// INTERFACES
+// ============================================================================
+
+interface ParticleState {
+  // Position (relative to base position)
+  x: number;
+  y: number;
+
+  // Velocity for spring physics
+  vx: number;
+  vy: number;
+
+  // Base position on screen
+  baseX: number;
+  baseY: number;
+
+  // Drift offsets (from Perlin noise)
+  driftX: number;
+  driftY: number;
+  noiseOffsetX: number;  // Time offset for Perlin noise
+  noiseOffsetY: number;
+
+  // Visual properties
+  size: number;
+  pulsePhase: number;
+  pulseSpeed: number;
+  scale: number;
+
+  // Scroll spring physics
+  scrollDisplacement: number;  // How far pushed by scroll
+  scrollVelocity: number;      // Velocity from scroll spring
+}
+
 interface DriftState {
   x: number;
   y: number;
@@ -18,41 +94,19 @@ interface DriftState {
   vy: number;
 }
 
-// Unique physics properties for each shape (substance-based)
 interface PhysicsProperties {
-  damping: number;          // How quickly motion decays (0.9-0.99)
-  maxVelocity: number;      // Maximum drift speed
-  forceMultiplier: number;  // How responsive to random forces
-  bounce: number;           // Velocity retained after collision (0-1)
-  maxDrift: number;         // Maximum distance from origin
-  substance: string;        // For reference
+  damping: number;
+  maxVelocity: number;
+  forceMultiplier: number;
+  bounce: number;
+  maxDrift: number;
+  substance: string;
 }
 
-// Playful particle state with orbital physics
-interface ParticleState {
-  x: number;
-  y: number;
-  rotation: number;
-  rotationSpeed: number;
-  scale: number;
-  baseY: number;
-  pulsePhase: number;
-  pulseSpeed: number;
-  colorIndex: number;
-  colorTransition: number;
-  squishX: number;
-  squishY: number;
-  // Orbital physics properties
-  orbitRadius: number;      // Size of circular orbit
-  orbitSpeed: number;       // How fast it orbits
-  orbitAngle: number;       // Current angle in orbit
-  orbitPhase: number;       // Offset phase for variety
-  ellipseRatioX: number;    // Make orbits elliptical, not circular
-  ellipseRatioY: number;
-}
+// ============================================================================
+// SHAPE PHYSICS CONSTANTS
+// ============================================================================
 
-
-// Unique physics for each shape - defined outside component for performance
 const SHAPE_PHYSICS: Record<string, PhysicsProperties> = {
   orb1: { damping: 0.995, maxVelocity: 0.05, forceMultiplier: 0.3, bounce: 0.3, maxDrift: 20, substance: 'heavy-liquid' },
   orb2: { damping: 0.97, maxVelocity: 0.12, forceMultiplier: 1.5, bounce: 0.6, maxDrift: 25, substance: 'light-air' },
@@ -66,11 +120,14 @@ const SHAPE_PHYSICS: Record<string, PhysicsProperties> = {
   violet: { damping: 0.97, maxVelocity: 0.14, forceMultiplier: 1.6, bounce: 0.7, maxDrift: 28, substance: 'gas' },
   teal: { damping: 0.91, maxVelocity: 0.08, forceMultiplier: 0.8, bounce: 0.6, maxDrift: 19, substance: 'glass' },
   rose: { damping: 0.95, maxVelocity: 0.07, forceMultiplier: 0.9, bounce: 0.55, maxDrift: 21, substance: 'soft-gel' },
-  // Vibrant accent orbs
   accentOrange: { damping: 0.98, maxVelocity: 0.06, forceMultiplier: 0.7, bounce: 0.3, maxDrift: 18, substance: 'mist' },
   accentEmerald: { damping: 0.97, maxVelocity: 0.07, forceMultiplier: 0.8, bounce: 0.4, maxDrift: 20, substance: 'mist' },
   accentViolet: { damping: 0.96, maxVelocity: 0.06, forceMultiplier: 0.7, bounce: 0.35, maxDrift: 19, substance: 'mist' }
 };
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
 
 export default function AnimatedBackground() {
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
@@ -85,7 +142,7 @@ export default function AnimatedBackground() {
   const driftAnimationRef = useRef<number | null>(null);
   const particleAnimationRef = useRef<number | null>(null);
 
-  // Initialize drift states for all shapes (including vibrant accent orbs)
+  // Initialize drift states for all shapes
   useEffect(() => {
     const shapes = ['orb1', 'orb2', 'orb3', 'hex', 'cyan', 'pink', 'square', 'orange', 'emerald', 'violet', 'teal', 'rose', 'accentOrange', 'accentEmerald', 'accentViolet'];
     const initialDrift: Record<string, DriftState> = {};
@@ -102,47 +159,43 @@ export default function AnimatedBackground() {
     setDrift(initialDrift);
   }, []);
 
-  // Initialize playful particle states (7 particles)
+  // Initialize particles with microgravity physics
   useEffect(() => {
     const particleData = [
-      { top: 25, left: 33.33 },
-      { top: 66.67, right: 25 },
-      { top: 50, left: 66.67 },
-      { bottom: 25, left: 50 },
-      { top: 20, right: 40 },
-      { bottom: 33.33, left: 20 },
-      { top: 75, right: 33.33 },
+      { baseX: 33.33, baseY: 25 },
+      { baseX: 75, baseY: 66.67 },
+      { baseX: 66.67, baseY: 50 },
+      { baseX: 50, baseY: 75 },
+      { baseX: 60, baseY: 20 },
+      { baseX: 20, baseY: 66.67 },
+      { baseX: 66.67, baseY: 75 },
     ];
 
     const initialParticles: ParticleState[] = particleData.map((p, index) => {
-      const baseY = p.top !== undefined ? p.top : 100 - (p.bottom || 0);
       return {
         x: 0,
         y: 0,
-        rotation: 0,
-        rotationSpeed: 0,
-        scale: 1,
-        baseY,
+        vx: 0,
+        vy: 0,
+        baseX: p.baseX,
+        baseY: p.baseY,
+        driftX: 0,
+        driftY: 0,
+        noiseOffsetX: Math.random() * 1000,  // Random starting point in noise space
+        noiseOffsetY: Math.random() * 1000,
+        size: PHYSICS_CONFIG.minSize + Math.random() * (PHYSICS_CONFIG.maxSize - PHYSICS_CONFIG.minSize),
         pulsePhase: Math.random() * Math.PI * 2,
-        pulseSpeed: 0.0008 + Math.random() * 0.0012,
-        colorIndex: index,
-        colorTransition: 0,
-        squishX: 1,
-        squishY: 1,
-        // Each particle gets its own unique orbital path - MUCH LARGER roaming area
-        orbitRadius: 20 + Math.random() * 40, // Orbit size between 20-60px (3x larger!)
-        orbitSpeed: 0.0002 + Math.random() * 0.0003, // Slower for larger orbits
-        orbitAngle: Math.random() * Math.PI * 2, // Random starting position
-        orbitPhase: index * 0.5, // Phase offset based on index
-        ellipseRatioX: 0.6 + Math.random() * 0.8, // Ellipse ratio 0.6-1.4 (more variety)
-        ellipseRatioY: 0.6 + Math.random() * 0.8,
+        pulseSpeed: PHYSICS_CONFIG.pulseSpeed + Math.random() * PHYSICS_CONFIG.pulseSpeed,
+        scale: 1,
+        scrollDisplacement: 0,
+        scrollVelocity: 0,
       };
     });
 
     setParticles(initialParticles);
   }, []);
 
-  // Physics-based drift animation loop with unique substance physics per shape
+  // Shape drift animation with substance physics
   useEffect(() => {
     if (!mounted) return;
 
@@ -155,7 +208,7 @@ export default function AnimatedBackground() {
           const physics = SHAPE_PHYSICS[key];
           if (!physics) return;
 
-          // Add random drift force (scaled by substance properties)
+          // Add random drift force
           const baseForce = 0.002;
           const forceX = (Math.random() - 0.5) * baseForce * physics.forceMultiplier;
           const forceY = (Math.random() - 0.5) * baseForce * physics.forceMultiplier;
@@ -164,11 +217,11 @@ export default function AnimatedBackground() {
           let vx = d.vx + forceX;
           let vy = d.vy + forceY;
 
-          // Apply substance-specific damping
+          // Apply damping
           vx *= physics.damping;
           vy *= physics.damping;
 
-          // Limit to substance-specific max velocity
+          // Limit velocity
           vx = Math.max(-physics.maxVelocity, Math.min(physics.maxVelocity, vx));
           vy = Math.max(-physics.maxVelocity, Math.min(physics.maxVelocity, vy));
 
@@ -176,14 +229,14 @@ export default function AnimatedBackground() {
           let x = d.x + vx;
           let y = d.y + vy;
 
-          // Keep within substance-specific bounds with substance-specific bounce
+          // Boundary bounce
           if (Math.abs(x) > physics.maxDrift) {
             x = Math.sign(x) * physics.maxDrift;
-            vx *= -physics.bounce; // substance-specific bounce
+            vx *= -physics.bounce;
           }
           if (Math.abs(y) > physics.maxDrift) {
             y = Math.sign(y) * physics.maxDrift;
-            vy *= -physics.bounce; // substance-specific bounce
+            vy *= -physics.bounce;
           }
 
           newDrift[key] = { x, y, vx, vy };
@@ -202,78 +255,81 @@ export default function AnimatedBackground() {
         cancelAnimationFrame(driftAnimationRef.current);
       }
     };
-  }, [mounted]); // Removed shapePhysics dependency for better performance
+  }, [mounted]);
 
-  // Epic particle physics with scroll waves, spirals, and dark mode magic
+  // Particle physics: Microgravity drift + Moon-trampoline scroll
   useEffect(() => {
     if (!mounted || particles.length === 0) return;
 
     const animate = () => {
+      const time = Date.now() * 0.001;
+
       setParticles(prevParticles => {
-        return prevParticles.map((p, index) => {
-          const time = Date.now() * 0.001;
+        return prevParticles.map((p) => {
+          // ========== MICROGRAVITY DRIFT (Perlin noise-based) ==========
+          // Advance through noise space slowly
+          const noiseOffsetX = p.noiseOffsetX + PHYSICS_CONFIG.driftSpeed;
+          const noiseOffsetY = p.noiseOffsetY + PHYSICS_CONFIG.driftSpeed;
 
-          // SMOOTH ORBITAL PHYSICS: Each particle follows a clean elliptical path
-          // Advance angle in orbit based on orbital speed
-          const orbitAngle = p.orbitAngle + p.orbitSpeed;
+          // Sample Perlin-like noise for organic drift
+          const targetDriftX = noise1D(noiseOffsetX) * PHYSICS_CONFIG.driftScale;
+          const targetDriftY = noise1D(noiseOffsetY) * PHYSICS_CONFIG.driftScale;
 
-          // Scroll creates a gentle "bump" effect - each particle reacts individually
+          // Smooth interpolation to target drift position
+          let driftX = p.driftX + (targetDriftX - p.driftX) * (1 - PHYSICS_CONFIG.driftDamping);
+          let driftY = p.driftY + (targetDriftY - p.driftY) * (1 - PHYSICS_CONFIG.driftDamping);
+
+          // ========== MOON-TRAMPOLINE SCROLL PHYSICS ==========
+          // Target position when not scrolling: 0 (resting position)
+          // When scrolling: pushed down/up by scroll velocity
           const scrollMag = Math.abs(scrollVelocity);
           const scrollDir = Math.sign(scrollVelocity);
 
-          // Calculate position on elliptical orbit
-          const baseOrbitX = Math.cos(orbitAngle + p.orbitPhase) * p.orbitRadius * p.ellipseRatioX;
-          const baseOrbitY = Math.sin(orbitAngle + p.orbitPhase) * p.orbitRadius * p.ellipseRatioY;
+          // Scroll pushes dots (sink effect)
+          const scrollTarget = scrollDir * scrollMag * PHYSICS_CONFIG.scrollSinkStrength;
 
-          // Gentle "bump" when scrolling - each particle bumps at different timing
-          const bumpPhase = time * 2 + index * 0.8; // Staggered timing per particle
-          const bumpX = Math.sin(bumpPhase) * scrollMag * 25; // Horizontal wiggle during scroll
-          const bumpY = scrollDir * scrollMag * 35; // Vertical bump in scroll direction
+          // Spring force pulling back to rest position
+          const springForce = -p.scrollDisplacement * PHYSICS_CONFIG.scrollSpringK;
 
-          // Smooth decay of bump effect
-          const bumpDecay = Math.exp(-scrollMag * 2); // Faster decay = smoother
-          const smoothBumpX = bumpX * (1 - bumpDecay);
-          const smoothBumpY = bumpY * (1 - bumpDecay);
+          // Update scroll velocity with spring force
+          let scrollVel = p.scrollVelocity + springForce;
+          scrollVel *= PHYSICS_CONFIG.scrollDamping;  // Damping for smooth return
 
-          // Final smooth position with gentle bump
-          const x = baseOrbitX + smoothBumpX;
-          const y = baseOrbitY + smoothBumpY;
+          // Update scroll displacement
+          let scrollDisplacement = p.scrollDisplacement + scrollVel;
 
-          // Smooth orbital motion - no squish needed
-          let squishX = p.squishX;
-          let squishY = p.squishY;
+          // Apply scroll push (only when actively scrolling)
+          if (scrollMag > 0.01) {
+            scrollDisplacement += (scrollTarget - scrollDisplacement) * 0.15;
+          }
 
-          // Quick return to normal shape
-          squishX += (1 - squishX) * 0.2;
-          squishY += (1 - squishY) * 0.2;
+          // ========== COMBINE ALL FORCES ==========
+          const x = driftX;
+          const y = driftY + scrollDisplacement;
 
-          // Very slow, gentle pulse (independent per particle)
+          // ========== VISUAL PROPERTIES ==========
+          // Gentle pulse
           const pulsePhase = p.pulsePhase + p.pulseSpeed;
-          const pulseFactor = Math.sin(pulsePhase) * 0.03 + 1; // ±3% size variation
+          const pulseFactor = Math.sin(pulsePhase) * PHYSICS_CONFIG.pulseAmount + 1;
           const scale = pulseFactor;
-
-          // Slow color transition (cycle through rainbow over time)
-          const colorTransition = (p.colorTransition + 0.0003) % 1;
 
           return {
             x,
             y,
-            rotation: 0,
-            rotationSpeed: 0,
-            scale: Math.max(0.9, Math.min(1.15, scale)),
+            vx: p.vx,
+            vy: p.vy,
+            baseX: p.baseX,
             baseY: p.baseY,
+            driftX,
+            driftY,
+            noiseOffsetX,
+            noiseOffsetY,
+            size: p.size,
             pulsePhase,
             pulseSpeed: p.pulseSpeed,
-            colorIndex: p.colorIndex,
-            colorTransition,
-            squishX: Math.max(0.98, Math.min(1.02, squishX)),
-            squishY: Math.max(0.98, Math.min(1.02, squishY)),
-            orbitRadius: p.orbitRadius,
-            orbitSpeed: p.orbitSpeed,
-            orbitAngle,
-            orbitPhase: p.orbitPhase,
-            ellipseRatioX: p.ellipseRatioX,
-            ellipseRatioY: p.ellipseRatioY,
+            scale: Math.max(0.9, Math.min(1.15, scale)),
+            scrollDisplacement,
+            scrollVelocity: scrollVel,
           };
         });
       });
@@ -288,7 +344,7 @@ export default function AnimatedBackground() {
         cancelAnimationFrame(particleAnimationRef.current);
       }
     };
-  }, [mounted, scrollVelocity, isDarkMode, particles.length]); // Optimized dependencies for performance
+  }, [mounted, scrollVelocity, particles.length]);
 
   useEffect(() => {
     setMounted(true);
@@ -299,7 +355,6 @@ export default function AnimatedBackground() {
     };
     checkDarkMode();
 
-    // Watch for dark mode changes
     const observer = new MutationObserver(checkDarkMode);
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
@@ -312,27 +367,22 @@ export default function AnimatedBackground() {
         const y = sanitizeNumber(((e.clientY || 0) / height) * 100, 50);
         setMousePos({ x, y });
       } catch (error) {
-        // Silently handle any errors to prevent crashes
         console.debug('MouseMove error:', error);
       }
     };
 
-    // Track title text position for orb interactions
     const updateTextBounds = () => {
       try {
         if (typeof document === 'undefined') return;
-        // Look for hero title specifically
         const titleElement = document.querySelector('h1') || document.querySelector('[id="hero-heading"]');
         if (titleElement && titleElement.getBoundingClientRect) {
           setTextBounds(titleElement.getBoundingClientRect());
         }
       } catch (error) {
-        // Silently handle any errors
         console.debug('UpdateTextBounds error:', error);
       }
     };
 
-    // Handle scroll for physics
     const handleScroll = () => {
       try {
         if (typeof window === 'undefined') return;
@@ -345,7 +395,6 @@ export default function AnimatedBackground() {
           const velocity = deltaScroll / deltaTime;
           setScrollVelocity(velocity);
 
-          // Decay scroll velocity over time
           setTimeout(() => {
             setScrollVelocity(v => v * 0.9);
           }, 100);
@@ -355,19 +404,16 @@ export default function AnimatedBackground() {
         lastScrollTimeRef.current = now;
         updateTextBounds();
       } catch (error) {
-        // Silently handle any errors
         console.debug('HandleScroll error:', error);
       }
     };
 
-    // Initial update after a small delay to ensure DOM is ready
     setTimeout(updateTextBounds, 100);
 
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('resize', updateTextBounds);
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // Update text bounds more frequently for better tracking
     const interval = setInterval(updateTextBounds, 500);
 
     return () => {
@@ -379,13 +425,13 @@ export default function AnimatedBackground() {
     };
   }, []);
 
-  // Calculate repulsion for shapes based on mouse proximity
+  // Calculate repulsion for shapes
   const getRepulsion = (shapeX: number, shapeY: number, strength: number = 20) => {
     try {
       const dx = sanitizeNumber(mousePos.x - shapeX, 0);
       const dy = sanitizeNumber(mousePos.y - shapeY, 0);
       const distance = sanitizeNumber(Math.sqrt(dx * dx + dy * dy), 0);
-      const maxDistance = 30; // pixels of influence
+      const maxDistance = 30;
 
       if (distance < maxDistance && distance > 0) {
         const force = sanitizeNumber((1 - distance / maxDistance) * strength, 0);
@@ -400,7 +446,7 @@ export default function AnimatedBackground() {
     return { x: 0, y: 0 };
   };
 
-  // Calculate gentle attraction/orbit around text elements
+  // Calculate text interaction
   const getTextInteraction = (orbX: number, orbY: number) => {
     try {
       if (!textBounds || typeof window === 'undefined') return { x: 0, y: 0 };
@@ -414,11 +460,9 @@ export default function AnimatedBackground() {
       const dy = sanitizeNumber(textCenterY - orbY, 0);
       const distance = sanitizeNumber(Math.sqrt(dx * dx + dy * dy), 0);
 
-      // Create orbital motion around text
-      const orbitalRadius = 15; // ideal orbital distance
+      const orbitalRadius = 15;
       const attraction = sanitizeNumber((distance - orbitalRadius) * 0.3, 0);
 
-      // Add perpendicular force for orbital motion
       const orbitalX = sanitizeNumber(-dy * 0.2, 0);
       const orbitalY = sanitizeNumber(dx * 0.2, 0);
 
@@ -432,22 +476,16 @@ export default function AnimatedBackground() {
     }
   };
 
-  // Calculate parallax scroll for shapes - creates depth effect
-  // depthLayer: 0 (far back, slow) to 1 (close, fast)
+  // Calculate parallax scroll
   const getParallaxScroll = (shapeY: number, depthLayer: number = 0.5) => {
     try {
-      // Parallax: closer layers move faster, distant layers move slower
       const baseScrollForce = sanitizeNumber(scrollVelocity * 10, 0);
-
-      // Depth multiplier: 0.2 (far) to 1.0 (close)
       const depthMultiplier = 0.2 + (depthLayer * 0.8);
-
-      // Y position adds subtle variation
       const centerDistance = Math.abs(shapeY - 50) / 50;
       const positionFactor = sanitizeNumber(1 - centerDistance * 0.3, 0.7);
 
       return {
-        x: sanitizeNumber(baseScrollForce * depthMultiplier * 0.2, 0), // Subtle horizontal parallax
+        x: sanitizeNumber(baseScrollForce * depthMultiplier * 0.2, 0),
         y: sanitizeNumber(baseScrollForce * depthMultiplier * positionFactor, 0),
       };
     } catch (error) {
@@ -458,14 +496,14 @@ export default function AnimatedBackground() {
 
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none animated-background-blur transition-opacity duration-300 ${mounted ? 'opacity-100' : 'opacity-0'}`}>
-      {/* Tech grid pattern overlay - reduced for better text contrast */}
+      {/* Tech grid pattern */}
       <div className="absolute inset-0 opacity-[0.01] dark:opacity-[0.04]" style={{
         backgroundImage: `linear-gradient(rgba(139, 92, 246, 0.3) 1px, transparent 1px),
                          linear-gradient(90deg, rgba(139, 92, 246, 0.3) 1px, transparent 1px)`,
         backgroundSize: '60px 60px'
       }}></div>
 
-      {/* Circuit-like connecting lines */}
+      {/* Circuit lines */}
       <svg className="absolute inset-0 w-full h-full opacity-5 dark:opacity-15" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="circuit-1" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -487,7 +525,7 @@ export default function AnimatedBackground() {
         <circle cx="1600" cy="450" r="5" fill="#10B981" className="animate-pulse-slow dark:opacity-80" />
       </svg>
 
-      {/* Large gradient orbs with text interaction and scroll physics - heavily blurred for better text readability, mobile-optimized sizes */}
+      {/* Large gradient orbs */}
       {(() => {
         const orb1Pos = { x: 10, y: 20 };
         const orb2Pos = { x: 90, y: 15 };
@@ -501,9 +539,9 @@ export default function AnimatedBackground() {
         const orb2Text = getTextInteraction(orb2Pos.x, orb2Pos.y);
         const orb3Text = getTextInteraction(orb3Pos.x, orb3Pos.y);
 
-        const orb1Scroll = getParallaxScroll(orb1Pos.y, 0.8); // Close layer - moves faster
-        const orb2Scroll = getParallaxScroll(orb2Pos.y, 0.6); // Mid layer
-        const orb3Scroll = getParallaxScroll(orb3Pos.y, 0.4); // Far layer - moves slower
+        const orb1Scroll = getParallaxScroll(orb1Pos.y, 0.8);
+        const orb2Scroll = getParallaxScroll(orb2Pos.y, 0.6);
+        const orb3Scroll = getParallaxScroll(orb3Pos.y, 0.4);
 
         const orb1Drift = drift.orb1 || { x: 0, y: 0 };
         const orb2Drift = drift.orb2 || { x: 0, y: 0 };
@@ -519,14 +557,14 @@ export default function AnimatedBackground() {
               }}
             ></div>
             <div
-              className="animated-orb absolute top-20 -right-40 w-[350px] h-[350px] md:w-[600px] md:h-[600px] bg-gradient-to-bl from-cyan-400/10 dark:from-cyan-500/20 via-blue-400/6 dark:via-blue-500/15 to-transparent rounded-full blur-3xl animate-float-delayed transition-all duration-300 ease-out will-change-transform"
+              className="animated-orb absolute top-20 -right-40 w-[350px] h-[350px] md:w-[600px] md:h-[600px] bg-gradient-to-br from-cyan-400/10 dark:from-cyan-500/20 via-blue-400/6 dark:via-blue-500/15 to-transparent rounded-full blur-3xl animate-float-delayed transition-all duration-300 ease-out will-change-transform"
               style={{
                 transform: `translate(${orb2Repulsion.x + orb2Text.x + orb2Scroll.x + orb2Drift.x}px, ${orb2Repulsion.y + orb2Text.y + orb2Scroll.y + orb2Drift.y}px)`,
                 opacity: mounted ? undefined : 0
               }}
             ></div>
             <div
-              className="animated-orb absolute -bottom-40 left-1/3 w-[320px] h-[320px] md:w-[550px] md:h-[550px] bg-gradient-to-tr from-pink-400/8 dark:from-pink-500/18 via-fuchsia-300/5 dark:via-fuchsia-400/12 to-transparent rounded-full blur-3xl animate-float-slow transition-all duration-300 ease-out will-change-transform"
+              className="animated-orb absolute -bottom-40 left-1/3 w-[320px] h-[320px] md:w-[550px] md:h-[550px] bg-gradient-to-br from-pink-400/8 dark:from-pink-500/18 via-fuchsia-300/5 dark:via-fuchsia-400/12 to-transparent rounded-full blur-3xl animate-float-slow transition-all duration-300 ease-out will-change-transform"
               style={{
                 transform: `translate(${orb3Repulsion.x + orb3Text.x + orb3Scroll.x + orb3Drift.x}px, ${orb3Repulsion.y + orb3Text.y + orb3Scroll.y + orb3Drift.y}px)`,
                 opacity: mounted ? undefined : 0
@@ -536,7 +574,7 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Vibrant accent orbs with drift physics - reduced opacity, mobile-optimized */}
+      {/* Vibrant accent orbs */}
       {(() => {
         const accentOrangeDrift = drift.accentOrange || { x: 0, y: 0 };
         const accentEmeraldDrift = drift.accentEmerald || { x: 0, y: 0 };
@@ -572,11 +610,11 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Purple morphing hexagon - hidden on mobile, reduced opacity for text readability */}
+      {/* Purple morphing hexagon */}
       {(() => {
         const hexPos = { x: 75, y: 25 };
         const hexRepulsion = getRepulsion(hexPos.x, hexPos.y, 10);
-        const hexScroll = getParallaxScroll(hexPos.y, 0.7); // Close-mid layer
+        const hexScroll = getParallaxScroll(hexPos.y, 0.7);
         const hexDrift = drift.hex || { x: 0, y: 0 };
         return (
           <div
@@ -589,11 +627,11 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Cyan/Blue floating shape - hidden on mobile */}
+      {/* Cyan/Blue floating shape */}
       {(() => {
         const cyanPos = { x: 20, y: 33 };
         const cyanRepulsion = getRepulsion(cyanPos.x, cyanPos.y, 10);
-        const cyanScroll = getParallaxScroll(cyanPos.y, 0.5); // Mid layer
+        const cyanScroll = getParallaxScroll(cyanPos.y, 0.5);
         const cyanDrift = drift.cyan || { x: 0, y: 0 };
         return (
           <div
@@ -606,11 +644,11 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Pink/Magenta octagon - hidden on mobile */}
+      {/* Pink/Magenta octagon */}
       {(() => {
         const pinkPos = { x: 66, y: 66 };
         const pinkRepulsion = getRepulsion(pinkPos.x, pinkPos.y, 10);
-        const pinkScroll = getParallaxScroll(pinkPos.y, 0.3); // Far layer
+        const pinkScroll = getParallaxScroll(pinkPos.y, 0.3);
         const pinkDrift = drift.pink || { x: 0, y: 0 };
         return (
           <div
@@ -624,11 +662,11 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Rotating square - perfect square above the morphing circle */}
+      {/* Rotating square */}
       {(() => {
         const squarePos = { x: 50, y: 40 };
         const squareRepulsion = getRepulsion(squarePos.x, squarePos.y, 8);
-        const squareScroll = getParallaxScroll(squarePos.y, 0.9); // Very close layer - moves fastest
+        const squareScroll = getParallaxScroll(squarePos.y, 0.9);
         const squareDrift = drift.square || { x: 0, y: 0 };
         return (
           <div
@@ -642,11 +680,11 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Orange/Amber morphing shape - starts as square, morphs to circle */}
+      {/* Orange/Amber morphing shape */}
       {(() => {
         const orangePos = { x: 50, y: 50 };
-        const orangeRepulsion = getRepulsion(orangePos.x, orangePos.y, 8); // NOW has mouse repulsion like others
-        const orangeScroll = getParallaxScroll(orangePos.y, 0.5); // Mid layer - same as others
+        const orangeRepulsion = getRepulsion(orangePos.x, orangePos.y, 8);
+        const orangeScroll = getParallaxScroll(orangePos.y, 0.5);
         const orangeDrift = drift.orange || { x: 0, y: 0 };
         return (
           <div
@@ -659,11 +697,11 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Emerald star - hidden on mobile */}
+      {/* Emerald star */}
       {(() => {
         const emeraldPos = { x: 25, y: 75 };
         const emeraldRepulsion = getRepulsion(emeraldPos.x, emeraldPos.y, 10);
-        const emeraldScroll = getParallaxScroll(emeraldPos.y, 0.4); // Far layer
+        const emeraldScroll = getParallaxScroll(emeraldPos.y, 0.4);
         const emeraldDrift = drift.emerald || { x: 0, y: 0 };
         return (
           <div
@@ -678,11 +716,11 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Violet triangle - hidden on mobile */}
+      {/* Violet triangle */}
       {(() => {
         const violetPos = { x: 80, y: 66 };
         const violetRepulsion = getRepulsion(violetPos.x, violetPos.y, 10);
-        const violetScroll = getParallaxScroll(violetPos.y, 0.6); // Mid layer
+        const violetScroll = getParallaxScroll(violetPos.y, 0.6);
         const violetDrift = drift.violet || { x: 0, y: 0 };
         return (
           <div
@@ -696,11 +734,11 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Teal diamond - hidden on mobile */}
+      {/* Teal diamond */}
       {(() => {
         const tealPos = { x: 33, y: 16 };
         const tealRepulsion = getRepulsion(tealPos.x, tealPos.y, 10);
-        const tealScroll = getParallaxScroll(tealPos.y, 0.2); // Very far layer - moves slowest
+        const tealScroll = getParallaxScroll(tealPos.y, 0.2);
         const tealDrift = drift.teal || { x: 0, y: 0 };
         return (
           <div
@@ -714,11 +752,11 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Rose pentagon - hidden on mobile */}
+      {/* Rose pentagon */}
       {(() => {
         const rosePos = { x: 60, y: 80 };
         const roseRepulsion = getRepulsion(rosePos.x, rosePos.y, 10);
-        const roseScroll = getParallaxScroll(rosePos.y, 0.35); // Far layer
+        const roseScroll = getParallaxScroll(rosePos.y, 0.35);
         const roseDrift = drift.rose || { x: 0, y: 0 };
         return (
           <div
@@ -732,93 +770,34 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Animated lines with rainbow gradients */}
+      {/* Animated lines */}
       <div className="absolute top-1/2 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-purple-400/30 dark:via-purple-400/60 to-transparent animate-shimmer"></div>
       <div className="absolute top-2/3 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400/25 dark:via-cyan-400/55 to-transparent animate-shimmer-delayed"></div>
       <div className="absolute top-1/3 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-pink-400/25 dark:via-pink-400/55 to-transparent animate-shimmer"></div>
 
-      {/* Rainbow floating particles with jello physics and color transitions */}
-      {(() => {
-        const particleData = [
-          { top: 25, left: 33.33, size: 12, lightColor: 'rgba(139, 92, 246, 0.7)', darkColor: 'rgba(168, 85, 247, 0.9)', shadowLight: 'rgba(139, 92, 246, 0.6)', shadowDark: 'rgba(168, 85, 247, 0.8)' },
-          { top: 66.67, right: 25, size: 16, lightColor: 'rgba(6, 182, 212, 0.7)', darkColor: 'rgba(34, 211, 238, 0.9)', shadowLight: 'rgba(6, 182, 212, 0.6)', shadowDark: 'rgba(34, 211, 238, 0.8)' },
-          { top: 50, left: 66.67, size: 12, lightColor: 'rgba(236, 72, 153, 0.7)', darkColor: 'rgba(244, 114, 182, 0.9)', shadowLight: 'rgba(236, 72, 153, 0.6)', shadowDark: 'rgba(244, 114, 182, 0.8)' },
-          { bottom: 25, left: 50, size: 16, lightColor: 'rgba(249, 115, 22, 0.7)', darkColor: 'rgba(251, 146, 60, 0.9)', shadowLight: 'rgba(249, 115, 22, 0.6)', shadowDark: 'rgba(251, 146, 60, 0.8)' },
-          { top: 20, right: 40, size: 12, lightColor: 'rgba(16, 185, 129, 0.7)', darkColor: 'rgba(52, 211, 153, 0.9)', shadowLight: 'rgba(16, 185, 129, 0.6)', shadowDark: 'rgba(52, 211, 153, 0.8)' },
-          { bottom: 33.33, left: 20, size: 12, lightColor: 'rgba(124, 58, 237, 0.7)', darkColor: 'rgba(167, 139, 250, 0.9)', shadowLight: 'rgba(124, 58, 237, 0.6)', shadowDark: 'rgba(167, 139, 250, 0.8)' },
-          { top: 75, right: 33.33, size: 16, lightColor: 'rgba(245, 158, 11, 0.7)', darkColor: 'rgba(251, 191, 36, 0.9)', shadowLight: 'rgba(245, 158, 11, 0.6)', shadowDark: 'rgba(251, 191, 36, 0.8)' },
-        ];
-
-        return particleData.map((particle, i) => {
-          const particleState = particles[i];
-          if (!particleState) return null;
-
-          const positionStyle: React.CSSProperties = {
-            width: `${particle.size}px`,
-            height: `${particle.size}px`,
-          };
-
-          // Apply physics-based position with playful transform
-          if (particle.top !== undefined) positionStyle.top = `${particle.top}%`;
-          if (particle.bottom !== undefined) positionStyle.bottom = `${particle.bottom}%`;
-          if (particle.left !== undefined) positionStyle.left = `${particle.left}%`;
-          if (particle.right !== undefined) positionStyle.right = `${particle.right}%`;
-
-          return (
-            <div
-              key={i}
-              className="absolute rounded-full will-change-transform"
-              style={{
-                ...positionStyle,
-                background: `var(--particle-bg-${i})`,
-                boxShadow: `0 ${4 * particleState.scale * particleState.squishY}px ${6 * particleState.scale}px -1px var(--particle-shadow-${i}),
-                            0 ${2 * particleState.scale * particleState.squishY}px ${4 * particleState.scale}px -1px var(--particle-shadow-${i})`,
-                transform: `translate(${particleState.x}px, ${particleState.y}px)
-                           scale(${particleState.scale * particleState.squishX}, ${particleState.scale * particleState.squishY})`,
-                transition: 'none',
-                opacity: mounted ? undefined : 0,
-              }}
-            />
-          );
-        });
-      })()}
-
-      <style jsx>{`
-        :global(body:not(.dark)) {
-          ${[0, 1, 2, 3, 4, 5, 6].map(i => {
-            const particles = [
-              { lightColor: 'rgba(139, 92, 246, 0.7)', shadowLight: 'rgba(139, 92, 246, 0.6)' },
-              { lightColor: 'rgba(6, 182, 212, 0.7)', shadowLight: 'rgba(6, 182, 212, 0.6)' },
-              { lightColor: 'rgba(236, 72, 153, 0.7)', shadowLight: 'rgba(236, 72, 153, 0.6)' },
-              { lightColor: 'rgba(249, 115, 22, 0.7)', shadowLight: 'rgba(249, 115, 22, 0.6)' },
-              { lightColor: 'rgba(16, 185, 129, 0.7)', shadowLight: 'rgba(16, 185, 129, 0.6)' },
-              { lightColor: 'rgba(124, 58, 237, 0.7)', shadowLight: 'rgba(124, 58, 237, 0.6)' },
-              { lightColor: 'rgba(245, 158, 11, 0.7)', shadowLight: 'rgba(245, 158, 11, 0.6)' },
-            ];
-            return `
-              --particle-bg-${i}: ${particles[i].lightColor};
-              --particle-shadow-${i}: ${particles[i].shadowLight};
-            `;
-          }).join('')}
-        }
-        :global(body.dark) {
-          ${[0, 1, 2, 3, 4, 5, 6].map(i => {
-            const particles = [
-              { darkColor: 'rgba(168, 85, 247, 0.9)', shadowDark: 'rgba(168, 85, 247, 0.8)' },
-              { darkColor: 'rgba(34, 211, 238, 0.9)', shadowDark: 'rgba(34, 211, 238, 0.8)' },
-              { darkColor: 'rgba(244, 114, 182, 0.9)', shadowDark: 'rgba(244, 114, 182, 0.8)' },
-              { darkColor: 'rgba(251, 146, 60, 0.9)', shadowDark: 'rgba(251, 146, 60, 0.8)' },
-              { darkColor: 'rgba(52, 211, 153, 0.9)', shadowDark: 'rgba(52, 211, 153, 0.8)' },
-              { darkColor: 'rgba(167, 139, 250, 0.9)', shadowDark: 'rgba(167, 139, 250, 0.8)' },
-              { darkColor: 'rgba(251, 191, 36, 0.9)', shadowDark: 'rgba(251, 191, 36, 0.8)' },
-            ];
-            return `
-              --particle-bg-${i}: ${particles[i].darkColor};
-              --particle-shadow-${i}: ${particles[i].shadowDark};
-            `;
-          }).join('')}
-        }
-      `}</style>
+      {/* Microgravity particles with moon-trampoline scroll */}
+      {particles.map((particle, i) => {
+        return (
+          <div
+            key={i}
+            className="absolute rounded-full will-change-transform transition-none"
+            style={{
+              left: `${particle.baseX}%`,
+              top: `${particle.baseY}%`,
+              width: `${particle.size}px`,
+              height: `${particle.size}px`,
+              background: isDarkMode
+                ? `radial-gradient(circle, rgba(168, 85, 247, 0.9), rgba(124, 58, 237, 0.7))`
+                : `radial-gradient(circle, rgba(139, 92, 246, 0.7), rgba(109, 40, 217, 0.5))`,
+              boxShadow: isDarkMode
+                ? `0 0 20px rgba(168, 85, 247, 0.6), 0 0 40px rgba(124, 58, 237, 0.3)`
+                : `0 4px 6px rgba(139, 92, 246, 0.3)`,
+              transform: `translate(${particle.x}px, ${particle.y}px) scale(${particle.scale})`,
+              opacity: mounted ? 1 : 0,
+            }}
+          />
+        );
+      })}
     </div>
   );
 }
