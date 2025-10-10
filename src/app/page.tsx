@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import DynamicDots from "@/components/ui/DynamicDots";
-import GradientText from "@/components/ui/GradientText";
 import SchoolLogoScroller from "@/components/ui/SchoolLogoScroller";
 
 export const metadata: Metadata = {
@@ -35,8 +34,8 @@ export default function Home() {
         <DynamicDots />
         <div className="hero-content text-center max-w-5xl mx-auto relative z-10">
           {/* Main Heading */}
-          <h1 id="hero-heading" className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1]">
-            <GradientText>Transform Student Collaboration</GradientText>
+          <h1 id="hero-heading" className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1] text-[#374045] dark:text-[#E0E7FF]">
+            Transform Student Collaboration
           </h1>
 
           {/* Subtitle */}
