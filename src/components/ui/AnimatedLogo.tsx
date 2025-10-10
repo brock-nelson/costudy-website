@@ -4,97 +4,32 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-interface Particle {
+interface GeometricDot {
   id: number;
-  x: number;
-  y: number;
-  angle: number;
-  speed: number;
-  life: number;
-  maxLife: number;
-  size: number;
-}
-
-interface OrbitDot {
-  id: number;
-  angle: number;
-  radius: number;
-  speed: number;
+  angle: number; // Cardinal direction: 0, 90, 180, 270
+  baseRadius: number;
+  currentRadius: number;
 }
 
 export default function AnimatedLogo() {
   const [mounted, setMounted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [particles, setParticles] = useState<Particle[]>([]);
-  const [orbitDots, setOrbitDots] = useState<OrbitDot[]>([]);
+  const [isClicked, setIsClicked] = useState(false);
+  const [geometricDots] = useState<GeometricDot[]>([
+    { id: 1, angle: 0, baseRadius: 30, currentRadius: 30 },           // Right
+    { id: 2, angle: Math.PI / 2, baseRadius: 30, currentRadius: 30 }, // Bottom
+    { id: 3, angle: Math.PI, baseRadius: 30, currentRadius: 30 },     // Left
+    { id: 4, angle: Math.PI * 1.5, baseRadius: 30, currentRadius: 30 }, // Top
+  ]);
 
   useEffect(() => {
     setMounted(true);
-
-    // Initialize 3 orbit dots for dark mode animation
-    const initialDots: OrbitDot[] = [
-      { id: 1, angle: 0, radius: 35, speed: 0.02 },
-      { id: 2, angle: Math.PI * 2 / 3, radius: 35, speed: 0.02 },
-      { id: 3, angle: Math.PI * 4 / 3, radius: 35, speed: 0.02 },
-    ];
-    setOrbitDots(initialDots);
   }, []);
 
-  // Animate orbit dots
-  useEffect(() => {
-    if (!mounted || orbitDots.length === 0) return;
-
-    const animate = () => {
-      setOrbitDots(prev => prev.map(dot => ({
-        ...dot,
-        angle: dot.angle + dot.speed
-      })));
-    };
-
-    const interval = setInterval(animate, 16);
-    return () => clearInterval(interval);
-  }, [mounted, orbitDots.length]);
-
-  // Animate particles (burst on click)
-  useEffect(() => {
-    if (particles.length === 0) return;
-
-    const animate = () => {
-      setParticles(prev =>
-        prev
-          .map(p => ({
-            ...p,
-            x: p.x + Math.cos(p.angle) * p.speed,
-            y: p.y + Math.sin(p.angle) * p.speed,
-            life: p.life - 1,
-          }))
-          .filter(p => p.life > 0)
-      );
-    };
-
-    const interval = setInterval(animate, 16);
-    return () => clearInterval(interval);
-  }, [particles.length]);
-
-  // Handle click - create subtle particle burst
+  // Handle click - trigger extension animation
   const handleClick = () => {
-    const newParticles: Particle[] = [];
-
-    // Create 6 particles bursting outward (more subtle)
-    for (let i = 0; i < 6; i++) {
-      newParticles.push({
-        id: Date.now() + i,
-        x: 0,
-        y: 0,
-        angle: (Math.PI * 2 * i) / 6,
-        speed: 1.5 + Math.random() * 1,
-        life: 45,
-        maxLife: 45,
-        size: 3 + Math.random() * 2,
-      });
-    }
-
-    setParticles(newParticles);
+    setIsClicked(true);
+    setTimeout(() => setIsClicked(false), 600);
   };
 
   return (
@@ -149,53 +84,76 @@ export default function AnimatedLogo() {
           </div>
         )}
 
-        {/* Orbit dots (dark mode only) - abstract, disconnected */}
-        {mounted && orbitDots.length > 0 && (
+        {/* Geometric dots and lines (dark mode only) */}
+        {mounted && geometricDots.length > 0 && (
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-            {/* Render orbit dots */}
-            {orbitDots.map(dot => {
-              const x = Math.cos(dot.angle) * dot.radius;
-              const y = Math.sin(dot.angle) * dot.radius;
+            {/* SVG for lines */}
+            <svg
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+              width="120"
+              height="120"
+              style={{
+                opacity: isHovered ? 0.4 : 0,
+                transition: 'opacity 0.4s ease',
+              }}
+            >
+              {geometricDots.map(dot => {
+                const radius = isClicked ? dot.baseRadius + 15 : dot.baseRadius;
+                const x = 60 + Math.cos(dot.angle) * radius;
+                const y = 60 + Math.sin(dot.angle) * radius;
+
+                return (
+                  <line
+                    key={`line-${dot.id}`}
+                    x1="60"
+                    y1="60"
+                    x2={x}
+                    y2={y}
+                    stroke="rgba(167, 139, 250, 0.5)"
+                    strokeWidth="1"
+                    style={{
+                      transition: 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                    }}
+                  />
+                );
+              })}
+            </svg>
+
+            {/* Render static geometric dots */}
+            {geometricDots.map(dot => {
+              const radius = isClicked ? dot.baseRadius + 15 : dot.baseRadius;
+              const x = Math.cos(dot.angle) * radius;
+              const y = Math.sin(dot.angle) * radius;
 
               return (
                 <div
                   key={`dot-${dot.id}`}
-                  className="absolute rounded-full border-2 border-purple-400"
+                  className="absolute"
                   style={{
                     left: `${x}px`,
                     top: `${y}px`,
-                    width: isHovered ? '8px' : '6px',
-                    height: isHovered ? '8px' : '6px',
+                    width: isHovered ? '7px' : '5px',
+                    height: isHovered ? '7px' : '5px',
                     transform: 'translate(-50%, -50%)',
-                    backgroundColor: 'transparent',
-                    boxShadow: isHovered
-                      ? '0 0 8px rgba(167, 139, 250, 0.8)'
-                      : '0 0 4px rgba(167, 139, 250, 0.5)',
-                    transition: 'all 0.3s ease',
+                    transition: 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)',
                   }}
-                />
+                >
+                  {/* Hollow circle */}
+                  <div
+                    className="w-full h-full rounded-full border border-purple-400"
+                    style={{
+                      backgroundColor: 'transparent',
+                      boxShadow: isHovered
+                        ? '0 0 6px rgba(167, 139, 250, 0.6)'
+                        : '0 0 3px rgba(167, 139, 250, 0.3)',
+                      transition: 'box-shadow 0.3s ease',
+                    }}
+                  />
+                </div>
               );
             })}
           </div>
         )}
-
-        {/* Particle burst on click */}
-        {mounted && particles.map(particle => (
-          <div
-            key={particle.id}
-            className="absolute pointer-events-none rounded-full"
-            style={{
-              left: '50%',
-              top: '50%',
-              transform: `translate(calc(-50% + ${particle.x}px), calc(-50% + ${particle.y}px))`,
-              width: `${particle.size}px`,
-              height: `${particle.size}px`,
-              backgroundColor: 'rgba(167, 139, 250, 0.8)',
-              opacity: particle.life / particle.maxLife,
-              boxShadow: `0 0 ${particle.size * 2}px rgba(167, 139, 250, 0.6)`,
-            }}
-          />
-        ))}
       </div>
 
       <style jsx>{`
