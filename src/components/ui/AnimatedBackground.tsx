@@ -46,6 +46,13 @@ interface ParticleState {
   squishY: number;
 }
 
+// Particle trail for dark mode magic
+interface TrailPoint {
+  x: number;
+  y: number;
+  opacity: number;
+}
+
 export default function AnimatedBackground() {
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const [textBounds, setTextBounds] = useState<DOMRect | null>(null);
@@ -53,6 +60,8 @@ export default function AnimatedBackground() {
   const [scrollVelocity, setScrollVelocity] = useState(0);
   const [drift, setDrift] = useState<Record<string, DriftState>>({});
   const [particles, setParticles] = useState<ParticleState[]>([]);
+  const [particleTrails, setParticleTrails] = useState<TrailPoint[][]>([]);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const lastScrollRef = useRef(0);
   const lastScrollTimeRef = useRef(Date.now());
   const driftAnimationRef = useRef<number | null>(null);
@@ -188,24 +197,46 @@ export default function AnimatedBackground() {
     };
   }, [mounted, shapePhysics]);
 
-  // Playful particle physics animation loop with jello squish and slow pulse
+  // Epic particle physics with scroll waves, spirals, and dark mode magic
   useEffect(() => {
     if (!mounted || particles.length === 0) return;
 
     const animate = () => {
       setParticles(prevParticles => {
         return prevParticles.map((p, index) => {
+          const time = Date.now() * 0.001;
+
           // Add playful random forces (increased for more movement)
           const forceX = (Math.random() - 0.5) * 0.025;
           const forceY = (Math.random() - 0.5) * 0.025;
 
-          // Scroll creates upward/downward force with playful oscillation
-          const scrollForce = scrollVelocity * 8;
-          const oscillation = Math.sin(Date.now() * 0.001 + index * 0.5) * 0.03;
+          // EPIC SCROLL PHYSICS: Creates flowing wave/spiral patterns
+          const scrollMag = Math.abs(scrollVelocity);
+          const scrollDir = Math.sign(scrollVelocity);
 
-          // Update velocity with forces, scroll impact, and damping
-          let vx = p.vx + forceX;
-          let vy = p.vy + forceY + scrollForce + oscillation;
+          // Spiral rotation during scroll (each particle has offset phase)
+          const spiralPhase = time + index * 0.8;
+          const spiralX = Math.cos(spiralPhase) * scrollMag * 15;
+          const spiralY = scrollDir * scrollMag * 20; // Flow with scroll direction
+
+          // Wave oscillation (particles move in wave pattern)
+          const waveX = Math.sin(time * 2 + index) * scrollMag * 10;
+
+          // Circular orbit during intense scroll
+          const orbitX = Math.cos(time * 3 + index * 1.2) * scrollMag * 8;
+          const orbitY = Math.sin(time * 3 + index * 1.2) * scrollMag * 8;
+
+          // Combine all scroll effects
+          const scrollForceX = spiralX + waveX + orbitX + (isDarkMode ? orbitX * 0.5 : 0);
+          const scrollForceY = spiralY + orbitY + (isDarkMode ? spiralY * 0.3 : 0);
+
+          // Gentle floating oscillation when not scrolling
+          const floatX = Math.sin(time * 0.5 + index * 0.7) * 0.02;
+          const floatY = Math.cos(time * 0.7 + index * 0.5) * 0.03;
+
+          // Update velocity with all forces
+          let vx = p.vx + forceX + scrollForceX + floatX;
+          let vy = p.vy + forceY + scrollForceY + floatY;
 
           // Playful damping (less damping = more bouncy)
           vx *= 0.95;
@@ -291,10 +322,20 @@ export default function AnimatedBackground() {
         cancelAnimationFrame(particleAnimationRef.current);
       }
     };
-  }, [mounted, particles.length, scrollVelocity]);
+  }, [mounted, particles.length, scrollVelocity, isDarkMode]);
 
   useEffect(() => {
     setMounted(true);
+
+    // Detect dark mode
+    const checkDarkMode = () => {
+      setIsDarkMode(document.documentElement.classList.contains('dark'));
+    };
+    checkDarkMode();
+
+    // Watch for dark mode changes
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     const handleMouseMove = (e: MouseEvent) => {
       try {
@@ -368,6 +409,7 @@ export default function AnimatedBackground() {
       window.removeEventListener('resize', updateTextBounds);
       window.removeEventListener('scroll', handleScroll);
       clearInterval(interval);
+      observer.disconnect();
     };
   }, []);
 
