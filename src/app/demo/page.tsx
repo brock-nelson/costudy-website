@@ -9,87 +9,137 @@ export const metadata: Metadata = {
 export default function Demo() {
   return (
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
-      {/* Hero Section */}
-      <section className="bg-[#4A12C0] dark:bg-gradient-to-br dark:from-purple-900 dark:to-blue-900 text-white py-20">
-        <div className="container mx-auto px-4">
+      {/* Hero Section - Playful & Creative */}
+      <section className="relative bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 dark:from-purple-700 dark:via-pink-700 dark:to-orange-600 text-white py-20 overflow-hidden">
+        {/* Animated playful background elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Floating geometric shapes */}
+          <div className="absolute top-10 left-10 w-20 h-20 border-4 border-white/30 rounded-full animate-float"></div>
+          <div className="absolute top-20 right-20 w-16 h-16 bg-white/20 rotate-45 animate-spin-slow"></div>
+          <div className="absolute bottom-20 left-1/4 w-24 h-24 border-4 border-white/30 rounded-lg rotate-12 animate-morph"></div>
+          <div className="absolute top-1/3 right-1/3 w-12 h-12 bg-yellow-300/40 rounded-full animate-pulse-slow"></div>
+
+          {/* Gradient orbs */}
+          <div className="absolute -top-20 -right-20 w-64 h-64 bg-gradient-to-br from-cyan-400/30 to-transparent rounded-full blur-3xl animate-float-delayed"></div>
+          <div className="absolute -bottom-10 -left-10 w-56 h-56 bg-gradient-to-tr from-yellow-400/30 to-transparent rounded-full blur-3xl animate-float"></div>
+
+          {/* Playful icons */}
+          <div className="absolute top-16 right-1/4 text-4xl opacity-20 animate-bounce">🎨</div>
+          <div className="absolute bottom-24 right-16 text-3xl opacity-20 animate-pulse">💫</div>
+          <div className="absolute top-1/2 left-12 text-4xl opacity-20 animate-spin-slow">🌈</div>
+          <div className="absolute bottom-16 left-1/3 text-3xl opacity-20 animate-float">✏️</div>
+
+          {/* Grid pattern overlay */}
+          <div className="absolute inset-0 opacity-10" style={{
+            backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)`,
+            backgroundSize: '40px 40px'
+          }}></div>
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <div className="inline-block mb-4">
+              <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30 animate-pulse-slow">
+                <span className="text-sm font-semibold">✨ Ready to be amazed?</span>
+              </div>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg">
               See CoStudy in Action
             </h1>
-            <p className="text-xl text-white/90 leading-relaxed">
+            <p className="text-xl text-white/95 leading-relaxed drop-shadow-md">
               Schedule a personalized demo to explore how CoStudy can transform
-              student collaboration in your classroom or institution.
+              student collaboration in your classroom or institution! 🚀
             </p>
           </div>
         </div>
       </section>
 
-      {/* Benefits of Demo Section */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#C4B5FD]">
+      {/* Benefits of Demo Section - Playful & Animated */}
+      <section className="container mx-auto px-4 py-16 relative overflow-hidden">
+        {/* Playful background elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-10 right-10 w-32 h-32 bg-gradient-to-br from-yellow-300/20 to-orange-300/20 rounded-full blur-2xl animate-pulse-slow"></div>
+          <div className="absolute bottom-20 left-10 w-40 h-40 bg-gradient-to-br from-pink-300/20 to-purple-300/20 rounded-full blur-2xl animate-float"></div>
+          <div className="absolute top-1/2 right-1/4 text-6xl opacity-5 dark:opacity-10">✨</div>
+          <div className="absolute top-1/4 left-1/4 text-5xl opacity-5 dark:opacity-10">🚀</div>
+        </div>
+
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-[#6B3DCB] dark:text-[#C4B5FD]">
           What You&apos;ll Learn
         </h2>
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
-          <div className="flex gap-4">
+        <p className="text-center text-[#5E6E76] dark:text-gray-200 mb-12 max-w-2xl mx-auto">
+          Get ready for an exciting journey through CoStudy&apos;s superpowers! 🎉
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12 relative">
+          {/* Card 1 - Rocket */}
+          <div className="group flex gap-4 p-6 rounded-2xl hover:bg-gradient-to-br hover:from-purple-50/50 dark:hover:from-purple-900/20 hover:to-transparent transition-all duration-300 hover:scale-105 hover:shadow-lg">
             <div className="flex-shrink-0">
-              <div className="w-12 h-12 bg-[#EDE7F9] dark:bg-purple-900/50 rounded-full flex items-center justify-center">
-                <span className="text-2xl">✓</span>
+              <div className="relative w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 dark:from-purple-500 dark:to-purple-700 rounded-2xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300 shadow-lg group-hover:shadow-xl">
+                <span className="text-3xl animate-bounce">🚀</span>
+                <div className="absolute inset-0 bg-white/20 rounded-2xl animate-pulse"></div>
               </div>
             </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-2 text-[#374045] dark:text-gray-100">
+            <div className="flex-1">
+              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-gray-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                 Complete Platform Walkthrough
               </h3>
               <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
-                See all features including team charters, peer feedback, and analytics dashboards.
+                Blast off through all features including team charters, peer feedback, and analytics dashboards!
               </p>
             </div>
           </div>
 
-          <div className="flex gap-4">
+          {/* Card 2 - Sparkles */}
+          <div className="group flex gap-4 p-6 rounded-2xl hover:bg-gradient-to-br hover:from-blue-50/50 dark:hover:from-blue-900/20 hover:to-transparent transition-all duration-300 hover:scale-105 hover:shadow-lg">
             <div className="flex-shrink-0">
-              <div className="w-12 h-12 bg-[#EDE7F9] dark:bg-purple-900/50 rounded-full flex items-center justify-center">
-                <span className="text-2xl">✓</span>
+              <div className="relative w-16 h-16 bg-gradient-to-br from-blue-400 to-cyan-500 dark:from-blue-500 dark:to-cyan-600 rounded-2xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300 shadow-lg group-hover:shadow-xl">
+                <span className="text-3xl group-hover:animate-spin">✨</span>
+                <div className="absolute inset-0 bg-white/20 rounded-2xl animate-pulse"></div>
               </div>
             </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-2 text-[#374045] dark:text-gray-100">
+            <div className="flex-1">
+              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                 Customized to Your Needs
               </h3>
               <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
-                Discuss your specific courses, goals, and how CoStudy can support them.
+                Discover how CoStudy sparkles with your specific courses, goals, and teaching style!
               </p>
             </div>
           </div>
 
-          <div className="flex gap-4">
+          {/* Card 3 - Light Bulb */}
+          <div className="group flex gap-4 p-6 rounded-2xl hover:bg-gradient-to-br hover:from-amber-50/50 dark:hover:from-amber-900/20 hover:to-transparent transition-all duration-300 hover:scale-105 hover:shadow-lg">
             <div className="flex-shrink-0">
-              <div className="w-12 h-12 bg-[#EDE7F9] dark:bg-purple-900/50 rounded-full flex items-center justify-center">
-                <span className="text-2xl">✓</span>
+              <div className="relative w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 dark:from-amber-500 dark:to-orange-600 rounded-2xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300 shadow-lg group-hover:shadow-xl">
+                <span className="text-3xl group-hover:animate-pulse">💡</span>
+                <div className="absolute inset-0 bg-white/20 rounded-2xl animate-pulse"></div>
               </div>
             </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-2 text-[#374045] dark:text-gray-100">
+            <div className="flex-1">
+              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-gray-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                 Implementation Guidance
               </h3>
               <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
-                Learn about onboarding, LMS integration, and getting started with your teams.
+                Illuminate your path to success with onboarding, LMS integration, and team setup tips!
               </p>
             </div>
           </div>
 
-          <div className="flex gap-4">
+          {/* Card 4 - Party Popper */}
+          <div className="group flex gap-4 p-6 rounded-2xl hover:bg-gradient-to-br hover:from-pink-50/50 dark:hover:from-pink-900/20 hover:to-transparent transition-all duration-300 hover:scale-105 hover:shadow-lg">
             <div className="flex-shrink-0">
-              <div className="w-12 h-12 bg-[#EDE7F9] dark:bg-purple-900/50 rounded-full flex items-center justify-center">
-                <span className="text-2xl">✓</span>
+              <div className="relative w-16 h-16 bg-gradient-to-br from-pink-400 to-rose-500 dark:from-pink-500 dark:to-rose-600 rounded-2xl flex items-center justify-center transform group-hover:rotate-12 transition-transform duration-300 shadow-lg group-hover:shadow-xl">
+                <span className="text-3xl group-hover:scale-125 transition-transform">🎉</span>
+                <div className="absolute inset-0 bg-white/20 rounded-2xl animate-pulse"></div>
               </div>
             </div>
-            <div>
-              <h3 className="text-lg font-semibold mb-2 text-[#374045] dark:text-gray-100">
+            <div className="flex-1">
+              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-gray-100 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">
                 Q&A with Our Team
               </h3>
               <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
-                Get all your questions answered by our product and education specialists.
+                Celebrate your curiosity! Get all your questions answered by our amazing team!
               </p>
             </div>
           </div>

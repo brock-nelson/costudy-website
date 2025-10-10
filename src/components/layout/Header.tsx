@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useState } from "react";
+import AnimatedLogo from "@/components/ui/AnimatedLogo";
 import HighContrastToggle from "@/components/ui/HighContrastToggle";
 import DarkModeToggle from "@/components/ui/DarkModeToggle";
 
@@ -10,30 +10,11 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white dark:bg-[#0a0a0a] border-b border-[#EAEDEF] dark:border-gray-800 sticky top-0 z-50 transition-colors">
+    <header className="bg-white dark:bg-[#0a0a0a] border-b border-[#EAEDEF] dark:border-gray-800 sticky top-0 z-50 transition-colors header-container">
       <nav className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center">
-            {/* Light mode logo */}
-            <Image
-              src="/logo_upperleft.svg"
-              alt="CoStudy"
-              width={160}
-              height={40}
-              className="h-10 w-auto dark:hidden"
-              priority
-            />
-            {/* Dark mode logo - brightened for visibility */}
-            <Image
-              src="/logo_upperleft.svg"
-              alt="CoStudy"
-              width={160}
-              height={40}
-              className="h-10 w-auto hidden dark:block brightness-[2] contrast-[1.2] saturate-[1.1]"
-              priority
-            />
-          </Link>
+          {/* Animated Logo */}
+          <AnimatedLogo />
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">

@@ -9,16 +9,44 @@ export const metadata: Metadata = {
 export default function About() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
-      {/* Hero Section */}
-      <section className="bg-[#4A12C0] dark:bg-[#3A0FA0] text-white py-20">
-        <div className="container mx-auto px-4">
+      {/* Hero Section - Creative & Student-Forward */}
+      <section className="relative bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 dark:from-blue-700 dark:via-purple-700 dark:to-pink-700 text-white py-20 overflow-hidden">
+        {/* Playful background elements */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Student-forward icons */}
+          <div className="absolute top-12 left-12 text-5xl opacity-20 animate-float">🎓</div>
+          <div className="absolute top-20 right-16 text-4xl opacity-20 animate-bounce">🤝</div>
+          <div className="absolute bottom-16 left-1/4 text-4xl opacity-20 animate-pulse">💡</div>
+          <div className="absolute bottom-20 right-1/3 text-3xl opacity-20 animate-spin-slow">⭐</div>
+
+          {/* Geometric shapes */}
+          <div className="absolute top-1/4 right-1/4 w-20 h-20 border-4 border-white/20 rounded-full animate-pulse-slow"></div>
+          <div className="absolute bottom-1/3 left-1/3 w-16 h-16 bg-white/10 rotate-45 animate-morph"></div>
+
+          {/* Gradient orbs */}
+          <div className="absolute -top-10 -left-10 w-64 h-64 bg-gradient-to-br from-cyan-400/20 to-transparent rounded-full blur-3xl animate-float-delayed"></div>
+          <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-gradient-to-tl from-yellow-400/20 to-transparent rounded-full blur-3xl animate-float"></div>
+
+          {/* Dot pattern */}
+          <div className="absolute inset-0 opacity-10" style={{
+            backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px)`,
+            backgroundSize: '30px 30px'
+          }}></div>
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <div className="inline-block mb-4">
+              <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30 animate-pulse-slow">
+                <span className="text-sm font-semibold">🌟 Built by educators, for educators</span>
+              </div>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg">
               About CoStudy
             </h1>
-            <p className="text-xl leading-relaxed">
+            <p className="text-xl leading-relaxed drop-shadow-md text-white/95">
               We&apos;re on a mission to help students develop essential collaboration skills
-              that prepare them for success in school, work, and life.
+              that prepare them for success in school, work, and life! 🚀
             </p>
           </div>
         </div>
@@ -100,27 +128,48 @@ export default function About() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-[#4A12C0] dark:bg-[#3A0FA0] text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Join Us in Transforming Student Collaboration
+      {/* CTA Section - Playful & Energetic */}
+      <section className="relative bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 dark:from-emerald-700 dark:via-teal-700 dark:to-cyan-700 text-white py-16 overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-8 left-10 text-4xl opacity-20 animate-bounce">🚀</div>
+          <div className="absolute top-12 right-12 text-3xl opacity-20 animate-pulse">✨</div>
+          <div className="absolute bottom-10 left-1/4 text-4xl opacity-20 animate-spin-slow">🎯</div>
+          <div className="absolute bottom-8 right-1/4 text-3xl opacity-20 animate-float">💫</div>
+
+          <div className="absolute -top-20 -left-20 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse-slow"></div>
+          <div className="absolute -bottom-20 -right-20 w-56 h-56 bg-white/10 rounded-full blur-3xl animate-float"></div>
+        </div>
+
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 drop-shadow-lg">
+            Join Us in Transforming Student Collaboration! 🎉
           </h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl mb-8 max-w-2xl mx-auto leading-relaxed drop-shadow-md text-white/95">
             Whether you&apos;re an educator, administrator, or student, we&apos;d love to hear from you.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/contact"
-              className="bg-white text-[#4A12C0] px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+              className="group bg-white text-teal-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-50 transition-all hover:scale-105 shadow-lg hover:shadow-xl"
             >
-              Get in Touch
+              <span className="flex items-center justify-center gap-2">
+                Get in Touch
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </span>
             </Link>
             <Link
               href="/demo"
-              className="bg-[#6B3DCB] dark:bg-[#7C4DD4] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#5a2fb8] dark:hover:bg-[#6B3DCB] transition-colors border-2 border-white"
+              className="group bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-purple-600 hover:to-pink-600 transition-all hover:scale-105 border-2 border-white/50 shadow-lg hover:shadow-xl"
             >
-              Schedule a Demo
+              <span className="flex items-center justify-center gap-2">
+                Schedule a Demo
+                <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                </svg>
+              </span>
             </Link>
           </div>
         </div>

@@ -75,7 +75,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} font-sans antialiased preload`}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Remove preload class after page loads to enable animations
+              window.addEventListener('load', () => {
+                document.body.classList.remove('preload');
+              });
+            `,
+          }}
+        />
         <SkipToContent />
         <Header />
         <main id="main-content" tabIndex={-1}>{children}</main>
