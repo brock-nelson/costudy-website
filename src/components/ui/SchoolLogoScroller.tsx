@@ -110,13 +110,13 @@ export default function SchoolLogoScroller() {
               key={`logo-${index}`}
               className="flex-shrink-0 mx-8"
             >
-              <div className="relative h-24 w-40 flex items-center justify-center bg-white/80 dark:bg-gray-800/40 rounded-xl p-5 backdrop-blur-md border-2 border-gray-300/70 dark:border-gray-700/50">
+              <div className="relative h-24 w-40 flex items-center justify-center bg-white dark:bg-gray-800/40 rounded-xl p-5 border-2 border-gray-300/70 dark:border-gray-700/50">
                 <Image
                   src={school.logo}
                   alt={`${school.name} logo`}
                   width={160}
                   height={96}
-                  className="object-contain max-h-14 w-auto filter opacity-90 dark:brightness-0 dark:invert dark:opacity-80"
+                  className="object-contain max-h-14 w-auto filter dark:brightness-0 dark:invert"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
