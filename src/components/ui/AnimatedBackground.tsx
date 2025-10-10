@@ -25,6 +25,14 @@ const PHYSICS_CONFIG = {
   pulseSpeed: 0.0008,
 };
 
+// Connection lines configuration
+const CONNECTIONS_CONFIG = {
+  maxDistance: 200,          // Maximum distance to draw connection (px)
+  minOpacity: 0.1,          // Minimum line opacity
+  maxOpacity: 0.5,          // Maximum line opacity (when particles are close)
+  lineWidth: 1.5,           // Line stroke width
+};
+
 // Visual styling configuration for light/dark modes
 const VISUAL_CONFIG = {
   light: {
@@ -597,6 +605,67 @@ export default function AnimatedBackground() {
     }
   };
 
+  // Calculate connections between nearby particles
+  const calculateConnections = () => {
+    const connections: Array<{
+      x1: number;
+      y1: number;
+      x2: number;
+      y2: number;
+      opacity: number;
+      color: string;
+    }> = [];
+
+    if (typeof window === 'undefined') return connections;
+
+    const width = window.innerWidth || 1;
+    const height = window.innerHeight || 1;
+
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const p1 = particles[i];
+        const p2 = particles[j];
+
+        // Calculate screen positions
+        const x1 = (p1.baseX / 100) * width + p1.x;
+        const y1 = (p1.baseY / 100) * height + p1.y;
+        const x2 = (p2.baseX / 100) * width + p2.x;
+        const y2 = (p2.baseY / 100) * height + p2.y;
+
+        // Calculate distance
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        // Only draw connection if within range
+        if (distance < CONNECTIONS_CONFIG.maxDistance) {
+          // Calculate opacity based on distance (closer = more opaque)
+          const distanceRatio = 1 - (distance / CONNECTIONS_CONFIG.maxDistance);
+          const opacity = CONNECTIONS_CONFIG.minOpacity +
+            (distanceRatio * (CONNECTIONS_CONFIG.maxOpacity - CONNECTIONS_CONFIG.minOpacity));
+
+          // Get color based on mode
+          let color;
+          if (isDarkMode) {
+            // Neon color from one of the particles
+            const neonColor = VISUAL_CONFIG.dark.neonColors[p1.colorIndex];
+            // Extract base color from border
+            color = neonColor.borderColor.replace('0.9', String(opacity));
+          } else {
+            // Pastel lavender for light mode
+            color = `rgba(167, 139, 250, ${opacity * 0.6})`;
+          }
+
+          connections.push({ x1, y1, x2, y2, opacity, color });
+        }
+      }
+    }
+
+    return connections;
+  };
+
+  const connections = calculateConnections();
+
   return (
     <div className={`absolute inset-0 overflow-hidden pointer-events-none animated-background-blur transition-opacity duration-300 ${mounted ? 'opacity-100' : 'opacity-0'}`}>
       {/* Tech grid pattern */}
@@ -877,6 +946,26 @@ export default function AnimatedBackground() {
       <div className="absolute top-1/2 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-purple-400/30 dark:via-purple-400/60 to-transparent animate-shimmer"></div>
       <div className="absolute top-2/3 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-cyan-400/25 dark:via-cyan-400/55 to-transparent animate-shimmer-delayed"></div>
       <div className="absolute top-1/3 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-pink-400/25 dark:via-pink-400/55 to-transparent animate-shimmer"></div>
+
+      {/* Dynamic connection lines between nearby particles */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
+        {connections.map((conn, i) => (
+          <line
+            key={`conn-${i}`}
+            x1={conn.x1}
+            y1={conn.y1}
+            x2={conn.x2}
+            y2={conn.y2}
+            stroke={conn.color}
+            strokeWidth={CONNECTIONS_CONFIG.lineWidth}
+            opacity={conn.opacity}
+            className="transition-opacity duration-300"
+            style={{
+              filter: isDarkMode ? `drop-shadow(0 0 2px ${conn.color})` : 'none',
+            }}
+          />
+        ))}
+      </svg>
 
       {/* Microgravity particles with moon-trampoline scroll */}
       {particles.map((particle, i) => {
