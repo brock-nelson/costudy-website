@@ -51,12 +51,6 @@ interface ParticleState {
   ellipseRatioY: number;
 }
 
-// Particle trail for dark mode magic
-interface TrailPoint {
-  x: number;
-  y: number;
-  opacity: number;
-}
 
 // Unique physics for each shape - defined outside component for performance
 const SHAPE_PHYSICS: Record<string, PhysicsProperties> = {
@@ -85,7 +79,6 @@ export default function AnimatedBackground() {
   const [scrollVelocity, setScrollVelocity] = useState(0);
   const [drift, setDrift] = useState<Record<string, DriftState>>({});
   const [particles, setParticles] = useState<ParticleState[]>([]);
-  const [particleTrails, setParticleTrails] = useState<TrailPoint[][]>([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const lastScrollRef = useRef(0);
   const lastScrollTimeRef = useRef(Date.now());
@@ -222,7 +215,7 @@ export default function AnimatedBackground() {
 
           // SMOOTH ORBITAL PHYSICS: Each particle follows a clean elliptical path
           // Advance angle in orbit based on orbital speed
-          let orbitAngle = p.orbitAngle + p.orbitSpeed;
+          const orbitAngle = p.orbitAngle + p.orbitSpeed;
 
           // Scroll gently influences the orbit - makes it drift smoothly
           const scrollMag = Math.abs(scrollVelocity);
@@ -290,7 +283,7 @@ export default function AnimatedBackground() {
         cancelAnimationFrame(particleAnimationRef.current);
       }
     };
-  }, [mounted, scrollVelocity, isDarkMode]); // Optimized dependencies for performance
+  }, [mounted, scrollVelocity, isDarkMode, particles.length]); // Optimized dependencies for performance
 
   useEffect(() => {
     setMounted(true);
@@ -751,24 +744,9 @@ export default function AnimatedBackground() {
           { top: 75, right: 33.33, size: 16, lightColor: 'rgba(245, 158, 11, 0.7)', darkColor: 'rgba(251, 191, 36, 0.9)', shadowLight: 'rgba(245, 158, 11, 0.6)', shadowDark: 'rgba(251, 191, 36, 0.8)' },
         ];
 
-        // Color palette for transitions
-        const rainbowColors = [
-          'rgba(139, 92, 246, 0.7)',   // Purple
-          'rgba(236, 72, 153, 0.7)',   // Pink
-          'rgba(6, 182, 212, 0.7)',    // Cyan
-          'rgba(16, 185, 129, 0.7)',   // Green
-          'rgba(245, 158, 11, 0.7)',   // Amber
-          'rgba(249, 115, 22, 0.7)',   // Orange
-        ];
-
         return particleData.map((particle, i) => {
           const particleState = particles[i];
           if (!particleState) return null;
-
-          // Calculate transitioning color
-          const colorIndex1 = Math.floor(particleState.colorTransition * rainbowColors.length);
-          const colorIndex2 = (colorIndex1 + 1) % rainbowColors.length;
-          const colorMix = (particleState.colorTransition * rainbowColors.length) % 1;
 
           const positionStyle: React.CSSProperties = {
             width: `${particle.size}px`,
