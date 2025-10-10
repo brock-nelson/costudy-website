@@ -12,6 +12,12 @@ Hover Background:      #242424  (Interactive state)
 
 ### Text Colors
 ```
+Section Titles:   #E0E7FF  (Soft lavender - harmonious with brand)
+  - Add glow: text-shadow: 0 0 20px rgba(224, 231, 255, 0.15)
+
+Body/Subtext:     #A0AEC0  (Muted blue-gray - calm and legible)
+
+Legacy (deprecated):
 Primary Text:     #f5f5f5  (High contrast, WCAG AAA - 15.29:1 on #0a0a0a)
 Secondary Text:   #b3b3b3  (Medium contrast, WCAG AA - 7.89:1 on #0a0a0a)
 Tertiary Text:    #808080  (Lower contrast for less important text)

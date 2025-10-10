@@ -4,69 +4,71 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-interface Particle {
-  id: number;
-  x: number;
-  y: number;
-  angle: number;
-  speed: number;
-  life: number;
-  size: number;
-  color: string;
-}
+// Particle burst effect - commented out per user request
+// interface Particle {
+//   id: number;
+//   x: number;
+//   y: number;
+//   angle: number;
+//   speed: number;
+//   life: number;
+//   size: number;
+//   color: string;
+// }
 
 export default function AnimatedLogo() {
   const [mounted, setMounted] = useState(false);
-  const [particles, setParticles] = useState<Particle[]>([]);
+  // const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Animate particles
-  useEffect(() => {
-    if (particles.length === 0) return;
+  // Particle animation - commented out per user request
+  // useEffect(() => {
+  //   if (particles.length === 0) return;
 
-    const animate = () => {
-      setParticles(prev =>
-        prev
-          .map(p => ({
-            ...p,
-            x: p.x + Math.cos(p.angle) * p.speed,
-            y: p.y + Math.sin(p.angle) * p.speed,
-            life: p.life - 0.02,
-          }))
-          .filter(p => p.life > 0)
-      );
-    };
+  //   const animate = () => {
+  //     setParticles(prev =>
+  //       prev
+  //         .map(p => ({
+  //           ...p,
+  //           x: p.x + Math.cos(p.angle) * p.speed,
+  //           y: p.y + Math.sin(p.angle) * p.speed,
+  //           life: p.life - 0.02,
+  //         }))
+  //         .filter(p => p.life > 0)
+  //     );
+  //   };
 
-    const interval = setInterval(animate, 16);
-    return () => clearInterval(interval);
-  }, [particles]);
+  //   const interval = setInterval(animate, 16);
+  //   return () => clearInterval(interval);
+  // }, [particles]);
 
-  const handleClick = () => {
-    // Create particle burst!
-    const colors = ['#8B5CF6', '#A78BFA', '#EC4899', '#F472B6', '#06B6D4', '#22D3EE'];
-    const newParticles: Particle[] = [];
+  // Particle burst handler - commented out per user request
+  // const handleClick = () => {
+  //   // Create particle burst!
+  //   const colors = ['#8B5CF6', '#A78BFA', '#EC4899', '#F472B6', '#06B6D4', '#22D3EE'];
+  //   const newParticles: Particle[] = [];
 
-    for (let i = 0; i < 20; i++) {
-      newParticles.push({
-        id: Date.now() + i,
-        x: 0,
-        y: 0,
-        angle: (Math.PI * 2 * i) / 20 + (Math.random() - 0.5) * 0.5,
-        speed: 2 + Math.random() * 3,
-        life: 1,
-        size: 4 + Math.random() * 6,
-        color: colors[Math.floor(Math.random() * colors.length)],
-      });
-    }
+  //   for (let i = 0; i < 20; i++) {
+  //     newParticles.push({
+  //       id: Date.now() + i,
+  //       x: 0,
+  //       y: 0,
+  //       angle: (Math.PI * 2 * i) / 20 + (Math.random() - 0.5) * 0.5,
+  //       speed: 2 + Math.random() * 3,
+  //       life: 1,
+  //       size: 4 + Math.random() * 6,
+  //       color: colors[Math.floor(Math.random() * colors.length)],
+  //     });
+  //   }
 
-    setParticles(newParticles);
-  };
+  //   setParticles(newParticles);
+  // };
 
   return (
-    <Link href="/" onClick={handleClick} className="relative group cursor-pointer inline-flex items-center gap-3">
+    <Link href="/" className="relative group cursor-pointer inline-flex items-center gap-3">
       {/* Light mode: Unified logo with brand purple colors */}
       <div className="dark:hidden relative">
         <Image
@@ -137,8 +139,8 @@ export default function AnimatedLogo() {
         </div>
       </div>
 
-      {/* Particle burst effect on click */}
-      {mounted && particles.map(particle => (
+      {/* Particle burst effect on click - commented out per user request */}
+      {/* {mounted && particles.map(particle => (
         <div
           key={particle.id}
           className="absolute pointer-events-none rounded-full"
@@ -153,7 +155,7 @@ export default function AnimatedLogo() {
             transition: 'opacity 0.1s',
           }}
         />
-      ))}
+      ))} */}
     </Link>
   );
 }

@@ -72,10 +72,10 @@ export default function Demo() {
           <div className="absolute bottom-32 right-1/4 w-40 h-px bg-gradient-to-r from-transparent via-pink-300/40 dark:via-pink-600/40 to-transparent"></div>
         </div>
 
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-[#6B3DCB] dark:text-[#C4B5FD]">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-[#6B3DCB] dark:text-[#E0E7FF]">
           What You&apos;ll Learn
         </h2>
-        <p className="text-center text-[#5E6E76] dark:text-gray-200 mb-12 max-w-2xl mx-auto">
+        <p className="text-center text-[#5E6E76] dark:text-[#A0AEC0] mb-12 max-w-2xl mx-auto">
           Get ready for an exciting journey through CoStudy&apos;s superpowers! 🎉
         </p>
 
@@ -89,10 +89,10 @@ export default function Demo() {
               </div>
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-gray-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-[#E0E7FF] group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                 Complete Platform Walkthrough
               </h3>
-              <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
+              <p className="text-[#5E6E76] dark:text-[#A0AEC0] leading-relaxed">
                 Blast off through all features including team charters, peer feedback, and analytics dashboards!
               </p>
             </div>
@@ -107,10 +107,10 @@ export default function Demo() {
               </div>
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-[#E0E7FF] group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                 Customized to Your Needs
               </h3>
-              <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
+              <p className="text-[#5E6E76] dark:text-[#A0AEC0] leading-relaxed">
                 Discover how CoStudy sparkles with your specific courses, goals, and teaching style!
               </p>
             </div>
@@ -125,10 +125,10 @@ export default function Demo() {
               </div>
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-gray-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-[#E0E7FF] group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                 Implementation Guidance
               </h3>
-              <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
+              <p className="text-[#5E6E76] dark:text-[#A0AEC0] leading-relaxed">
                 Illuminate your path to success with onboarding, LMS integration, and team setup tips!
               </p>
             </div>
@@ -143,10 +143,10 @@ export default function Demo() {
               </div>
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-gray-100 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">
+              <h3 className="text-lg font-bold mb-2 text-[#374045] dark:text-[#E0E7FF] group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">
                 Q&A with Our Team
               </h3>
-              <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
+              <p className="text-[#5E6E76] dark:text-[#A0AEC0] leading-relaxed">
                 Celebrate your curiosity! Get all your questions answered by our amazing team!
               </p>
             </div>
@@ -166,10 +166,10 @@ export default function Demo() {
                 </svg>
                 <span className="text-sm font-medium text-[#4A12C0] dark:text-purple-300">Pick a Time That Works for You</span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-3 text-[#374045] dark:text-gray-100">
+              <h2 className="text-3xl md:text-4xl font-bold mb-3 text-[#374045] dark:text-[#E0E7FF]">
                 Schedule Your Demo
               </h2>
-              <p className="text-lg text-[#5E6E76] dark:text-gray-200 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-lg text-[#5E6E76] dark:text-[#A0AEC0] max-w-2xl mx-auto leading-relaxed">
                 Choose a convenient time below. Our team will walk you through CoStudy&apos;s features
                 and answer all your questions.
               </p>

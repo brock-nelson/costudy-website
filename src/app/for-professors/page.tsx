@@ -42,34 +42,34 @@ export default function ForProfessors() {
 
       {/* Benefits Section */}
       <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#C4B5FD]">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E0E7FF]">
           Why Professors Choose CoStudy
         </h2>
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <div className="border-l-4 border-blue-600 dark:border-[#404040] pl-6">
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Save Time on Team Management</h3>
-            <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Save Time on Team Management</h3>
+            <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
               Automated team formation, charter creation, and feedback collection eliminate hours of administrative work.
             </p>
           </div>
 
           <div className="border-l-4 border-blue-600 dark:border-[#404040] pl-6">
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Real-Time Collaboration Insights</h3>
-            <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Real-Time Collaboration Insights</h3>
+            <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
               Monitor team health, identify struggling groups early, and intervene before issues escalate.
             </p>
           </div>
 
           <div className="border-l-4 border-blue-600 dark:border-[#404040] pl-6">
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Seamless LMS Integration</h3>
-            <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Seamless LMS Integration</h3>
+            <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
               Works with Canvas, Blackboard, Moodle, and more. No disruption to your existing workflow.
             </p>
           </div>
 
           <div className="border-l-4 border-blue-600 dark:border-[#404040] pl-6">
-            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Evidence-Based Pedagogy</h3>
-            <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+            <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Evidence-Based Pedagogy</h3>
+            <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
               Built on research-backed principles of effective team learning and student development.
             </p>
           </div>
@@ -79,48 +79,48 @@ export default function ForProfessors() {
       {/* Features Section */}
       <section className="bg-gray-50 dark:bg-[#1a1a1a] py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#C4B5FD]">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#E0E7FF]">
             Powerful Features for Your Classroom
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Smart Team Formation</h3>
-              <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Smart Team Formation</h3>
+              <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Create balanced teams based on skills, schedules, and learning goals with one click.
               </p>
             </div>
 
             <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Team Charters</h3>
-              <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Team Charters</h3>
+              <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Guide students through creating effective team agreements with customizable templates.
               </p>
             </div>
 
             <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Peer Assessment</h3>
-              <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Peer Assessment</h3>
+              <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Structured peer feedback that promotes accountability and continuous improvement.
               </p>
             </div>
 
             <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Progress Tracking</h3>
-              <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Progress Tracking</h3>
+              <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Visualize team dynamics and individual contributions throughout the semester.
               </p>
             </div>
 
             <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Intervention Alerts</h3>
-              <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Intervention Alerts</h3>
+              <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Get notified when teams show signs of dysfunction so you can help early.
               </p>
             </div>
 
             <div className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Grade Integration</h3>
-              <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Grade Integration</h3>
+              <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Export participation and peer feedback data directly to your gradebook.
               </p>
             </div>
@@ -130,10 +130,10 @@ export default function ForProfessors() {
 
       {/* CTA Section */}
       <section className="container mx-auto px-4 py-16 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#2D3748] dark:text-white">
+        <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#2D3748] dark:text-[#E0E7FF]">
           Ready to Transform Your Team-Based Courses?
         </h2>
-        <p className="text-xl text-[#4A5568] dark:text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-xl text-[#4A5568] dark:text-[#A0AEC0] mb-8 max-w-2xl mx-auto leading-relaxed">
           Join hundreds of professors using CoStudy to create more effective collaborative learning experiences.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

@@ -40,7 +40,7 @@ export default function Home() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-[#5E6E76] dark:text-gray-100 mb-10 max-w-3xl mx-auto leading-relaxed font-medium">
+          <p className="text-xl md:text-2xl text-[#5E6E76] dark:text-[#A0AEC0] mb-10 max-w-3xl mx-auto leading-relaxed font-medium">
             Structured teamwork tools that help students build essential collaboration skills
             and achieve better learning outcomes.
           </p>
@@ -75,7 +75,7 @@ export default function Home() {
           </div>
 
           {/* Trust Badge */}
-          <div className="mt-12 flex items-center justify-center gap-8 text-sm text-[#92A2AA] dark:text-gray-300">
+          <div className="mt-12 flex items-center justify-center gap-8 text-sm text-[#92A2AA] dark:text-[#A0AEC0]">
             <div className="flex items-center gap-2">
               <svg className="w-5 h-5 text-purple-500 dark:text-purple-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
@@ -118,7 +118,7 @@ export default function Home() {
         </div>
 
         <div className="container mx-auto px-4 relative">
-        <h2 id="solutions-heading" className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#6B3DCB] dark:text-[#C4B5FD]">
+        <h2 id="solutions-heading" className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#6B3DCB] dark:text-[#E0E7FF]">
           Tailored Solutions for Every Role
         </h2>
         <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -130,7 +130,7 @@ export default function Home() {
             <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/5 dark:bg-blue-400/10 rounded-bl-[100px] rounded-tr-2xl group-hover:bg-blue-500/10 dark:group-hover:bg-blue-400/20 transition-colors"></div>
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-100/0 via-blue-100/0 to-blue-100/0 dark:from-blue-900/0 dark:via-blue-900/0 dark:to-blue-900/0 group-hover:from-blue-100/10 dark:group-hover:from-blue-900/20 group-hover:via-blue-50/5 dark:group-hover:via-blue-900/10 transition-all duration-300 pointer-events-none"></div>
             <h3 className="text-2xl font-bold mb-4 text-blue-600 dark:text-blue-200 relative">For Professors</h3>
-            <p className="text-[#5E6E76] dark:text-gray-100 relative leading-relaxed">
+            <p className="text-[#5E6E76] dark:text-[#A0AEC0] relative leading-relaxed">
               Streamline team formation, monitor collaboration, and integrate seamlessly with your LMS.
             </p>
           </Link>
@@ -143,7 +143,7 @@ export default function Home() {
             <div className="absolute top-0 right-0 w-20 h-20 bg-green-500/5 dark:bg-green-400/10 rounded-bl-[100px] rounded-tr-2xl group-hover:bg-green-500/10 dark:group-hover:bg-green-400/20 transition-colors"></div>
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-green-100/0 via-green-100/0 to-green-100/0 dark:from-green-900/0 dark:via-green-900/0 dark:to-green-900/0 group-hover:from-green-100/10 dark:group-hover:from-green-900/20 group-hover:via-green-50/5 dark:group-hover:via-green-900/10 transition-all duration-300 pointer-events-none"></div>
             <h3 className="text-2xl font-bold mb-4 text-green-600 dark:text-green-200 relative">For Administrators</h3>
-            <p className="text-[#5E6E76] dark:text-gray-100 relative leading-relaxed">
+            <p className="text-[#5E6E76] dark:text-[#A0AEC0] relative leading-relaxed">
               Track institutional impact, measure student success, and demonstrate ROI with data-driven insights.
             </p>
           </Link>
@@ -156,7 +156,7 @@ export default function Home() {
             <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/5 dark:bg-purple-400/10 rounded-bl-[100px] rounded-tr-2xl group-hover:bg-purple-500/10 dark:group-hover:bg-purple-400/20 transition-colors"></div>
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-100/0 via-purple-100/0 to-purple-100/0 dark:from-purple-900/0 dark:via-purple-900/0 dark:to-purple-900/0 group-hover:from-purple-100/10 dark:group-hover:from-purple-900/20 group-hover:via-purple-50/5 dark:group-hover:via-purple-900/10 transition-all duration-300 pointer-events-none"></div>
             <h3 className="text-2xl font-bold mb-4 text-purple-600 dark:text-purple-200 relative">For Students</h3>
-            <p className="text-[#5E6E76] dark:text-gray-100 relative leading-relaxed">
+            <p className="text-[#5E6E76] dark:text-[#A0AEC0] relative leading-relaxed">
               Build teamwork skills, set clear goals, and give meaningful feedback to teammates.
             </p>
           </Link>
@@ -181,7 +181,7 @@ export default function Home() {
           <div className="absolute top-1/2 left-10 w-20 h-20 bg-gradient-to-tr from-blue-200/10 to-transparent border border-blue-200/20 rounded-2xl -rotate-12 backdrop-blur-sm"></div>
         </div>
         <div className="container mx-auto px-4 relative">
-          <h2 id="features-heading" className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#6B3DCB] dark:text-[#C4B5FD]">
+          <h2 id="features-heading" className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#6B3DCB] dark:text-[#E0E7FF]">
             Powerful Tools for Better Teamwork
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -190,8 +190,8 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-200/0 to-purple-200/0 dark:from-purple-400/0 dark:to-purple-400/0 group-hover:from-purple-200/30 dark:group-hover:from-purple-400/20 group-hover:to-transparent rounded-2xl transition-all duration-300"></div>
                 <span className="text-4xl relative">📋</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Team Charters</h3>
-              <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Team Charters</h3>
+              <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Help teams establish clear expectations and working agreements from day one.
               </p>
             </div>
@@ -201,8 +201,8 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-200/0 to-purple-200/0 dark:from-purple-400/0 dark:to-purple-400/0 group-hover:from-purple-200/30 dark:group-hover:from-purple-400/20 group-hover:to-transparent rounded-2xl transition-all duration-300"></div>
                 <span className="text-4xl relative">📈</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Growth-Goal Scales</h3>
-              <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Growth-Goal Scales</h3>
+              <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Track individual development and measure progress toward collaboration goals.
               </p>
             </div>
@@ -212,8 +212,8 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-200/0 to-purple-200/0 dark:from-purple-400/0 dark:to-purple-400/0 group-hover:from-purple-200/30 dark:group-hover:from-purple-400/20 group-hover:to-transparent rounded-2xl transition-all duration-300"></div>
                 <span className="text-4xl relative">💬</span>
               </div>
-              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Peer Feedback</h3>
-              <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E0E7FF]">Peer Feedback</h3>
+              <p className="text-[#4A5568] dark:text-[#A0AEC0] leading-relaxed">
                 Facilitate constructive feedback that helps students grow and improve.
               </p>
             </div>
@@ -241,10 +241,10 @@ export default function Home() {
         </div>
         <div className="container mx-auto px-4 text-center relative">
           <div className="max-w-3xl mx-auto">
-            <h2 id="cta-heading" className="text-3xl md:text-4xl font-bold mb-6 text-[#374045] dark:text-gray-50">
+            <h2 id="cta-heading" className="text-3xl md:text-4xl font-bold mb-6 text-[#374045] dark:text-[#E0E7FF]">
               Ready to Transform Student Collaboration?
             </h2>
-            <p className="text-xl text-[#5E6E76] dark:text-gray-100 mb-10 leading-relaxed">
+            <p className="text-xl text-[#5E6E76] dark:text-[#A0AEC0] mb-10 leading-relaxed">
               Join leading educators who are using CoStudy to build essential teamwork skills.
             </p>
             <Link

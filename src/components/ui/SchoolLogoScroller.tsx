@@ -6,7 +6,6 @@ import Image from "next/image";
 export default function SchoolLogoScroller() {
   const [mounted, setMounted] = useState(false);
   const scrollerRef = useRef<HTMLDivElement>(null);
-  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -25,7 +24,7 @@ export default function SchoolLogoScroller() {
     if (!firstChild) return;
 
     const animate = () => {
-      if (!isPaused && scroller) {
+      if (scroller) {
         position += speed;
 
         // Get the width of one complete set (half the total width since we duplicate)
@@ -50,7 +49,7 @@ export default function SchoolLogoScroller() {
         cancelAnimationFrame(animationId);
       }
     };
-  }, [mounted, isPaused]);
+  }, [mounted]);
 
   const schools = [
     { name: "Boston University", logo: "/schools/boston-university.png" },
@@ -98,8 +97,6 @@ export default function SchoolLogoScroller() {
         <div
           ref={scrollerRef}
           className="flex"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
           style={{
             willChange: 'transform',
           }}
@@ -110,13 +107,13 @@ export default function SchoolLogoScroller() {
               key={`logo-${index}`}
               className="flex-shrink-0 mx-8"
             >
-              <div className="relative h-24 w-40 flex items-center justify-center bg-white dark:bg-white rounded-xl p-5 border-2 border-gray-300/70 dark:border-gray-700/50">
+              <div className="relative h-24 w-40 flex items-center justify-center bg-white dark:bg-[#1a1a1a] rounded-xl p-5 border-2 border-gray-300/70 dark:border-[#404040]">
                 <Image
                   src={school.logo}
                   alt={`${school.name} logo`}
                   width={160}
                   height={96}
-                  className="object-contain max-h-14 w-auto"
+                  className="object-contain max-h-14 w-auto dark:brightness-[1.3] dark:contrast-[0.9] dark:saturate-[0.8] dark:opacity-90"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
