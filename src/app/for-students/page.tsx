@@ -83,63 +83,39 @@ export default function ForStudents() {
           <h2 id="how-it-works-heading" className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#C4B5FD]">
             How CoStudy Works for You
           </h2>
-          <div className="max-w-3xl mx-auto space-y-8">
-            <div className="flex gap-6">
-              <div className="flex-shrink-0 w-12 h-12 bg-purple-600 dark:bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-xl" aria-hidden="true">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <div className="flex gap-6 p-6 rounded-xl bg-white dark:bg-gray-700/50 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-purple-600 to-purple-700 dark:from-purple-500 dark:to-purple-600 text-white rounded-full flex items-center justify-center font-bold text-xl shadow-md" aria-hidden="true">
                 1
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2 text-[#374045] dark:text-gray-100">Create Your Team Charter</h3>
-                <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
-                  Work with your teammates to set ground rules, communication norms, and shared goals.
+                <h3 className="text-lg font-bold mb-2 text-[#2D3748] dark:text-white">Build Your Foundation</h3>
+                <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+                  Create a team charter and set personal collaboration goals that align with your growth.
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-6">
-              <div className="flex-shrink-0 w-12 h-12 bg-purple-600 dark:bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-xl" aria-hidden="true">
+            <div className="flex gap-6 p-6 rounded-xl bg-white dark:bg-gray-700/50 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-purple-600 to-purple-700 dark:from-purple-500 dark:to-purple-600 text-white rounded-full flex items-center justify-center font-bold text-xl shadow-md" aria-hidden="true">
                 2
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2 text-[#374045] dark:text-gray-100">Set Personal Goals</h3>
-                <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
-                  Choose collaboration skills you want to develop, like active listening or conflict resolution.
+                <h3 className="text-lg font-bold mb-2 text-[#2D3748] dark:text-white">Collaborate & Learn</h3>
+                <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+                  Work on projects while CoStudy helps you reflect on team dynamics and individual contributions.
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-6">
-              <div className="flex-shrink-0 w-12 h-12 bg-purple-600 dark:bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-xl" aria-hidden="true">
+            <div className="flex gap-6 p-6 rounded-xl bg-white dark:bg-gray-700/50 shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-purple-600 to-purple-700 dark:from-purple-500 dark:to-purple-600 text-white rounded-full flex items-center justify-center font-bold text-xl shadow-md" aria-hidden="true">
                 3
               </div>
               <div>
-                <h3 className="text-xl font-semibold mb-2 text-[#374045] dark:text-gray-100">Work and Reflect</h3>
-                <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
-                  Collaborate on projects while reflecting on team dynamics and your individual contributions.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-6">
-              <div className="flex-shrink-0 w-12 h-12 bg-purple-600 dark:bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-xl" aria-hidden="true">
-                4
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2 text-[#374045] dark:text-gray-100">Exchange Feedback</h3>
-                <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
-                  Give and receive constructive peer feedback to help everyone grow and improve.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-6">
-              <div className="flex-shrink-0 w-12 h-12 bg-purple-600 dark:bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-xl" aria-hidden="true">
-                5
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold mb-2 text-[#374045] dark:text-gray-100">Measure Progress</h3>
-                <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
-                  See how you&apos;ve grown and showcase your teamwork skills to future employers.
+                <h3 className="text-lg font-bold mb-2 text-[#2D3748] dark:text-white">Grow Together</h3>
+                <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
+                  Exchange constructive feedback and track your progress toward becoming an exceptional teammate.
                 </p>
               </div>
             </div>

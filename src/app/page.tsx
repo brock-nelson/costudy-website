@@ -190,8 +190,8 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-200/0 to-purple-200/0 dark:from-purple-400/0 dark:to-purple-400/0 group-hover:from-purple-200/30 dark:group-hover:from-purple-400/20 group-hover:to-transparent rounded-2xl transition-all duration-300"></div>
                 <span className="text-4xl relative">📋</span>
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-gray-100">Team Charters</h3>
-              <p className="text-[#5E6E76] dark:text-gray-100 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Team Charters</h3>
+              <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
                 Help teams establish clear expectations and working agreements from day one.
               </p>
             </div>
@@ -201,8 +201,8 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-200/0 to-purple-200/0 dark:from-purple-400/0 dark:to-purple-400/0 group-hover:from-purple-200/30 dark:group-hover:from-purple-400/20 group-hover:to-transparent rounded-2xl transition-all duration-300"></div>
                 <span className="text-4xl relative">📈</span>
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-gray-100">Growth-Goal Scales</h3>
-              <p className="text-[#5E6E76] dark:text-gray-100 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Growth-Goal Scales</h3>
+              <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
                 Track individual development and measure progress toward collaboration goals.
               </p>
             </div>
@@ -212,8 +212,8 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-200/0 to-purple-200/0 dark:from-purple-400/0 dark:to-purple-400/0 group-hover:from-purple-200/30 dark:group-hover:from-purple-400/20 group-hover:to-transparent rounded-2xl transition-all duration-300"></div>
                 <span className="text-4xl relative">💬</span>
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-gray-100">Peer Feedback</h3>
-              <p className="text-[#5E6E76] dark:text-gray-100 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Peer Feedback</h3>
+              <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
                 Facilitate constructive feedback that helps students grow and improve.
               </p>
             </div>

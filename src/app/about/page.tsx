@@ -53,19 +53,24 @@ export default function About() {
       </section>
 
       {/* Mission Section */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto">
+      <section className="container mx-auto px-4 py-16 relative">
+        {/* Subtle background elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-10 right-1/4 w-32 h-32 bg-gradient-to-br from-purple-200/20 dark:from-purple-600/20 to-transparent rounded-full blur-2xl"></div>
+          <div className="absolute bottom-10 left-1/4 w-40 h-40 bg-gradient-to-tr from-blue-200/20 dark:from-blue-600/20 to-transparent rounded-full blur-2xl"></div>
+        </div>
+        <div className="max-w-4xl mx-auto relative">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 text-[#6B3DCB] dark:text-[#C4B5FD]">Our Mission</h2>
-          <p className="text-lg text-[#5E6E76] dark:text-gray-200 mb-4 leading-relaxed">
+          <p className="text-lg text-[#4A5568] dark:text-gray-200 mb-4 leading-relaxed">
             Student collaboration is essential for deep learning, yet it&apos;s often left to chance.
             Teams struggle with unclear expectations, poor communication, and unequal participation.
           </p>
-          <p className="text-lg text-[#5E6E76] dark:text-gray-200 mb-4 leading-relaxed">
+          <p className="text-lg text-[#4A5568] dark:text-gray-200 mb-4 leading-relaxed">
             CoStudy provides the structure and tools that make teamwork work. We help students
             establish clear expectations, track their growth, and give meaningful feedback to
             their teammates.
           </p>
-          <p className="text-lg text-[#5E6E76] dark:text-gray-200 leading-relaxed">
+          <p className="text-lg text-[#4A5568] dark:text-gray-200 leading-relaxed">
             By making collaboration visible and intentional, we empower students to build
             skills that will serve them throughout their academic and professional careers.
           </p>
@@ -78,31 +83,31 @@ export default function About() {
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#C4B5FD]">Our Values</h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="text-center">
-              <div className="bg-white dark:bg-gray-700 w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <div className="bg-white dark:bg-gray-700 w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center shadow-md">
                 <span className="text-4xl">🎯</span>
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-gray-100">Student-Centered</h3>
-              <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Student-Centered</h3>
+              <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
                 Everything we build is designed to help students grow and succeed.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-white dark:bg-gray-700 w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <div className="bg-white dark:bg-gray-700 w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center shadow-md">
                 <span className="text-4xl">🔬</span>
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-gray-100">Evidence-Based</h3>
-              <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Evidence-Based</h3>
+              <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
                 Our approach is grounded in research on effective learning and teamwork.
               </p>
             </div>
 
             <div className="text-center">
-              <div className="bg-white dark:bg-gray-700 w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <div className="bg-white dark:bg-gray-700 w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center shadow-md">
                 <span className="text-4xl">🤝</span>
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-[#374045] dark:text-gray-100">Collaborative</h3>
-              <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
+              <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-white">Collaborative</h3>
+              <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
                 We partner with educators to continuously improve and innovate.
               </p>
             </div>
@@ -111,16 +116,21 @@ export default function About() {
       </section>
 
       {/* Team Section */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto">
+      <section className="container mx-auto px-4 py-16 relative">
+        {/* Subtle background elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-10 w-28 h-28 bg-gradient-to-br from-teal-200/20 dark:from-teal-600/20 to-transparent rounded-full blur-2xl"></div>
+          <div className="absolute bottom-10 right-10 w-36 h-36 bg-gradient-to-tl from-cyan-200/20 dark:from-cyan-600/20 to-transparent rounded-full blur-2xl"></div>
+        </div>
+        <div className="max-w-4xl mx-auto relative">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[#6B3DCB] dark:text-[#C4B5FD]">Our Team</h2>
-          <p className="text-lg text-[#5E6E76] dark:text-gray-200 text-center mb-12 leading-relaxed">
+          <p className="text-lg text-[#4A5568] dark:text-gray-200 text-center mb-12 leading-relaxed">
             We&apos;re a team of educators, researchers, and technologists passionate about
             transforming how students learn to work together.
           </p>
           {/* Placeholder for team members - can be expanded later */}
           <div className="text-center">
-            <p className="text-[#5E6E76] dark:text-gray-200 leading-relaxed">
+            <p className="text-[#4A5568] dark:text-gray-200 leading-relaxed">
               Founded by educators with decades of experience in collaborative learning,
               CoStudy brings together expertise in pedagogy, learning science, and technology.
             </p>

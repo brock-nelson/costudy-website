@@ -62,6 +62,14 @@ export default function Demo() {
           <div className="absolute bottom-20 left-10 w-40 h-40 bg-gradient-to-br from-pink-300/20 to-purple-300/20 rounded-full blur-2xl animate-float"></div>
           <div className="absolute top-1/2 right-1/4 text-6xl opacity-5 dark:opacity-10">✨</div>
           <div className="absolute top-1/4 left-1/4 text-5xl opacity-5 dark:opacity-10">🚀</div>
+
+          {/* Additional geometric shapes */}
+          <div className="absolute top-1/3 left-12 w-24 h-24 border-2 border-purple-300/30 dark:border-purple-600/30 rounded-2xl rotate-12 animate-morph"></div>
+          <div className="absolute bottom-1/4 right-16 w-20 h-20 border-2 border-blue-300/30 dark:border-blue-600/30 rounded-full animate-pulse-slow"></div>
+
+          {/* Accent lines */}
+          <div className="absolute top-20 left-1/3 w-32 h-px bg-gradient-to-r from-transparent via-purple-300/40 dark:via-purple-600/40 to-transparent"></div>
+          <div className="absolute bottom-32 right-1/4 w-40 h-px bg-gradient-to-r from-transparent via-pink-300/40 dark:via-pink-600/40 to-transparent"></div>
         </div>
 
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-[#6B3DCB] dark:text-[#C4B5FD]">
