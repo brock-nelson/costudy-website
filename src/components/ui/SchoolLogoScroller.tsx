@@ -22,8 +22,8 @@ export default function SchoolLogoScroller() {
     { name: "University of Arizona", logo: "/schools/arizona.png" },
   ];
 
-  // Duplicate the schools array for seamless infinite scroll
-  const duplicatedSchools = [...schools, ...schools];
+  // Triple the schools array for truly seamless infinite scroll
+  const duplicatedSchools = [...schools, ...schools, ...schools];
 
   if (!mounted) {
     return (
@@ -92,7 +92,7 @@ export default function SchoolLogoScroller() {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-50%);
+            transform: translateX(calc(-100% / 3));
           }
         }
         .animate-scroll {
