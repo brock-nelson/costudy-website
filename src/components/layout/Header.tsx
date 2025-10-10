@@ -10,8 +10,8 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white dark:bg-[#0a0a0a] border-b border-[#EAEDEF] dark:border-[#404040] sticky top-0 z-50 transition-colors header-container overflow-visible">
-      <nav className="container mx-auto px-4 py-4">
+    <header className="bg-white dark:bg-[#0a0a0a] border-b border-[#EAEDEF] dark:border-[#404040] sticky top-0 z-50 transition-colors header-container">
+      <nav className="container mx-auto px-4 py-4 relative">
         <div className="flex items-center justify-between">
           {/* Animated Logo */}
           <AnimatedLogo />
@@ -19,15 +19,24 @@ export default function Header() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             <div className="relative group">
-              <button className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-colors flex items-center gap-1">
+              <button
+                className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-colors flex items-center gap-1"
+                aria-expanded="false"
+                aria-haspopup="true"
+              >
                 Solutions
-                <svg className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              <div className="absolute left-0 top-full mt-3 w-56 bg-white/95 dark:bg-[#121212]/95 rounded-lg shadow-xl border border-gray-200/60 dark:border-[#404040]/60 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[60] overflow-hidden backdrop-blur-sm translate-y-2 group-hover:translate-y-0">
+              <div
+                className="absolute left-0 mt-3 w-56 bg-white dark:bg-[#121212] rounded-lg shadow-2xl border border-gray-200 dark:border-[#404040] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden translate-y-2 group-hover:translate-y-0"
+                style={{ top: '100%', zIndex: 9999 }}
+                role="menu"
+                aria-label="Solutions menu"
+              >
                 {/* Dropdown arrow */}
-                <div className="absolute left-6 -top-1 w-2 h-2 bg-white/95 dark:bg-[#121212]/95 border-l border-t border-gray-200/60 dark:border-[#404040]/60 rotate-45"></div>
+                <div className="absolute left-6 -top-1 w-2 h-2 bg-white dark:bg-[#121212] border-l border-t border-gray-200 dark:border-[#404040] rotate-45"></div>
 
                 <Link
                   href="/for-professors"
