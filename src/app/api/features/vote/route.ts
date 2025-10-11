@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { db, features, votes } from "@/db";
 import { eq, and, or } from "drizzle-orm";
+import { voteLimiter, getIdentifier } from "@/lib/rate-limit";
 
 const voteSchema = z.object({
   featureId: z.string().uuid(),
@@ -11,6 +12,17 @@ const voteSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting
+    const identifier = getIdentifier(request);
+    const { success } = await voteLimiter.limit(identifier);
+
+    if (!success) {
+      return NextResponse.json(
+        { error: "Too many vote attempts. Please try again later." },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
     const validatedData = voteSchema.parse(body);
 

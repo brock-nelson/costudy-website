@@ -1,17 +1,32 @@
 import { auth } from "@/auth";
 import { db, analyticsEvents, demoRequests, contactSubmissions, emailSubscriptions } from "@/db";
-import { count, desc, eq, gte } from "drizzle-orm";
+import { count, desc, eq, gte, and } from "drizzle-orm";
+import AnalyticsFilters from "@/components/admin/AnalyticsFilters";
 
-export default async function AnalyticsPage() {
+export default async function AnalyticsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ range?: string; event?: string }>;
+}) {
   const session = await auth();
 
   if (!session) {
     return null;
   }
 
-  // Get date 30 days ago
-  const thirtyDaysAgo = new Date();
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  const params = await searchParams;
+  const dateRange = params.range || "30";
+  const eventTypeFilter = params.event || "all";
+
+  // Calculate date based on range
+  let startDate: Date;
+  if (dateRange === "all") {
+    startDate = new Date(0); // Beginning of time
+  } else {
+    const days = parseInt(dateRange);
+    startDate = new Date();
+    startDate.setDate(startDate.getDate() - days);
+  }
 
   // Fetch analytics data
   const [
@@ -53,14 +68,21 @@ export default async function AnalyticsPage() {
       .orderBy(desc(contactSubmissions.createdAt))
       .limit(10),
 
-    // Top pages
+    // Top pages (with filters)
     db
       .select({
         page: analyticsEvents.page,
         count: count(),
       })
       .from(analyticsEvents)
-      .where(gte(analyticsEvents.timestamp, thirtyDaysAgo))
+      .where(
+        eventTypeFilter === "all"
+          ? gte(analyticsEvents.timestamp, startDate)
+          : and(
+              gte(analyticsEvents.timestamp, startDate),
+              eq(analyticsEvents.eventType, eventTypeFilter)
+            )
+      )
       .groupBy(analyticsEvents.page)
       .orderBy(desc(count()))
       .limit(10),
@@ -77,6 +99,9 @@ export default async function AnalyticsPage() {
           View user activity, submissions, and engagement metrics
         </p>
       </div>
+
+      {/* Filters */}
+      <AnalyticsFilters />
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -111,7 +136,7 @@ export default async function AnalyticsPage() {
         {/* Top Pages */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-            Top Pages (Last 30 Days)
+            Top Pages ({dateRange === "all" ? "All Time" : `Last ${dateRange} Days`})
           </h2>
           {topPages.length === 0 ? (
             <p className="text-gray-600 dark:text-gray-400 text-sm">

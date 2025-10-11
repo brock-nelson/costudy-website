@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db, contactSubmissions } from "@/db";
+import { contactFormLimiter, getIdentifier } from "@/lib/rate-limit";
 
 // Validation schema
 const contactSchema = z.object({
@@ -14,6 +15,17 @@ const contactSchema = z.object({
 
 export async function POST(request: Request) {
   try {
+    // Rate limiting
+    const identifier = getIdentifier(request);
+    const { success } = await contactFormLimiter.limit(identifier);
+
+    if (!success) {
+      return NextResponse.json(
+        { error: "Too many requests. Please try again later." },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
 
     // Validate the data
