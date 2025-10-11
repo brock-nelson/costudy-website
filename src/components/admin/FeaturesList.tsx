@@ -298,6 +298,25 @@ function FeatureCard({ feature, isSelected, onToggle }: FeatureCardProps) {
           <span className={`px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap ${statusColors[feature.status as keyof typeof statusColors]}`}>
             {feature.status}
           </span>
+          <a
+            href={`/admin/features/${feature.id}/edit`}
+            className="inline-flex items-center gap-1 px-3 py-1 text-sm font-medium text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded-lg transition-colors"
+          >
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+              />
+            </svg>
+            Edit
+          </a>
           <select
             value={feature.status}
             onChange={(e) => handleStatusChange(e.target.value)}

@@ -16,20 +16,36 @@ export async function PATCH(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { status } = body;
+    const { title, description, status, category } = body;
 
-    if (!status) {
-      return NextResponse.json({ error: "Status is required" }, { status: 400 });
+    // Build update object dynamically based on provided fields
+    const updateData: Record<string, unknown> = {
+      updatedAt: new Date(),
+    };
+
+    if (title !== undefined) updateData.title = title;
+    if (description !== undefined) updateData.description = description;
+    if (category !== undefined) updateData.category = category;
+    if (status !== undefined) {
+      updateData.status = status;
+      // Set completedAt when status changes to completed
+      if (status === "completed") {
+        updateData.completedAt = new Date();
+      }
     }
 
-    // Update feature status
+    // Validate that at least one field is being updated
+    if (Object.keys(updateData).length === 1) {
+      return NextResponse.json(
+        { error: "No fields to update" },
+        { status: 400 }
+      );
+    }
+
+    // Update feature
     await db
       .update(features)
-      .set({
-        status,
-        updatedAt: new Date(),
-        ...(status === "completed" ? { completedAt: new Date() } : {}),
-      })
+      .set(updateData)
       .where(eq(features.id, id));
 
     return NextResponse.json({ success: true });
