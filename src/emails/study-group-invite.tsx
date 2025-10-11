@@ -30,7 +30,7 @@ export const StudyGroupInviteEmail: React.FC<StudyGroupInviteProps> = ({
         <Container style={{ maxWidth: '600px', margin: '0 auto', backgroundColor: '#ffffff' }}>
       <div style={{ backgroundColor: '#7C3AED', padding: '40px 20px', textAlign: 'center' }}>
         <h1 style={{ color: 'white', margin: 0, fontSize: '28px' }}>
-          You've Been Invited! 📚
+          You&apos;ve Been Invited! 📚
         </h1>
       </div>
 
@@ -92,7 +92,7 @@ export const StudyGroupInviteEmail: React.FC<StudyGroupInviteProps> = ({
             <li>Learn faster through collaborative discussion</li>
             <li>Stay motivated and accountable</li>
             <li>Share notes and study resources</li>
-            <li>Get help when you're stuck</li>
+            <li>Get help when you&apos;re stuck</li>
           </ul>
         </div>
 

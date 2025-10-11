@@ -4,11 +4,6 @@ import {
   Head,
   Body,
   Container,
-  Section,
-  Heading,
-  Text,
-  Link,
-  Button,
 } from '@react-email/components';
 
 interface WelcomeEmailProps {
@@ -37,7 +32,7 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
         </p>
 
         <p style={{ fontSize: '16px', color: '#4A5568', lineHeight: '1.6', marginBottom: '20px' }}>
-          We're excited to have you join CoStudy! You're now part of a community of students
+          We&apos;re excited to have you join CoStudy! You&apos;re now part of a community of students
           who are transforming how they study together.
         </p>
 

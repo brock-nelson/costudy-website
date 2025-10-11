@@ -190,7 +190,7 @@ export default function PricingPage() {
                   Can I cancel anytime?
                 </h3>
                 <p className="text-[#4A5568] dark:text-[#A0AEC0]">
-                  Yes! You can cancel your Pro subscription at any time. You'll continue to have access until the end of your billing period.
+                  Yes! You can cancel your Pro subscription at any time. You&apos;ll continue to have access until the end of your billing period.
                 </p>
               </div>
 
@@ -223,10 +223,10 @@ export default function PricingPage() {
 
               <div className="bg-white dark:bg-[#1E1E1E] rounded-xl p-6 border border-gray-200 dark:border-[#404040]">
                 <h3 className="text-lg font-semibold text-[#2D3748] dark:text-[#E9EEFF] mb-2">
-                  What's included in Enterprise?
+                  What&apos;s included in Enterprise?
                 </h3>
                 <p className="text-[#4A5568] dark:text-[#A0AEC0]">
-                  Enterprise plans are customized for your institution's needs. This includes unlimited users, custom branding, SSO integration, dedicated support, and more. Contact our sales team to discuss your requirements.
+                  Enterprise plans are customized for your institution&apos;s needs. This includes unlimited users, custom branding, SSO integration, dedicated support, and more. Contact our sales team to discuss your requirements.
                 </p>
               </div>
 
@@ -235,7 +235,7 @@ export default function PricingPage() {
                   Do you offer refunds?
                 </h3>
                 <p className="text-[#4A5568] dark:text-[#A0AEC0]">
-                  We offer a 14-day money-back guarantee for Pro subscriptions. If you're not satisfied, contact support within 14 days of your purchase for a full refund.
+                  We offer a 14-day money-back guarantee for Pro subscriptions. If you&apos;re not satisfied, contact support within 14 days of your purchase for a full refund.
                 </p>
               </div>
             </div>
