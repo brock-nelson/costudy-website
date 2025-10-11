@@ -20,8 +20,8 @@
 - ✅ Create "New Release" form (`/admin/releases/new`)
 - ✅ Create "Edit Release" form (`/admin/releases/[id]/edit`)
 - ✅ Advanced analytics filters (date ranges, event type filters)
-- [ ] Add bulk actions for features (approve multiple, etc.)
-- [ ] Export data functionality (CSV/Excel) ⬅️ NEXT
+- [ ] Add bulk actions for features (approve multiple, etc.) ⬅️ NEXT
+- ✅ Export data functionality (CSV/Excel)
 - [ ] Email notifications for new demo requests (requires SendGrid key)
 
 ### Marketing Site
@@ -53,6 +53,7 @@
 - ✅ Newsletter subscription system
 - ✅ Rate limiting on all public forms
 - ✅ Advanced analytics filters (date/event type)
+- ✅ Export data functionality (CSV/Excel for all admin data)
 - ✅ Unit testing infrastructure (Vitest, 23 tests)
 - ✅ Dark mode throughout
 - ✅ Mobile responsive design
