@@ -10,13 +10,8 @@ export default async function AdminLayout({
   const session = await auth();
 
   // Redirect to login if not authenticated
-  if (!session && !children?.toString().includes("admin/login")) {
-    redirect("/admin/login");
-  }
-
-  // If on login page, don't show nav
   if (!session) {
-    return <>{children}</>;
+    redirect("/login");
   }
 
   return (

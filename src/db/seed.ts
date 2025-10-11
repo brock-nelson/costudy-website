@@ -1,11 +1,20 @@
 import { db, users } from "./index";
 import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
+import dotenv from "dotenv";
+
+// Load environment variables from .env.local
+dotenv.config({ path: ".env.local" });
 
 async function seed() {
   console.log("🌱 Seeding database...");
 
   const admins = [
+    {
+      email: "support@costudy.co",
+      name: "CoStudy Support",
+      password: "ChangeMe123!", // CHANGE THIS IMMEDIATELY
+    },
     {
       email: "brock@costudy.co",
       name: "Brock Nelson",
@@ -48,7 +57,7 @@ async function seed() {
 
   console.log("\n✅ Seeding complete!");
   console.log("\n📝 Next steps:");
-  console.log("1. Login to /admin/login with one of the admin accounts");
+  console.log("1. Login to /login with one of the admin accounts");
   console.log("2. Change your password immediately");
   console.log("3. Delete or comment out the default passwords in seed.ts");
 }

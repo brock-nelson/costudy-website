@@ -121,6 +121,59 @@ export const rateLimits = pgTable("rate_limits", {
   windowEndIdx: index("rate_limits_window_end_idx").on(table.windowEnd),
 }));
 
+// Demo requests - from /demo page form submissions
+export const demoRequests = pgTable("demo_requests", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  institution: varchar("institution", { length: 255 }),
+  role: varchar("role", { length: 100 }), // professor, admin, student, other
+  message: text("message"),
+  phoneNumber: varchar("phone_number", { length: 50 }),
+  preferredDate: timestamp("preferred_date"),
+  status: varchar("status", { length: 50 }).notNull().default("pending"), // pending, contacted, scheduled, completed, declined
+  ipAddress: varchar("ip_address", { length: 45 }).notNull(),
+  userAgent: text("user_agent"),
+  source: varchar("source", { length: 100 }), // utm parameters, referrer, etc
+  notes: text("notes"), // admin notes
+  assignedTo: uuid("assigned_to").references(() => users.id), // which admin is handling this
+  contactedAt: timestamp("contacted_at"),
+  scheduledFor: timestamp("scheduled_for"),
+  completedAt: timestamp("completed_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => ({
+  emailIdx: index("demo_requests_email_idx").on(table.email),
+  statusIdx: index("demo_requests_status_idx").on(table.status),
+  createdAtIdx: index("demo_requests_created_at_idx").on(table.createdAt),
+}));
+
+// Contact form submissions - from /contact page
+export const contactSubmissions = pgTable("contact_submissions", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  subject: varchar("subject", { length: 255 }),
+  message: text("message").notNull(),
+  type: varchar("type", { length: 100 }).notNull().default("general"), // general, support, partnership, media
+  phoneNumber: varchar("phone_number", { length: 50 }),
+  status: varchar("status", { length: 50 }).notNull().default("new"), // new, in-progress, responded, closed
+  ipAddress: varchar("ip_address", { length: 45 }).notNull(),
+  userAgent: text("user_agent"),
+  source: varchar("source", { length: 100 }),
+  notes: text("notes"), // admin notes
+  assignedTo: uuid("assigned_to").references(() => users.id),
+  respondedAt: timestamp("responded_at"),
+  closedAt: timestamp("closed_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => ({
+  emailIdx: index("contact_submissions_email_idx").on(table.email),
+  statusIdx: index("contact_submissions_status_idx").on(table.status),
+  typeIdx: index("contact_submissions_type_idx").on(table.type),
+  createdAtIdx: index("contact_submissions_created_at_idx").on(table.createdAt),
+}));
+
 // Relations
 export const featuresRelations = relations(features, ({ one, many }) => ({
   creator: one(users, {
@@ -140,6 +193,20 @@ export const votesRelations = relations(votes, ({ one }) => ({
 export const releasesRelations = relations(releases, ({ one }) => ({
   creator: one(users, {
     fields: [releases.createdBy],
+    references: [users.id],
+  }),
+}));
+
+export const demoRequestsRelations = relations(demoRequests, ({ one }) => ({
+  assignedAdmin: one(users, {
+    fields: [demoRequests.assignedTo],
+    references: [users.id],
+  }),
+}));
+
+export const contactSubmissionsRelations = relations(contactSubmissions, ({ one }) => ({
+  assignedAdmin: one(users, {
+    fields: [contactSubmissions.assignedTo],
     references: [users.id],
   }),
 }));
@@ -165,3 +232,9 @@ export type NewAnalyticsEvent = typeof analyticsEvents.$inferInsert;
 
 export type RateLimit = typeof rateLimits.$inferSelect;
 export type NewRateLimit = typeof rateLimits.$inferInsert;
+
+export type DemoRequest = typeof demoRequests.$inferSelect;
+export type NewDemoRequest = typeof demoRequests.$inferInsert;
+
+export type ContactSubmission = typeof contactSubmissions.$inferSelect;
+export type NewContactSubmission = typeof contactSubmissions.$inferInsert;

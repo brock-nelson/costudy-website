@@ -1,21 +1,11 @@
-import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
-export default auth((req) => {
-  const { pathname } = req.nextUrl;
-
-  // Protect /admin routes (except /admin/login)
-  if (pathname.startsWith("/admin") && pathname !== "/admin/login") {
-    if (!req.auth) {
-      const loginUrl = new URL("/admin/login", req.url);
-      loginUrl.searchParams.set("callbackUrl", pathname);
-      return NextResponse.redirect(loginUrl);
-    }
-  }
-
+// Middleware is disabled to avoid Edge runtime issues with postgres.js
+// Auth protection is handled directly in admin pages via server components
+export function middleware() {
   return NextResponse.next();
-});
+}
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: [],
 };
