@@ -1,4 +1,5 @@
 import { resend, emailConfig } from './resend';
+import React from 'react';
 import WelcomeEmail from '@/emails/welcome';
 import StudyGroupInviteEmail from '@/emails/study-group-invite';
 
@@ -36,7 +37,7 @@ export async function sendWelcomeEmail({
       from: emailConfig.from,
       to,
       subject: 'Welcome to CoStudy! 🎓',
-      react: WelcomeEmail({ firstName, verificationUrl }),
+      react: React.createElement(WelcomeEmail, { firstName, verificationUrl }),
     });
 
     if (error) {
@@ -74,7 +75,7 @@ export async function sendStudyGroupInvite({
       from: emailConfig.from,
       to,
       subject: `${inviterName} invited you to join their study group on CoStudy`,
-      react: StudyGroupInviteEmail({
+      react: React.createElement(StudyGroupInviteEmail, {
         recipientName,
         inviterName,
         groupName,
