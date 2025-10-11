@@ -1,0 +1,92 @@
+# PREMIUM QUALITY SETTINGS
+# For Fortune-100-level content generation
+# Copy to .env or export these variables
+
+# API Keys
+OPENAI_API_KEY="your_openai_api_key_here"
+ANTHROPIC_API_KEY="your_claude_api_key_here"  # Optional: for Claude Opus refinement
+
+# Model Selection - BEST AVAILABLE
+OPENAI_MODEL="gpt-4-turbo-preview"  # Full GPT-4, not optimized for cost
+# Alternative: "gpt-4" for absolute best reasoning (slower, more expensive)
+
+# Quality Settings
+QUALITY_MODE="premium"  # premium | standard | budget
+ENABLE_REFINEMENT="true"  # Multi-pass refinement for top quality
+
+# Token Limits - GENEROUS for quality
+OPENAI_MAX_TOKENS="8000"  # 2x standard for comprehensive content
+# Can go up to 128000 for GPT-4 Turbo if needed
+
+# Image Generation - HD QUALITY
+IMAGE_QUALITY="hd"  # hd | standard
+IMAGE_SIZE="1792x1024"  # Wider format for hero images
+# Options: 1024x1024 (square), 1792x1024 (wide), 1024x1792 (tall)
+
+# Temperature Settings - OPTIMIZED FOR QUALITY
+CREATIVITY_TEMP="0.9"  # Higher = more creative (blog posts, social)
+PRECISION_TEMP="0.3"  # Lower = more precise (refinement, technical)
+
+# Cost Tracking
+TRACK_COSTS="true"
+MONTHLY_BUDGET="unlimited"  # Set to number for alerts, or "unlimited"
+
+# Advanced Features
+ENABLE_FACT_CHECKING="true"  # Validate claims (future feature)
+ENABLE_SEO_SCORING="true"  # Score content for SEO (future feature)
+ENABLE_READABILITY_ANALYSIS="true"  # Flesch-Kincaid scoring (future feature)
+
+# Content Standards
+MIN_BLOG_WORDS="1500"  # Minimum word count for blog posts
+TARGET_SEO_SCORE="90"  # Target SEO score (1-100)
+REQUIRE_DATA_CITATIONS="true"  # Require sources for statistics
+
+# Output Settings
+CONTENT_OUTPUT_DIR="content/generated"
+SAVE_DRAFTS="true"  # Save both draft and final versions
+FORMAT="json"  # json | markdown | html
+
+##############################################
+# ESTIMATED COSTS (PREMIUM MODE)
+##############################################
+#
+# Blog Post (2-pass refinement):
+#   - Draft: ~4000 tokens @ GPT-4 Turbo = $0.40
+#   - Refinement: ~4000 tokens = $0.40
+#   - TOTAL: ~$0.80 per post
+#   - Time saved: 5 hours @ $50/hr = $250 value
+#   - ROI: 31,150%
+#
+# Social Media Pack:
+#   - ~2000 tokens @ GPT-4 Turbo = $0.20
+#   - Time saved: 1 hour = $50 value
+#   - ROI: 24,900%
+#
+# HD Image:
+#   - DALL-E 3 HD (1792x1024) = $0.08
+#   - Time saved: Designer quote = $100-200
+#   - ROI: 124,900%
+#
+# Deep Research:
+#   - ~6000 tokens @ GPT-4 Turbo = $0.60
+#   - Time saved: 8 hours = $400 value
+#   - ROI: 66,567%
+#
+# Monthly (Heavy Usage):
+#   - 10 blog posts = $8
+#   - 20 social packs = $4
+#   - 30 HD images = $2.40
+#   - 5 research reports = $3
+#   - TOTAL: ~$17.40/month
+#   - Time saved: ~100 hours = $5,000
+#   - ROI: 28,644%
+#
+# CONCLUSION: Even at 10x the "budget" cost,
+# premium quality delivers MASSIVE ROI
+##############################################
+
+# Support
+# For questions or issues, create a GitHub issue
+# For API key management, visit:
+#   - OpenAI: https://platform.openai.com/api-keys
+#   - Anthropic: https://console.anthropic.com/settings/keys
