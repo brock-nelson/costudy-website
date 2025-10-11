@@ -18,11 +18,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (!process.env.RESEND_API_KEY) {
+    if (!process.env.SENDGRID_API_KEY) {
       return NextResponse.json(
         {
-          error: 'RESEND_API_KEY not configured',
-          help: 'Add RESEND_API_KEY to your .env.local file. See docs/RESEND_SETUP.md'
+          error: 'SENDGRID_API_KEY not configured',
+          help: 'Add SENDGRID_API_KEY to your .env.local file'
         },
         { status: 500 }
       );
@@ -135,6 +135,6 @@ export async function GET() {
         body: { to: 'test@example.com', type: 'reset' }
       },
     ],
-    configured: !!process.env.RESEND_API_KEY,
+    configured: !!process.env.SENDGRID_API_KEY,
   });
 }

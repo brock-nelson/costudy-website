@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
 
     // Send welcome email (don't block the response)
     // If email fails, log it but don't fail the signup
-    if (process.env.RESEND_API_KEY) {
+    if (process.env.SENDGRID_API_KEY) {
       sendWelcomeEmail({
         to: newUser.email,
         firstName: newUser.name.split(' ')[0], // Use first name only
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
         // Don't fail the signup if email fails
       });
     } else {
-      console.warn('⚠️ RESEND_API_KEY not set. Welcome email not sent.');
+      console.warn('⚠️ SENDGRID_API_KEY not set. Welcome email not sent.');
     }
 
     // Return success (without password)

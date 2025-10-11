@@ -1,4 +1,5 @@
-import { resend, emailConfig } from './resend';
+import { sgMail, emailConfig } from './sendgrid';
+import { render } from '@react-email/render';
 import React from 'react';
 import WelcomeEmail from '@/emails/welcome';
 import StudyGroupInviteEmail from '@/emails/study-group-invite';
@@ -27,26 +28,29 @@ export async function sendWelcomeEmail({
   firstName,
   verificationUrl,
 }: SendWelcomeEmailParams) {
-  if (!process.env.RESEND_API_KEY) {
-    console.warn('⚠️ RESEND_API_KEY not set. Skipping email send.');
+  if (!process.env.SENDGRID_API_KEY) {
+    console.warn('⚠️ SENDGRID_API_KEY not set. Skipping email send.');
     return { success: false, error: 'Email service not configured' };
   }
 
   try {
-    const { data, error } = await resend.emails.send({
-      from: emailConfig.from,
+    // Render React component to HTML
+    const html = render(
+      React.createElement(WelcomeEmail, { firstName, verificationUrl })
+    );
+
+    const msg = {
       to,
+      from: emailConfig.from,
+      replyTo: emailConfig.replyTo,
       subject: 'Welcome to CoStudy! 🎓',
-      react: React.createElement(WelcomeEmail, { firstName, verificationUrl }),
-    });
+      html,
+    };
 
-    if (error) {
-      console.error('Failed to send welcome email:', error);
-      return { success: false, error };
-    }
+    await sgMail.send(msg);
 
-    console.log('✅ Welcome email sent successfully:', data?.id);
-    return { success: true, data };
+    console.log('✅ Welcome email sent successfully to:', to);
+    return { success: true, data: { to } };
   } catch (error) {
     console.error('Error sending welcome email:', error);
     return { success: false, error };
@@ -65,33 +69,36 @@ export async function sendStudyGroupInvite({
   nextSessionDate,
   acceptUrl,
 }: SendStudyGroupInviteParams) {
-  if (!process.env.RESEND_API_KEY) {
-    console.warn('⚠️ RESEND_API_KEY not set. Skipping email send.');
+  if (!process.env.SENDGRID_API_KEY) {
+    console.warn('⚠️ SENDGRID_API_KEY not set. Skipping email send.');
     return { success: false, error: 'Email service not configured' };
   }
 
   try {
-    const { data, error } = await resend.emails.send({
-      from: emailConfig.from,
-      to,
-      subject: `${inviterName} invited you to join their study group on CoStudy`,
-      react: React.createElement(StudyGroupInviteEmail, {
+    // Render React component to HTML
+    const html = render(
+      React.createElement(StudyGroupInviteEmail, {
         recipientName,
         inviterName,
         groupName,
         className,
         nextSessionDate,
         acceptUrl,
-      }),
-    });
+      })
+    );
 
-    if (error) {
-      console.error('Failed to send study group invite:', error);
-      return { success: false, error };
-    }
+    const msg = {
+      to,
+      from: emailConfig.from,
+      replyTo: emailConfig.replyTo,
+      subject: `${inviterName} invited you to join their study group on CoStudy`,
+      html,
+    };
 
-    console.log('✅ Study group invite sent successfully:', data?.id);
-    return { success: true, data };
+    await sgMail.send(msg);
+
+    console.log('✅ Study group invite sent successfully to:', to);
+    return { success: true, data: { to } };
   } catch (error) {
     console.error('Error sending study group invite:', error);
     return { success: false, error };
@@ -118,57 +125,57 @@ export async function sendSessionReminder({
   location: string;
   joinUrl: string;
 }) {
-  if (!process.env.RESEND_API_KEY) {
-    console.warn('⚠️ RESEND_API_KEY not set. Skipping email send.');
+  if (!process.env.SENDGRID_API_KEY) {
+    console.warn('⚠️ SENDGRID_API_KEY not set. Skipping email send.');
     return { success: false, error: 'Email service not configured' };
   }
 
   try {
-    const { data, error } = await resend.emails.send({
-      from: emailConfig.from,
-      to,
-      subject: `Reminder: Study session tomorrow - ${groupName}`,
-      html: `
-        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background-color: #7C3AED; padding: 30px 20px; text-align: center;">
-            <h1 style="color: white; margin: 0;">Study Session Reminder 📚</h1>
-          </div>
-
-          <div style="padding: 30px 20px;">
-            <p style="font-size: 16px;">Hi ${studentName},</p>
-
-            <p style="font-size: 16px;">
-              This is a friendly reminder about your upcoming study session:
-            </p>
-
-            <div style="background-color: #F7FAFC; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h2 style="margin-top: 0; color: #2D3748;">${groupName}</h2>
-              <p style="margin: 8px 0;"><strong>📅 Date:</strong> ${sessionDate}</p>
-              <p style="margin: 8px 0;"><strong>🕐 Time:</strong> ${sessionTime}</p>
-              <p style="margin: 8px 0;"><strong>📍 Location:</strong> ${location}</p>
-            </div>
-
-            <div style="text-align: center; margin: 30px 0;">
-              <a href="${joinUrl}" style="background-color: #7C3AED; color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600;">
-                View Session Details
-              </a>
-            </div>
-
-            <p style="font-size: 14px; color: #718096; margin-top: 30px;">
-              Can't make it? Let your group know as soon as possible.
-            </p>
-          </div>
+    const html = `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #7C3AED; padding: 30px 20px; text-align: center;">
+          <h1 style="color: white; margin: 0;">Study Session Reminder 📚</h1>
         </div>
-      `,
-    });
 
-    if (error) {
-      console.error('Failed to send session reminder:', error);
-      return { success: false, error };
-    }
+        <div style="padding: 30px 20px;">
+          <p style="font-size: 16px;">Hi ${studentName},</p>
 
-    console.log('✅ Session reminder sent successfully:', data?.id);
-    return { success: true, data };
+          <p style="font-size: 16px;">
+            This is a friendly reminder about your upcoming study session:
+          </p>
+
+          <div style="background-color: #F7FAFC; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h2 style="margin-top: 0; color: #2D3748;">${groupName}</h2>
+            <p style="margin: 8px 0;"><strong>📅 Date:</strong> ${sessionDate}</p>
+            <p style="margin: 8px 0;"><strong>🕐 Time:</strong> ${sessionTime}</p>
+            <p style="margin: 8px 0;"><strong>📍 Location:</strong> ${location}</p>
+          </div>
+
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${joinUrl}" style="background-color: #7C3AED; color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">
+              View Session Details
+            </a>
+          </div>
+
+          <p style="font-size: 14px; color: #718096; margin-top: 30px;">
+            Can&apos;t make it? Let your group know as soon as possible.
+          </p>
+        </div>
+      </div>
+    `;
+
+    const msg = {
+      to,
+      from: emailConfig.from,
+      replyTo: emailConfig.replyTo,
+      subject: `Reminder: Study session tomorrow - ${groupName}`,
+      html,
+    };
+
+    await sgMail.send(msg);
+
+    console.log('✅ Session reminder sent successfully to:', to);
+    return { success: true, data: { to } };
   } catch (error) {
     console.error('Error sending session reminder:', error);
     return { success: false, error };
@@ -187,57 +194,57 @@ export async function sendPasswordResetEmail({
   firstName: string;
   resetUrl: string;
 }) {
-  if (!process.env.RESEND_API_KEY) {
-    console.warn('⚠️ RESEND_API_KEY not set. Skipping email send.');
+  if (!process.env.SENDGRID_API_KEY) {
+    console.warn('⚠️ SENDGRID_API_KEY not set. Skipping email send.');
     return { success: false, error: 'Email service not configured' };
   }
 
   try {
-    const { data, error } = await resend.emails.send({
-      from: emailConfig.from,
-      to,
-      subject: 'Reset Your CoStudy Password',
-      html: `
-        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-          <div style="background-color: #7C3AED; padding: 30px 20px; text-align: center;">
-            <h1 style="color: white; margin: 0;">Reset Your Password 🔐</h1>
+    const html = `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #7C3AED; padding: 30px 20px; text-align: center;">
+          <h1 style="color: white; margin: 0;">Reset Your Password 🔐</h1>
+        </div>
+
+        <div style="padding: 30px 20px;">
+          <p style="font-size: 16px;">Hi ${firstName},</p>
+
+          <p style="font-size: 16px;">
+            We received a request to reset your CoStudy password. Click the button below to create a new password:
+          </p>
+
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${resetUrl}" style="background-color: #7C3AED; color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">
+              Reset Password
+            </a>
           </div>
 
-          <div style="padding: 30px 20px;">
-            <p style="font-size: 16px;">Hi ${firstName},</p>
+          <p style="font-size: 14px; color: #718096;">
+            This link will expire in 1 hour for security reasons.
+          </p>
 
-            <p style="font-size: 16px;">
-              We received a request to reset your CoStudy password. Click the button below to create a new password:
+          <div style="margin-top: 30px; padding: 15px; background-color: #FEF2F2; border-left: 4px solid #EF4444; border-radius: 4px;">
+            <p style="margin: 0; font-size: 14px; color: #991B1B;">
+              <strong>⚠️ Didn&apos;t request a password reset?</strong><br />
+              You can safely ignore this email. Your password won&apos;t change unless you click the link above.
             </p>
-
-            <div style="text-align: center; margin: 30px 0;">
-              <a href="${resetUrl}" style="background-color: #7C3AED; color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">
-                Reset Password
-              </a>
-            </div>
-
-            <p style="font-size: 14px; color: #718096;">
-              This link will expire in 1 hour for security reasons.
-            </p>
-
-            <div style="margin-top: 30px; padding: 15px; background-color: #FEF2F2; border-left: 4px solid #EF4444; border-radius: 4px;">
-              <p style="margin: 0; font-size: 14px; color: #991B1B;">
-                <strong>⚠️ Didn't request a password reset?</strong><br />
-                You can safely ignore this email. Your password won't change unless you click the link above.
-              </p>
-            </div>
           </div>
         </div>
-      `,
-    });
+      </div>
+    `;
 
-    if (error) {
-      console.error('Failed to send password reset email:', error);
-      return { success: false, error };
-    }
+    const msg = {
+      to,
+      from: emailConfig.from,
+      replyTo: emailConfig.replyTo,
+      subject: 'Reset Your CoStudy Password',
+      html,
+    };
 
-    console.log('✅ Password reset email sent successfully:', data?.id);
-    return { success: true, data };
+    await sgMail.send(msg);
+
+    console.log('✅ Password reset email sent successfully to:', to);
+    return { success: true, data: { to } };
   } catch (error) {
     console.error('Error sending password reset email:', error);
     return { success: false, error };

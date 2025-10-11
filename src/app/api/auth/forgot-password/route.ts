@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
     const resetUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}`;
 
     // Send reset email
-    if (process.env.RESEND_API_KEY) {
+    if (process.env.SENDGRID_API_KEY) {
       const result = await sendPasswordResetEmail({
         to: user.email,
         firstName: user.name.split(' ')[0],
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
         );
       }
     } else {
-      console.warn('⚠️ RESEND_API_KEY not set. Password reset email not sent.');
+      console.warn('⚠️ SENDGRID_API_KEY not set. Password reset email not sent.');
       // In development, log the reset URL
       console.log('Password reset URL:', resetUrl);
     }
