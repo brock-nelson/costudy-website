@@ -1,4 +1,15 @@
 import * as React from 'react';
+import {
+  Html,
+  Head,
+  Body,
+  Container,
+  Section,
+  Heading,
+  Text,
+  Link,
+  Button,
+} from '@react-email/components';
 
 interface WelcomeEmailProps {
   firstName: string;
@@ -10,7 +21,10 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
   verificationUrl,
 }) => {
   return (
-    <div style={{ fontFamily: 'sans-serif', maxWidth: '600px', margin: '0 auto' }}>
+    <Html>
+      <Head />
+      <Body style={{ fontFamily: 'sans-serif', backgroundColor: '#f5f5f5' }}>
+        <Container style={{ maxWidth: '600px', margin: '0 auto', backgroundColor: '#ffffff' }}>
       <div style={{ backgroundColor: '#7C3AED', padding: '40px 20px', textAlign: 'center' }}>
         <h1 style={{ color: 'white', margin: 0, fontSize: '32px' }}>
           Welcome to CoStudy! 🎓
@@ -80,7 +94,9 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
           <a href="https://costudy.co/help" style={{ color: '#7C3AED' }}>Help</a>
         </p>
       </div>
-    </div>
+        </Container>
+      </Body>
+    </Html>
   );
 };
 

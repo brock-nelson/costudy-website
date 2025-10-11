@@ -1,4 +1,10 @@
 import * as React from 'react';
+import {
+  Html,
+  Head,
+  Body,
+  Container,
+} from '@react-email/components';
 
 interface StudyGroupInviteProps {
   recipientName: string;
@@ -18,7 +24,10 @@ export const StudyGroupInviteEmail: React.FC<StudyGroupInviteProps> = ({
   acceptUrl,
 }) => {
   return (
-    <div style={{ fontFamily: 'sans-serif', maxWidth: '600px', margin: '0 auto' }}>
+    <Html>
+      <Head />
+      <Body style={{ fontFamily: 'sans-serif', backgroundColor: '#f5f5f5' }}>
+        <Container style={{ maxWidth: '600px', margin: '0 auto', backgroundColor: '#ffffff' }}>
       <div style={{ backgroundColor: '#7C3AED', padding: '40px 20px', textAlign: 'center' }}>
         <h1 style={{ color: 'white', margin: 0, fontSize: '28px' }}>
           You've Been Invited! 📚
@@ -102,7 +111,9 @@ export const StudyGroupInviteEmail: React.FC<StudyGroupInviteProps> = ({
           <a href="https://costudy.co/help" style={{ color: '#7C3AED' }}>Help</a>
         </p>
       </div>
-    </div>
+        </Container>
+      </Body>
+    </Html>
   );
 };
 
