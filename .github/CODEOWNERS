@@ -1,0 +1,41 @@
+# CODEOWNERS - Code Review Assignments
+# Each line is a file pattern followed by one or more owners.
+# Order matters - last matching pattern takes precedence.
+#
+# Learn more: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owners for everything in the repo
+* @brock-nelson
+
+# Frontend Components & UI
+/src/components/ @brock-nelson
+/src/app/ @brock-nelson
+/public/ @brock-nelson
+
+# Backend & API Routes
+/src/app/api/ @brock-nelson
+/src/lib/ @brock-nelson
+
+# Database & Schema
+/drizzle/ @brock-nelson
+/src/db/ @brock-nelson
+drizzle.config.ts @brock-nelson
+
+# AI Workforce Scripts - Require careful review
+/ops/scripts/ @brock-nelson
+/ops/prompts/ @brock-nelson
+/.github/workflows/ @brock-nelson
+
+# Configuration Files - Critical for deployment
+.env* @brock-nelson
+next.config.ts @brock-nelson
+package.json @brock-nelson
+tsconfig.json @brock-nelson
+tailwind.config.ts @brock-nelson
+
+# Documentation
+*.md @brock-nelson
+/docs/ @brock-nelson
+
+# GitHub Configuration
+/.github/ @brock-nelson
