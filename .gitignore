@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# AI-generated content (excluded from git)
+content/generated/
+specs/spec_*.json
+sales/*/
+ops/.env.local
