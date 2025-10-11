@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { db, features } from "@/db";
 import { desc } from "drizzle-orm";
 import FeaturesList from "@/components/admin/FeaturesList";
+import ExportButton from "@/components/admin/ExportButton";
 
 export default async function FeaturesPage() {
   const session = await auth();
@@ -28,12 +29,19 @@ export default async function FeaturesPage() {
             Manage user-submitted features and roadmap items
           </p>
         </div>
-        <a
-          href="/admin/features/new"
-          className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-lg transition-all shadow-lg"
-        >
-          + New Feature
-        </a>
+        <div className="flex gap-3">
+          <ExportButton
+            endpoint="/api/admin/export/features"
+            filename="features"
+            label="Export"
+          />
+          <a
+            href="/admin/features/new"
+            className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-lg transition-all shadow-lg"
+          >
+            + New Feature
+          </a>
+        </div>
       </div>
 
       {/* Stats */}

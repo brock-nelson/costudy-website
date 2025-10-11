@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { db, releases } from "@/db";
 import { desc } from "drizzle-orm";
 import ReleasesList from "@/components/admin/ReleasesList";
+import ExportButton from "@/components/admin/ExportButton";
 
 export default async function ReleasesPage() {
   const session = await auth();
@@ -31,12 +32,19 @@ export default async function ReleasesPage() {
             Publish product updates and release notes
           </p>
         </div>
-        <a
-          href="/admin/releases/new"
-          className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-lg transition-all shadow-lg"
-        >
-          + New Release
-        </a>
+        <div className="flex gap-3">
+          <ExportButton
+            endpoint="/api/admin/export/releases"
+            filename="releases"
+            label="Export"
+          />
+          <a
+            href="/admin/releases/new"
+            className="px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-lg transition-all shadow-lg"
+          >
+            + New Release
+          </a>
+        </div>
       </div>
 
       {/* Stats */}

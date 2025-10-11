@@ -19,22 +19,22 @@
 - ✅ Create "New Feature" form (`/admin/features/new`)
 - ✅ Create "New Release" form (`/admin/releases/new`)
 - ✅ Create "Edit Release" form (`/admin/releases/[id]/edit`)
+- ✅ Advanced analytics filters (date ranges, event type filters)
 - [ ] Add bulk actions for features (approve multiple, etc.)
-- [ ] Export data functionality (CSV/Excel)
+- [ ] Export data functionality (CSV/Excel) ⬅️ NEXT
 - [ ] Email notifications for new demo requests (requires SendGrid key)
-- [ ] Advanced analytics filters (date ranges, event type filters)
 
 ### Marketing Site
 - ✅ Connect demo form to API (uses Cal.com, no database integration needed)
 - ✅ Connect contact form to API (`/api/contact`)
-- [ ] Newsletter subscription functionality
+- ✅ Newsletter subscription functionality
 - ✅ Feature voting system for public users
-- [ ] Public release notes/changelog page
+- ✅ Public release notes/changelog page
 
 ### Infrastructure
 - [ ] Merge with Henry's production database when ready
 - [ ] Set up SendGrid email service (waiting on API key from partner)
-- [ ] Add rate limiting to public forms
+- ✅ Add rate limiting to public forms
 - [ ] Set up automated backups
 
 ---
@@ -49,6 +49,10 @@
 - ✅ API routes for admin actions (features, releases, contact)
 - ✅ Contact form connected to database
 - ✅ Feature voting system for public users
+- ✅ Public changelog page
+- ✅ Newsletter subscription system
+- ✅ Rate limiting on all public forms
+- ✅ Advanced analytics filters (date/event type)
 - ✅ Unit testing infrastructure (Vitest, 23 tests)
 - ✅ Dark mode throughout
 - ✅ Mobile responsive design

@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { db, analyticsEvents, demoRequests, contactSubmissions, emailSubscriptions } from "@/db";
 import { count, desc, eq, gte, and } from "drizzle-orm";
 import AnalyticsFilters from "@/components/admin/AnalyticsFilters";
+import ExportButton from "@/components/admin/ExportButton";
 
 export default async function AnalyticsPage({
   searchParams,
@@ -91,13 +92,27 @@ export default async function AnalyticsPage({
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-          Analytics Dashboard
-        </h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
-          View user activity, submissions, and engagement metrics
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            Analytics Dashboard
+          </h1>
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
+            View user activity, submissions, and engagement metrics
+          </p>
+        </div>
+        <div className="flex gap-3">
+          <ExportButton
+            endpoint="/api/admin/export/contacts"
+            filename="contacts"
+            label="Export Contacts"
+          />
+          <ExportButton
+            endpoint="/api/admin/export/newsletter"
+            filename="newsletter"
+            label="Export Newsletter"
+          />
+        </div>
       </div>
 
       {/* Filters */}
