@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Discord Community
+    url: https://discord.gg/costudy
+    about: Join our Discord for questions and discussions
+  - name: 📚 Documentation
+    url: https://costudy.co/docs
+    about: Read the CoStudy documentation
+  - name: 🆘 Support
+    url: https://costudy.co/support
+    about: Get help from the CoStudy team

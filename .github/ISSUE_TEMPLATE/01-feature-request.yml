@@ -1,0 +1,86 @@
+name: ✨ Feature Request
+description: Suggest a new feature for CoStudy
+title: "[FEATURE] "
+labels: ["feature", "needs-spec"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature for CoStudy! This will automatically trigger our AI spec writer bot to create a technical specification.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve? Who is affected?
+      placeholder: |
+        As a [student/professor/administrator], I need...
+        Currently, users have to...
+        This causes issues because...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How would you like to solve this problem?
+      placeholder: |
+        I suggest adding...
+        The feature would work by...
+        Users would be able to...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: user-type
+    attributes:
+      label: Primary User Type
+      description: Who would primarily benefit from this feature?
+      options:
+        - Student
+        - Professor
+        - Administrator
+        - All Users
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature?
+      options:
+        - Low - Nice to have
+        - Medium - Would improve experience
+        - High - Critical for workflow
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you considered any alternative solutions?
+      placeholder: |
+        Other options could be...
+        An alternative approach would be...
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context, screenshots, or mockups
+      placeholder: |
+        Related to...
+        Similar to features in...
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Checklist
+      options:
+        - label: I have searched existing issues to ensure this is not a duplicate
+          required: true
+        - label: I understand this will be reviewed and may be modified or rejected
+          required: true
