@@ -74,7 +74,14 @@ echo ""
 
 # Push to GitHub
 echo -e "${YELLOW}Pushing to GitHub...${NC}"
-git push origin "$BRANCH"
+
+# Check for stored token for authentication
+if [ -f "$HOME/.claude-github-token" ]; then
+    GITHUB_TOKEN=$(cat "$HOME/.claude-github-token")
+    git -c credential.helper='!f() { echo "username=x-access-token"; echo "password='$GITHUB_TOKEN'"; }; f' push origin "$BRANCH"
+else
+    git push origin "$BRANCH"
+fi
 
 echo -e "${GREEN}✓ Pushed to GitHub${NC}"
 echo ""
