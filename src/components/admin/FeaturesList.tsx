@@ -10,6 +10,8 @@ interface FeaturesListProps {
 export default function FeaturesList({ features }: FeaturesListProps) {
   const [filter, setFilter] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [isBulkUpdating, setIsBulkUpdating] = useState(false);
 
   const filteredFeatures = features.filter(feature => {
     const matchesFilter = filter === "all" || feature.status === filter;
@@ -17,6 +19,65 @@ export default function FeaturesList({ features }: FeaturesListProps) {
                          feature.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesFilter && matchesSearch;
   });
+
+  const allSelected = filteredFeatures.length > 0 &&
+    filteredFeatures.every(f => selectedIds.has(f.id));
+
+  const someSelected = selectedIds.size > 0;
+
+  const handleSelectAll = () => {
+    if (allSelected) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(filteredFeatures.map(f => f.id)));
+    }
+  };
+
+  const handleToggleFeature = (id: string) => {
+    const newSelected = new Set(selectedIds);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    setSelectedIds(newSelected);
+  };
+
+  const handleBulkAction = async (action: string, status?: string) => {
+    if (selectedIds.size === 0) return;
+
+    const confirmed = confirm(
+      `Are you sure you want to ${action} ${selectedIds.size} feature(s)?`
+    );
+
+    if (!confirmed) return;
+
+    setIsBulkUpdating(true);
+
+    try {
+      const response = await fetch("/api/admin/features/bulk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          featureIds: Array.from(selectedIds),
+          action,
+          status,
+        }),
+      });
+
+      if (response.ok) {
+        window.location.reload();
+      } else {
+        const data = await response.json();
+        alert(`Failed: ${data.error}`);
+      }
+    } catch (error) {
+      console.error("Bulk action error:", error);
+      alert("An error occurred");
+    } finally {
+      setIsBulkUpdating(false);
+    }
+  };
 
   const statusOptions = [
     { value: "all", label: "All Features" },
@@ -29,9 +90,78 @@ export default function FeaturesList({ features }: FeaturesListProps) {
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+      {/* Bulk Action Toolbar */}
+      {someSelected && (
+        <div className="bg-purple-50 dark:bg-purple-900/20 border-b border-purple-200 dark:border-purple-800 p-4">
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-medium text-purple-900 dark:text-purple-100">
+                {selectedIds.size} feature(s) selected
+              </span>
+              <button
+                onClick={() => setSelectedIds(new Set())}
+                className="text-sm text-purple-600 dark:text-purple-400 hover:underline"
+              >
+                Clear selection
+              </button>
+            </div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <button
+                onClick={() => handleBulkAction("update_status", "approved")}
+                disabled={isBulkUpdating}
+                className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
+              >
+                Approve
+              </button>
+              <button
+                onClick={() => handleBulkAction("update_status", "in-progress")}
+                disabled={isBulkUpdating}
+                className="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
+              >
+                In Progress
+              </button>
+              <button
+                onClick={() => handleBulkAction("update_status", "completed")}
+                disabled={isBulkUpdating}
+                className="px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
+              >
+                Complete
+              </button>
+              <button
+                onClick={() => handleBulkAction("update_status", "declined")}
+                disabled={isBulkUpdating}
+                className="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
+              >
+                Decline
+              </button>
+              <button
+                onClick={() => handleBulkAction("delete")}
+                disabled={isBulkUpdating}
+                className="px-3 py-1.5 bg-gray-700 hover:bg-gray-800 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Filters */}
       <div className="p-6 border-b border-gray-200 dark:border-gray-700">
         <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex items-center gap-3">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={allSelected}
+                onChange={handleSelectAll}
+                className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+              />
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Select All
+              </span>
+            </label>
+          </div>
           <div className="flex-1">
             <input
               type="text"
@@ -65,7 +195,12 @@ export default function FeaturesList({ features }: FeaturesListProps) {
           </div>
         ) : (
           filteredFeatures.map((feature) => (
-            <FeatureCard key={feature.id} feature={feature} />
+            <FeatureCard
+              key={feature.id}
+              feature={feature}
+              isSelected={selectedIds.has(feature.id)}
+              onToggle={() => handleToggleFeature(feature.id)}
+            />
           ))
         )}
       </div>
@@ -73,7 +208,13 @@ export default function FeaturesList({ features }: FeaturesListProps) {
   );
 }
 
-function FeatureCard({ feature }: { feature: Feature }) {
+interface FeatureCardProps {
+  feature: Feature;
+  isSelected: boolean;
+  onToggle: () => void;
+}
+
+function FeatureCard({ feature, isSelected, onToggle }: FeatureCardProps) {
   const [isUpdating, setIsUpdating] = useState(false);
 
   const handleStatusChange = async (newStatus: string) => {
@@ -108,12 +249,22 @@ function FeatureCard({ feature }: { feature: Feature }) {
 
   return (
     <div className="p-6 hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start gap-4">
+        <div className="pt-1">
+          <input
+            type="checkbox"
+            checked={isSelected}
+            onChange={onToggle}
+            className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500 cursor-pointer"
+          />
+        </div>
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-3 mb-2">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              {feature.title}
-            </h3>
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-3 mb-2">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                  {feature.title}
+                </h3>
             {feature.isUserSubmitted && (
               <span className="px-2 py-1 text-xs font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full">
                 User Submitted
@@ -162,5 +313,7 @@ function FeatureCard({ feature }: { feature: Feature }) {
         </div>
       </div>
     </div>
+    </div>
+  </div>
   );
 }
