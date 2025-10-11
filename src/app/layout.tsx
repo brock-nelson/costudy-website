@@ -7,6 +7,7 @@ import SkipToContent from "@/components/ui/SkipToContent";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
+import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -78,6 +79,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <GoogleAnalytics />
       <body className={`${inter.variable} font-sans antialiased preload`}>
         <script
           dangerouslySetInnerHTML={{
