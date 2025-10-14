@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { Metadata } from "next";
+import UniversityShowcase from "@/components/showcase/UniversityShowcase";
+import VideoTestimonial from "@/components/testimonials/VideoTestimonial";
+import { sampleTestimonials } from "@/data/sampleTestimonials";
 
 export const metadata: Metadata = {
   title: "About CoStudy - Our Mission & Team",
@@ -137,6 +140,28 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      {/* Testimonials Section */}
+      <section className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/10 dark:to-blue-900/10 py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-[#374045] dark:text-[#E9EEFF]">
+              What Educators Are Saying
+            </h2>
+            <p className="text-lg md:text-xl text-[#5E6E76] dark:text-[#A0AEC0] max-w-3xl mx-auto">
+              Hear from university leaders using CoStudy to transform student collaboration
+            </p>
+          </div>
+          <div className="space-y-12 max-w-7xl mx-auto">
+            {sampleTestimonials.slice(0, 2).map((testimonial, index) => (
+              <VideoTestimonial key={index} testimonial={testimonial} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* University Showcase */}
+      <UniversityShowcase />
 
       {/* CTA Section - Playful & Energetic */}
       <section className="relative bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 dark:from-emerald-700 dark:via-teal-700 dark:to-cyan-700 text-white py-16 overflow-hidden">

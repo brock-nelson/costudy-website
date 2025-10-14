@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import ROICalculator from "@/components/calculators/ROICalculator";
+import TrustBadges from "@/components/trust/TrustBadges";
+import MetricsDashboard from "@/components/metrics/MetricsDashboard";
 
 export const metadata: Metadata = {
   title: "CoStudy for Administrators - Measure Student Success & ROI",
@@ -141,6 +143,12 @@ export default function ForAdministrators() {
           <ROICalculator />
         </div>
       </section>
+
+      {/* Metrics Dashboard */}
+      <MetricsDashboard />
+
+      {/* Trust Badges Section */}
+      <TrustBadges />
 
       {/* Implementation Section */}
       <section className="container mx-auto px-4 py-16">
