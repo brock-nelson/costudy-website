@@ -84,9 +84,10 @@ function AnimatedCounter({ value, decimals = 0, prefix = "", suffix = "" }: {
   }, [isInView, value, motionValue]);
 
   useEffect(() => {
-    springValue.on("change", (latest) => {
+    const unsubscribe = springValue.on("change", (latest) => {
       setDisplayValue(latest);
     });
+    return () => unsubscribe();
   }, [springValue]);
 
   return (
@@ -130,13 +131,13 @@ export default function MetricsDashboard({
 
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {metrics.map((metric, index) => (
+          {metrics.map((metric) => (
             <motion.div
-              key={index}
+              key={`metric-${metric.label}`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.5 }}
               className="group relative bg-white dark:bg-[#1a1a1a] rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-gray-200 dark:border-[#404040] transition-all duration-300 hover:scale-105"
             >
               {/* Icon */}

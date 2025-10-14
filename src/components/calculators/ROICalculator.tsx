@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 
 export default function ROICalculator() {
@@ -11,15 +11,7 @@ export default function ROICalculator() {
   const [currentToolCost, setCurrentToolCost] = useState(10000);
   const [estimatedImprovement, setEstimatedImprovement] = useState(5);
 
-  const [results, setResults] = useState({
-    annualCostSavings: 0,
-    additionalRevenue: 0,
-    costPerStudent: 0,
-    paybackPeriod: 0,
-    threeYearROI: 0,
-  });
-
-  useEffect(() => {
+  const results = useMemo(() => {
     // Estimate CoStudy annual cost (simplified: $10 per student per year)
     const costudyCost = numStudents * 10;
 
@@ -48,14 +40,14 @@ export default function ROICalculator() {
       ? ((totalAnnualSavings * 3 - costudyCost) / costudyCost) * 100
       : 0;
 
-    setResults({
+    return {
       annualCostSavings: Math.round(totalAnnualSavings),
       additionalRevenue: Math.round(additionalRevenue),
       costPerStudent: Math.round(costPerStudent * 100) / 100,
       paybackPeriod: Math.round(paybackPeriod * 10) / 10,
       threeYearROI: Math.round(threeYearROI),
-    });
-  }, [numStudents, currentRetention, avgTuition, currentToolCost, estimatedImprovement]);
+    };
+  }, [numStudents, avgTuition, currentToolCost, estimatedImprovement]);
 
   return (
     <motion.div

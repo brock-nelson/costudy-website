@@ -128,12 +128,12 @@ export default function VideoTestimonial({ testimonial }: VideoTestimonialProps)
 
           {/* Metrics */}
           <div className="grid grid-cols-2 gap-4 mb-6">
-            {testimonial.metrics.map((metric, index) => (
+            {testimonial.metrics.map((metric) => (
               <motion.div
-                key={index}
+                key={`${metric.label}-${metric.value}`}
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
+                transition={{ duration: 0.3 }}
                 className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 rounded-lg p-4 border border-purple-100 dark:border-purple-900/50"
               >
                 <div className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-1">

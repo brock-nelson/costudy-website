@@ -107,13 +107,13 @@ export default function UniversityShowcase({
         {featuredUniversities.length > 0 && (
           <div className="mb-16">
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {featuredUniversities.map((university, index) => (
+              {featuredUniversities.map((university) => (
                 <motion.div
-                  key={index}
+                  key={university.name}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  transition={{ duration: 0.5 }}
                   className="group bg-white dark:bg-[#1a1a1a] rounded-2xl p-8 shadow-lg hover:shadow-2xl border border-gray-200 dark:border-[#404040] transition-all duration-300 hover:scale-105"
                 >
                   {/* Logo */}
@@ -169,13 +169,13 @@ export default function UniversityShowcase({
               And Many More
             </motion.h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
-              {otherUniversities.map((university, index) => (
+              {otherUniversities.map((university) => (
                 <motion.div
-                  key={index}
+                  key={university.name}
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                  transition={{ duration: 0.3 }}
                   className="group bg-white dark:bg-[#1a1a1a] rounded-xl p-4 shadow-md hover:shadow-lg border border-gray-200 dark:border-[#404040] transition-all duration-300 hover:scale-110"
                 >
                   <div className="relative h-16 flex items-center justify-center">

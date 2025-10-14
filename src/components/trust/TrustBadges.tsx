@@ -94,13 +94,13 @@ export default function TrustBadges({
       <div className="py-8 overflow-hidden bg-white dark:bg-[#0a0a0a] border-y border-gray-200 dark:border-[#404040]">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap items-center justify-center gap-8">
-            {badges.map((badge, index) => (
+            {badges.map((badge) => (
               <motion.div
-                key={index}
+                key={badge.name}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
+                transition={{ duration: 0.3 }}
                 className="flex items-center gap-3 text-purple-600 dark:text-purple-400"
               >
                 <div className="w-8 h-8">{badge.icon}</div>
@@ -134,13 +134,13 @@ export default function TrustBadges({
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {badges.map((badge, index) => (
+          {badges.map((badge) => (
             <motion.div
-              key={index}
+              key={badge.name}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.5 }}
               className="group bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/10 dark:to-blue-900/10 rounded-2xl p-8 text-center hover:shadow-xl transition-all duration-300 hover:scale-105 border border-purple-100 dark:border-purple-900/30"
             >
               <div className="text-purple-600 dark:text-purple-400 flex justify-center mb-4 transform group-hover:scale-110 transition-transform duration-300">
