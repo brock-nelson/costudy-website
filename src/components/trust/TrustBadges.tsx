@@ -94,9 +94,9 @@ export default function TrustBadges({
       <div className="py-8 overflow-hidden bg-white dark:bg-[#0a0a0a] border-y border-gray-200 dark:border-[#404040]">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap items-center justify-center gap-8">
-            {badges.map((badge) => (
+            {badges.map((badge, index) => (
               <motion.div
-                key={badge.name}
+                key={`badge-h-${index}-${badge.name}`}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
@@ -134,9 +134,9 @@ export default function TrustBadges({
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {badges.map((badge) => (
+          {badges.map((badge, index) => (
             <motion.div
-              key={badge.name}
+              key={`badge-g-${index}-${badge.name}`}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}

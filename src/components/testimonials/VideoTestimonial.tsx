@@ -47,7 +47,7 @@ export default function VideoTestimonial({ testimonial }: VideoTestimonialProps)
                   className="absolute top-0 left-0 w-full h-full rounded-lg shadow-lg"
                   src={testimonial.videoUrl}
                   title={`${testimonial.personName} testimonial video`}
-                  frameBorder="0"
+                  style={{ border: 0 }}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 />
@@ -63,6 +63,7 @@ export default function VideoTestimonial({ testimonial }: VideoTestimonialProps)
                     src={testimonial.videoThumbnail}
                     alt={`${testimonial.personName} video thumbnail`}
                     fill
+                    priority
                     className="object-cover rounded-lg shadow-lg"
                   />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors rounded-lg flex items-center justify-center">
@@ -91,6 +92,7 @@ export default function VideoTestimonial({ testimonial }: VideoTestimonialProps)
                 src={testimonial.universityLogo}
                 alt={`${testimonial.universityName} logo`}
                 fill
+                priority
                 className="object-contain object-left dark:brightness-[1.3] dark:contrast-[0.9]"
               />
             </div>
@@ -128,9 +130,9 @@ export default function VideoTestimonial({ testimonial }: VideoTestimonialProps)
 
           {/* Metrics */}
           <div className="grid grid-cols-2 gap-4 mb-6">
-            {testimonial.metrics.map((metric) => (
+            {testimonial.metrics.map((metric, index) => (
               <motion.div
-                key={`${metric.label}-${metric.value}`}
+                key={`${testimonial.universityName}-${metric.label}-${index}`}
                 initial={{ scale: 0.95, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.3 }}

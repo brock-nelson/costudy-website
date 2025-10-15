@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
@@ -75,8 +76,8 @@ export default function UniversityShowcase({
   title = "Trusted by Leading Universities",
   subtitle = "Join prestigious institutions using CoStudy to enhance student collaboration",
 }: UniversityShowcaseProps) {
-  const featuredUniversities = universities.filter((u) => u.featured);
-  const otherUniversities = universities.filter((u) => !u.featured);
+  const featuredUniversities = useMemo(() => universities.filter((u) => u.featured), [universities]);
+  const otherUniversities = useMemo(() => universities.filter((u) => !u.featured), [universities]);
 
   return (
     <section className="py-20 bg-gradient-to-b from-white to-purple-50/30 dark:from-[#0a0a0a] dark:to-purple-900/5 relative overflow-hidden">
@@ -107,9 +108,9 @@ export default function UniversityShowcase({
         {featuredUniversities.length > 0 && (
           <div className="mb-16">
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {featuredUniversities.map((university) => (
+              {featuredUniversities.map((university, index) => (
                 <motion.div
-                  key={university.name}
+                  key={`featured-${index}-${university.name}`}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
@@ -123,6 +124,7 @@ export default function UniversityShowcase({
                         src={university.logo}
                         alt={`${university.name} logo`}
                         fill
+                        priority
                         className="object-contain dark:brightness-[1.3] dark:contrast-[0.9]"
                       />
                     </div>
@@ -169,9 +171,9 @@ export default function UniversityShowcase({
               And Many More
             </motion.h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
-              {otherUniversities.map((university) => (
+              {otherUniversities.map((university, index) => (
                 <motion.div
-                  key={university.name}
+                  key={`other-${index}-${university.name}`}
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, amount: 0.3 }}
