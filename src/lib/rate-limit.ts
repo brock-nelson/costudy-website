@@ -44,3 +44,25 @@ export function getIdentifier(request: Request): string {
              "unknown";
   return ip;
 }
+
+// Generic rate limit checker
+export async function checkRateLimit(
+  identifier: string,
+  prefix: string,
+  maxRequests: number,
+  windowMs: number
+): Promise<{ allowed: boolean; remaining: number }> {
+  const limiter = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(maxRequests, `${windowMs}ms`),
+    analytics: true,
+    prefix: `@upstash/ratelimit/${prefix}`,
+  });
+
+  const { success, remaining } = await limiter.limit(identifier);
+
+  return {
+    allowed: success,
+    remaining,
+  };
+}
