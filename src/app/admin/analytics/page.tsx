@@ -200,14 +200,14 @@ export default async function AnalyticsPage({
                   <div className="flex items-start justify-between">
                     <div>
                       <p className="font-medium text-gray-900 dark:text-white">
-                        {request.name}
+                        {request.firstName} {request.lastName}
                       </p>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
                         {request.email}
                       </p>
-                      {request.institution && (
+                      {request.universityName && (
                         <p className="text-xs text-gray-500 dark:text-gray-500">
-                          {request.institution}
+                          {request.universityName}
                         </p>
                       )}
                     </div>

@@ -3,6 +3,8 @@ import { render } from '@react-email/render';
 import React from 'react';
 import WelcomeEmail from '@/emails/welcome';
 import StudyGroupInviteEmail from '@/emails/study-group-invite';
+import DemoRequestConfirmation from '@/emails/demo-request-confirmation';
+import DemoRequestSalesNotification from '@/emails/demo-request-sales-notification';
 
 export interface SendWelcomeEmailParams {
   to: string;
@@ -35,7 +37,7 @@ export async function sendWelcomeEmail({
 
   try {
     // Render React component to HTML
-    const html = render(
+    const html = await render(
       React.createElement(WelcomeEmail, { firstName, verificationUrl })
     );
 
@@ -76,7 +78,7 @@ export async function sendStudyGroupInvite({
 
   try {
     // Render React component to HTML
-    const html = render(
+    const html = await render(
       React.createElement(StudyGroupInviteEmail, {
         recipientName,
         inviterName,
@@ -247,6 +249,100 @@ export async function sendPasswordResetEmail({
     return { success: true, data: { to } };
   } catch (error) {
     console.error('Error sending password reset email:', error);
+    return { success: false, error };
+  }
+}
+
+export interface SendDemoRequestConfirmationParams {
+  to: string;
+  firstName: string;
+  universityName: string;
+}
+
+/**
+ * Send demo request confirmation email to requester
+ */
+export async function sendDemoRequestConfirmation({
+  to,
+  firstName,
+  universityName,
+}: SendDemoRequestConfirmationParams) {
+  if (!process.env.SENDGRID_API_KEY) {
+    console.warn('⚠️ SENDGRID_API_KEY not set. Skipping email send.');
+    return { success: false, error: 'Email service not configured' };
+  }
+
+  try {
+    const html = await render(
+      React.createElement(DemoRequestConfirmation, { firstName, universityName })
+    );
+
+    const msg = {
+      to,
+      from: emailConfig.from,
+      replyTo: emailConfig.replyTo,
+      subject: 'Thanks for Requesting a CoStudy Demo!',
+      html,
+    };
+
+    await sgMail.send(msg);
+
+    console.log('✅ Demo confirmation email sent successfully to:', to);
+    return { success: true, data: { to } };
+  } catch (error) {
+    console.error('Error sending demo confirmation email:', error);
+    return { success: false, error };
+  }
+}
+
+export interface SendDemoRequestSalesNotificationParams {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  universityName: string;
+  universityWebsite?: string;
+  studentCount?: string;
+  role: string;
+  department?: string;
+  goals?: string[];
+  timeline?: string;
+  message?: string;
+  referralSource?: string;
+}
+
+/**
+ * Send demo request notification to sales team
+ */
+export async function sendDemoRequestSalesNotification(
+  params: SendDemoRequestSalesNotificationParams
+) {
+  if (!process.env.SENDGRID_API_KEY) {
+    console.warn('⚠️ SENDGRID_API_KEY not set. Skipping email send.');
+    return { success: false, error: 'Email service not configured' };
+  }
+
+  const salesEmail = process.env.SALES_EMAIL || 'sales@costudy.co';
+
+  try {
+    const html = await render(
+      React.createElement(DemoRequestSalesNotification, params)
+    );
+
+    const msg = {
+      to: salesEmail,
+      from: emailConfig.from,
+      replyTo: params.email,
+      subject: `New Demo Request: ${params.universityName}`,
+      html,
+    };
+
+    await sgMail.send(msg);
+
+    console.log('✅ Sales notification email sent successfully to:', salesEmail);
+    return { success: true, data: { to: salesEmail } };
+  } catch (error) {
+    console.error('Error sending sales notification email:', error);
     return { success: false, error };
   }
 }

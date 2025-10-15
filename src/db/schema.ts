@@ -124,13 +124,28 @@ export const rateLimits = pgTable("rate_limits", {
 // Demo requests - from /demo page form submissions
 export const demoRequests = pgTable("demo_requests", {
   id: uuid("id").defaultRandom().primaryKey(),
-  name: varchar("name", { length: 255 }).notNull(),
+  // University Info
+  universityName: varchar("university_name", { length: 255 }).notNull(),
+  universityWebsite: varchar("university_website", { length: 255 }),
+  studentCount: varchar("student_count", { length: 50 }), // <5K, 5-10K, 10-20K, 20K+
+
+  // Contact Info
+  firstName: varchar("first_name", { length: 255 }).notNull(),
+  lastName: varchar("last_name", { length: 255 }).notNull(),
   email: varchar("email", { length: 255 }).notNull(),
-  institution: varchar("institution", { length: 255 }),
-  role: varchar("role", { length: 100 }), // professor, admin, student, other
-  message: text("message"),
   phoneNumber: varchar("phone_number", { length: 50 }),
-  preferredDate: timestamp("preferred_date"),
+  role: varchar("role", { length: 100 }), // Dean, IT Director, Student Success, Other
+  department: varchar("department", { length: 255 }),
+
+  // Use Case
+  goals: jsonb("goals"), // Array of strings: Improve retention, Increase engagement, Support remote learning
+  timeline: varchar("timeline", { length: 100 }), // This semester, Next semester, Exploring
+
+  // Optional
+  message: text("message"),
+  referralSource: varchar("referral_source", { length: 255 }), // How did you hear about us?
+
+  // Status & Admin Fields
   status: varchar("status", { length: 50 }).notNull().default("pending"), // pending, contacted, scheduled, completed, declined
   ipAddress: varchar("ip_address", { length: 45 }).notNull(),
   userAgent: text("user_agent"),
