@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "intro.js/introjs.css";
 
 @variant dark (&:is(.dark *));
 
@@ -714,4 +715,94 @@ body {
 
 .animate-particle-3 {
   animation: particle-3 3.5s ease-in-out infinite 1s;
+}
+
+/* Intro.js Custom Styles */
+.customTooltip {
+  background: linear-gradient(135deg, #6B3DCB 0%, #4A12C0 100%);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(107, 61, 203, 0.3);
+  max-width: 400px;
+}
+
+.customTooltip .introjs-tooltip-header {
+  padding: 0;
+  margin: 0;
+}
+
+.customTooltip .introjs-tooltiptext {
+  padding: 24px;
+  color: white;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.customTooltip .introjs-tooltiptext h3 {
+  color: white !important;
+  margin-bottom: 8px;
+}
+
+.customTooltip .introjs-tooltipbuttons {
+  padding: 16px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.customTooltip .introjs-button {
+  background: white;
+  color: #6B3DCB;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.customTooltip .introjs-button:hover {
+  background: #f3f4f6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.customTooltip .introjs-skipbutton {
+  color: rgba(255, 255, 255, 0.8);
+  background: transparent;
+}
+
+.customTooltip .introjs-skipbutton:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.customTooltip .introjs-progressbar {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.customTooltip .introjs-progress {
+  background: white;
+  border-radius: 10px;
+}
+
+.customTooltip .introjs-bullets ul li a {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.customTooltip .introjs-bullets ul li a.active {
+  background: white;
+}
+
+.customHighlight {
+  border: 2px solid #6B3DCB;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 40px rgba(107, 61, 203, 0.8);
+  border-radius: 12px;
+}
+
+/* Dark mode adjustments for Intro.js */
+.dark .customTooltip {
+  background: linear-gradient(135deg, #8B5CF6 0%, #6B3DCB 100%);
+}
+
+.dark .customHighlight {
+  border-color: #A78BFA;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.85), 0 0 40px rgba(167, 139, 250, 0.8);
 }

@@ -1,16 +1,23 @@
-import { Metadata } from "next";
-import CalEmbed from "@/components/ui/CalEmbed";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Schedule a Demo - CoStudy",
-  description: "See CoStudy in action. Schedule a personalized demo to explore how CoStudy can transform collaboration in your classroom.",
-};
+import { useState } from "react";
+import CalEmbed from "@/components/ui/CalEmbed";
+import InteractiveDemo from "@/components/demo/InteractiveDemo";
+import DemoTour from "@/components/demo/DemoTour";
 
 export default function Demo() {
+  const [tourActive, setTourActive] = useState(false);
+
+  const startTour = () => {
+    setTourActive(true);
+  };
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
-      {/* Hero Section - Playful & Creative */}
-      <section className="relative bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 dark:from-purple-700 dark:via-pink-700 dark:to-orange-600 text-white py-20 overflow-hidden">
+      <DemoTour enabled={tourActive} onExit={() => setTourActive(false)} />
+
+      {/* Hero Section - Interactive Demo Focus */}
+      <section id="demo-welcome" className="relative bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 dark:from-purple-700 dark:via-pink-700 dark:to-orange-600 text-white py-20 overflow-hidden">
         {/* Animated playful background elements */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {/* Floating geometric shapes */}
@@ -44,17 +51,50 @@ export default function Demo() {
               </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg">
-              See CoStudy in Action
+              Experience CoStudy Yourself
             </h1>
-            <p className="text-xl text-white/95 leading-relaxed drop-shadow-md">
-              Schedule a personalized demo to explore how CoStudy can transform
-              student collaboration in your classroom or institution! 🚀
+            <p className="text-xl text-white/95 leading-relaxed drop-shadow-md mb-8">
+              Try our interactive demo or schedule a personalized walkthrough with our team! 🚀
+            </p>
+            <button
+              onClick={startTour}
+              className="bg-white text-purple-600 px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 inline-flex items-center gap-2"
+            >
+              <span>🎯</span>
+              Start Interactive Tour
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Interactive Demo Section */}
+      <section className="py-20 bg-gradient-to-b from-white dark:from-[#0a0a0a] via-purple-50/20 dark:via-purple-900/10 to-white dark:to-[#0a0a0a]">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-gradient-to-r from-purple-50 dark:from-purple-900/30 to-blue-50 dark:to-blue-900/30 border border-purple-200/50 dark:border-purple-700/50">
+              <span className="text-xl">🎮</span>
+              <span className="text-sm font-medium text-[#4A12C0] dark:text-purple-300">Try It Now</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-[#374045] dark:text-[#E9EEFF]">
+              Interactive Product Demo
+            </h2>
+            <p className="text-lg text-[#5E6E76] dark:text-[#A0AEC0] max-w-2xl mx-auto leading-relaxed">
+              Click through the tabs below to explore CoStudy&apos;s key features with real sample data.
+              Or click the button above to take a guided tour!
+            </p>
+          </div>
+
+          <InteractiveDemo />
+
+          <div className="text-center mt-12">
+            <p className="text-sm text-[#92A2AA] dark:text-[#A0AEC0] mb-4">
+              💡 This is a sample environment with demo data
             </p>
           </div>
         </div>
       </section>
 
-      {/* Benefits of Demo Section - Playful & Animated */}
+      {/* Features Showcase Section - Playful & Animated */}
       <section className="container mx-auto px-4 py-16 relative overflow-hidden">
         {/* Playful background elements */}
         <div className="absolute inset-0 pointer-events-none">
@@ -73,10 +113,10 @@ export default function Demo() {
         </div>
 
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-[#6B3DCB] dark:text-[#E9EEFF]">
-          What You&apos;ll Learn
+          Features You&apos;ll Explore
         </h2>
         <p className="text-center text-[#5E6E76] dark:text-[#A0AEC0] mb-12 max-w-2xl mx-auto">
-          Get ready for an exciting journey through CoStudy&apos;s superpowers! 🎉
+          Discover the powerful tools that make CoStudy the leading collaboration platform! 🎉
         </p>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12 relative">
@@ -155,7 +195,7 @@ export default function Demo() {
       </section>
 
       {/* Demo Scheduling Calendar */}
-      <section className="py-16 bg-gradient-to-b from-white dark:from-[#0a0a0a] via-purple-50/20 dark:via-purple-900/10 to-white dark:to-[#0a0a0a]">
+      <section id="demo-cta" className="py-16 bg-gradient-to-b from-white dark:from-[#0a0a0a] via-purple-50/20 dark:via-purple-900/10 to-white dark:to-[#0a0a0a]">
         <div className="container mx-auto px-4">
           <div className="max-w-5xl mx-auto">
             {/* Section Header */}
