@@ -35,7 +35,7 @@ export async function sendWelcomeEmail({
 
   try {
     // Render React component to HTML
-    const html = render(
+    const html = await render(
       React.createElement(WelcomeEmail, { firstName, verificationUrl })
     );
 
@@ -76,7 +76,7 @@ export async function sendStudyGroupInvite({
 
   try {
     // Render React component to HTML
-    const html = render(
+    const html = await render(
       React.createElement(StudyGroupInviteEmail, {
         recipientName,
         inviterName,
