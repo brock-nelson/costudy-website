@@ -8,6 +8,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import CookieConsent from "@/components/ui/CookieConsent";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -96,6 +97,7 @@ export default function RootLayout({
           <Header />
           <main id="main-content" tabIndex={-1}>{children}</main>
           <Footer />
+          <CookieConsent />
           <Analytics />
           <SpeedInsights />
         </ErrorBoundary>

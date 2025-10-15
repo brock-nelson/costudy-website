@@ -123,18 +123,30 @@ export default function Footer() {
             &copy; {currentYear} CoStudy. All rights reserved.
           </p>
 
-          <div className="flex space-x-6">
+          <div className="flex flex-wrap gap-6">
             <Link
-              href="/privacy"
+              href="/legal/privacy"
               className="text-gray-400 dark:text-[#A0AEC0] hover:text-white dark:hover:text-gray-300 text-sm transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
-              href="/terms"
+              href="/legal/terms"
               className="text-gray-400 dark:text-[#A0AEC0] hover:text-white dark:hover:text-gray-300 text-sm transition-colors"
             >
               Terms of Service
+            </Link>
+            <Link
+              href="/legal/cookies"
+              className="text-gray-400 dark:text-[#A0AEC0] hover:text-white dark:hover:text-gray-300 text-sm transition-colors"
+            >
+              Cookie Policy
+            </Link>
+            <Link
+              href="/legal/dpa"
+              className="text-gray-400 dark:text-[#A0AEC0] hover:text-white dark:hover:text-gray-300 text-sm transition-colors"
+            >
+              DPA
             </Link>
           </div>
         </div>
