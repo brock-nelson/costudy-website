@@ -3,6 +3,8 @@ import { Metadata } from "next";
 import DynamicDots from "@/components/ui/DynamicDots";
 import GradientText from "@/components/ui/GradientText";
 import SchoolLogoScroller from "@/components/ui/SchoolLogoScroller";
+import StatsBar from "@/components/ui/StatsBar";
+import Testimonials from "@/components/ui/Testimonials";
 
 export const metadata: Metadata = {
   title: "CoStudy - Transform Student Collaboration & Teamwork",
@@ -100,6 +102,9 @@ export default function Home() {
 
       {/* School Logo Scroller */}
       <SchoolLogoScroller />
+
+      {/* Stats Bar */}
+      <StatsBar />
 
       {/* Transition element */}
       <div className="relative h-20 overflow-hidden">
@@ -227,6 +232,16 @@ export default function Home() {
         <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-300/20 dark:via-purple-600/30 to-transparent"></div>
         <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-2 h-2 bg-purple-400/40 dark:bg-purple-500/60 rounded-full"></div>
         <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-2 h-2 bg-blue-400/40 dark:bg-blue-500/60 rounded-full"></div>
+      </div>
+
+      {/* Testimonials Section */}
+      <Testimonials />
+
+      {/* Transition element between sections */}
+      <div className="relative h-16 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-[#0a0a0a] via-blue-50/10 dark:via-blue-900/10 to-white dark:to-[#0a0a0a]"></div>
+        <div className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-blue-300/20 dark:via-blue-600/30 to-transparent"></div>
+        <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-purple-300/20 dark:via-purple-600/30 to-transparent"></div>
       </div>
 
       {/* CTA Section */}
