@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { Feature } from "@/db/schema";
+import { trackFeatureVote } from "@/lib/analytics";
 
 interface FeatureVotingListProps {
   features: Feature[];
@@ -112,6 +113,19 @@ function FeatureCard({ feature }: { feature: Feature }) {
       const data = await response.json();
 
       if (response.ok) {
+        // Track successful feature vote
+        try {
+          trackFeatureVote({
+            featureId: feature.id,
+            featureName: feature.title,
+          });
+        } catch (error) {
+          // Silent fail - don't break user flow if analytics fails
+          if (process.env.NODE_ENV === "development") {
+            console.error("Analytics tracking error:", error);
+          }
+        }
+
         setHasVoted(true);
         setVoteCount(data.voteCount);
         setShowVoteForm(false);
@@ -122,7 +136,9 @@ function FeatureCard({ feature }: { feature: Feature }) {
       }
     } catch (err) {
       setError("An error occurred. Please try again.");
-      console.error("Error voting:", err);
+      if (process.env.NODE_ENV === "development") {
+        console.error("Error voting:", err);
+      }
     } finally {
       setIsVoting(false);
     }

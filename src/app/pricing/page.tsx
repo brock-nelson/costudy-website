@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Metadata } from "next";
+import PageViewTracker from "@/components/analytics/PageViewTracker";
 
 export const metadata: Metadata = {
   title: "Pricing - CoStudy | Affordable Plans for Students",
@@ -76,6 +77,13 @@ const pricingTiers = [
 export default function PricingPage() {
   return (
     <div className="min-h-screen bg-white dark:bg-[#121212]">
+      <PageViewTracker
+        eventName="pricing_view"
+        eventParams={{
+          event_category: "engagement",
+          event_label: "pricing_page",
+        }}
+      />
       {/* Hero Section */}
       <section className="py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-purple-50/30 via-transparent to-transparent dark:from-purple-900/10 pointer-events-none"></div>

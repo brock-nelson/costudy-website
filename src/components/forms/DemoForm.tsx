@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { trackDemoRequest, getStoredUTMParameters } from "@/lib/analytics";
 
 const demoSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -49,6 +50,23 @@ export default function DemoForm() {
       const result = await response.json();
 
       if (response.ok && result.success) {
+        // Track successful demo request conversion
+        try {
+          const utmParams = getStoredUTMParameters();
+          trackDemoRequest({
+            role: data.role,
+            institution: data.institution,
+            teamSize: data.teamSize,
+            value: 500, // Estimated lead value
+            ...utmParams,
+          });
+        } catch (error) {
+          // Silent fail - don't break user flow if analytics fails
+          if (process.env.NODE_ENV === "development") {
+            console.error("Analytics tracking error:", error);
+          }
+        }
+
         setSubmitStatus({
           type: "success",
           message: result.message,

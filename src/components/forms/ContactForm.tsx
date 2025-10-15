@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { trackContactSubmit, getStoredUTMParameters } from "@/lib/analytics";
 
 const contactSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -48,6 +49,22 @@ export default function ContactForm() {
       const result = await response.json();
 
       if (response.ok && result.success) {
+        // Track successful contact form submission
+        try {
+          const utmParams = getStoredUTMParameters();
+          trackContactSubmit({
+            role: data.role,
+            institution: data.institution,
+            value: 100, // Estimated lead value
+            ...utmParams,
+          });
+        } catch (error) {
+          // Silent fail - don't break user flow if analytics fails
+          if (process.env.NODE_ENV === "development") {
+            console.error("Analytics tracking error:", error);
+          }
+        }
+
         setSubmitStatus({
           type: "success",
           message: result.message,

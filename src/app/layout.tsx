@@ -8,6 +8,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/next";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
+import MicrosoftClarity from "@/components/analytics/MicrosoftClarity";
+import UTMTracker from "@/components/analytics/UTMTracker";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -80,6 +82,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <GoogleAnalytics />
+      <MicrosoftClarity />
       <body className={`${inter.variable} font-sans antialiased preload`}>
         <script
           dangerouslySetInnerHTML={{
@@ -92,6 +95,7 @@ export default function RootLayout({
           }}
         />
         <ErrorBoundary>
+          <UTMTracker />
           <SkipToContent />
           <Header />
           <main id="main-content" tabIndex={-1}>{children}</main>

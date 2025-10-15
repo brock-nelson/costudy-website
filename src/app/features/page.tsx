@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { db, features } from "@/db";
 import { desc, inArray } from "drizzle-orm";
 import FeatureVotingList from "@/components/features/FeatureVotingList";
+import PageViewTracker from "@/components/analytics/PageViewTracker";
 
 export const metadata: Metadata = {
   title: "CoStudy Feature Roadmap - Vote on Upcoming Features",
@@ -18,6 +19,13 @@ export default async function FeaturesPage() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#121212]">
+      <PageViewTracker
+        eventName="feature_view"
+        eventParams={{
+          event_category: "engagement",
+          event_label: "features_page",
+        }}
+      />
       {/* Hero Section */}
       <section className="bg-[#EDE7F9] dark:bg-[#1a1a1a] py-20">
         <div className="container mx-auto px-4">

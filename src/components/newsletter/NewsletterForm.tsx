@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { trackNewsletterSignup } from "@/lib/analytics";
 
 interface NewsletterFormProps {
   source?: string;
@@ -37,6 +38,19 @@ export default function NewsletterForm({
       const data = await response.json();
 
       if (response.ok) {
+        // Track successful newsletter signup
+        try {
+          trackNewsletterSignup({
+            source,
+            location: typeof window !== "undefined" ? window.location.pathname : undefined,
+          });
+        } catch (error) {
+          // Silent fail - don't break user flow if analytics fails
+          if (process.env.NODE_ENV === "development") {
+            console.error("Analytics tracking error:", error);
+          }
+        }
+
         setMessage({ type: "success", text: data.message });
         setEmail("");
         setName("");
@@ -45,7 +59,9 @@ export default function NewsletterForm({
       }
     } catch (err) {
       setMessage({ type: "error", text: "An error occurred. Please try again." });
-      console.error("Newsletter subscription error:", err);
+      if (process.env.NODE_ENV === "development") {
+        console.error("Newsletter subscription error:", err);
+      }
     } finally {
       setIsSubmitting(false);
     }
