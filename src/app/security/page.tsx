@@ -244,6 +244,10 @@ export default function SecurityPage() {
               {
                 title: "Right to Deletion",
                 description: "Users can request complete deletion of their data at any time"
+              },
+              {
+                title: "Data Residency Options",
+                description: "Choose where your data is stored with regional data center options in the US, EU, and other global regions to meet local compliance requirements"
               }
             ]}
           />
