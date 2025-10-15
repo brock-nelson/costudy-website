@@ -3,6 +3,7 @@ import { render } from '@react-email/render';
 import React from 'react';
 import WelcomeEmail from '@/emails/welcome';
 import StudyGroupInviteEmail from '@/emails/study-group-invite';
+import NewsletterWelcomeEmail from '@/emails/newsletter-welcome';
 
 export interface SendWelcomeEmailParams {
   to: string;
@@ -35,7 +36,7 @@ export async function sendWelcomeEmail({
 
   try {
     // Render React component to HTML
-    const html = render(
+    const html = await render(
       React.createElement(WelcomeEmail, { firstName, verificationUrl })
     );
 
@@ -76,7 +77,7 @@ export async function sendStudyGroupInvite({
 
   try {
     // Render React component to HTML
-    const html = render(
+    const html = await render(
       React.createElement(StudyGroupInviteEmail, {
         recipientName,
         inviterName,
@@ -247,6 +248,45 @@ export async function sendPasswordResetEmail({
     return { success: true, data: { to } };
   } catch (error) {
     console.error('Error sending password reset email:', error);
+    return { success: false, error };
+  }
+}
+
+/**
+ * Send newsletter welcome email
+ */
+export async function sendNewsletterWelcomeEmail({
+  to,
+  firstName,
+}: {
+  to: string;
+  firstName?: string;
+}) {
+  if (!process.env.SENDGRID_API_KEY) {
+    console.warn('⚠️ SENDGRID_API_KEY not set. Skipping email send.');
+    return { success: false, error: 'Email service not configured' };
+  }
+
+  try {
+    // Render React component to HTML
+    const html = await render(
+      React.createElement(NewsletterWelcomeEmail, { firstName })
+    );
+
+    const msg = {
+      to,
+      from: emailConfig.from,
+      replyTo: emailConfig.replyTo,
+      subject: 'Welcome to CoStudy Insights! 🎓',
+      html,
+    };
+
+    await sgMail.send(msg);
+
+    console.log('✅ Newsletter welcome email sent successfully to:', to);
+    return { success: true, data: { to } };
+  } catch (error) {
+    console.error('Error sending newsletter welcome email:', error);
     return { success: false, error };
   }
 }

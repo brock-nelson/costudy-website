@@ -1,4 +1,5 @@
 import Link from "next/link";
+import NewsletterForm from "@/components/newsletter/NewsletterForm";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -6,6 +7,17 @@ export default function Footer() {
   return (
     <footer className="bg-[#2a2f33] dark:bg-[#0a0a0a] text-white border-t border-gray-700 dark:border-gray-800">
       <div className="container mx-auto px-4 py-12">
+        {/* Newsletter Section */}
+        <div className="mb-12 pb-8 border-b border-gray-600 dark:border-gray-800">
+          <div className="max-w-2xl">
+            <h3 className="text-xl font-bold mb-2 text-white">Stay Updated</h3>
+            <p className="text-gray-300 dark:text-[#A0AEC0] mb-4">
+              Get weekly insights on student collaboration and EdTech trends.
+            </p>
+            <NewsletterForm source="footer" variant="minimal" />
+          </div>
+        </div>
+
         <div className="grid md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>

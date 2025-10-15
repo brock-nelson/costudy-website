@@ -3,20 +3,7 @@ import { db, users } from '@/db';
 import { eq } from 'drizzle-orm';
 import crypto from 'crypto';
 import { sendPasswordResetEmail } from '@/lib/email-service';
-
-// In a production app, you'd store reset tokens in the database with expiration
-// For now, we'll use a simple in-memory store (this will reset on server restart)
-const passwordResetTokens = new Map<string, { userId: string; expires: number }>();
-
-// Clean up expired tokens periodically
-setInterval(() => {
-  const now = Date.now();
-  for (const [token, data] of passwordResetTokens.entries()) {
-    if (data.expires < now) {
-      passwordResetTokens.delete(token);
-    }
-  }
-}, 60000); // Clean every minute
+import { passwordResetTokens } from '@/lib/password-reset-tokens';
 
 export async function POST(request: NextRequest) {
   try {
@@ -96,5 +83,3 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Export the tokens map so reset-password route can access it
-export { passwordResetTokens };

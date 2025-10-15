@@ -3,11 +3,23 @@ import { z } from "zod";
 import { db, emailSubscriptions } from "@/db";
 import { eq } from "drizzle-orm";
 import { newsletterLimiter, getIdentifier } from "@/lib/rate-limit";
+import sgClient from "@sendgrid/client";
+import { sendNewsletterWelcomeEmail } from "@/lib/email-service";
+
+// Initialize SendGrid client
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+if (SENDGRID_API_KEY) {
+  sgClient.setApiKey(SENDGRID_API_KEY);
+}
 
 const subscribeSchema = z.object({
   email: z.string().email("Invalid email address"),
   name: z.string().optional(),
   source: z.string().default("newsletter-form"),
+  firstName: z.string().optional(),
+  institution: z.string().optional(),
+  role: z.string().optional(),
+  interests: z.array(z.string()).optional(),
 });
 
 export async function POST(request: NextRequest) {
@@ -77,9 +89,53 @@ export async function POST(request: NextRequest) {
       confirmedAt: new Date(), // Auto-confirm for now, can add double opt-in later
     });
 
+    // Add to SendGrid Marketing Campaigns contact list
+    if (SENDGRID_API_KEY && process.env.SENDGRID_NEWSLETTER_LIST_ID) {
+      try {
+        const contactData = {
+          list_ids: [process.env.SENDGRID_NEWSLETTER_LIST_ID],
+          contacts: [
+            {
+              email: validatedData.email,
+              first_name: validatedData.firstName || validatedData.name?.split(" ")[0] || "",
+              last_name: validatedData.name?.split(" ").slice(1).join(" ") || "",
+              custom_fields: {
+                institution: validatedData.institution || "",
+                role: validatedData.role || "",
+                interests: validatedData.interests?.join(", ") || "",
+                source: validatedData.source,
+              },
+            },
+          ],
+        };
+
+        await sgClient.request({
+          method: "PUT",
+          url: "/v3/marketing/contacts",
+          body: contactData,
+        });
+
+        console.log("✅ Contact added to SendGrid list:", validatedData.email);
+      } catch (sgError) {
+        console.error("SendGrid Marketing API error:", sgError);
+        // Continue even if SendGrid fails - we still have the DB record
+      }
+    }
+
+    // Send welcome email
+    try {
+      await sendNewsletterWelcomeEmail({
+        to: validatedData.email,
+        firstName: validatedData.firstName || validatedData.name?.split(" ")[0],
+      });
+    } catch (emailError) {
+      console.error("Welcome email error:", emailError);
+      // Continue even if email fails - subscription is still active
+    }
+
     return NextResponse.json({
       success: true,
-      message: "Thanks for subscribing! You'll receive our latest updates.",
+      message: "Thanks for subscribing! Check your email for a welcome message.",
     });
   } catch (error) {
     if (error instanceof z.ZodError) {

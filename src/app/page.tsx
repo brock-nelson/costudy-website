@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import DynamicDots from "@/components/ui/DynamicDots";
 import GradientText from "@/components/ui/GradientText";
 import SchoolLogoScroller from "@/components/ui/SchoolLogoScroller";
+import NewsletterForm from "@/components/newsletter/NewsletterForm";
 
 export const metadata: Metadata = {
   title: "CoStudy - Transform Student Collaboration & Teamwork",
@@ -227,6 +228,35 @@ export default function Home() {
         <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-300/20 dark:via-purple-600/30 to-transparent"></div>
         <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-2 h-2 bg-purple-400/40 dark:bg-purple-500/60 rounded-full"></div>
         <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-2 h-2 bg-blue-400/40 dark:bg-blue-500/60 rounded-full"></div>
+      </div>
+
+      {/* Newsletter Section */}
+      <section className="py-20 relative overflow-hidden bg-gradient-to-br from-purple-50/50 dark:from-purple-950/20 via-white dark:via-[#0a0a0a] to-blue-50/50 dark:to-blue-950/20" aria-labelledby="newsletter-heading">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-10 right-1/4 w-32 h-32 bg-gradient-to-br from-purple-200/20 to-transparent rounded-full blur-2xl"></div>
+          <div className="absolute bottom-10 left-1/4 w-40 h-40 bg-gradient-to-tl from-blue-200/20 to-transparent rounded-full blur-2xl"></div>
+        </div>
+        <div className="container mx-auto px-4 relative">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 id="newsletter-heading" className="text-3xl md:text-4xl font-bold mb-4 text-[#374045] dark:text-[#E9EEFF]">
+              Stay Updated on Higher Ed Insights
+            </h2>
+            <p className="text-lg text-[#5E6E76] dark:text-[#A0AEC0] mb-8">
+              Get weekly insights on student success strategies, EdTech trends, and university case studies delivered to your inbox every Wednesday.
+            </p>
+            <div className="max-w-md mx-auto">
+              <NewsletterForm source="homepage" variant="minimal" />
+            </div>
+            <p className="text-sm text-[#718096] dark:text-[#A0AEC0] mt-4">
+              Join 500+ university decision makers already receiving our newsletter
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Transition element between sections */}
+      <div className="relative h-16 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-white dark:from-[#0a0a0a] via-lavender/5 dark:via-purple-900/5 to-white dark:to-[#0a0a0a]"></div>
       </div>
 
       {/* CTA Section */}

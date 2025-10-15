@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db, users } from '@/db';
 import { eq } from 'drizzle-orm';
 import bcrypt from 'bcryptjs';
-import { passwordResetTokens } from '../forgot-password/route';
+import { passwordResetTokens } from '@/lib/password-reset-tokens';
 
 export async function POST(request: NextRequest) {
   try {
