@@ -1,59 +1,11 @@
 import Link from "next/link";
 import { Metadata } from "next";
+import { blogPosts } from "./blogData";
 
 export const metadata: Metadata = {
-  title: "Blog - CoStudy | Student Success Strategies",
-  description: "Proven strategies for study groups, time management, exam prep, and academic success. Research-backed tips for college students.",
+  title: "Blog - CoStudy | Higher Education Insights & Student Success",
+  description: "Expert insights on student retention, peer learning, LMS integration, and student success strategies for higher education institutions.",
 };
-
-// Blog posts data
-const blogPosts = [
-  {
-    slug: "how-to-form-effective-study-groups-college-guide",
-    title: "How to Form Effective Study Groups in College: A Complete Guide",
-    description: "Learn proven strategies to create and manage successful study groups that boost grades and reduce stress.",
-    category: "Study Tips",
-    readingTime: "8 min read",
-    publishDate: "2025-01-11",
-    tags: ["study groups", "collaboration", "productivity"]
-  },
-  {
-    slug: "remote-learning-strategies-college-students",
-    title: "10 Remote Learning Strategies That Actually Work for College Students",
-    description: "Master online learning with these 10 proven strategies. From staying focused to building connections.",
-    category: "Online Learning",
-    readingTime: "7 min read",
-    publishDate: "2025-01-11",
-    tags: ["remote learning", "online education", "productivity"]
-  },
-  {
-    slug: "time-management-college-students-system",
-    title: "Time Management for College Students: A Practical System That Works",
-    description: "Stop feeling overwhelmed. Learn a proven time management system designed for college students.",
-    category: "Productivity",
-    readingTime: "6 min read",
-    publishDate: "2025-01-11",
-    tags: ["time management", "organization", "productivity"]
-  },
-  {
-    slug: "exam-preparation-strategies-college-students",
-    title: "Exam Preparation: Science-Backed Strategies for College Students",
-    description: "Stop cramming and start mastering. Learn evidence-based exam prep strategies that improve retention.",
-    category: "Study Tips",
-    readingTime: "8 min read",
-    publishDate: "2025-01-11",
-    tags: ["exam prep", "test taking", "study strategies"]
-  },
-  {
-    slug: "note-taking-methods-college-students",
-    title: "5 Note-Taking Methods Every College Student Should Know",
-    description: "Stop writing everything down. Learn the best note-taking methods for different classes.",
-    category: "Study Skills",
-    readingTime: "7 min read",
-    publishDate: "2025-01-11",
-    tags: ["note-taking", "study methods", "learning strategies"]
-  }
-];
 
 export default function Blog() {
   return (
@@ -64,10 +16,10 @@ export default function Blog() {
         <div className="container mx-auto px-4 relative">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-5xl font-bold mb-6 text-[#2D3748] dark:text-[#E9EEFF]">
-              Student Success Blog
+              Higher Education Insights
             </h1>
             <p className="text-xl text-[#4A5568] dark:text-[#A0AEC0]">
-              Evidence-based strategies for study groups, time management, exam prep, and academic success.
+              Research-backed strategies for student retention, peer learning, and institutional success.
             </p>
           </div>
         </div>
@@ -98,7 +50,7 @@ export default function Blog() {
                   </h2>
 
                   <p className="text-[#4A5568] dark:text-[#A0AEC0] mb-4 line-clamp-3">
-                    {post.description}
+                    {post.excerpt}
                   </p>
 
                   <div className="flex items-center justify-between">
