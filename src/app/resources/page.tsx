@@ -73,15 +73,20 @@ export default function Resources() {
             <div className="mt-4 text-sm text-blue-600 dark:text-blue-400 font-semibold">Coming Soon</div>
           </div>
 
-          <div className="group relative p-8 rounded-2xl border border-purple-100 dark:border-[#404040] hover:border-purple-200 dark:hover:border-purple-700 bg-gradient-to-br from-white to-purple-50/30 dark:from-gray-800 dark:to-purple-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
+          <Link href="/case-studies" className="group relative p-8 rounded-2xl border border-purple-100 dark:border-[#404040] hover:border-purple-200 dark:hover:border-purple-700 bg-gradient-to-br from-white to-purple-50/30 dark:from-gray-800 dark:to-purple-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
             <div className="absolute top-0 right-0 w-20 h-20 bg-purple-500/5 dark:bg-purple-500/10 rounded-bl-[100px] rounded-tr-2xl"></div>
             <div className="text-4xl mb-4">📊</div>
             <h3 className="text-xl font-bold mb-3 text-[#2D3748] dark:text-[#E9EEFF] relative">Case Studies</h3>
             <p className="text-[#4A5568] dark:text-[#A0AEC0] relative leading-relaxed">
               Real-world examples of successful team-based learning implementations.
             </p>
-            <div className="mt-4 text-sm text-purple-600 dark:text-purple-400 font-semibold">Coming Soon</div>
-          </div>
+            <div className="mt-4 flex items-center gap-2 text-sm text-purple-600 dark:text-purple-400 font-semibold">
+              View Case Studies
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </div>
+          </Link>
 
           <div className="group relative p-8 rounded-2xl border border-green-100 dark:border-[#404040] hover:border-green-200 dark:hover:border-green-700 bg-gradient-to-br from-white to-green-50/30 dark:from-gray-800 dark:to-green-900/10 hover:shadow-xl hover:scale-[1.02] transition-all duration-300">
             <div className="absolute top-0 right-0 w-20 h-20 bg-green-500/5 dark:bg-green-500/10 rounded-bl-[100px] rounded-tr-2xl"></div>

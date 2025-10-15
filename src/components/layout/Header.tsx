@@ -74,6 +74,13 @@ export default function Header() {
             </Link>
 
             <Link
+              href="/case-studies"
+              className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-colors"
+            >
+              Case Studies
+            </Link>
+
+            <Link
               href="/about"
               className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-colors"
             >
@@ -166,6 +173,14 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Resources
+            </Link>
+
+            <Link
+              href="/case-studies"
+              className="block px-4 py-2 text-[#374045] hover:bg-[#EDE7F9] hover:text-[#4A12C0] rounded transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Case Studies
             </Link>
 
             <Link
