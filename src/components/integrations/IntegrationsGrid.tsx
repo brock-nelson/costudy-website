@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import IntegrationCard from "./IntegrationCard";
-import { Integration, IntegrationCategory, integrations, integrationCategories } from "@/lib/integrations";
+import { IntegrationCategory, integrations, integrationCategories } from "@/lib/integrations";
 
 export default function IntegrationsGrid() {
   const [searchQuery, setSearchQuery] = useState("");
