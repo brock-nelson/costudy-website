@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: `${type} email sent successfully to ${to}`,
-      emailId: result.data?.id,
+      emailId: result.data && typeof result.data === 'object' && 'id' in result.data ? result.data.id : undefined,
     });
 
   } catch (error) {

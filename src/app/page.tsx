@@ -1,8 +1,27 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import DynamicDots from "@/components/ui/DynamicDots";
+import dynamic from "next/dynamic";
 import GradientText from "@/components/ui/GradientText";
-import SchoolLogoScroller from "@/components/ui/SchoolLogoScroller";
+
+// Lazy load heavy components to reduce initial bundle size
+const DynamicDots = dynamic(() => import("@/components/ui/DynamicDots"), {
+  loading: () => <div className="absolute inset-0" />,
+});
+
+const SchoolLogoScroller = dynamic(() => import("@/components/ui/SchoolLogoScroller"), {
+  loading: () => (
+    <div className="py-16 bg-gradient-to-r from-purple-100/50 via-blue-100/40 to-purple-100/50">
+      <div className="container mx-auto px-4">
+        <p className="text-center text-base font-bold text-gray-700 mb-10">Trusted by Leading Institutions</p>
+        <div className="flex justify-center gap-8">
+          <div className="w-32 h-16 bg-gray-200 rounded animate-pulse" />
+          <div className="w-32 h-16 bg-gray-200 rounded animate-pulse" />
+          <div className="w-32 h-16 bg-gray-200 rounded animate-pulse" />
+        </div>
+      </div>
+    </div>
+  ),
+});
 
 export const metadata: Metadata = {
   title: "CoStudy - Transform Student Collaboration & Teamwork",

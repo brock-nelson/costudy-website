@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { db, releases } from "@/db";
 import { desc, eq } from "drizzle-orm";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "CoStudy Changelog - Latest Updates & Release Notes",
@@ -148,12 +149,14 @@ function ReleaseCard({ release, isLatest }: { release: typeof releases.$inferSel
 
         {/* Featured Image */}
         {release.featuredImageUrl && (
-          <div className="mb-4 rounded-lg overflow-hidden">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+          <div className="mb-4 rounded-lg overflow-hidden relative w-full aspect-video">
+            <Image
               src={release.featuredImageUrl}
               alt={release.title}
-              className="w-full h-auto"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover"
+              loading="lazy"
             />
           </div>
         )}

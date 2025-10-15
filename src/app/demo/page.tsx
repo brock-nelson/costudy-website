@@ -1,5 +1,17 @@
 import { Metadata } from "next";
-import CalEmbed from "@/components/ui/CalEmbed";
+import dynamic from "next/dynamic";
+
+// Lazy load the calendar embed to reduce initial bundle size
+const CalEmbed = dynamic(() => import("@/components/ui/CalEmbed"), {
+  loading: () => (
+    <div className="min-h-[700px] flex items-center justify-center">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
+        <p className="text-gray-600 dark:text-gray-400">Loading calendar...</p>
+      </div>
+    </div>
+  ),
+});
 
 export const metadata: Metadata = {
   title: "Schedule a Demo - CoStudy",

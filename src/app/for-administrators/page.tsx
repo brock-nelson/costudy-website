@@ -1,6 +1,23 @@
 import Link from "next/link";
 import { Metadata } from "next";
-import ROICalculator from "@/components/calculators/ROICalculator";
+import dynamic from "next/dynamic";
+
+// Lazy load the ROI Calculator to reduce initial bundle size
+const ROICalculator = dynamic(() => import("@/components/calculators/ROICalculator"), {
+  loading: () => (
+    <div className="max-w-3xl mx-auto p-8 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+      <div className="animate-pulse">
+        <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
+        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-8"></div>
+        <div className="space-y-4">
+          <div className="h-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          <div className="h-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          <div className="h-24 bg-gray-200 dark:bg-gray-700 rounded"></div>
+        </div>
+      </div>
+    </div>
+  ),
+});
 
 export const metadata: Metadata = {
   title: "CoStudy for Administrators - Measure Student Success & ROI",

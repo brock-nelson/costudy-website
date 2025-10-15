@@ -114,6 +114,8 @@ export default function SchoolLogoScroller() {
                   width={160}
                   height={96}
                   className="object-contain max-h-14 w-auto dark:brightness-[1.3] dark:contrast-[0.9] dark:saturate-[0.8] dark:opacity-90"
+                  loading="lazy"
+                  quality={85}
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
