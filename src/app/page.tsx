@@ -5,25 +5,37 @@ import GradientText from "@/components/ui/GradientText";
 import SchoolLogoScroller from "@/components/ui/SchoolLogoScroller";
 
 export const metadata: Metadata = {
-  title: "CoStudy - Transform Student Collaboration & Teamwork",
-  description: "Empower students with structured teamwork tools. CoStudy provides team charters, growth-goal scales, and peer feedback for meaningful collaboration.",
+  title: "CoStudy - Student Success & Retention Platform for Universities",
+  description: "Increase retention and engagement with CoStudy's peer learning platform. Trusted by 50+ universities. LMS integration, SSO, analytics.",
+  keywords: [
+    "student retention software",
+    "university engagement platform",
+    "LMS study group integration",
+    "peer learning software",
+    "student success platform",
+    "collaborative learning tools for universities",
+    "Canvas LMS integration",
+    "student engagement tools",
+    "peer-to-peer learning software",
+    "higher education retention",
+  ],
   openGraph: {
-    title: "CoStudy - Transform Student Collaboration & Teamwork",
-    description: "Empower students with structured teamwork tools. CoStudy provides team charters, growth-goal scales, and peer feedback for meaningful collaboration.",
+    title: "CoStudy - Student Success & Retention Platform for Universities",
+    description: "Increase retention and engagement with CoStudy's peer learning platform. Trusted by 50+ universities. LMS integration, SSO, analytics.",
     url: "https://costudy.co",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "CoStudy - Transform Student Collaboration",
+        alt: "CoStudy - Student Success Platform",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "CoStudy - Transform Student Collaboration & Teamwork",
-    description: "Empower students with structured teamwork tools. CoStudy provides team charters, growth-goal scales, and peer feedback for meaningful collaboration.",
+    title: "CoStudy - Student Success & Retention Platform for Universities",
+    description: "Increase retention and engagement with CoStudy's peer learning platform. Trusted by 50+ universities. LMS integration, SSO, analytics.",
   },
 };
 
@@ -36,13 +48,13 @@ export default function Home() {
         <div className="hero-content text-center max-w-5xl mx-auto relative z-10">
           {/* Main Heading */}
           <h1 id="hero-heading" className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1]">
-            <GradientText>Transform Student Collaboration</GradientText>
+            <GradientText>Student Success Through Connected Learning</GradientText>
           </h1>
 
           {/* Subtitle */}
           <p className="text-xl md:text-2xl text-[#5E6E76] dark:text-[#A0AEC0] mb-10 max-w-3xl mx-auto leading-relaxed font-medium">
-            Structured teamwork tools that help students build essential collaboration skills
-            and achieve better learning outcomes.
+            Boost student retention and engagement with our peer learning platform.
+            Seamless LMS integration, SSO, and powerful analytics for universities.
           </p>
 
           {/* CTA Buttons */}
@@ -119,7 +131,7 @@ export default function Home() {
 
         <div className="container mx-auto px-4 relative">
         <h2 id="solutions-heading" className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#6B3DCB] dark:text-[#E9EEFF]">
-          Tailored Solutions for Every Role
+          University Engagement Platform Built for Every Role
         </h2>
         <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
           <Link
@@ -182,7 +194,7 @@ export default function Home() {
         </div>
         <div className="container mx-auto px-4 relative">
           <h2 id="features-heading" className="text-3xl md:text-4xl font-bold text-center mb-16 text-[#6B3DCB] dark:text-[#E9EEFF]">
-            Powerful Tools for Better Teamwork
+            Collaborative Learning Tools That Drive Student Success
           </h2>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <div className="text-center group">

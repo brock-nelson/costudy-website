@@ -2,8 +2,15 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About CoStudy - Our Mission & Team",
-  description: "Learn about CoStudy's mission to transform student collaboration through structured teamwork tools and evidence-based pedagogy.",
+  title: "About - Student Retention & Engagement Platform",
+  description: "CoStudy helps universities improve student retention through peer learning and collaborative tools. Evidence-based approach to student success.",
+  keywords: [
+    "student retention solution",
+    "university engagement platform",
+    "evidence-based learning",
+    "peer learning research",
+    "student success mission",
+  ],
 };
 
 export default function About() {

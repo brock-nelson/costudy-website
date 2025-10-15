@@ -2,17 +2,24 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "CoStudy for Professors - Streamline Team-Based Learning",
-  description: "Make team-based learning easier with CoStudy. Automate team formation, track collaboration, and integrate with your LMS.",
+  title: "For Professors - LMS Study Group Integration & Collaboration Tools",
+  description: "Streamline team-based learning with Canvas LMS integration, automated team formation, and collaboration tracking. Improve student engagement in large lecture courses.",
+  keywords: [
+    "LMS study group tools",
+    "Canvas LMS integration",
+    "team-based learning software",
+    "student engagement tools for large lectures",
+    "collaborative learning for professors",
+  ],
   openGraph: {
-    title: "CoStudy for Professors - Streamline Team-Based Learning",
-    description: "Make team-based learning easier with CoStudy. Automate team formation, track collaboration, and integrate with your LMS.",
+    title: "CoStudy for Professors - LMS Study Group Integration",
+    description: "Streamline team-based learning with Canvas LMS integration, automated team formation, and collaboration tracking.",
     url: "https://costudy.co/for-professors",
   },
   twitter: {
     card: "summary_large_image",
-    title: "CoStudy for Professors - Streamline Team-Based Learning",
-    description: "Make team-based learning easier with CoStudy. Automate team formation, track collaboration, and integrate with your LMS.",
+    title: "CoStudy for Professors - LMS Study Group Integration",
+    description: "Streamline team-based learning with Canvas LMS integration, automated team formation, and collaboration tracking.",
   },
 };
 

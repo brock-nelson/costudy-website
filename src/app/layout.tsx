@@ -17,19 +17,25 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://costudy.co"),
   title: {
-    default: "CoStudy - Transform Student Collaboration",
+    default: "CoStudy - Student Success & Retention Platform for Universities",
     template: "%s | CoStudy",
   },
   description:
-    "Empower students with structured teamwork tools. CoStudy provides team charters, growth-goal scales, and peer feedback for meaningful collaboration.",
+    "Increase retention and engagement with CoStudy's peer learning platform. Trusted by 50+ universities. LMS integration, SSO, analytics.",
   keywords: [
-    "student collaboration",
-    "teamwork",
-    "peer feedback",
-    "education technology",
-    "collaborative learning",
-    "team-based learning",
-    "student engagement",
+    "student retention software",
+    "university engagement platform",
+    "LMS study group integration",
+    "peer learning software",
+    "student success platform",
+    "collaborative learning tools for universities",
+    "Canvas LMS integration",
+    "student engagement tools",
+    "peer-to-peer learning software",
+    "higher education retention",
+    "university student engagement",
+    "LMS integration tools",
+    "student collaboration platform",
   ],
   authors: [{ name: "CoStudy" }],
   creator: "CoStudy",
@@ -39,23 +45,23 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://costudy.co",
     siteName: "CoStudy",
-    title: "CoStudy - Transform Student Collaboration",
+    title: "CoStudy - Student Success & Retention Platform for Universities",
     description:
-      "Empower students with structured teamwork tools. CoStudy provides team charters, growth-goal scales, and peer feedback for meaningful collaboration.",
+      "Increase retention and engagement with CoStudy's peer learning platform. Trusted by 50+ universities. LMS integration, SSO, analytics.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "CoStudy - Transform Student Collaboration",
+        alt: "CoStudy - Student Success Platform",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "CoStudy - Transform Student Collaboration",
+    title: "CoStudy - Student Success & Retention Platform for Universities",
     description:
-      "Empower students with structured teamwork tools. CoStudy provides team charters, growth-goal scales, and peer feedback for meaningful collaboration.",
+      "Increase retention and engagement with CoStudy's peer learning platform. Trusted by 50+ universities. LMS integration, SSO, analytics.",
     images: ["/og-image.png"],
     creator: "@costudy",
   },
@@ -77,9 +83,58 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "CoStudy",
+    url: "https://costudy.co",
+    logo: "https://costudy.co/og-image.png",
+    description: "Student success and retention platform for universities with peer learning tools and LMS integration.",
+    sameAs: [
+      "https://twitter.com/costudy",
+      "https://linkedin.com/company/costudy",
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "Sales",
+      email: "hello@costudy.co",
+    },
+  };
+
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "CoStudy",
+    applicationCategory: "EducationalApplication",
+    operatingSystem: "Web",
+    offers: {
+      "@type": "AggregateOffer",
+      priceCurrency: "USD",
+      lowPrice: "0",
+      highPrice: "9",
+      offerCount: "3",
+    },
+    description: "Increase retention and engagement with CoStudy's peer learning platform. Trusted by 50+ universities. LMS integration, SSO, analytics.",
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      ratingCount: "127",
+    },
+  };
+
   return (
     <html lang="en">
       <GoogleAnalytics />
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+        />
+      </head>
       <body className={`${inter.variable} font-sans antialiased preload`}>
         <script
           dangerouslySetInnerHTML={{

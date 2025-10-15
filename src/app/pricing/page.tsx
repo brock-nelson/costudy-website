@@ -2,8 +2,15 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Pricing - CoStudy | Affordable Plans for Students",
-  description: "Choose the perfect plan for your study needs. Free forever for basic features. Pro features for $9/month. Enterprise solutions for universities.",
+  title: "Pricing - Student Success Platform for Universities",
+  description: "Flexible pricing for universities and institutions. Enterprise solutions with LMS integration, SSO, analytics, and dedicated support. Custom pricing available.",
+  keywords: [
+    "university software pricing",
+    "student success platform cost",
+    "LMS integration pricing",
+    "enterprise education software",
+    "university engagement platform pricing",
+  ],
 };
 
 const pricingTiers = [

@@ -3,17 +3,24 @@ import { Metadata } from "next";
 import ROICalculator from "@/components/calculators/ROICalculator";
 
 export const metadata: Metadata = {
-  title: "CoStudy for Administrators - Measure Student Success & ROI",
-  description: "Track institutional impact, measure student outcomes, and demonstrate ROI with CoStudy's comprehensive analytics platform.",
+  title: "For Administrators - Student Retention Software & Analytics Platform",
+  description: "Improve student retention in higher education with data-driven insights. Track engagement, measure ROI, and demonstrate impact across your institution.",
+  keywords: [
+    "student retention software",
+    "higher education analytics",
+    "institutional engagement tracking",
+    "student success ROI",
+    "university retention improvement",
+  ],
   openGraph: {
-    title: "CoStudy for Administrators - Measure Student Success & ROI",
-    description: "Track institutional impact, measure student outcomes, and demonstrate ROI with CoStudy's comprehensive analytics platform.",
+    title: "CoStudy for Administrators - Student Retention Software",
+    description: "Improve student retention in higher education with data-driven insights and comprehensive analytics.",
     url: "https://costudy.co/for-administrators",
   },
   twitter: {
     card: "summary_large_image",
-    title: "CoStudy for Administrators - Measure Student Success & ROI",
-    description: "Track institutional impact, measure student outcomes, and demonstrate ROI with CoStudy's comprehensive analytics platform.",
+    title: "CoStudy for Administrators - Student Retention Software",
+    description: "Improve student retention in higher education with data-driven insights and comprehensive analytics.",
   },
 };
 
