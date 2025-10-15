@@ -238,3 +238,73 @@ export type NewDemoRequest = typeof demoRequests.$inferInsert;
 
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 export type NewContactSubmission = typeof contactSubmissions.$inferInsert;
+
+// Resources table - whitepapers, guides, webinars, case studies
+export const resources = pgTable("resources", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description").notNull(),
+  type: varchar("type", { length: 50 }).notNull(), // whitepaper, guide, webinar, case-study, checklist
+  category: varchar("category", { length: 100 }), // retention, engagement, peer-learning, integration, etc
+  thumbnailUrl: text("thumbnail_url"),
+  fileUrl: text("file_url"), // URL to PDF or video
+  fileSize: varchar("file_size", { length: 50 }), // e.g., "2.5 MB"
+  duration: varchar("duration", { length: 50 }), // for webinars, e.g., "45 min"
+  isGated: boolean("is_gated").notNull().default(true), // requires email to access
+  isPublished: boolean("is_published").notNull().default(false),
+  publishedAt: timestamp("published_at"),
+  author: varchar("author", { length: 255 }), // author or presenter name
+  downloadCount: integer("download_count").notNull().default(0),
+  viewCount: integer("view_count").notNull().default(0),
+  metadata: jsonb("metadata"), // flexible field for additional data
+  createdBy: uuid("created_by").references(() => users.id),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => ({
+  typeIdx: index("resources_type_idx").on(table.type),
+  categoryIdx: index("resources_category_idx").on(table.category),
+  publishedIdx: index("resources_published_idx").on(table.isPublished),
+  publishedAtIdx: index("resources_published_at_idx").on(table.publishedAt),
+}));
+
+// Resource downloads/access tracking - lead generation
+export const resourceDownloads = pgTable("resource_downloads", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  resourceId: uuid("resource_id").notNull().references(() => resources.id, { onDelete: "cascade" }),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  university: varchar("university", { length: 255 }),
+  role: varchar("role", { length: 100 }), // professor, administrator, student, other
+  ipAddress: varchar("ip_address", { length: 45 }).notNull(),
+  userAgent: text("user_agent"),
+  source: varchar("source", { length: 100 }), // utm parameters, referrer
+  subscribeToNewsletter: boolean("subscribe_to_newsletter").notNull().default(false),
+  metadata: jsonb("metadata"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => ({
+  resourceIdx: index("resource_downloads_resource_idx").on(table.resourceId),
+  emailIdx: index("resource_downloads_email_idx").on(table.email),
+  createdAtIdx: index("resource_downloads_created_at_idx").on(table.createdAt),
+}));
+
+// Relations
+export const resourcesRelations = relations(resources, ({ one, many }) => ({
+  creator: one(users, {
+    fields: [resources.createdBy],
+    references: [users.id],
+  }),
+  downloads: many(resourceDownloads),
+}));
+
+export const resourceDownloadsRelations = relations(resourceDownloads, ({ one }) => ({
+  resource: one(resources, {
+    fields: [resourceDownloads.resourceId],
+    references: [resources.id],
+  }),
+}));
+
+export type Resource = typeof resources.$inferSelect;
+export type NewResource = typeof resources.$inferInsert;
+
+export type ResourceDownload = typeof resourceDownloads.$inferSelect;
+export type NewResourceDownload = typeof resourceDownloads.$inferInsert;
