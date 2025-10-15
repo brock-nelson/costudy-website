@@ -35,7 +35,7 @@ export async function sendWelcomeEmail({
 
   try {
     // Render React component to HTML
-    const html = render(
+    const html = await render(
       React.createElement(WelcomeEmail, { firstName, verificationUrl })
     );
 
@@ -76,7 +76,7 @@ export async function sendStudyGroupInvite({
 
   try {
     // Render React component to HTML
-    const html = render(
+    const html = await render(
       React.createElement(StudyGroupInviteEmail, {
         recipientName,
         inviterName,
@@ -247,6 +247,145 @@ export async function sendPasswordResetEmail({
     return { success: true, data: { to } };
   } catch (error) {
     console.error('Error sending password reset email:', error);
+    return { success: false, error };
+  }
+}
+
+/**
+ * Send sales inquiry notification email
+ */
+export async function sendSalesInquiryEmail({
+  to,
+  salesEmail,
+  name,
+  university,
+  inquiryType,
+  role,
+  phone,
+  message,
+}: {
+  to: string;
+  salesEmail: string;
+  name: string;
+  university: string;
+  inquiryType: string;
+  role: string;
+  phone?: string;
+  message: string;
+}) {
+  if (!process.env.SENDGRID_API_KEY) {
+    console.warn('⚠️ SENDGRID_API_KEY not set. Skipping email send.');
+    return { success: false, error: 'Email service not configured' };
+  }
+
+  const inquiryTypeLabels: Record<string, string> = {
+    demo: 'Demo Request',
+    pricing: 'Pricing Inquiry',
+    pilot: 'Pilot Program',
+    other: 'General Inquiry',
+  };
+
+  try {
+    // Send confirmation to the customer
+    const customerHtml = `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #4A12C0; padding: 30px 20px; text-align: center;">
+          <h1 style="color: white; margin: 0;">Thank You for Your Inquiry! 💼</h1>
+        </div>
+
+        <div style="padding: 30px 20px;">
+          <p style="font-size: 16px;">Hi ${name},</p>
+
+          <p style="font-size: 16px;">
+            Thank you for reaching out to CoStudy! We&apos;ve received your ${inquiryTypeLabels[inquiryType] || 'inquiry'} and our sales team will get back to you within 24 hours.
+          </p>
+
+          <div style="background-color: #F7FAFC; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h2 style="margin-top: 0; color: #2D3748; font-size: 18px;">Your Inquiry Details:</h2>
+            <p style="margin: 8px 0;"><strong>Type:</strong> ${inquiryTypeLabels[inquiryType] || inquiryType}</p>
+            <p style="margin: 8px 0;"><strong>University:</strong> ${university}</p>
+            <p style="margin: 8px 0;"><strong>Role:</strong> ${role}</p>
+            ${phone ? `<p style="margin: 8px 0;"><strong>Phone:</strong> ${phone}</p>` : ''}
+          </div>
+
+          <p style="font-size: 16px;">
+            In the meantime, feel free to explore our resources:
+          </p>
+
+          <ul style="font-size: 16px; line-height: 1.8;">
+            <li><a href="https://costudy.co/features" style="color: #4A12C0;">Learn about our features</a></li>
+            <li><a href="https://costudy.co/pricing" style="color: #4A12C0;">View pricing information</a></li>
+            <li><a href="https://costudy.co/demo" style="color: #4A12C0;">Schedule a demo</a></li>
+          </ul>
+
+          <p style="font-size: 14px; color: #718096; margin-top: 30px;">
+            Best regards,<br />
+            The CoStudy Team
+          </p>
+        </div>
+      </div>
+    `;
+
+    // Send notification to sales team
+    const salesHtml = `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #4A12C0; padding: 30px 20px; text-align: center;">
+          <h1 style="color: white; margin: 0;">🔔 New Sales Inquiry</h1>
+        </div>
+
+        <div style="padding: 30px 20px;">
+          <div style="background-color: #FEF2F2; padding: 15px; border-left: 4px solid #EF4444; border-radius: 4px; margin-bottom: 20px;">
+            <p style="margin: 0; font-size: 14px; color: #991B1B;">
+              <strong>⚠️ Action Required:</strong> Please respond within 24 hours
+            </p>
+          </div>
+
+          <div style="background-color: #F7FAFC; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h2 style="margin-top: 0; color: #2D3748; font-size: 18px;">Contact Information:</h2>
+            <p style="margin: 8px 0;"><strong>Name:</strong> ${name}</p>
+            <p style="margin: 8px 0;"><strong>Email:</strong> <a href="mailto:${to}" style="color: #4A12C0;">${to}</a></p>
+            ${phone ? `<p style="margin: 8px 0;"><strong>Phone:</strong> <a href="tel:${phone}" style="color: #4A12C0;">${phone}</a></p>` : ''}
+            <p style="margin: 8px 0;"><strong>University:</strong> ${university}</p>
+            <p style="margin: 8px 0;"><strong>Role:</strong> ${role}</p>
+            <p style="margin: 8px 0;"><strong>Inquiry Type:</strong> ${inquiryTypeLabels[inquiryType] || inquiryType}</p>
+          </div>
+
+          <div style="background-color: #F7FAFC; padding: 20px; border-radius: 8px; margin: 20px 0;">
+            <h2 style="margin-top: 0; color: #2D3748; font-size: 18px;">Message:</h2>
+            <p style="margin: 0; white-space: pre-wrap;">${message}</p>
+          </div>
+
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="mailto:${to}?subject=Re: Your CoStudy Inquiry" style="background-color: #4A12C0; color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">
+              Reply to ${name}
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Send customer confirmation
+    await sgMail.send({
+      to,
+      from: emailConfig.from,
+      replyTo: salesEmail,
+      subject: 'Thank you for contacting CoStudy',
+      html: customerHtml,
+    });
+
+    // Send notification to sales team
+    await sgMail.send({
+      to: salesEmail,
+      from: emailConfig.from,
+      replyTo: to,
+      subject: `New Sales Inquiry: ${inquiryTypeLabels[inquiryType]} - ${university}`,
+      html: salesHtml,
+    });
+
+    console.log('✅ Sales inquiry emails sent successfully');
+    return { success: true, data: { to, salesEmail } };
+  } catch (error) {
+    console.error('Error sending sales inquiry emails:', error);
     return { success: false, error };
   }
 }
