@@ -31,6 +31,7 @@
     "dotenv": "^17.2.3",
     "drizzle-kit": "^0.31.5",
     "drizzle-orm": "^0.44.6",
+    "flags": "^4.0.1",
     "framer-motion": "^12.23.22",
     "next": "15.5.4",
     "next-auth": "^5.0.0-beta.29",

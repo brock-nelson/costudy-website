@@ -238,3 +238,81 @@ export type NewDemoRequest = typeof demoRequests.$inferInsert;
 
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 export type NewContactSubmission = typeof contactSubmissions.$inferInsert;
+
+// Experiments table - tracks A/B test configurations
+export const experiments = pgTable("experiments", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  experimentId: varchar("experiment_id", { length: 100 }).notNull().unique(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  hypothesis: text("hypothesis"), // what we expect to happen
+  variants: jsonb("variants").notNull(), // array of variant IDs and descriptions
+  defaultVariant: varchar("default_variant", { length: 100 }).notNull(),
+  status: varchar("status", { length: 50 }).notNull().default("draft"), // draft, active, paused, completed, archived
+  targetMetric: varchar("target_metric", { length: 100 }).notNull(), // e.g., "demo_request", "cta_click"
+  minimumSampleSize: integer("minimum_sample_size").notNull().default(1000),
+  confidenceLevel: integer("confidence_level").notNull().default(95), // 95% confidence
+  startedAt: timestamp("started_at"),
+  completedAt: timestamp("completed_at"),
+  winningVariant: varchar("winning_variant", { length: 100 }),
+  results: jsonb("results"), // final results and learnings
+  createdBy: uuid("created_by").references(() => users.id),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => ({
+  experimentIdIdx: index("experiments_experiment_id_idx").on(table.experimentId),
+  statusIdx: index("experiments_status_idx").on(table.status),
+}));
+
+// Experiment assignments - tracks which users got which variant
+export const experimentAssignments = pgTable("experiment_assignments", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  experimentId: varchar("experiment_id", { length: 100 }).notNull(),
+  variant: varchar("variant", { length: 100 }).notNull(),
+  sessionId: varchar("session_id", { length: 255 }).notNull(), // anonymous user tracking
+  userEmail: varchar("user_email", { length: 255 }), // if user is identified
+  ipAddress: varchar("ip_address", { length: 45 }).notNull(),
+  userAgent: text("user_agent"),
+  assignedAt: timestamp("assigned_at").defaultNow().notNull(),
+}, (table) => ({
+  experimentSessionIdx: index("assignments_experiment_session_idx").on(table.experimentId, table.sessionId),
+  experimentIdx: index("assignments_experiment_idx").on(table.experimentId),
+  variantIdx: index("assignments_variant_idx").on(table.variant),
+  assignedAtIdx: index("assignments_assigned_at_idx").on(table.assignedAt),
+}));
+
+// Experiment conversions - tracks conversion events for experiments
+export const experimentConversions = pgTable("experiment_conversions", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  experimentId: varchar("experiment_id", { length: 100 }).notNull(),
+  variant: varchar("variant", { length: 100 }).notNull(),
+  sessionId: varchar("session_id", { length: 255 }).notNull(),
+  userEmail: varchar("user_email", { length: 255 }),
+  conversionType: varchar("conversion_type", { length: 100 }).notNull(), // e.g., "demo_request", "cta_click"
+  value: integer("value"), // optional value for the conversion
+  metadata: jsonb("metadata"), // additional conversion data
+  convertedAt: timestamp("converted_at").defaultNow().notNull(),
+}, (table) => ({
+  experimentSessionIdx: index("conversions_experiment_session_idx").on(table.experimentId, table.sessionId),
+  experimentIdx: index("conversions_experiment_idx").on(table.experimentId),
+  variantIdx: index("conversions_variant_idx").on(table.variant),
+  convertedAtIdx: index("conversions_converted_at_idx").on(table.convertedAt),
+}));
+
+// Experiment relations
+export const experimentsRelations = relations(experiments, ({ one }) => ({
+  creator: one(users, {
+    fields: [experiments.createdBy],
+    references: [users.id],
+  }),
+}));
+
+// Experiment types
+export type Experiment = typeof experiments.$inferSelect;
+export type NewExperiment = typeof experiments.$inferInsert;
+
+export type ExperimentAssignment = typeof experimentAssignments.$inferSelect;
+export type NewExperimentAssignment = typeof experimentAssignments.$inferInsert;
+
+export type ExperimentConversion = typeof experimentConversions.$inferSelect;
+export type NewExperimentConversion = typeof experimentConversions.$inferInsert;

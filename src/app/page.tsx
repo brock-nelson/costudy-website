@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import DynamicDots from "@/components/ui/DynamicDots";
-import GradientText from "@/components/ui/GradientText";
 import SchoolLogoScroller from "@/components/ui/SchoolLogoScroller";
+import HomePageExperiments from "@/components/experiments/HomePageExperiments";
 
 export const metadata: Metadata = {
   title: "CoStudy - Transform Student Collaboration & Teamwork",
@@ -34,45 +34,8 @@ export default function Home() {
       <section className="relative container mx-auto px-4 py-24 md:py-32 overflow-hidden" aria-labelledby="hero-heading">
         <DynamicDots />
         <div className="hero-content text-center max-w-5xl mx-auto relative z-10">
-          {/* Main Heading */}
-          <h1 id="hero-heading" className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1]">
-            <GradientText>Transform Student Collaboration</GradientText>
-          </h1>
-
-          {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-[#5E6E76] dark:text-[#A0AEC0] mb-10 max-w-3xl mx-auto leading-relaxed font-medium">
-            Structured teamwork tools that help students build essential collaboration skills
-            and achieve better learning outcomes.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link
-              href="/demo"
-              className="group relative bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 overflow-hidden"
-              aria-label="Schedule a demo of CoStudy"
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                Schedule a Demo
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </Link>
-            <Link
-              href="/products"
-              className="group bg-white dark:bg-[#1a1a1a] text-[#4A12C0] dark:text-[#A78BFA] px-8 py-4 rounded-xl font-semibold border-2 border-purple-200 dark:border-[#404040] hover:border-purple-300 dark:hover:border-[#606060] hover:bg-purple-50/50 dark:hover:bg-purple-900/30 transition-all duration-300 hover:shadow-lg"
-              aria-label="Explore CoStudy products"
-            >
-              <span className="flex items-center gap-2">
-                Explore Products
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </span>
-            </Link>
-          </div>
+          {/* Main Heading - A/B Tested */}
+          <HomePageExperiments />
 
           {/* Trust Badge */}
           <div className="mt-12 flex items-center justify-center gap-8 text-sm text-[#92A2AA] dark:text-[#A0AEC0]">

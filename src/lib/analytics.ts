@@ -31,6 +31,29 @@ export const event = ({
   }
 };
 
+// Experiment-specific event tracking
+export const trackExperimentView = (experimentId: string, variant: string) => {
+  event({
+    action: "experiment_view",
+    category: "experiments",
+    label: `${experimentId}:${variant}`,
+  });
+};
+
+export const trackExperimentConversion = (
+  experimentId: string,
+  variant: string,
+  conversionType: string,
+  value?: number
+) => {
+  event({
+    action: `experiment_conversion_${conversionType}`,
+    category: "experiments",
+    label: `${experimentId}:${variant}`,
+    value,
+  });
+};
+
 // Example usage:
 // event({
 //   action: "form_submission",

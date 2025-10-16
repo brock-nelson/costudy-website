@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { trackConversion, EXPERIMENTS } from "@/lib/experiments";
 
 const demoSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -49,6 +50,10 @@ export default function DemoForm() {
       const result = await response.json();
 
       if (response.ok && result.success) {
+        // Track conversion for demo form experiment (long form)
+        trackConversion(EXPERIMENTS.DEMO_FORM_LENGTH, "demo_request");
+        trackConversion(EXPERIMENTS.HOMEPAGE_HEADLINE, "demo_request");
+
         setSubmitStatus({
           type: "success",
           message: result.message,
