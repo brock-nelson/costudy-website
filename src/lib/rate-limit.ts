@@ -36,6 +36,13 @@ export const demoRequestLimiter = new Ratelimit({
   prefix: "@upstash/ratelimit/demo",
 });
 
+export const integrationRequestLimiter = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(2, "1 h"), // 2 requests per hour
+  analytics: true,
+  prefix: "@upstash/ratelimit/integration",
+});
+
 // Helper function to get identifier (IP address) from request
 export function getIdentifier(request: Request): string {
   const forwarded = request.headers.get("x-forwarded-for");

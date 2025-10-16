@@ -28,7 +28,7 @@ export interface Integration {
   supportUrl?: string;
 }
 
-export interface IntegrationCategory {
+export interface IntegrationCategoryInfo {
   id: IntegrationCategory;
   name: string;
   description: string;

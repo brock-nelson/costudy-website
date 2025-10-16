@@ -174,6 +174,51 @@ export const contactSubmissions = pgTable("contact_submissions", {
   createdAtIdx: index("contact_submissions_created_at_idx").on(table.createdAt),
 }));
 
+// Integration requests - from /integrations page
+export const integrationRequests = pgTable("integration_requests", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  // Integration details
+  integrationName: varchar("integration_name", { length: 255 }).notNull(),
+  platform: varchar("platform", { length: 255 }), // e.g., Canvas, Blackboard, etc.
+
+  // Institution/Organization
+  institutionName: varchar("institution_name", { length: 255 }).notNull(),
+
+  // Contact person
+  contactName: varchar("contact_name", { length: 255 }).notNull(),
+  contactEmail: varchar("contact_email", { length: 255 }).notNull(),
+  contactRole: varchar("contact_role", { length: 100 }), // IT Director, Dean, etc.
+  phoneNumber: varchar("phone_number", { length: 50 }),
+
+  // Request details
+  numberOfUsers: integer("number_of_users"), // estimated user count
+  timeline: varchar("timeline", { length: 100 }), // immediate, 1-3 months, 6+ months, etc.
+  urgency: varchar("urgency", { length: 50 }), // low, medium, high, critical
+  useCaseDescription: text("use_case_description").notNull(),
+  existingTechStack: text("existing_tech_stack"), // other tools/systems in use
+
+  // Admin tracking
+  status: varchar("status", { length: 50 }).notNull().default("pending"), // pending, contacted, in-progress, completed, declined
+  notes: text("notes"), // admin notes
+  assignedTo: uuid("assigned_to").references(() => users.id),
+
+  // Tracking metadata
+  ipAddress: varchar("ip_address", { length: 45 }).notNull(),
+  userAgent: text("user_agent"),
+  source: varchar("source", { length: 100 }), // utm parameters, referrer, etc
+
+  // Status timestamps
+  contactedAt: timestamp("contacted_at"),
+  completedAt: timestamp("completed_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => ({
+  emailIdx: index("integration_requests_email_idx").on(table.contactEmail),
+  statusIdx: index("integration_requests_status_idx").on(table.status),
+  integrationIdx: index("integration_requests_integration_idx").on(table.integrationName),
+  createdAtIdx: index("integration_requests_created_at_idx").on(table.createdAt),
+}));
+
 // Relations
 export const featuresRelations = relations(features, ({ one, many }) => ({
   creator: one(users, {
@@ -211,6 +256,13 @@ export const contactSubmissionsRelations = relations(contactSubmissions, ({ one 
   }),
 }));
 
+export const integrationRequestsRelations = relations(integrationRequests, ({ one }) => ({
+  assignedAdmin: one(users, {
+    fields: [integrationRequests.assignedTo],
+    references: [users.id],
+  }),
+}));
+
 // Types
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
@@ -238,3 +290,6 @@ export type NewDemoRequest = typeof demoRequests.$inferInsert;
 
 export type ContactSubmission = typeof contactSubmissions.$inferSelect;
 export type NewContactSubmission = typeof contactSubmissions.$inferInsert;
+
+export type IntegrationRequest = typeof integrationRequests.$inferSelect;
+export type NewIntegrationRequest = typeof integrationRequests.$inferInsert;
