@@ -17,11 +17,27 @@ export default function PageViewTracker({ eventName, eventParams }: PageViewTrac
   const hasTracked = useRef(false);
 
   useEffect(() => {
-    // Only track once on mount to prevent duplicate events
-    if (!hasTracked.current && typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", eventName, eventParams);
-      hasTracked.current = true;
-    }
+    const trackPageView = () => {
+      try {
+        if (!hasTracked.current && typeof window !== "undefined" && window.gtag) {
+          window.gtag("event", eventName, eventParams);
+          hasTracked.current = true;
+          return true;
+        }
+      } catch (error) {
+        if (process.env.NODE_ENV === "development") {
+          console.error("PageViewTracker error:", error);
+        }
+      }
+      return false;
+    };
+
+    // Try immediately
+    if (trackPageView()) return;
+
+    // If gtag not ready, try again after a short delay
+    const timeout = setTimeout(trackPageView, 1000);
+    return () => clearTimeout(timeout);
   }, [eventName, eventParams]);
 
   return null;

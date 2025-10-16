@@ -16,13 +16,32 @@ export default function UTMTracker() {
     // Capture and store UTM parameters on mount
     const utmParams = getUTMParameters();
 
-    // If UTM parameters exist, track them as a custom event
-    if (Object.keys(utmParams).length > 0 && typeof window !== "undefined" && window.gtag) {
-      window.gtag("event", "utm_capture", {
-        event_category: "attribution",
-        ...utmParams,
-      });
-    }
+    // Only track if UTM parameters exist
+    if (Object.keys(utmParams).length === 0) return;
+
+    const trackUTM = () => {
+      try {
+        if (typeof window !== "undefined" && window.gtag) {
+          window.gtag("event", "utm_capture", {
+            event_category: "attribution",
+            ...utmParams,
+          });
+          return true;
+        }
+      } catch (error) {
+        if (process.env.NODE_ENV === "development") {
+          console.error("UTMTracker error:", error);
+        }
+      }
+      return false;
+    };
+
+    // Try immediately
+    if (trackUTM()) return;
+
+    // If gtag not ready, try again after a short delay
+    const timeout = setTimeout(trackUTM, 1000);
+    return () => clearTimeout(timeout);
   }, []);
 
   return null;

@@ -3,10 +3,17 @@ export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ""
 
 // Track page views
 export const pageview = (url: string) => {
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("config", GA_MEASUREMENT_ID, {
-      page_path: url,
-    });
+  try {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("config", GA_MEASUREMENT_ID, {
+        page_path: url,
+      });
+    }
+  } catch (error) {
+    // Silent fail - don't break user experience
+    if (process.env.NODE_ENV === "development") {
+      console.error("Analytics pageview error:", error);
+    }
   }
 };
 
@@ -22,12 +29,19 @@ export const event = ({
   label?: string;
   value?: number;
 }) => {
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("event", action, {
-      event_category: category,
-      event_label: label,
-      value: value,
-    });
+  try {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", action, {
+        event_category: category,
+        event_label: label,
+        value: value,
+      });
+    }
+  } catch (error) {
+    // Silent fail - don't break user experience
+    if (process.env.NODE_ENV === "development") {
+      console.error("Analytics event error:", error);
+    }
   }
 };
 
@@ -40,8 +54,15 @@ interface EventParams {
  * Track a GA4 event with custom parameters
  */
 export const trackEvent = (eventName: string, params?: EventParams) => {
-  if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("event", eventName, params);
+  try {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("event", eventName, params);
+    }
+  } catch (error) {
+    // Silent fail - don't break user experience
+    if (process.env.NODE_ENV === "development") {
+      console.error("Analytics trackEvent error:", error);
+    }
   }
 };
 
@@ -55,6 +76,7 @@ export const trackDemoRequest = (params: {
   institution?: string;
   teamSize?: string;
   value?: number;
+  [key: string]: string | number | undefined; // Allow UTM params
 }) => {
   trackEvent("demo_request", {
     event_category: "conversion",
@@ -64,6 +86,7 @@ export const trackDemoRequest = (params: {
     user_role: params.role,
     institution: params.institution,
     team_size: params.teamSize,
+    ...params, // Include all extra params (like UTM parameters)
   });
 
   // Also track as a conversion for GA4
@@ -78,6 +101,7 @@ export const trackContactSubmit = (params: {
   role?: string;
   institution?: string;
   value?: number;
+  [key: string]: string | number | undefined; // Allow UTM params
 }) => {
   trackEvent("contact_submit", {
     event_category: "conversion",
@@ -86,6 +110,7 @@ export const trackContactSubmit = (params: {
     value: params.value || 100, // Estimated lead value
     user_role: params.role,
     institution: params.institution,
+    ...params, // Include all extra params (like UTM parameters)
   });
 
   trackEvent("generate_lead", {
@@ -184,8 +209,8 @@ export const getUTMParameters = (): Record<string, string> => {
   utmKeys.forEach((key) => {
     const value = params.get(key);
     if (value) {
-      // Limit length to prevent malicious long strings
-      const sanitized = value.slice(0, 200);
+      // Sanitize: limit length and remove potentially dangerous characters
+      const sanitized = value.slice(0, 200).replace(/[<>"']/g, "");
       utmParams[key] = sanitized;
       // Store in sessionStorage for attribution (with error handling)
       try {

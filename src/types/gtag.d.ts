@@ -1,6 +1,6 @@
 interface Window {
   gtag: (
-    command: string,
+    command: 'config' | 'event' | 'set' | 'js',
     targetId: string,
     config?: Record<string, unknown>
   ) => void;
