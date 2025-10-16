@@ -1,0 +1,70 @@
+name: Linear Sync
+
+on:
+  pull_request:
+    types: [opened, closed, reopened]
+  push:
+    branches:
+      - main
+
+jobs:
+  sync-linear:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract Linear issue from commit/PR
+        id: extract
+        run: |
+          # Extract Linear issue identifier from commit message or PR title
+          # Looks for patterns like "COS-123" or "Fixes COS-456"
+
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            TEXT="${{ github.event.pull_request.title }} ${{ github.event.pull_request.body }}"
+          else
+            TEXT="${{ github.event.head_commit.message }}"
+          fi
+
+          # Extract issue identifier (format: XXX-123)
+          ISSUE=$(echo "$TEXT" | grep -oE '[A-Z]+-[0-9]+' | head -1)
+
+          if [ -n "$ISSUE" ]; then
+            echo "issue=$ISSUE" >> $GITHUB_OUTPUT
+            echo "Found Linear issue: $ISSUE"
+          else
+            echo "No Linear issue found in commit/PR"
+          fi
+
+      - name: Update Linear issue on PR open
+        if: github.event_name == 'pull_request' && github.event.action == 'opened' && steps.extract.outputs.issue
+        run: |
+          curl -X POST \
+            -H "Authorization: ${{ secrets.LINEAR_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "query": "mutation { commentCreate(input: { issueId: \"${{ steps.extract.outputs.issue }}\", body: \"🔄 Pull Request opened: ${{ github.event.pull_request.html_url }}\" }) { success } }"
+            }' \
+            https://api.linear.app/graphql
+
+      - name: Update Linear issue on PR merge
+        if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && steps.extract.outputs.issue
+        run: |
+          curl -X POST \
+            -H "Authorization: ${{ secrets.LINEAR_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "query": "mutation { commentCreate(input: { issueId: \"${{ steps.extract.outputs.issue }}\", body: \"✅ Pull Request merged: ${{ github.event.pull_request.html_url }}\" }) { success } }"
+            }' \
+            https://api.linear.app/graphql
+
+      - name: Update Linear issue on push to main
+        if: github.event_name == 'push' && steps.extract.outputs.issue
+        run: |
+          curl -X POST \
+            -H "Authorization: ${{ secrets.LINEAR_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "query": "mutation { commentCreate(input: { issueId: \"${{ steps.extract.outputs.issue }}\", body: \"🚀 Committed to main: ${{ github.event.head_commit.message }}\\n\\nCommit: ${{ github.event.head_commit.url }}\" }) { success } }"
+            }' \
+            https://api.linear.app/graphql
