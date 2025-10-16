@@ -341,9 +341,9 @@ export default function Resources() {
           resourceId={downloadingResource.id}
           resourceTitle={downloadingResource.title}
           resourceType={formatType(downloadingResource.type)}
-          onSuccess={(downloadUrl) => {
+          onSuccess={() => {
             setDownloadingResource(null);
-            // Optionally show a success message
+            // Optionally show a success message or trigger a download
           }}
           onCancel={() => setDownloadingResource(null)}
         />
