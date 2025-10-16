@@ -5,9 +5,10 @@ import { useState, useEffect } from "react";
 interface CalEmbedProps {
   calLink: string;
   className?: string;
+  prefillData?: Record<string, string>;
 }
 
-export default function CalEmbed({ calLink, className = "" }: CalEmbedProps) {
+export default function CalEmbed({ calLink, className = "", prefillData }: CalEmbedProps) {
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [iframeError, setIframeError] = useState(false);
   const [isDark, setIsDark] = useState(false);
@@ -32,7 +33,15 @@ export default function CalEmbed({ calLink, className = "" }: CalEmbedProps) {
 
   // Use appropriate theme based on mode
   const theme = isDark ? "dark" : "light";
-  const embedUrl = `https://cal.com/${calLink}?embed=true&theme=${theme}`;
+
+  // Build URL with prefill data
+  const params = new URLSearchParams({ embed: "true", theme });
+  if (prefillData) {
+    Object.entries(prefillData).forEach(([key, value]) => {
+      params.set(key, value);
+    });
+  }
+  const embedUrl = `https://cal.com/${calLink}?${params.toString()}`;
 
   const handleIframeLoad = () => {
     setIframeLoaded(true);

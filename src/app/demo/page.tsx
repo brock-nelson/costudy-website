@@ -6,7 +6,14 @@ export const metadata: Metadata = {
   description: "See CoStudy in action. Schedule a personalized demo to explore how CoStudy can transform collaboration in your classroom.",
 };
 
-export default function Demo() {
+export default async function Demo({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const queryParams = await searchParams;
+  const universityName = queryParams.university as string | undefined;
+
   return (
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
       {/* Hero Section - Playful & Creative */}
@@ -44,11 +51,11 @@ export default function Demo() {
               </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6 drop-shadow-lg">
-              See CoStudy in Action
+              See CoStudy in Action{universityName ? ` at ${universityName}` : ""}
             </h1>
             <p className="text-xl text-white/95 leading-relaxed drop-shadow-md">
               Schedule a personalized demo to explore how CoStudy can transform
-              student collaboration in your classroom or institution! 🚀
+              student collaboration{universityName ? ` at ${universityName}` : " in your classroom or institution"}! 🚀
             </p>
           </div>
         </div>
@@ -205,6 +212,15 @@ export default function Demo() {
                 <CalEmbed
                   calLink="costudy-support-n8d1gq/30min"
                   className="min-h-[700px]"
+                  prefillData={
+                    universityName
+                      ? {
+                          name: "",
+                          email: "",
+                          notes: `Inquiry from ${universityName}`,
+                        }
+                      : undefined
+                  }
                 />
               </div>
             </div>

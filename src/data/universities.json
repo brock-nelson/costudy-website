@@ -1,0 +1,107 @@
+[
+  {
+    "slug": "stanford",
+    "name": "Stanford University",
+    "type": "research-university",
+    "studentCount": 17000,
+    "logo": "/universities/stanford-logo.svg",
+    "heroImage": "/universities/stanford-campus.jpg",
+    "stats": {
+      "studyGroups": 450,
+      "students": 8500,
+      "retentionImprovement": "18%"
+    },
+    "testimonial": {
+      "quote": "CoStudy transformed how our students collaborate. We've seen a significant increase in project quality and student engagement.",
+      "author": "Dr. Jane Smith",
+      "title": "Director of Student Success",
+      "photo": "/testimonials/jane-smith.jpg"
+    },
+    "relevantCaseStudy": "mit-case-study",
+    "primaryColor": "#8C1515"
+  },
+  {
+    "slug": "mit",
+    "name": "MIT",
+    "type": "research-university",
+    "studentCount": 11500,
+    "logo": "/universities/mit-logo.svg",
+    "heroImage": "/universities/mit-campus.jpg",
+    "stats": {
+      "studyGroups": 380,
+      "students": 7200,
+      "retentionImprovement": "22%"
+    },
+    "testimonial": {
+      "quote": "The structured approach to teamwork has been transformative. Our engineering students are developing crucial collaboration skills alongside technical expertise.",
+      "author": "Prof. Michael Chen",
+      "title": "Associate Dean of Undergraduate Education",
+      "photo": "/testimonials/michael-chen.jpg"
+    },
+    "relevantCaseStudy": "stanford-case-study",
+    "primaryColor": "#A31F34"
+  },
+  {
+    "slug": "uc-berkeley",
+    "name": "UC Berkeley",
+    "type": "research-university",
+    "studentCount": 45000,
+    "logo": "/universities/berkeley-logo.svg",
+    "heroImage": "/universities/berkeley-campus.jpg",
+    "stats": {
+      "studyGroups": 890,
+      "students": 15000,
+      "retentionImprovement": "16%"
+    },
+    "testimonial": {
+      "quote": "CoStudy helps us scale personalized support across thousands of students. The analytics give us insights we never had before.",
+      "author": "Dr. Sarah Martinez",
+      "title": "Vice Provost for Teaching & Learning",
+      "photo": "/testimonials/sarah-martinez.jpg"
+    },
+    "relevantCaseStudy": "ucla-case-study",
+    "primaryColor": "#003262"
+  },
+  {
+    "slug": "harvard",
+    "name": "Harvard University",
+    "type": "research-university",
+    "studentCount": 23000,
+    "logo": "/universities/harvard-logo.svg",
+    "heroImage": "/universities/harvard-campus.jpg",
+    "stats": {
+      "studyGroups": 520,
+      "students": 9800,
+      "retentionImprovement": "20%"
+    },
+    "testimonial": {
+      "quote": "The peer feedback system has revolutionized how our students approach collaborative learning. It's become an essential part of our pedagogy.",
+      "author": "Dr. Elizabeth Thompson",
+      "title": "Dean of Harvard College",
+      "photo": "/testimonials/elizabeth-thompson.jpg"
+    },
+    "relevantCaseStudy": "yale-case-study",
+    "primaryColor": "#A51C30"
+  },
+  {
+    "slug": "yale",
+    "name": "Yale University",
+    "type": "research-university",
+    "studentCount": 14600,
+    "logo": "/universities/yale-logo.svg",
+    "heroImage": "/universities/yale-campus.jpg",
+    "stats": {
+      "studyGroups": 410,
+      "students": 7500,
+      "retentionImprovement": "19%"
+    },
+    "testimonial": {
+      "quote": "CoStudy aligns perfectly with our commitment to residential education. Students are building deeper connections and more effective teams.",
+      "author": "Dr. James Wilson",
+      "title": "Associate Provost for Student Affairs",
+      "photo": "/testimonials/james-wilson.jpg"
+    },
+    "relevantCaseStudy": "harvard-case-study",
+    "primaryColor": "#00356B"
+  }
+]
