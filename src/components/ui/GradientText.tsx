@@ -30,6 +30,7 @@ export default function GradientText({
   'aria-label': ariaLabel,
 }: GradientTextProps) {
   const [mounted, setMounted] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [scrollOffset, setScrollOffset] = useState(0);
   const [isRapidMovement, setIsRapidMovement] = useState(false);
   const [sparks, setSparks] = useState<Spark[]>([]);
@@ -64,6 +65,15 @@ export default function GradientText({
 
   useEffect(() => {
     setMounted(true);
+
+    // Detect dark mode
+    const checkDarkMode = () => {
+      setIsDarkMode(document.documentElement.classList.contains('dark'));
+    };
+    checkDarkMode();
+
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     // Detect reduced motion preference
     const checkReducedMotion = () => {
@@ -155,6 +165,7 @@ export default function GradientText({
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
       motionMediaQuery.removeEventListener('change', handleMotionChange);
+      observer.disconnect();
     };
   }, [variant]);
 
@@ -281,39 +292,30 @@ export default function GradientText({
     ${className}
   `;
 
+  // Select the appropriate gradient and shadow based on dark mode
+  const gradient = isDarkMode ? darkGradient : lightGradient;
+  const textShadow = isDarkMode ? heroTitleDarkShadow : heroTitleLightShadow;
+  const glowFilter = isRapidMovement
+    ? (isDarkMode
+        ? `brightness(1.4) saturate(1.6) drop-shadow(0 0 ${glowIntensity}px rgba(233, 213, 255, 0.9))`
+        : `brightness(1.3) saturate(1.6) drop-shadow(0 0 ${glowIntensity}px rgba(139, 92, 246, 0.8))`)
+    : 'none';
+
   return (
     <Component
       className="inline-block relative"
       id={id}
       aria-label={ariaLabel}
     >
-      {/* Light mode text */}
+      {/* Single text element - switches between light/dark mode */}
       <span
-        className={`${baseClasses} dark:hidden`}
+        className={baseClasses}
         style={{
-          backgroundImage: lightGradient,
+          backgroundImage: gradient,
           backgroundSize: variant === 'heroTitle' ? '200% 200%' : (isRapidMovement ? '200% 200%' : '100% 100%'),
-          textShadow: heroTitleLightShadow,
+          textShadow: textShadow,
           transition: 'background-image 0.8s ease-out, background-size 0.3s ease-out, filter 0.3s ease-out',
-          filter: isRapidMovement
-            ? `brightness(1.3) saturate(1.6) drop-shadow(0 0 ${glowIntensity}px rgba(139, 92, 246, 0.8))`
-            : 'none',
-        }}
-      >
-        {children}
-      </span>
-
-      {/* Dark mode text */}
-      <span
-        className={`${baseClasses} hidden dark:inline-block`}
-        style={{
-          backgroundImage: darkGradient,
-          backgroundSize: variant === 'heroTitle' ? '200% 200%' : (isRapidMovement ? '200% 200%' : '100% 100%'),
-          textShadow: heroTitleDarkShadow,
-          transition: 'background-image 0.8s ease-out, background-size 0.3s ease-out, filter 0.3s ease-out',
-          filter: isRapidMovement
-            ? `brightness(1.4) saturate(1.6) drop-shadow(0 0 ${glowIntensity}px rgba(233, 213, 255, 0.9))`
-            : 'none',
+          filter: glowFilter,
         }}
       >
         {children}
