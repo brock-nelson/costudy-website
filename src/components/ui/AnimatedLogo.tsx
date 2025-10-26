@@ -35,58 +35,121 @@ export default function AnimatedLogo() {
   return (
     <Link
       href="/"
-      className="relative group cursor-pointer inline-flex items-center gap-3"
+      className="relative group cursor-pointer inline-flex items-center gap-3 p-2 -m-2 overflow-visible"
       onClick={handleClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Light mode: Unified logo with brand purple colors */}
-      <div className="dark:hidden relative">
+      {/* Light mode: Logo with gradient overlay */}
+      <div className="dark:hidden relative overflow-visible">
         <Image
           src="/logo_upperleft.svg"
           alt="CoStudy Logo"
           width={200}
           height={50}
-          className="h-10 w-auto transition-all duration-300 group-hover:scale-105"
-          style={{ display: mounted ? undefined : 'block' }}
-        />
-      </div>
-
-      {/* Dark mode: Full logo image with reduced shadow + animations */}
-      <div className="hidden dark:block relative">
-        <Image
-          src="/logo_upperleft.svg"
-          alt="CoStudy Logo"
-          width={200}
-          height={50}
-          className="h-10 w-auto transition-all duration-300 group-hover:scale-105"
+          className="h-10 w-auto transition-all duration-300 group-hover:scale-105 relative z-10"
           style={{
-            filter: mounted
-              ? 'invert(1) brightness(2.5) saturate(0.9) drop-shadow(0 0 3px rgba(243, 232, 255, 0.4)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.2))'
-              : undefined
+            display: mounted ? undefined : 'block',
+            filter: 'drop-shadow(0 1px 2px rgba(74, 18, 192, 0.1))'
           }}
         />
 
-        {/* Animated shimmer overlay effect */}
+        {/* Gradient overlay for light mode */}
         {mounted && (
-          <div
-            className="absolute inset-0 pointer-events-none overflow-hidden"
-            style={{
-              maskImage: 'url(/logo_upperleft.svg)',
-              WebkitMaskImage: 'url(/logo_upperleft.svg)',
-              maskSize: 'contain',
-              WebkitMaskSize: 'contain',
-              maskRepeat: 'no-repeat',
-              WebkitMaskRepeat: 'no-repeat',
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer-logo" />
-          </div>
+          <>
+            <div
+              className="absolute inset-0 pointer-events-none overflow-visible"
+              style={{
+                maskImage: 'url(/logo_upperleft.svg)',
+                WebkitMaskImage: 'url(/logo_upperleft.svg)',
+                maskSize: 'contain',
+                WebkitMaskSize: 'contain',
+                maskRepeat: 'no-repeat',
+                WebkitMaskRepeat: 'no-repeat',
+                opacity: isHovered ? 0.3 : 0,
+                transition: 'opacity 0.3s ease',
+              }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 bg-[length:200%_100%] animate-gradient-shift" />
+            </div>
+
+            {/* Shimmer effect on hover */}
+            <div
+              className="absolute inset-0 pointer-events-none overflow-visible"
+              style={{
+                maskImage: 'url(/logo_upperleft.svg)',
+                WebkitMaskImage: 'url(/logo_upperleft.svg)',
+                maskSize: 'contain',
+                WebkitMaskSize: 'contain',
+                maskRepeat: 'no-repeat',
+                WebkitMaskRepeat: 'no-repeat',
+                opacity: isHovered ? 1 : 0,
+                transition: 'opacity 0.3s ease',
+              }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer-logo" />
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Dark mode: Enhanced logo with gradient glow */}
+      <div className="hidden dark:block relative overflow-visible">
+        <Image
+          src="/logo_upperleft.svg"
+          alt="CoStudy Logo"
+          width={200}
+          height={50}
+          className="h-10 w-auto transition-all duration-300 group-hover:scale-105 relative z-10"
+          style={{
+            filter: mounted
+              ? isHovered
+                ? 'invert(1) brightness(2.8) saturate(1.2) drop-shadow(0 0 8px rgba(167, 139, 250, 0.6)) drop-shadow(0 0 4px rgba(192, 132, 252, 0.4))'
+                : 'invert(1) brightness(2.5) saturate(0.9) drop-shadow(0 0 3px rgba(243, 232, 255, 0.4)) drop-shadow(0 0 2px rgba(255, 255, 255, 0.2))'
+              : undefined,
+            transition: 'filter 0.3s ease'
+          }}
+        />
+
+        {/* Gradient color overlay */}
+        {mounted && (
+          <>
+            <div
+              className="absolute inset-0 pointer-events-none overflow-visible"
+              style={{
+                maskImage: 'url(/logo_upperleft.svg)',
+                WebkitMaskImage: 'url(/logo_upperleft.svg)',
+                maskSize: 'contain',
+                WebkitMaskSize: 'contain',
+                maskRepeat: 'no-repeat',
+                WebkitMaskRepeat: 'no-repeat',
+                opacity: isHovered ? 0.4 : 0.15,
+                transition: 'opacity 0.3s ease',
+              }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400 bg-[length:200%_100%] animate-gradient-shift" />
+            </div>
+
+            {/* Animated shimmer overlay effect */}
+            <div
+              className="absolute inset-0 pointer-events-none overflow-visible"
+              style={{
+                maskImage: 'url(/logo_upperleft.svg)',
+                WebkitMaskImage: 'url(/logo_upperleft.svg)',
+                maskSize: 'contain',
+                WebkitMaskSize: 'contain',
+                maskRepeat: 'no-repeat',
+                WebkitMaskRepeat: 'no-repeat',
+              }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer-logo" />
+            </div>
+          </>
         )}
 
         {/* Geometric dots and lines (dark mode only) */}
         {mounted && geometricDots.length > 0 && (
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none overflow-visible">
             {/* SVG for lines */}
             <svg
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
