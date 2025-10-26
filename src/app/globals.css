@@ -229,6 +229,21 @@ body {
 .header-container {
   overflow: visible !important;
   overscroll-behavior: none !important;
+  contain: none !important; /* Disable containment to allow overflow */
+}
+
+/* Ensure nav and all dropdown containers can overflow */
+.header-container nav,
+.header-container nav > *,
+.header-container .group {
+  overflow: visible !important;
+}
+
+/* Dropdown menu must be able to overflow */
+.header-container [role="menu"] {
+  position: absolute !important;
+  overflow: visible !important;
+  z-index: 9999 !important;
 }
 
 /* Suppress animations until page is fully loaded */
