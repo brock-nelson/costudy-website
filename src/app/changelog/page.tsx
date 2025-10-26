@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import { db, releases } from "@/db";
 import { desc, eq } from "drizzle-orm";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "CoStudy Changelog - Latest Updates & Release Notes",
   description: "Stay up to date with the latest features, improvements, and bug fixes in CoStudy. View our complete release history.",

@@ -3,6 +3,8 @@ import { db, features } from "@/db";
 import { desc, inArray } from "drizzle-orm";
 import FeatureVotingList from "@/components/features/FeatureVotingList";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "CoStudy Feature Roadmap - Vote on Upcoming Features",
   description: "See what's coming to CoStudy and vote on features you'd like to see next. Help shape the future of student collaboration.",
