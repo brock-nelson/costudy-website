@@ -45,7 +45,7 @@ async function main() {
   console.log('📡 Creating new Cyrus webhook...\n');
 
   try {
-    const webhook = await linear.createWebhook({
+    const webhookPayload = await linear.createWebhook({
       url: CYRUS_WEBHOOK_URL,
       label: 'Cyrus AI Agent',
       enabled: true,
@@ -58,8 +58,9 @@ async function main() {
       ],
     });
 
+    const webhook = await webhookPayload.webhook;
     console.log('✅ Cyrus webhook created successfully!');
-    console.log(`   ID: ${webhook.webhook?.id}`);
+    console.log(`   ID: ${webhook?.id}`);
     console.log(`   URL: ${CYRUS_WEBHOOK_URL}`);
     console.log(`   Resource types: Issue, IssueLabel, Comment, Project`);
     console.log('\n🎉 Cyrus should now receive events from Linear!');
