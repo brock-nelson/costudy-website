@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import DynamicDots from "@/components/ui/DynamicDots";
+import AnimatedBackground from "@/components/ui/AnimatedBackground";
 import GradientText from "@/components/ui/GradientText";
 import SchoolLogoScroller from "@/components/ui/SchoolLogoScroller";
 
@@ -32,6 +33,7 @@ export default function Home() {
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
       {/* Hero Section */}
       <section className="relative container mx-auto px-4 py-24 md:py-32 overflow-hidden" aria-labelledby="hero-heading">
+        <AnimatedBackground />
         <DynamicDots />
 
         {/* Soft vignette for legibility */}
