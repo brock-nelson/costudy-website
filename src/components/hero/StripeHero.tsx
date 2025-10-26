@@ -260,7 +260,7 @@ export default function StripeHero() {
 
               {/* Phone Screenshot (foreground layer, overlapping) */}
               <motion.div
-                className="relative -mt-12 lg:-mt-16 lg:-ml-20 z-20 max-w-xs mx-auto lg:mx-0"
+                className="relative -mt-[75%] lg:-mt-[70%] lg:-ml-20 z-20 max-w-xs mx-auto lg:mx-0"
                 initial={{ opacity: 0, y: 30, x: -10 }}
                 animate={{ opacity: 1, y: 0, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
