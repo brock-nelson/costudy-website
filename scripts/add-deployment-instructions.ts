@@ -78,7 +78,7 @@ async function main() {
 
   for (const issue of issues.nodes) {
     try {
-      await linear.commentCreate({
+      await linear.createComment({
         issueId: issue.id,
         body: DEPLOYMENT_INSTRUCTIONS,
       });
