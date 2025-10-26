@@ -33,7 +33,7 @@ function getDb() {
 export const db = new Proxy({} as ReturnType<typeof drizzle>, {
   get(_target, prop) {
     const realDb = getDb();
-    return (realDb as any)[prop];
+    return realDb[prop as keyof typeof realDb];
   }
 });
 
