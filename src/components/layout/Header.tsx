@@ -10,8 +10,8 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white dark:bg-[#0a0a0a] border-b border-[#EAEDEF] dark:border-[#404040] fixed top-0 left-0 right-0 z-50 transition-colors header-container overflow-hidden overscroll-none">
-      <nav className="container mx-auto px-4 py-4 relative overflow-visible overscroll-none">
+    <header className="bg-white dark:bg-[#0a0a0a] border-b border-[#EAEDEF] dark:border-[#404040] z-50 transition-colors header-container">
+      <nav className="container mx-auto px-4 py-4 relative overflow-visible">
         <div className="flex items-center justify-between">
           {/* Animated Logo */}
           <AnimatedLogo />

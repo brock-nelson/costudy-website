@@ -213,9 +213,23 @@ body {
 
 /* Prevent layout shift and flash on page load */
 .header-container {
-  min-height: 72px; /* Consistent header height */
-  max-height: 72px; /* Prevent header from growing */
-  overscroll-behavior: contain; /* Prevent scroll chaining */
+  min-height: 72px !important; /* Consistent header height */
+  max-height: 72px !important; /* Prevent header from growing */
+  height: 72px !important; /* Lock exact height */
+  overscroll-behavior: none !important; /* Prevent scroll chaining */
+  transform: translateZ(0) !important; /* Force GPU layer, prevent transforms */
+  will-change: auto !important; /* Disable animations */
+  position: fixed !important; /* Force fixed positioning */
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+/* Prevent scrolling within header and its children */
+.header-container,
+.header-container * {
+  overflow-y: hidden !important;
+  overscroll-behavior-y: none !important;
 }
 
 /* Suppress animations until page is fully loaded */
