@@ -142,7 +142,9 @@ export default function StripeHero() {
           <div className="space-y-6 lg:space-y-8 text-center lg:text-left lg:pr-8">
             {/* Hero Heading */}
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight text-gray-900 dark:text-white">
-              Transform Student
+              Transform
+              <br />
+              Student
               <br />
               <span className="text-[#4A12C0] dark:text-[#A78BFA]">Collaboration</span>
             </h1>
