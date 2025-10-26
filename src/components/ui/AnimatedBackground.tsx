@@ -243,6 +243,8 @@ export default function AnimatedBackground() {
 
   // Initialize particles with microgravity physics
   useEffect(() => {
+    if (!mounted) return; // Don't initialize until component is mounted
+
     const allParticleData = [
       { baseX: 33.33, baseY: 25 },
       { baseX: 75, baseY: 66.67 },
@@ -291,7 +293,7 @@ export default function AnimatedBackground() {
     });
 
     setParticles(initialParticles);
-  }, [isDarkMode]);
+  }, [isDarkMode, mounted]);
 
   // Shape drift animation with substance physics
   useEffect(() => {

@@ -42,7 +42,7 @@ export default function Home() {
           {/* Main Heading */}
           <h1
             id="hero-heading"
-            className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1] tracking-tight text-[#374045] dark:text-[#E0E7FF]"
+            className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1] tracking-tight text-[#4A12C0] dark:text-[#E0E7FF]"
             aria-label="Transform Student Collaboration"
           >
             Transform Student Collaboration

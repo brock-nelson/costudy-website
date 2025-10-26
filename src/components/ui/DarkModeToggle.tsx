@@ -30,7 +30,7 @@ export default function DarkModeToggle() {
   return (
     <button
       onClick={toggleDarkMode}
-      className="flex items-center justify-center p-2 rounded-lg border-2 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-[#4A12C0] dark:hover:border-[#8B5CF6] transition-all shadow-sm"
+      className="flex items-center justify-center p-1.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 hover:border-[#4A12C0] dark:hover:border-[#8B5CF6] transition-all shadow-sm"
       aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
       aria-pressed={darkMode}
       aria-describedby="theme-toggle-desc"
@@ -40,10 +40,10 @@ export default function DarkModeToggle() {
       </span>
       {darkMode ? (
         // In dark mode, show sun emoji to switch to light mode
-        <span className="text-2xl" role="img" aria-label="Sun - Switch to light mode">☀️</span>
+        <span className="text-lg" role="img" aria-label="Sun - Switch to light mode">☀️</span>
       ) : (
         // In light mode, show moon emoji to switch to dark mode
-        <span className="text-2xl" role="img" aria-label="Moon - Switch to dark mode">🌙</span>
+        <span className="text-lg" role="img" aria-label="Moon - Switch to dark mode">🌙</span>
       )}
     </button>
   );
