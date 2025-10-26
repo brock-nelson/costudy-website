@@ -214,6 +214,8 @@ body {
 /* Prevent layout shift and flash on page load */
 .header-container {
   min-height: 72px; /* Consistent header height */
+  max-height: 72px; /* Prevent header from growing */
+  overscroll-behavior: contain; /* Prevent scroll chaining */
 }
 
 /* Suppress animations until page is fully loaded */
