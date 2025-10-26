@@ -113,16 +113,15 @@ export default function Products() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
               <Link
                 href="/demo"
-                className="group relative bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 overflow-hidden"
+                className="group bg-[#4A12C0] dark:bg-[#8B5CF6] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl hover:bg-[#3a0e99] dark:hover:bg-[#7C3AED] hover:scale-105 transition-all duration-300"
                 aria-label="Schedule a demo of CoStudy"
               >
-                <span className="relative z-10 flex items-center gap-2 justify-center">
+                <span className="flex items-center gap-2 justify-center">
                   Schedule a Demo
                   <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </svg>
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </Link>
               <Link
                 href="/contact"
@@ -181,7 +180,7 @@ export default function Products() {
       {/* 3. TESTIMONIALS - Gradient Background */}
       <section className="py-20 bg-gradient-to-br from-cyan-50 via-blue-50 to-purple-50 dark:from-cyan-900/20 dark:via-blue-900/20 dark:to-purple-900/20">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-6xl font-black text-center mb-4 bg-gradient-to-r from-purple-600 to-cyan-600 dark:from-purple-400 dark:to-cyan-400 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-6xl font-black text-center mb-4 text-[#6B3DCB] dark:text-[#E9EEFF]">
             What Our Community Says
           </h2>
           <p className="text-center text-gray-600 dark:text-[#A0AEC0] mb-16 max-w-2xl mx-auto text-lg">
@@ -243,7 +242,7 @@ export default function Products() {
       {/* 4. CHALLENGES / PAIN POINTS - White Background */}
       <section className="py-20 bg-white dark:bg-[#121212]">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-6xl font-black text-center mb-4 bg-gradient-to-r from-red-600 to-orange-600 dark:from-purple-400 dark:to-cyan-400 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-6xl font-black text-center mb-4 text-[#6B3DCB] dark:text-[#E9EEFF]">
             The Collaboration Challenge
           </h2>
           <p className="text-center text-gray-600 dark:text-[#A0AEC0] mb-16 max-w-3xl mx-auto text-lg">
@@ -293,7 +292,7 @@ export default function Products() {
       {/* 5. FEATURES - Alternating Gradient Sections */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl md:text-6xl font-black text-center mb-4 bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-6xl font-black text-center mb-4 text-[#6B3DCB] dark:text-[#E9EEFF]">
             Complete Collaboration Toolkit
           </h2>
           <p className="text-center text-gray-600 dark:text-[#A0AEC0] mb-20 max-w-3xl mx-auto text-lg">

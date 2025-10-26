@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import DynamicDots from "@/components/ui/DynamicDots";
-import GradientText from "@/components/ui/GradientText";
+import AnimatedBackground from "@/components/ui/AnimatedBackground";
 import SchoolLogoScroller from "@/components/ui/SchoolLogoScroller";
 
 export const metadata: Metadata = {
@@ -32,15 +32,32 @@ export default function Home() {
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
       {/* Hero Section */}
       <section className="relative container mx-auto px-4 py-24 md:py-32 overflow-hidden" aria-labelledby="hero-heading">
+        <AnimatedBackground />
         <DynamicDots />
+
+        {/* Soft vignette for legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.08] dark:via-black/[0.08] to-transparent pointer-events-none" style={{ zIndex: 9 }}></div>
+
         <div className="hero-content text-center max-w-5xl mx-auto relative z-10">
           {/* Main Heading */}
-          <h1 id="hero-heading" className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1]">
-            <GradientText>Transform Student Collaboration</GradientText>
+          <h1
+            id="hero-heading"
+            className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1] tracking-tight text-[#374045] dark:text-[#E0E7FF]"
+            aria-label="Transform Student Collaboration"
+          >
+            Transform Student Collaboration
           </h1>
 
           {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-[#5E6E76] dark:text-[#A0AEC0] mb-10 max-w-3xl mx-auto leading-relaxed font-medium">
+          <p
+            className="text-xl md:text-2xl text-[#5E6E76] dark:text-[#A0AEC0] mb-10 max-w-3xl mx-auto leading-relaxed font-medium"
+            style={{
+              hyphens: 'none',
+              WebkitHyphens: 'none',
+              MozHyphens: 'none',
+              msHyphens: 'none',
+            }}
+          >
             Structured teamwork tools that help students build essential collaboration skills
             and achieve better learning outcomes.
           </p>
@@ -49,16 +66,15 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
               href="/demo"
-              className="group relative bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 overflow-hidden"
+              className="group bg-[#4A12C0] dark:bg-[#8B5CF6] text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#3a0e99] dark:hover:bg-[#7C3AED] hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300"
               aria-label="Schedule a demo of CoStudy"
             >
-              <span className="relative z-10 flex items-center gap-2">
+              <span className="flex items-center gap-2">
                 Schedule a Demo
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </Link>
             <Link
               href="/products"

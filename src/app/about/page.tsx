@@ -172,7 +172,7 @@ export default function About() {
             </Link>
             <Link
               href="/demo"
-              className="group bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-xl font-semibold hover:from-purple-600 hover:to-pink-600 transition-all hover:scale-105 border-2 border-white/50 shadow-lg hover:shadow-xl"
+              className="group bg-[#4A12C0] dark:bg-[#8B5CF6] text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#3a0e99] dark:hover:bg-[#7C3AED] transition-all hover:scale-105 border-2 border-white/50 shadow-lg hover:shadow-xl"
             >
               <span className="flex items-center justify-center gap-2">
                 Schedule a Demo

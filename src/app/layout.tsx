@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Figtree } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -9,9 +9,9 @@ import { Analytics } from "@vercel/analytics/next";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import GoogleAnalytics from "@/components/analytics/GoogleAnalytics";
 
-const inter = Inter({
+const figtree = Figtree({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-figtree",
 });
 
 export const metadata: Metadata = {
@@ -80,7 +80,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <GoogleAnalytics />
-      <body className={`${inter.variable} font-sans antialiased preload`}>
+      <body className={`${figtree.variable} font-sans antialiased preload`}>
         <script
           dangerouslySetInnerHTML={{
             __html: `

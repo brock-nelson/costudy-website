@@ -287,7 +287,7 @@ export default function PricingPage() {
               >
                 {tier.badge && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                    <span className="bg-[#4A12C0] dark:bg-[#8B5CF6] text-white px-4 py-1 rounded-full text-sm font-semibold">
                       {tier.badge}
                     </span>
                   </div>
