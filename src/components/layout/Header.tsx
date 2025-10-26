@@ -10,15 +10,15 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white dark:bg-[#0a0a0a] border-b border-[#EAEDEF] dark:border-[#404040] sticky top-0 z-50 transition-colors header-container">
-      <nav className="container mx-auto px-4 py-4 relative">
+    <header className="bg-white dark:bg-[#0a0a0a] border-b border-[#EAEDEF] dark:border-[#404040] sticky top-0 z-50 transition-colors header-container overflow-hidden">
+      <nav className="container mx-auto px-4 py-4 relative overflow-visible">
         <div className="flex items-center justify-between">
           {/* Animated Logo */}
           <AnimatedLogo />
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
-            <div className="relative group">
+          <div className="hidden md:flex items-center space-x-6 overflow-visible">
+            <div className="relative group overflow-visible">
               <button
                 className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-colors flex items-center gap-1"
                 aria-expanded="false"
