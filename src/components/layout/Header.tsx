@@ -30,7 +30,7 @@ export default function Header() {
                 </svg>
               </button>
               <div
-                className="absolute left-0 mt-3 w-56 bg-white dark:bg-[#121212] rounded-lg shadow-2xl border border-gray-200 dark:border-[#404040] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 overflow-hidden translate-y-2 group-hover:translate-y-0 pointer-events-none group-hover:pointer-events-auto"
+                className="absolute left-0 mt-3 w-56 bg-white dark:bg-[#121212] rounded-lg shadow-2xl border border-gray-200 dark:border-[#404040] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 pointer-events-none group-hover:pointer-events-auto"
                 style={{ top: '100%', zIndex: 9999 }}
                 role="menu"
                 aria-label="Solutions menu"

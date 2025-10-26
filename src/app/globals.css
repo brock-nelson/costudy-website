@@ -167,10 +167,16 @@ body:not(.high-contrast).dark .animated-orb {
   overflow-wrap: break-word;
 }
 
-/* Ensure containers don't overflow */
+/* Ensure containers don't overflow horizontally, but allow vertical overflow for dropdowns */
 .container {
   max-width: 100%;
   overflow-x: hidden;
+  overflow-y: visible;
+}
+
+/* Specifically allow overflow for header navigation to show dropdowns */
+header.header-container nav.container {
+  overflow: visible !important;
 }
 
 /* Responsive text sizing for all devices */
