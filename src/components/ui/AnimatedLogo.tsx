@@ -48,7 +48,12 @@ export default function AnimatedLogo() {
           width={200}
           height={50}
           className="h-10 w-auto transition-all duration-300 group-hover:scale-105"
-          style={{ display: mounted ? undefined : 'block' }}
+          style={{
+            display: mounted ? undefined : 'block',
+            filter: mounted
+              ? 'brightness(0) saturate(100%) invert(17%) sepia(98%) saturate(6446%) hue-rotate(267deg) brightness(78%) contrast(120%)'
+              : undefined
+          }}
         />
       </div>
 
