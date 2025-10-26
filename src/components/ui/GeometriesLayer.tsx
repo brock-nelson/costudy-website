@@ -22,18 +22,28 @@ interface Shape {
 }
 
 export default function GeometriesLayer({ reducedMotion, intensity = 1 }: GeometriesLayerProps) {
+  // Initialize dark mode early to prevent flicker
+  const getInitialDarkMode = () => {
+    if (typeof window === 'undefined') return false;
+    return document.documentElement.classList.contains('dark');
+  };
+
   const [mounted, setMounted] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(getInitialDarkMode);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const [textBounds, setTextBounds] = useState<DOMRect | null>(null);
   const [shapes, setShapes] = useState<Shape[]>([]);
+  const [fadeIn, setFadeIn] = useState(false);
   const animationRef = useRef<number | null>(null);
   const timeRef = useRef(0);
+  const shapesInitialized = useRef(false);
 
-  // Initialize shapes
+  const neonColors = ['#EC4899', '#22D3EE', '#A78BFA', '#2DD4BF', '#C084FC', '#F0ABFC', '#60A5FA'];
+  const mutedPurples = ['#9333EA', '#A855F7', '#8B5CF6', '#7C3AED'];
+
+  // Initialize shapes once on mount
   useEffect(() => {
-    const neonColors = ['#EC4899', '#22D3EE', '#A78BFA', '#2DD4BF', '#C084FC', '#F0ABFC', '#60A5FA'];
-    const mutedPurples = ['#9333EA', '#A855F7', '#8B5CF6', '#7C3AED'];
+    if (shapesInitialized.current) return;
 
     const initialShapes: Shape[] = [
       {
@@ -41,11 +51,11 @@ export default function GeometriesLayer({ reducedMotion, intensity = 1 }: Geomet
         type: 'sphere',
         x: -12,
         y: -10,
-        size: '50vw', // 40-60vw
+        size: '50vw',
         color: isDarkMode ? neonColors[0] : mutedPurples[0],
         depthFactor: 0.8,
         animationDelay: 0,
-        rotationSpeed: 30, // slow rotate
+        rotationSpeed: 30,
         driftX: 0,
         driftY: 0,
       },
@@ -54,11 +64,11 @@ export default function GeometriesLayer({ reducedMotion, intensity = 1 }: Geomet
         type: 'rectangle',
         x: 65,
         y: 45,
-        size: '28vw', // 24-32vw
+        size: '28vw',
         color: isDarkMode ? neonColors[1] : mutedPurples[1],
         depthFactor: 0.6,
         animationDelay: 2.7,
-        rotationSpeed: 2, // 360°/180s
+        rotationSpeed: 2,
         driftX: 0,
         driftY: 0,
       },
@@ -67,11 +77,11 @@ export default function GeometriesLayer({ reducedMotion, intensity = 1 }: Geomet
         type: 'triangle',
         x: 28,
         y: 58,
-        size: '19vw', // 16-22vw
+        size: '19vw',
         color: isDarkMode ? neonColors[2] : mutedPurples[2],
         depthFactor: 0.5,
         animationDelay: 5.1,
-        rotationSpeed: 3, // 360°/120s
+        rotationSpeed: 3,
         driftX: 0,
         driftY: 0,
       },
@@ -80,11 +90,11 @@ export default function GeometriesLayer({ reducedMotion, intensity = 1 }: Geomet
         type: 'circle',
         x: 104,
         y: -6,
-        size: '32vw', // 28-36vw
+        size: '32vw',
         color: isDarkMode ? neonColors[3] : mutedPurples[3],
         depthFactor: 0.7,
         animationDelay: 7.8,
-        rotationSpeed: 25, // subtle rotate
+        rotationSpeed: 25,
         driftX: 0,
         driftY: 0,
       },
@@ -93,7 +103,7 @@ export default function GeometriesLayer({ reducedMotion, intensity = 1 }: Geomet
         type: 'cube',
         x: 76,
         y: 78,
-        size: '21vw', // 18-24vw
+        size: '21vw',
         color: isDarkMode ? neonColors[4] : mutedPurples[0],
         depthFactor: 0.4,
         animationDelay: 10.5,
@@ -104,6 +114,24 @@ export default function GeometriesLayer({ reducedMotion, intensity = 1 }: Geomet
     ];
 
     setShapes(initialShapes);
+    shapesInitialized.current = true;
+
+    // Trigger fade-in after shapes are set
+    setTimeout(() => setFadeIn(true), 50);
+  }, []);
+
+  // Update colors when dark mode changes (without recreating shapes)
+  useEffect(() => {
+    if (!shapesInitialized.current || shapes.length === 0) return;
+
+    setShapes(prevShapes =>
+      prevShapes.map((shape, index) => ({
+        ...shape,
+        color: isDarkMode
+          ? index === 4 ? neonColors[0] : neonColors[index]
+          : index === 4 ? mutedPurples[0] : mutedPurples[index],
+      }))
+    );
   }, [isDarkMode]);
 
   // Animation loop for drift
@@ -492,7 +520,13 @@ export default function GeometriesLayer({ reducedMotion, intensity = 1 }: Geomet
   };
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 5 }}>
+    <div
+      className="absolute inset-0 overflow-hidden pointer-events-none transition-opacity duration-700"
+      style={{
+        zIndex: 5,
+        opacity: fadeIn ? 1 : 0,
+      }}
+    >
       {shapes.map(renderShape)}
     </div>
   );

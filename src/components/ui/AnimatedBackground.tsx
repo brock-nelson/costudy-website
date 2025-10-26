@@ -853,7 +853,7 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Rotating square */}
+      {/* Rotating square - HIDDEN for Hero v2 */}
       {(() => {
         const squarePos = { x: 50, y: 40 };
         const squareRepulsion = getRepulsion(squarePos.x, squarePos.y, 8);
@@ -861,7 +861,7 @@ export default function AnimatedBackground() {
         const squareDrift = drift.square || { x: 0, y: 0 };
         return (
           <div
-            className="absolute top-[40%] left-1/2 w-24 h-24 md:w-36 md:h-36 bg-gradient-to-br from-amber-500/12 dark:from-amber-400/28 via-orange-500/10 dark:via-orange-400/24 to-yellow-400/6 dark:to-yellow-400/16 border-2 border-amber-500/25 dark:border-amber-400/45 backdrop-blur-sm shadow-lg shadow-amber-500/20 dark:shadow-amber-400/40 transition-transform duration-300 ease-out will-change-transform animate-spin-very-slow"
+            className="hidden absolute top-[40%] left-1/2 w-24 h-24 md:w-36 md:h-36 bg-gradient-to-br from-amber-500/12 dark:from-amber-400/28 via-orange-500/10 dark:via-orange-400/24 to-yellow-400/6 dark:to-yellow-400/16 border-2 border-amber-500/25 dark:border-amber-400/45 backdrop-blur-sm shadow-lg shadow-amber-500/20 dark:shadow-amber-400/40 transition-transform duration-300 ease-out will-change-transform animate-spin-very-slow"
             style={{
               transform: `translate(${squareRepulsion.x + squareScroll.x + squareDrift.x}px, ${squareRepulsion.y + squareScroll.y + squareDrift.y}px)`,
               borderRadius: '1.5rem',
@@ -871,7 +871,7 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Orange/Amber morphing shape */}
+      {/* Orange/Amber morphing shape - HIDDEN for Hero v2 */}
       {(() => {
         const orangePos = { x: 50, y: 50 };
         const orangeRepulsion = getRepulsion(orangePos.x, orangePos.y, 8);
@@ -879,7 +879,7 @@ export default function AnimatedBackground() {
         const orangeDrift = drift.orange || { x: 0, y: 0 };
         return (
           <div
-            className="absolute top-1/2 left-1/2 w-32 h-32 md:w-48 md:h-48 bg-gradient-to-br from-orange-500/15 dark:from-orange-400/35 via-amber-500/12 dark:via-amber-400/28 to-yellow-400/8 dark:to-yellow-400/20 border-2 border-orange-500/30 dark:border-orange-400/50 animate-pulse-slow backdrop-blur-sm shadow-xl shadow-orange-500/25 dark:shadow-orange-400/45 transition-transform duration-300 ease-out will-change-transform animate-morph-to-circle"
+            className="hidden absolute top-1/2 left-1/2 w-32 h-32 md:w-48 md:h-48 bg-gradient-to-br from-orange-500/15 dark:from-orange-400/35 via-amber-500/12 dark:via-amber-400/28 to-yellow-400/8 dark:to-yellow-400/20 border-2 border-orange-500/30 dark:border-orange-400/50 animate-pulse-slow backdrop-blur-sm shadow-xl shadow-orange-500/25 dark:shadow-orange-400/45 transition-transform duration-300 ease-out will-change-transform animate-morph-to-circle"
             style={{
               transform: `translate(${orangeRepulsion.x + orangeScroll.x + orangeDrift.x}px, ${orangeRepulsion.y + orangeScroll.y + orangeDrift.y}px)`,
               opacity: mounted ? undefined : 0
@@ -888,7 +888,7 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Emerald star */}
+      {/* Emerald star - HIDDEN for Hero v2 */}
       {(() => {
         const emeraldPos = { x: 25, y: 75 };
         const emeraldRepulsion = getRepulsion(emeraldPos.x, emeraldPos.y, 10);
@@ -896,7 +896,7 @@ export default function AnimatedBackground() {
         const emeraldDrift = drift.emerald || { x: 0, y: 0 };
         return (
           <div
-            className="hidden lg:block absolute bottom-1/4 left-1/4 w-48 h-48 bg-gradient-to-br from-emerald-500/10 dark:from-emerald-400/30 via-green-500/8 dark:via-green-400/24 to-teal-400/6 dark:to-teal-400/18 border-2 border-emerald-500/28 dark:border-emerald-400/50 animate-spin-slow backdrop-blur-sm shadow-xl shadow-emerald-500/22 dark:shadow-emerald-400/42 transition-transform duration-300 ease-out will-change-transform"
+            className="hidden absolute bottom-1/4 left-1/4 w-48 h-48 bg-gradient-to-br from-emerald-500/10 dark:from-emerald-400/30 via-green-500/8 dark:via-green-400/24 to-teal-400/6 dark:to-teal-400/18 border-2 border-emerald-500/28 dark:border-emerald-400/50 animate-spin-slow backdrop-blur-sm shadow-xl shadow-emerald-500/22 dark:shadow-emerald-400/42 transition-transform duration-300 ease-out will-change-transform"
             style={{
               clipPath: "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
               borderRadius: "15%",
@@ -907,7 +907,7 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Violet triangle */}
+      {/* Violet triangle - HIDDEN for Hero v2 */}
       {(() => {
         const violetPos = { x: 80, y: 66 };
         const violetRepulsion = getRepulsion(violetPos.x, violetPos.y, 10);
@@ -915,7 +915,7 @@ export default function AnimatedBackground() {
         const violetDrift = drift.violet || { x: 0, y: 0 };
         return (
           <div
-            className="hidden lg:block absolute top-2/3 right-1/5 w-44 h-44 bg-gradient-to-br from-violet-500/14 dark:from-violet-400/34 via-indigo-500/10 dark:via-indigo-400/26 to-purple-400/6 dark:to-purple-400/18 border-2 border-violet-500/30 dark:border-violet-400/50 rounded-[2rem] animate-morph backdrop-blur-sm shadow-xl shadow-violet-500/25 dark:shadow-violet-400/45 transition-transform duration-300 ease-out will-change-transform"
+            className="hidden absolute top-2/3 right-1/5 w-44 h-44 bg-gradient-to-br from-violet-500/14 dark:from-violet-400/34 via-indigo-500/10 dark:via-indigo-400/26 to-purple-400/6 dark:to-purple-400/18 border-2 border-violet-500/30 dark:border-violet-400/50 rounded-[2rem] animate-morph backdrop-blur-sm shadow-xl shadow-violet-500/25 dark:shadow-violet-400/45 transition-transform duration-300 ease-out will-change-transform"
             style={{
               clipPath: "polygon(50% 0%, 100% 100%, 0% 100%)",
               transform: `translate(${violetRepulsion.x + violetScroll.x + violetDrift.x}px, ${violetRepulsion.y + violetScroll.y + violetDrift.y}px) rotate(30deg)`,
@@ -925,7 +925,7 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Teal diamond */}
+      {/* Teal diamond - HIDDEN for Hero v2 */}
       {(() => {
         const tealPos = { x: 33, y: 16 };
         const tealRepulsion = getRepulsion(tealPos.x, tealPos.y, 10);
@@ -933,7 +933,7 @@ export default function AnimatedBackground() {
         const tealDrift = drift.teal || { x: 0, y: 0 };
         return (
           <div
-            className="hidden lg:block absolute top-1/6 left-1/3 w-40 h-40 bg-gradient-to-br from-teal-500/14 dark:from-teal-400/34 via-cyan-400/10 dark:via-cyan-400/26 to-blue-400/6 dark:to-blue-400/18 border-2 border-teal-500/30 dark:border-teal-400/50 rounded-[1.8rem] animate-morph-delayed backdrop-blur-sm shadow-xl shadow-teal-500/25 dark:shadow-teal-400/45 transition-transform duration-300 ease-out will-change-transform"
+            className="hidden absolute top-1/6 left-1/3 w-40 h-40 bg-gradient-to-br from-teal-500/14 dark:from-teal-400/34 via-cyan-400/10 dark:via-cyan-400/26 to-blue-400/6 dark:to-blue-400/18 border-2 border-teal-500/30 dark:border-teal-400/50 rounded-[1.8rem] animate-morph-delayed backdrop-blur-sm shadow-xl shadow-teal-500/25 dark:shadow-teal-400/45 transition-transform duration-300 ease-out will-change-transform"
             style={{
               clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
               transform: `translate(${tealRepulsion.x + tealScroll.x + tealDrift.x}px, ${tealRepulsion.y + tealScroll.y + tealDrift.y}px) rotate(45deg)`,
@@ -943,7 +943,7 @@ export default function AnimatedBackground() {
         );
       })()}
 
-      {/* Rose pentagon */}
+      {/* Rose pentagon - HIDDEN for Hero v2 */}
       {(() => {
         const rosePos = { x: 60, y: 80 };
         const roseRepulsion = getRepulsion(rosePos.x, rosePos.y, 10);
@@ -951,7 +951,7 @@ export default function AnimatedBackground() {
         const roseDrift = drift.rose || { x: 0, y: 0 };
         return (
           <div
-            className="hidden lg:block absolute bottom-1/5 right-2/5 w-36 h-36 bg-gradient-to-br from-rose-500/12 dark:from-rose-400/32 via-pink-400/8 dark:via-pink-400/22 to-fuchsia-400/6 dark:to-fuchsia-400/16 border-2 border-rose-500/30 dark:border-rose-400/50 rounded-[1.5rem] animate-morph backdrop-blur-sm shadow-xl shadow-rose-500/24 dark:shadow-rose-400/44 transition-transform duration-300 ease-out will-change-transform"
+            className="hidden absolute bottom-1/5 right-2/5 w-36 h-36 bg-gradient-to-br from-rose-500/12 dark:from-rose-400/32 via-pink-400/8 dark:via-pink-400/22 to-fuchsia-400/6 dark:to-fuchsia-400/16 border-2 border-rose-500/30 dark:border-rose-400/50 rounded-[1.5rem] animate-morph backdrop-blur-sm shadow-xl shadow-rose-500/24 dark:shadow-rose-400/44 transition-transform duration-300 ease-out will-change-transform"
             style={{
               clipPath: "polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)",
               transform: `translate(${roseRepulsion.x + roseScroll.x + roseDrift.x}px, ${roseRepulsion.y + roseScroll.y + roseDrift.y}px) rotate(72deg)`,
