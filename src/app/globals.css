@@ -94,7 +94,12 @@ body:not(.high-contrast) {
   color: #374045;
 }
 
-body:not(.high-contrast) h1,
+/* Hero h1 gets brand purple, other headings get dark gray */
+body:not(.high-contrast) #hero-heading {
+  color: #4A12C0 !important;
+}
+
+body:not(.high-contrast) h1:not(#hero-heading),
 body:not(.high-contrast) h2,
 body:not(.high-contrast) h3,
 body:not(.high-contrast) h4,
@@ -200,6 +205,7 @@ body {
 /* Prevent layout shift and flash on page load */
 .header-container {
   min-height: 72px; /* Consistent header height */
+  overflow: visible !important; /* Allow dropdowns to overflow */
 }
 
 /* Suppress animations until page is fully loaded */
