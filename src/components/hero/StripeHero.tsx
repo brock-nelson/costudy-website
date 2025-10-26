@@ -148,7 +148,7 @@ export default function StripeHero() {
             </h1>
 
             {/* Subheading */}
-            <p className="text-lg md:text-xl lg:text-2xl font-medium text-gray-700 dark:text-gray-300 leading-relaxed max-w-xl mx-auto lg:mx-0">
+            <p className="text-base md:text-lg lg:text-xl font-normal text-gray-600 dark:text-gray-400 leading-relaxed max-w-xl mx-auto lg:mx-0">
               Structured teamwork tools that help students build essential collaboration skills and achieve better learning outcomes.
             </p>
 
@@ -181,24 +181,24 @@ export default function StripeHero() {
             </div>
 
             {/* Trust Indicators with Bubble Badges */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 lg:gap-6 mt-2">
-              <div className="flex items-center gap-2 px-4 py-2 bg-purple-50 dark:bg-purple-900/20 rounded-full border border-purple-200 dark:border-purple-800">
-                <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-xl mx-auto lg:mx-0 lg:flex lg:flex-row lg:justify-start">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-50 dark:bg-purple-900/20 rounded-full border border-purple-200 dark:border-purple-800 justify-center lg:justify-start">
+                <svg className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                <span className="font-medium text-sm text-gray-700 dark:text-gray-300">FERPA Compliant</span>
+                <span className="font-medium text-xs text-gray-700 dark:text-gray-300 whitespace-nowrap">FERPA Compliant</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-purple-50 dark:bg-purple-900/20 rounded-full border border-purple-200 dark:border-purple-800">
-                <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-50 dark:bg-purple-900/20 rounded-full border border-purple-200 dark:border-purple-800 justify-center lg:justify-start">
+                <svg className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                <span className="font-medium text-sm text-gray-700 dark:text-gray-300">SOC 2 Certified</span>
+                <span className="font-medium text-xs text-gray-700 dark:text-gray-300 whitespace-nowrap">SOC 2 Certified</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 bg-purple-50 dark:bg-purple-900/20 rounded-full border border-purple-200 dark:border-purple-800">
-                <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-50 dark:bg-purple-900/20 rounded-full border border-purple-200 dark:border-purple-800 justify-center lg:justify-start">
+                <svg className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
-                <span className="font-medium text-sm text-gray-700 dark:text-gray-300">LMS Integration</span>
+                <span className="font-medium text-xs text-gray-700 dark:text-gray-300 whitespace-nowrap">LMS Integration</span>
               </div>
             </div>
           </div>
