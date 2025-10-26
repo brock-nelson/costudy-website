@@ -1068,12 +1068,13 @@ export default function AnimatedBackground() {
         return (
           <div
             key={i}
-            className="absolute rounded-full will-change-transform transition-all duration-200"
+            className="absolute will-change-transform transition-all duration-200"
             style={{
               left: `${particle.baseX}%`,
               top: `${particle.baseY}%`,
               width: `${particle.size}px`,
               height: `${particle.size}px`,
+              borderRadius: '9999px',
               background: visualConfig.innerGradient,
               border: `${visualConfig.borderWidth} solid ${visualConfig.borderColor}`,
               boxShadow: enhancedShadow,
