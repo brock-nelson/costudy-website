@@ -136,9 +136,9 @@ export default function StripeHero() {
 
       {/* Main Content Container */}
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-12 md:py-16 relative z-10">
-        <div className="grid lg:grid-cols-[45%_55%] gap-8 lg:gap-12 xl:gap-16 items-center max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-[55%_45%] gap-8 lg:gap-12 xl:gap-16 items-center max-w-7xl mx-auto">
 
-          {/* Left Column: Copy and CTA (40-45% width) */}
+          {/* Left Column: Copy and CTA (55% width) */}
           <div className="space-y-6 lg:space-y-8 text-center lg:text-left lg:pr-8">
             {/* Hero Heading */}
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.05] tracking-tight text-gray-900 dark:text-white">
@@ -203,7 +203,7 @@ export default function StripeHero() {
             </div>
           </div>
 
-          {/* Right Column: Product Screenshots with Diagonal Divider */}
+          {/* Right Column: Product Screenshots (45% width) */}
           <div className="relative">
             {/* Diagonal Divider (subtle, guides the eye) */}
             <div
