@@ -171,9 +171,6 @@ body:not(.high-contrast).dark .animated-orb {
 * {
   word-wrap: break-word;
   overflow-wrap: break-word;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  hyphens: auto;
 }
 
 /* Ensure containers don't overflow */

@@ -52,7 +52,15 @@ export default function Home() {
           </GradientText>
 
           {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-[#5E6E76] dark:text-[#A0AEC0] mb-10 max-w-3xl mx-auto leading-relaxed font-medium hyphens-none">
+          <p
+            className="text-xl md:text-2xl text-[#5E6E76] dark:text-[#A0AEC0] mb-10 max-w-3xl mx-auto leading-relaxed font-medium"
+            style={{
+              hyphens: 'none',
+              WebkitHyphens: 'none',
+              MozHyphens: 'none',
+              msHyphens: 'none',
+            }}
+          >
             Structured teamwork tools that help students build essential collaboration skills
             and achieve better learning outcomes.
           </p>
