@@ -51,13 +51,6 @@ export default function StripeHero() {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-white dark:bg-gray-950">
-      {/* Performance Fallback Message */}
-      {slowConnection && (
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50 bg-blue-50 dark:bg-blue-900/30 text-blue-900 dark:text-blue-100 px-4 py-2 rounded-lg shadow-lg border border-blue-200 dark:border-blue-800 text-sm">
-          ⚡ We noticed things are loading a bit slowly. Switching to a streamlined view…
-        </div>
-      )}
-
       {/* Animated Gradient Mesh Background */}
       {!slowConnection && (
         <motion.div
@@ -215,7 +208,7 @@ export default function StripeHero() {
             />
 
             {/* Layered Screenshots Container */}
-            <div className="relative max-w-2xl mx-auto lg:mx-0">
+            <div className="relative max-w-3xl mx-auto lg:mx-0">
               {/* Desktop Screenshot (background layer) */}
               <motion.div
                 className="relative z-10"
@@ -223,7 +216,7 @@ export default function StripeHero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <div className="relative aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl shadow-purple-500/20 dark:shadow-purple-900/40 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+                <div className="relative aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl shadow-purple-500/20 dark:shadow-purple-900/40 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 scale-110 lg:scale-100">
                   {/* Desktop Placeholder - Dashboard View */}
                   <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
                     {/* Mock browser chrome */}
@@ -267,7 +260,7 @@ export default function StripeHero() {
 
               {/* Phone Screenshot (foreground layer, overlapping) */}
               <motion.div
-                className="relative -mt-32 lg:-mt-40 lg:-ml-20 z-20 max-w-xs mx-auto lg:mx-0"
+                className="relative -mt-24 lg:-mt-32 lg:-ml-20 z-20 max-w-xs mx-auto lg:mx-0"
                 initial={{ opacity: 0, y: 30, x: -10 }}
                 animate={{ opacity: 1, y: 0, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
