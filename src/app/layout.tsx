@@ -94,7 +94,7 @@ export default function RootLayout({
         <ErrorBoundary>
           <SkipToContent />
           <Header />
-          <main id="main-content" className="pt-[72px]" tabIndex={-1}>{children}</main>
+          <main id="main-content" className="pt-[80px]" tabIndex={-1}>{children}</main>
           <Footer />
           <Analytics />
           <SpeedInsights />

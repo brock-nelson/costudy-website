@@ -213,9 +213,9 @@ body {
 
 /* Prevent layout shift and flash on page load */
 .header-container {
-  min-height: 72px !important; /* Consistent header height */
-  max-height: 72px !important; /* Prevent header from growing */
-  height: 72px !important; /* Lock exact height */
+  min-height: 80px !important; /* Consistent header height */
+  max-height: 80px !important; /* Prevent header from growing */
+  height: 80px !important; /* Lock exact height */
   overscroll-behavior: none !important; /* Prevent scroll chaining */
   transform: translateZ(0) !important; /* Force GPU layer, prevent transforms */
   will-change: auto !important; /* Disable animations */

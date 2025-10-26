@@ -10,17 +10,17 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white dark:bg-[#0a0a0a] border-b border-[#EAEDEF] dark:border-[#404040] z-50 transition-colors header-container">
-      <nav className="container mx-auto px-4 py-4 relative overflow-visible">
-        <div className="flex items-center justify-between">
+    <header className="bg-white dark:bg-[#0a0a0a] border-b border-[#EAEDEF] dark:border-[#404040] z-50 transition-colors header-container backdrop-blur-sm bg-white/95 dark:bg-[#0a0a0a]/95">
+      <nav className="container mx-auto px-6 py-5 relative overflow-visible">
+        <div className="flex items-center justify-between gap-8">
           {/* Animated Logo */}
           <AnimatedLogo />
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6 overflow-visible">
+          <div className="hidden md:flex items-center space-x-8 overflow-visible">
             <div className="relative group overflow-visible">
               <button
-                className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-colors flex items-center gap-1"
+                className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-all duration-200 flex items-center gap-1.5 py-2"
                 aria-expanded="false"
                 aria-haspopup="true"
               >
@@ -61,33 +61,33 @@ export default function Header() {
 
             <Link
               href="/products"
-              className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-colors"
+              className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-all duration-200 py-2"
             >
               Products
             </Link>
 
             <Link
               href="/resources"
-              className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-colors"
+              className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-all duration-200 py-2"
             >
               Resources
             </Link>
 
             <Link
               href="/about"
-              className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-colors"
+              className="text-[#374045] dark:text-gray-300 hover:text-[#4A12C0] dark:hover:text-[#8B5CF6] font-medium transition-all duration-200 py-2"
             >
               About
             </Link>
 
-            <div className="flex items-center gap-2 ml-4 border-l border-gray-200 dark:border-[#404040] pl-4">
+            <div className="flex items-center gap-3 ml-6 border-l border-gray-200 dark:border-[#404040] pl-6">
               <DarkModeToggle />
               <HighContrastToggle />
             </div>
 
             <Link
               href="/demo"
-              className="bg-[#4A12C0] dark:bg-[#8B5CF6] text-white px-6 py-2 rounded-lg font-semibold hover:bg-[#3a0e99] dark:hover:bg-[#7C3AED] transition-colors shadow-md hover:shadow-lg"
+              className="bg-[#4A12C0] dark:bg-[#8B5CF6] text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-[#3a0e99] dark:hover:bg-[#7C3AED] transition-all duration-200 shadow-md hover:shadow-lg hover:scale-105"
             >
               Get Demo
             </Link>
