@@ -5,6 +5,10 @@ import { useEffect, useState, useRef } from "react";
 interface GradientTextProps {
   children: React.ReactNode;
   className?: string;
+  variant?: 'default' | 'heroTitle';
+  as?: 'h1' | 'h2' | 'h3' | 'span';
+  id?: string;
+  'aria-label'?: string;
 }
 
 interface Spark {
@@ -17,11 +21,19 @@ interface Spark {
   color: string;
 }
 
-export default function GradientText({ children, className = "" }: GradientTextProps) {
+export default function GradientText({
+  children,
+  className = "",
+  variant = 'default',
+  as: Component = 'span',
+  id,
+  'aria-label': ariaLabel,
+}: GradientTextProps) {
   const [mounted, setMounted] = useState(false);
   const [scrollOffset, setScrollOffset] = useState(0);
   const [isRapidMovement, setIsRapidMovement] = useState(false);
   const [sparks, setSparks] = useState<Spark[]>([]);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const containerRef = useRef<HTMLSpanElement>(null);
   const prevPosRef = useRef({ x: 50, y: 50 });
   const prevTimeRef = useRef(Date.now());
@@ -53,8 +65,20 @@ export default function GradientText({ children, className = "" }: GradientTextP
   useEffect(() => {
     setMounted(true);
 
+    // Detect reduced motion preference
+    const checkReducedMotion = () => {
+      if (typeof window !== 'undefined' && window.matchMedia) {
+        setPrefersReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      }
+    };
+    checkReducedMotion();
+
+    const motionMediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handleMotionChange = () => checkReducedMotion();
+    motionMediaQuery.addEventListener('change', handleMotionChange);
+
     const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
+      if (!containerRef.current || variant !== 'default') return;
 
       const rect = containerRef.current.getBoundingClientRect();
       const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -122,63 +146,74 @@ export default function GradientText({ children, className = "" }: GradientTextP
       setScrollOffset(scroll * 0.1); // Slow scroll effect
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    if (variant === 'default') {
+      window.addEventListener('mousemove', handleMouseMove);
+    }
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('scroll', handleScroll);
+      motionMediaQuery.removeEventListener('change', handleMotionChange);
     };
-  }, []);
+  }, [variant]);
 
   // Calculate gradient angle based on scroll only
   const angle = 135 + scrollOffset * 0.3;
 
   // Dynamic gradient colors that shift with scroll
-  // Light mode: Brand purple → lavender/rose
-  // Dark mode: Starts dark left, shifts to light left / dark right on scroll
   const getBrandColors = (isDark: boolean, scroll: number): string[] => {
     try {
       // Normalize scroll to 0-1 range (transition over 500px)
       const scrollProgress = Math.min(scroll / 500, 1);
 
-      if (isDark) {
-        // Dark mode: Shifts from dark-left to light-left/dark-right on scroll
-        // At top (scroll 0): Dark purple/indigo on left → lighter on right
-        // Scrolled down (scroll 1): Light lavender/cyan on left → dark purple/indigo on right
+      if (variant === 'heroTitle') {
+        // Hero Title: Continuous 12s loop colors
+        if (isDark) {
+          // Dark mode: reversing gradient
+          const darkShades = ['#4338CA', '#4F46E5', '#6366F1', '#7C3AED'];
+          const lightShades = ['#A78BFA', '#C4B5FD', '#DDD6FE', '#E9D5FF'];
 
-        // Dark colors for starting position (left side at top, right side when scrolled)
-        const darkShades = ['#4338CA', '#4F46E5', '#6366F1', '#7C3AED']; // Dark indigo/purple
-        // Light colors for ending position (right side at top, left side when scrolled)
-        const lightShades = ['#A78BFA', '#C4B5FD', '#DDD6FE', '#E9D5FF']; // Light purple/lavender
-
-        // Reverse the gradient direction as user scrolls
-        // At scroll 0: [dark, dark, light, light] - dark on left
-        // At scroll 1: [light, light, dark, dark] - light on left
-        if (scrollProgress < 0.5) {
-          // Top of page: dark → light gradient
-          return [darkShades[0], darkShades[1], lightShades[0], lightShades[1]];
+          if (scrollProgress < 0.5) {
+            return [darkShades[0], darkShades[1], lightShades[0], lightShades[1]];
+          } else {
+            return [lightShades[1], lightShades[2], darkShades[2], darkShades[3]];
+          }
         } else {
-          // Scrolled down: light → dark gradient (reversed)
-          return [lightShades[1], lightShades[2], darkShades[2], darkShades[3]];
+          // Light mode: brand purple transitions
+          const start = ['#6B21A8', '#7C3AED', '#8B5CF6', '#A78BFA'];
+          const end = ['#A855F7', '#C084FC', '#E879F9', '#F0ABFC'];
+
+          if (scrollProgress < 0.5) {
+            return start;
+          } else {
+            return end;
+          }
         }
       } else {
-        // Light mode: Brand purple → lavender/rose transition
-        // Start: Deep purple (WCAG AA compliant 4.5:1 on white)
-        const start = ['#6B21A8', '#7C3AED', '#8B5CF6', '#A78BFA']; // Purple 800-400
-        // End: Lavender/rose mix
-        const end = ['#A855F7', '#C084FC', '#E879F9', '#F0ABFC']; // Purple 500 → Fuchsia 300
+        // Default variant: original behavior
+        if (isDark) {
+          const darkShades = ['#4338CA', '#4F46E5', '#6366F1', '#7C3AED'];
+          const lightShades = ['#A78BFA', '#C4B5FD', '#DDD6FE', '#E9D5FF'];
 
-        // Interpolate between purple and lavender/rose
-        if (scrollProgress < 0.5) {
-          return start;
+          if (scrollProgress < 0.5) {
+            return [darkShades[0], darkShades[1], lightShades[0], lightShades[1]];
+          } else {
+            return [lightShades[1], lightShades[2], darkShades[2], darkShades[3]];
+          }
         } else {
-          return end;
+          const start = ['#6B21A8', '#7C3AED', '#8B5CF6', '#A78BFA'];
+          const end = ['#A855F7', '#C084FC', '#E879F9', '#F0ABFC'];
+
+          if (scrollProgress < 0.5) {
+            return start;
+          } else {
+            return end;
+          }
         }
       }
     } catch (error) {
       console.debug('getBrandColors error:', error);
-      // Return default purple palette on error
       return isDark
         ? ['#4338CA', '#4F46E5', '#A78BFA', '#C4B5FD']
         : ['#6B21A8', '#7C3AED', '#8B5CF6', '#A78BFA'];
@@ -209,35 +244,56 @@ export default function GradientText({ children, className = "" }: GradientTextP
     ${safeDarkColors[2]} ${colorStop3}%,
     ${safeDarkColors[3]} ${colorStop4}%)`;
 
+  // Hero title specific styles
+  const heroTitleLightShadow = variant === 'heroTitle'
+    ? '0 0 8px rgba(74, 18, 192, 0.18)'
+    : '';
+  const heroTitleDarkShadow = variant === 'heroTitle'
+    ? '0 0 18px rgba(167,139,250,0.35), 0 0 36px rgba(167,139,250,0.22)'
+    : '';
+
   // Animation classes for special effects
   const specialEffectClass = isRapidMovement ? 'animate-shimmer-text' : '';
   const pulseClass = isRapidMovement ? 'animate-pulse' : '';
   const glowIntensity = isRapidMovement ? 10 : 0;
 
+  // Hero title continuous animation (when not in reduced motion)
+  const heroAnimationClass = variant === 'heroTitle' && !prefersReducedMotion
+    ? 'animate-gradient-shift animate-shimmer-text'
+    : '';
+
   // Prevent flash by using a wrapper with consistent dimensions
   if (!mounted) {
     return (
-      <span className={`inline-block font-extrabold tracking-tight ${className}`}>
+      <Component className={`inline-block font-extrabold tracking-tight ${className}`}>
         {children}
-      </span>
+      </Component>
     );
   }
 
+  const baseClasses = `
+    inline-block font-extrabold tracking-tight
+    bg-clip-text text-transparent
+    transition-opacity duration-300
+    ${variant === 'heroTitle' ? 'supports-text-stroke' : ''}
+    ${heroAnimationClass}
+    ${specialEffectClass} ${pulseClass}
+    ${className}
+  `;
+
   return (
-    <span className="inline-block relative" ref={containerRef}>
+    <Component
+      className="inline-block relative"
+      id={id}
+      aria-label={ariaLabel}
+    >
       {/* Light mode text */}
       <span
-        className={`
-          inline-block font-extrabold tracking-tight
-          bg-clip-text text-transparent
-          dark:hidden
-          transition-opacity duration-300
-          ${specialEffectClass} ${pulseClass}
-          ${className}
-        `}
+        className={`${baseClasses} dark:hidden`}
         style={{
           backgroundImage: lightGradient,
-          backgroundSize: isRapidMovement ? '200% 200%' : '100% 100%',
+          backgroundSize: variant === 'heroTitle' ? '200% 200%' : (isRapidMovement ? '200% 200%' : '100% 100%'),
+          textShadow: heroTitleLightShadow,
           transition: 'background-image 0.8s ease-out, background-size 0.3s ease-out, filter 0.3s ease-out',
           filter: isRapidMovement
             ? `brightness(1.3) saturate(1.6) drop-shadow(0 0 ${glowIntensity}px rgba(139, 92, 246, 0.8))`
@@ -249,16 +305,11 @@ export default function GradientText({ children, className = "" }: GradientTextP
 
       {/* Dark mode text */}
       <span
-        className={`
-          hidden dark:inline-block font-extrabold tracking-tight
-          bg-clip-text text-transparent
-          transition-opacity duration-300
-          ${specialEffectClass} ${pulseClass}
-          ${className}
-        `}
+        className={`${baseClasses} hidden dark:inline-block`}
         style={{
           backgroundImage: darkGradient,
-          backgroundSize: isRapidMovement ? '200% 200%' : '100% 100%',
+          backgroundSize: variant === 'heroTitle' ? '200% 200%' : (isRapidMovement ? '200% 200%' : '100% 100%'),
+          textShadow: heroTitleDarkShadow,
           transition: 'background-image 0.8s ease-out, background-size 0.3s ease-out, filter 0.3s ease-out',
           filter: isRapidMovement
             ? `brightness(1.4) saturate(1.6) drop-shadow(0 0 ${glowIntensity}px rgba(233, 213, 255, 0.9))`
@@ -268,8 +319,8 @@ export default function GradientText({ children, className = "" }: GradientTextP
         {children}
       </span>
 
-      {/* Sparks */}
-      {sparks.map(spark => (
+      {/* Sparks (only for default variant) */}
+      {variant === 'default' && sparks.map(spark => (
         <div
           key={spark.id}
           className="absolute w-2 h-2 rounded-full pointer-events-none"
@@ -283,6 +334,6 @@ export default function GradientText({ children, className = "" }: GradientTextP
           }}
         />
       ))}
-    </span>
+    </Component>
   );
 }

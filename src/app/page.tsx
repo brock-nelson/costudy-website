@@ -33,11 +33,21 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative container mx-auto px-4 py-24 md:py-32 overflow-hidden" aria-labelledby="hero-heading">
         <DynamicDots />
+
+        {/* Soft vignette for legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.08] dark:via-black/[0.08] to-transparent pointer-events-none" style={{ zIndex: 9 }}></div>
+
         <div className="hero-content text-center max-w-5xl mx-auto relative z-10">
           {/* Main Heading */}
-          <h1 id="hero-heading" className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1]">
-            <GradientText>Transform Student Collaboration</GradientText>
-          </h1>
+          <GradientText
+            as="h1"
+            id="hero-heading"
+            className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1] tracking-tight"
+            variant="heroTitle"
+            aria-label="Transform Student Collaboration"
+          >
+            Transform Student Collaboration
+          </GradientText>
 
           {/* Subtitle */}
           <p className="text-xl md:text-2xl text-[#5E6E76] dark:text-[#A0AEC0] mb-10 max-w-3xl mx-auto leading-relaxed font-medium">
@@ -50,9 +60,10 @@ export default function Home() {
             <Link
               href="/demo"
               className="group relative bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 overflow-hidden"
+              style={{ textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)' }}
               aria-label="Schedule a demo of CoStudy"
             >
-              <span className="relative z-10 flex items-center gap-2">
+              <span className="relative z-10 flex items-center gap-2 text-white">
                 Schedule a Demo
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />

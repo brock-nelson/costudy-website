@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import GeometriesLayer from "./GeometriesLayer";
 
 // ============================================================================
 // CONFIGURATION CONSTANTS - Easily adjustable parameters
@@ -959,6 +960,9 @@ export default function AnimatedBackground() {
           ></div>
         );
       })()}
+
+      {/* Geometries Layer (Hero v2) - z-index 5 */}
+      <GeometriesLayer reducedMotion={prefersReducedMotion} intensity={isDarkMode ? 1 : 0.6} />
 
       {/* Animated lines */}
       <div className="absolute top-1/2 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-purple-400/30 dark:via-purple-400/60 to-transparent animate-shimmer"></div>

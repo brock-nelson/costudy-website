@@ -15,6 +15,14 @@
   --medium-gray: #5E6E76;
   --light-gray: #92A2AA;
   --background-gray: #EAEDEF;
+
+  /* Hero v2 - Neon Color Palette */
+  --co-primary: #4A12C0;
+  --co-neon1: #A78BFA;
+  --co-neon2: #C084FC;
+  --co-neon3: #22D3EE;
+  --co-neon4: #EC4899;
+  --co-neon5: #60A5FA;
 }
 
 @theme inline {
@@ -48,6 +56,9 @@
   --medium-gray: #A3A3A3;
   --light-gray: #737373;
   --background-gray: #171717;
+
+  /* Hero v2 - Dark mode override */
+  --co-primary: #8B5CF6;
 }
 
 :root.dark body,
@@ -714,4 +725,77 @@ body {
 
 .animate-particle-3 {
   animation: particle-3 3.5s ease-in-out infinite 1s;
+}
+
+/* Hero v2 - New Keyframes */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes shimmerText {
+  0% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.06);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+@keyframes outlineWave {
+  to {
+    stroke-dashoffset: -200;
+  }
+}
+
+@keyframes slowPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes slowRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-gradient-shift {
+  animation: gradientShift 12s ease-in-out infinite;
+}
+
+.animate-shimmer-text {
+  animation: shimmerText 12s ease-in-out infinite;
+}
+
+.animate-slow-pulse {
+  animation: slowPulse 8s ease-in-out infinite;
+}
+
+.animate-slow-rotate {
+  animation: slowRotate 120s linear infinite;
+}
+
+/* Feature query for text-stroke support */
+@supports (-webkit-text-stroke: 1px black) {
+  .supports-text-stroke {
+    -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.25);
+  }
+
+  .dark .supports-text-stroke {
+    -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.18);
+  }
 }
