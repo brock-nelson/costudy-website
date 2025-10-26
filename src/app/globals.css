@@ -225,11 +225,16 @@ body {
   right: 0 !important;
 }
 
-/* Prevent scrolling within header and its children */
-.header-container,
-.header-container * {
-  overflow-y: hidden !important;
+/* Prevent scrolling within header but allow dropdowns */
+.header-container {
+  overflow-y: clip !important;
   overscroll-behavior-y: none !important;
+}
+
+/* Allow dropdown menus to overflow */
+.header-container [role="menu"],
+.header-container .group > div[class*="absolute"] {
+  overflow: visible !important;
 }
 
 /* Suppress animations until page is fully loaded */
