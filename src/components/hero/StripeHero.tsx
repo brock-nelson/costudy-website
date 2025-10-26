@@ -216,7 +216,7 @@ export default function StripeHero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <div className="relative aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl shadow-purple-500/20 dark:shadow-purple-900/40 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 scale-110 lg:scale-100">
+                <div className="relative aspect-[16/13] rounded-2xl overflow-hidden shadow-2xl shadow-purple-500/20 dark:shadow-purple-900/40 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 scale-110 lg:scale-100">
                   {/* Desktop Placeholder - Dashboard View */}
                   <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
                     {/* Mock browser chrome */}
@@ -260,7 +260,7 @@ export default function StripeHero() {
 
               {/* Phone Screenshot (foreground layer, overlapping) */}
               <motion.div
-                className="relative -mt-24 lg:-mt-32 lg:-ml-20 z-20 max-w-xs mx-auto lg:mx-0"
+                className="relative -mt-12 lg:-mt-16 lg:-ml-20 z-20 max-w-xs mx-auto lg:mx-0"
                 initial={{ opacity: 0, y: 30, x: -10 }}
                 animate={{ opacity: 1, y: 0, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
