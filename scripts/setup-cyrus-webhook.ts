@@ -28,7 +28,7 @@ async function main() {
   // Check if Cyrus webhook already exists
   const existingWebhooks = await linear.webhooks();
   const cyrusWebhook = existingWebhooks.nodes.find(wh =>
-    wh.url.includes('cyrus-proxy.ceedar.workers.dev')
+    wh.url?.includes('cyrus-proxy.ceedar.workers.dev')
   );
 
   if (cyrusWebhook) {
@@ -59,7 +59,6 @@ async function main() {
     });
 
     console.log('✅ Cyrus webhook created successfully!');
-    console.log(`   ID: ${webhook.webhook?.id}`);
     console.log(`   URL: ${CYRUS_WEBHOOK_URL}`);
     console.log(`   Resource types: Issue, IssueLabel, Comment, Project`);
     console.log('\n🎉 Cyrus should now receive events from Linear!');
