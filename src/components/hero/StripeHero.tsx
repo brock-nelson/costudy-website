@@ -81,13 +81,6 @@ export default function StripeHero() {
       {/* Dark mode gradient overlay */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-gray-900 via-purple-950 to-blue-950 opacity-0 dark:opacity-100 transition-opacity duration-500" aria-hidden="true" />
 
-      {/* Scattered Dots - Visible in background, avoiding center content */}
-      {!slowConnection && mounted && (
-        <div className="absolute inset-0 -z-8 pointer-events-none" aria-hidden="true">
-          <DynamicDots />
-        </div>
-      )}
-
       {/* Decorative Geometries - Positioned at corners/edges */}
       {!slowConnection && mounted && (
         <div className="absolute inset-0 -z-5 pointer-events-none" aria-hidden="true">
@@ -134,6 +127,11 @@ export default function StripeHero() {
           />
         </div>
       )}
+
+      {/* Scattered Dots Layer */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-40" aria-hidden="true">
+        <DynamicDots />
+      </div>
 
       {/* Main Content Container */}
       <div className="container mx-auto px-6 md:px-8 lg:px-12 py-12 md:py-16 relative z-10">
