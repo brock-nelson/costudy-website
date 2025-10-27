@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import DynamicDots from "@/components/ui/DynamicDots";
 
 /**
  * StripeHero Component
@@ -79,6 +80,22 @@ export default function StripeHero() {
 
       {/* Dark mode gradient overlay */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-gray-900 via-purple-950 to-blue-950 opacity-0 dark:opacity-100 transition-opacity duration-500" aria-hidden="true" />
+
+      {/* Scattered Dots - Masked to avoid text and screenshots */}
+      {!slowConnection && mounted && (
+        <div
+          className="absolute inset-0 -z-8 pointer-events-none opacity-50"
+          aria-hidden="true"
+          style={{
+            maskImage: 'linear-gradient(to right, black 0%, transparent 35%, transparent 65%, black 100%), linear-gradient(to bottom, black 0%, transparent 45%, transparent 55%, black 100%)',
+            WebkitMaskImage: 'linear-gradient(to right, black 0%, transparent 35%, transparent 65%, black 100%), linear-gradient(to bottom, black 0%, transparent 45%, transparent 55%, black 100%)',
+            maskComposite: 'intersect',
+            WebkitMaskComposite: 'source-in'
+          }}
+        >
+          <DynamicDots />
+        </div>
+      )}
 
       {/* Decorative Geometries - Positioned at corners/edges */}
       {!slowConnection && mounted && (
